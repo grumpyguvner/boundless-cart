@@ -44,6 +44,7 @@ function fixMenu($menu) {
 <link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/jquery/tabs.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/superfish/js/superfish.js"></script>
+<script type="text/javascript" src="view/javascript/common.js"></script>
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
@@ -231,84 +232,25 @@ ob_start("fixMenu");
       </li>
       <li id="help"><a class="top"><?php echo $text_help; ?></a>
         <ul>
-          <li><a onClick="window.open('http://www.opencart.com');"><?php echo $text_opencart; ?></a></li>
-          <li><a onClick="window.open('http://www.opencart.com/index.php?route=documentation/introduction');"><?php echo $text_documentation; ?></a></li>
-          <li><a onClick="window.open('http://forum.opencart.com');"><?php echo $text_support; ?></a></li>
+          <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
+          <li><a href="http://www.opencart.com/index.php?route=documentation/introduction" target="_blank"><?php echo $text_documentation; ?></a></li>
+          <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
         </ul>
       </li>
     </ul>
 <?php
 ob_end_flush();
 ?>
-    <ul class="right">
-      <li id="store"><a onClick="window.open('<?php echo $store; ?>');" class="top"><?php echo $text_front; ?></a>
+    <ul class="right" style="display: none;">
+      <li id="store"><a href="<?php echo $store; ?>" target="_blank" class="top"><?php echo $text_front; ?></a>
         <ul>
           <?php foreach ($stores as $stores) { ?>
-          <li><a onClick="window.open('<?php echo $stores['href']; ?>');"><?php echo $stores['name']; ?></a></li>
+          <li><a href="<?php echo $stores['href']; ?>" target="_blank"><?php echo $stores['name']; ?></a></li>
           <?php } ?>
         </ul>
       </li>
-      <li id="store"><a class="top" href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
+      <li><a class="top" href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
     </ul>
-    <script type="text/javascript"><!--
-$(document).ready(function() {
-	$('#menu > ul').superfish({
-		hoverClass	 : 'sfHover',
-		pathClass	 : 'overideThisToUse',
-		delay		 : 0,
-		animation	 : {height: 'show'},
-		speed		 : 'normal',
-		autoArrows   : false,
-		dropShadows  : false, 
-		disableHI	 : false, /* set to true to disable hoverIntent detection */
-		onInit		 : function(){},
-		onBeforeShow : function(){},
-		onShow		 : function(){},
-		onHide		 : function(){}
-	});
-	
-	$('#menu > ul').css('display', 'block');
-});
- 
-function getURLVar(urlVarName) {
-	var urlHalves = String(document.location).toLowerCase().split('?');
-	var urlVarValue = '';
-	
-	if (urlHalves[1]) {
-		var urlVars = urlHalves[1].split('&');
-
-		for (var i = 0; i <= (urlVars.length); i++) {
-			if (urlVars[i]) {
-				var urlVarPair = urlVars[i].split('=');
-				
-				if (urlVarPair[0] && urlVarPair[0] == urlVarName.toLowerCase()) {
-					urlVarValue = urlVarPair[1];
-				}
-			}
-		}
-	}
-	
-	return urlVarValue;
-} 
-
-$(document).ready(function() {
-	route = getURLVar('route');
-	
-	if (!route) {
-		$('#dashboard').addClass('selected');
-	} else {
-		part = route.split('/');
-		
-		url = part[0];
-		
-		if (part[1]) {
-			url += '/' + part[1];
-		}
-		
-		$('a[href*=\'' + url + '\']').parents('li[id]').addClass('selected');
-	}
-});
-//--></script> 
   </div>
   <?php } ?>
 </div>
