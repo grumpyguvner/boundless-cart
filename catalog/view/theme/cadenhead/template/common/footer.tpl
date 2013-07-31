@@ -5,4 +5,5 @@
 </div>
 <div id="footerlast"></div>
 </div>
+<?php echo $welcome_popup; ?>
 </body></html>

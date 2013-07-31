@@ -47,4 +47,5 @@ Please donate via PayPal to donate@opencart.com
 //-->
 </div>
 </div>
+<?php echo $welcome_popup; ?>
 </body></html>
