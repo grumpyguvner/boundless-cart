@@ -64,5 +64,6 @@
 <div id="powered">
     Optimised by <a href="http://www.seoclock.co.uk" target=_blank >SEO Clock</a>. Designed and built by <a href="http://www.boundlesscommerce.co.uk" target=_blank >Boundless Commerce</a>.
 </div>
+<?php echo $welcome_popup; ?>
 </body>
 </html>

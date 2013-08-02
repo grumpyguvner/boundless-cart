@@ -149,6 +149,10 @@ class ControllerCommonFooter extends Controller {
 
         $this->setTemplate('common/footer.tpl');
 
+        $this->children = array(
+               'module/welcome_popup'
+        );
+         
         $this->render();
     }
 
