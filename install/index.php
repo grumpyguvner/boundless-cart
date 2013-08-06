@@ -59,13 +59,13 @@ $upgrade = false;
 
 if (!is_file('../' . FILE_CONFIG)) {
     if ($file = @fopen('../' . FILE_CONFIG, 'w')) {
-        chmod('../' . FILE_CONFIG, '0755');
+        chmod('../' . FILE_CONFIG, 0755);
         fclose($file);
     }
 }
 if (!is_file('../admin/' . FILE_CONFIG)) {
     if ($file = @fopen('../admin/' . FILE_CONFIG, 'w')) {
-        chmod('../admin/' . FILE_CONFIG, '0755');
+        chmod('../admin/' . FILE_CONFIG, 0755);
         fclose($file);
     }
 }
