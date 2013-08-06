@@ -1670,6 +1670,10 @@ a.button:hover, input.button:hover {
 div#footerlast{
     height: 100px;
     width: 980px;
+        margin-left: 14px;
+        margin-right: 13px;
+        padding-top: 11px;
+        padding-bottom: 11px;
 }
 #footer h3 {
 	color: #000000;

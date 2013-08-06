@@ -3,7 +3,9 @@
     <div id="textfooter2"><b>Design &amp; Built by Boundless Commerce</b></div>
 <?php   ?>
 </div>
-<div id="footerlast"></div>
+<div id="footerlast">
+    <p><?php foreach ($informations as $information) { ?><a href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a> &nbsp;&nbsp;<?php } ?><br /><br />This site is intended to be used and accessed only by individuals of legal drinking age within the UK.</p>
+</div>
 </div>
 <?php echo $welcome_popup; ?>
 </body></html>
