@@ -9,8 +9,14 @@
             }
             $(this).find('.paAddress button[name=lookup]').show();
         }
+        
+        
+        if ($(this).hasClass('paNoHide'))
+        {
+            $(this).find('.paLookup').show();
+        }
     
-        $(this).on('click','button[name=lookup]', function (event) {
+        $(this).on('click','button[name=lookup], input[name=lookup]', function (event) {
             event.preventDefault();
             var paContainer = $(this).parents('.postcodeAnywhereContainer');
             
@@ -53,7 +59,11 @@
                     {
                         if (json['fail'])
                         {
-                            paContainer.find('.paLookup').hide();
+                            
+                            if (!paContainer.hasClass('paNoHide'))
+                            {
+                                paContainer.find('.paLookup').hide();
+                            }
                             paContainer.find('.paSelect').hide();
                             paContainer.find('.paAddress').show();
                             paContainer.find('.paAddress').prepend('<span class="error">' + json['error'] + '</span>');
@@ -81,7 +91,7 @@
             });
         });
     
-        $(this).on('click','button[name=address_select]', function (event) {
+        $(this).on('click','button[name=address_select], input[name=address_select]', function (event) {
             event.preventDefault();
             var paContainer = $(this).parents('.postcodeAnywhereContainer');
             
@@ -101,7 +111,11 @@
                     {
                         if (json['fail'])
                         {
-                            paContainer.find('.paLookup').hide();
+                            
+                            if (!paContainer.hasClass('paNoHide'))
+                            {
+                                paContainer.find('.paLookup').hide();
+                            }
                             paContainer.find('.paSelect').hide();
                             paContainer.find('.paAddress').show();
                             paContainer.find('.paAddress').prepend('<span class="error">' + json['error'] + '</span>');
@@ -119,8 +133,12 @@
                         paContainer.find('input[name=\'city\']').val(json['address']['city']);
                         paContainer.find('select[name=\'country_id\']').val(json['address']['country_id']);
                         paContainer.find('select[name=\'zone_id\']').val(json['address']['zone_id']);
-                        paContainer.find('.paLookup').hide();
-                        paContainer.find('.paSelect').hide();
+                        
+                        if (!paContainer.hasClass('paNoHide'))
+                        {
+                            paContainer.find('.paLookup').hide();
+                            paContainer.find('.paSelect').hide();
+                        }
                         paContainer.find('.paAddress').show();
                     }
                         
@@ -137,7 +155,10 @@
             
             paContainer.find('.error').remove();
             
-            paContainer.find('.paLookup').hide();
+            if (!paContainer.hasClass('paNoHide'))
+            {
+                paContainer.find('.paLookup').hide();
+            }
             paContainer.find('.paSelect').hide();
             paContainer.find('.paAddress').show();
         });

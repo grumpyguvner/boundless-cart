@@ -2294,7 +2294,7 @@ a.button-account:hover, input.button-account:hover {
     width: 100%;
 }
 .checkout-content #shipping-new {
-    width: 50%;
+    width: 100%;
 }
 .checkout-content .prow {
     width: 100%;
@@ -2317,8 +2317,14 @@ a.button-account:hover, input.button-account:hover {
 .checkout-content .buttons {
     clear: both;
     float: right;
+   
     text-align: right;
     display: block;
+}
+.checkout-content p.buttons {
+    float: right;
+    border-top: none;
+    padding: none;
 }
 .checkout-content .buttons label.checkbox {
     display: table;

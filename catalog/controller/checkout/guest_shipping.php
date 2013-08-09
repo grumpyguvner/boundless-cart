@@ -6,6 +6,9 @@ class ControllerCheckoutGuestShipping extends Controller {
                 $this->language->load('module/postcode_anywhere');
                 $this->load->model('module/postcode_anywhere');
                 
+                $this->data['text_your_address'] = $this->language->get('text_your_address');
+                $this->data['text_your_shipping_address'] = $this->language->get('text_your_shipping_address');
+                
                 $this->data['text_enter_manually'] = $this->language->get('text_enter_manually');
                 $this->data['entry_search_address'] = $this->language->get('entry_search_address');
                 $this->data['entry_select_address'] = $this->language->get('entry_select_address');
@@ -29,9 +32,17 @@ class ControllerCheckoutGuestShipping extends Controller {
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
 
+                
+		$this->data['entry_shipping'] = $this->language->get('entry_shipping');
+                
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
+		$this->data['entry_email'] = $this->language->get('entry_email');
+		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
+		$this->data['entry_fax'] = $this->language->get('entry_fax');
 		$this->data['entry_company'] = $this->language->get('entry_company');
+		$this->data['entry_company_id'] = $this->language->get('entry_company_id');
+		$this->data['entry_tax_id'] = $this->language->get('entry_tax_id');			
 		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
 		$this->data['entry_address_2'] = $this->language->get('entry_address_2');
 		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
@@ -40,6 +51,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 		$this->data['entry_zone'] = $this->language->get('entry_zone');
 	
 		$this->data['button_continue'] = $this->language->get('button_continue');
+                
 					
 		if (isset($this->session->data['guest']['shipping']['firstname'])) {
 			$this->data['firstname'] = $this->session->data['guest']['shipping']['firstname'];
@@ -104,6 +116,91 @@ class ControllerCheckoutGuestShipping extends Controller {
 		$this->load->model('localisation/country');
 		
 		$this->data['countries'] = $this->model_localisation_country->getCountries();
+                
+		$this->load->model('account/customer_group');
+
+		$this->data['customer_groups'] = array();
+		
+		if (is_array($this->config->get('config_customer_group_display'))) {
+			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
+			
+			foreach ($customer_groups as $customer_group) {
+				if (in_array($customer_group['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+					$this->data['customer_groups'][] = $customer_group;
+				}
+			}
+		}
+                
+		if (isset($this->session->data['guest']['payment']['company'])) {
+			$this->data['payment_company'] = $this->session->data['guest']['payment']['company'];			
+		} else {
+			$this->data['payment_company'] = '';
+		}
+		
+		// Company ID
+		if (isset($this->session->data['guest']['payment']['company_id'])) {
+			$this->data['payment_company_id'] = $this->session->data['guest']['payment']['company_id'];			
+		} else {
+			$this->data['payment_company_id'] = '';
+		}
+		
+		// Tax ID
+		if (isset($this->session->data['guest']['payment']['tax_id'])) {
+			$this->data['payment_tax_id'] = $this->session->data['guest']['payment']['tax_id'];			
+		} else {
+			$this->data['payment_tax_id'] = '';
+		}
+								
+		if (isset($this->session->data['guest']['payment']['address_1'])) {
+			$this->data['payment_address_1'] = $this->session->data['guest']['payment']['address_1'];			
+		} else {
+			$this->data['payment_address_1'] = '';
+		}
+
+		if (isset($this->session->data['guest']['payment']['address_2'])) {
+			$this->data['payment_address_2'] = $this->session->data['guest']['payment']['address_2'];			
+		} else {
+			$this->data['payment_address_2'] = '';
+		}
+
+		if (isset($this->session->data['guest']['payment']['postcode'])) {
+			$this->data['payment_postcode'] = $this->session->data['guest']['payment']['postcode'];							
+		} elseif (isset($this->session->data['shipping_postcode'])) {
+			$this->data['payment_postcode'] = $this->session->data['shipping_postcode'];			
+		} else {
+			$this->data['payment_postcode'] = '';
+		}
+		
+		if (isset($this->session->data['guest']['payment']['city'])) {
+			$this->data['payment_city'] = $this->session->data['guest']['payment']['city'];			
+		} else {
+			$this->data['payment_city'] = '';
+		}
+
+		if (isset($this->session->data['guest']['payment']['country_id'])) {
+			$this->data['payment_country_id'] = $this->session->data['guest']['payment']['country_id'];			  	
+		} elseif (isset($this->session->data['shipping_country_id'])) {
+			$this->data['payment_country_id'] = $this->session->data['shipping_country_id'];		
+		} else {
+			$this->data['payment_country_id'] = $this->config->get('config_country_id');
+		}
+
+		if (isset($this->session->data['guest']['payment']['zone_id'])) {
+			$this->data['payment_zone_id'] = $this->session->data['guest']['payment']['zone_id'];	
+		} elseif (isset($this->session->data['shipping_zone_id'])) {
+			$this->data['payment_zone_id'] = $this->session->data['shipping_zone_id'];						
+		} else {
+			$this->data['payment_zone_id'] = '';
+		}
+		
+		$this->data['shipping_required'] = $this->cart->hasShipping();
+		
+		if (isset($this->session->data['guest']['shipping_address'])) {
+			$this->data['shipping_address'] = $this->session->data['guest']['shipping_address'];			
+		} else {
+			$this->data['shipping_address'] = true;
+		}
+                
 		
 		$this->setTemplate('checkout/guest_shipping.tpl');		
 		

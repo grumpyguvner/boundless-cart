@@ -22,6 +22,7 @@ $_['text_register_account']          = 'By creating an account you will be able 
 $_['text_forgotten']                 = 'Forgotten Password';
 $_['text_your_details']              = 'Your Personal Details';
 $_['text_your_address']              = 'Your Address';
+$_['text_your_shipping_address']     = 'Your Shipping Address';
 $_['text_your_password']             = 'Your Password';
 $_['text_agree']                     = 'I have read and agree to the <a class="colorbox" href="%s" alt="%s"><b>%s</b></a>';
 $_['text_address_new']               = 'I want to use a new address';
