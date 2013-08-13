@@ -1,0 +1,87 @@
+#amz-statistics
+{
+  height: 200px;
+  width: 600px;
+  border: 1px solid red;
+}
+.parameters
+{
+  margin:0;
+  padding:0;
+}
+
+.parameters label
+{
+    position:relative;
+    top:-2px;
+}
+.parameters input[type=button]
+{
+    position:relative;
+    top:-2px;
+    width:60px;
+    margin-left:40px;
+}
+.options
+{
+  position:relative;
+  top:-2px;
+  color:green;
+  font-weight:bold;
+  padding-right:20px;
+}
+.language
+{
+  position:relative;
+  top:-2px;
+  padding:0 10px 0 40px;
+}
+#language
+{
+  width:100px;
+}
+
+
+.loader
+{
+  display:block;
+  margin:0 auto 0 auto;
+  width:32px;
+  height:32px;
+  background: url(../../image/amazon/loading.gif) no-repeat;
+}
+.statistiques
+{
+  width:600px;
+  margin:5px;
+}
+.statistiques .right
+{
+  text-align:right;
+}
+.statistiques .center
+{
+  text-align:center;
+}
+.statistiques th
+{
+  font-weight: bold;
+  color:navy;
+  padding:0 0 5px 0;
+}
+.statistiques th:first-child
+{
+  text-align:left;
+}
+.statistiques .download
+{
+  cursor:pointer;
+  border:1px solid transparent;
+  padding:3px;
+}
+.statistiques .download:hover
+{
+  cursor:pointer;
+  border:1px solid navy;
+  padding:3px;
+}

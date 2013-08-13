@@ -1,0 +1,54 @@
+.sep
+{
+  position:relative;
+  float:left;
+  height:300px;
+  margin:auto 10px auto 10px;
+  top:100px;
+}
+select
+{
+ height:300px;
+ width:300px;
+ float:left;
+}
+.move
+{
+  cursor:pointer;
+  padding:5px;
+  border:1px solid transparent;
+}
+.move:hover
+{
+  padding:5px;
+  border:1px solid silver;
+  background-color:#9cb8dd;
+}
+.save
+{
+margin-left:550px;
+}
+
+
+.content
+{
+    height:600px;
+}
+.validation
+{
+   display:none;
+   min-height:40px;
+   background-color:#ccffcd;
+   border-top:1px solid #019609;
+   border-bottom:1px solid #019609;
+   margin-top:20px;
+   padding:10px;
+}
+.loader
+{
+  display:block;
+  margin:0 auto 0 auto;
+  width:32px;
+  height:32px;
+  background: url(../../image/amazon/loading.gif) no-repeat;
+}
