@@ -2,9 +2,9 @@
 $_['heading_title']				= 'pine3ree - Admin Rebooted theme';
 
 // Text
-$_['text_help']						= 'Ein Admin Thema mit "Twitter Bootstrap" gebaut und mehr ...';
-$_['text_module']         = 'Module';
-$_['text_success']        = 'Erfolg: Sie haben "Admin Rebooted" Design-Einstellungen geändert!';
+$_['text_help']						= 'An admin theme based on Twitter Bootstrap and more...';
+$_['text_module']         = 'Modules';
+$_['text_success']        = 'Success: You have modified Admin Rebooted theme settings!';
 
 // Entry
 $_['entry_status']					= 'Status';
@@ -14,14 +14,14 @@ $_['entry_select2']					= 'Select2 addon:';
 $_['entry_toggle_buttons']	= 'Cool toggle buttons:';
 $_['entry_ckeditor4']				= 'CKEditor version:';
 $_['entry_menu_highlight']	= 'Active Menu highlight:';
-$_['entry_hide_helpmenu']		= 'Ausblenden OpenCart Hilfe Menüpunkt';
+$_['entry_hide_helpmenu']		= 'Hide OpenCart Help menu item';
 
 
 // Buttons
-$_['button_apply']				= 'Anwenden';
-$_['button_save']					= 'Sparen';
-$_['button_cancel']				= 'Kündigen';
+$_['button_apply']				= 'Apply';
+$_['button_save']					= 'Save';
+$_['button_cancel']				= 'Cancel';
 
 // Error
-$_['error_permission']		= 'Warnung: Sie haben keine Berechtigung, um diese Einstellungen zu ändern!';
+$_['error_permission']  = 'Warning: You do not have permission to modify the Admin Rebooted theme settings!';
 
