@@ -131,6 +131,19 @@ class ControllerCheckoutGuestShipping extends Controller {
 			}
 		}
                 
+                
+		if (isset($this->session->data['guest']['firstname'])) {
+			$this->data['payment_firstname'] = $this->session->data['guest']['firstname'];
+		} else {
+			$this->data['payment_firstname'] = '';
+		}
+
+		if (isset($this->session->data['guest']['lastname'])) {
+			$this->data['payment_lastname'] = $this->session->data['guest']['lastname'];
+		} else {
+			$this->data['payment_lastname'] = '';
+		}
+                
 		if (isset($this->session->data['guest']['payment']['company'])) {
 			$this->data['payment_company'] = $this->session->data['guest']['payment']['company'];			
 		} else {

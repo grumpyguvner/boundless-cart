@@ -92,3 +92,16 @@ $('.colorbox').colorbox({
 	height: 480
 });
 //--></script> 
+
+<?php if ($text_agree) { ?>
+<script type="text/javascript"><!--
+    $('input[name=agree]').live('click', function () {
+        if ($(this).is(':checked'))
+        {
+            $('#button-payment-method').attr('disabled', false);
+        } else {
+            $('#button-payment-method').attr('disabled', 'disabled');
+        }
+    }).trigger('click');
+    //--></script>
+        <?php } ?>

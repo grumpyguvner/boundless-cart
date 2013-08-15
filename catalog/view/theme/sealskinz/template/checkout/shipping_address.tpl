@@ -79,7 +79,7 @@
             }
             ?>
         </div>
-        <div class="right" style="border-left: none;">
+        <div class="right">
             <div class="paAddress">
                 <div class="prow">
                     <div class="pLabel">  
@@ -234,4 +234,26 @@
     });
 
     $('#shippingPostcodeAnywhere select[name=\'country_id\']').trigger('change');
+    //--></script>
+
+<script type="text/javascript"><!--
+    $('#shipping-address input, #shipping-address select').live('keydown, change', function () {
+        if ($('#paymentPostcodeAnywhere select[name=address_id]').val() || ($('#paymentPostcodeAnywhere input[name=address_1]').val() &&
+            $('#paymentPostcodeAnywhere input[name=city]').val() &&
+            $('#paymentPostcodeAnywhere input[name=postcode]').val() &&
+            $('#paymentPostcodeAnywhere select[name=country_id]').val() &&
+            $('#paymentPostcodeAnywhere select[name=zone_id]').val()) &&
+            ($('#shipping').is(':checked') || $('#shippingPostcodeAnywhere select[name=address_id]').val() || ($('#shippingPostcodeAnywhere input[name=firstname]').val() &&
+                $('#shippingPostcodeAnywhere input[name=lastname]').val() &&
+                $('#shippingPostcodeAnywhere input[name=address_1]').val() &&
+                $('#shippingPostcodeAnywhere input[name=city]').val() &&
+                $('#shippingPostcodeAnywhere input[name=postcode]').val() &&
+                $('#shippingPostcodeAnywhere select[name=country_id]').val() &&
+                $('#shippingPostcodeAnywhere select[name=zone_id]').val())))
+        {
+            $('#button-shipping-address').attr('disabled', false);
+        } else {
+            $('#button-shipping-address').attr('disabled', 'disabled');
+        }
+    }).trigger('change');
     //--></script>

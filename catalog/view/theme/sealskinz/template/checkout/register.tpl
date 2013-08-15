@@ -1,3 +1,7 @@
+<?php
+if (!$this->customer->isLogged())
+{
+?>
 <div class="left" style="border-right: none;">
     
         <h2><?php echo $text_your_details; ?></h2>
@@ -104,4 +108,31 @@
         width: 640,
         height: 480
     });
-    //--></script> 
+    //--></script>
+
+<script type="text/javascript"><!--
+    $('#payment-address input').live('keydown, change', function () {
+        if ($('#payment-address input[name=firstname]').val() &&
+            $('#payment-address input[name=lastname]').val() &&
+            $('#payment-address input[name=email]').val() &&
+            $('#payment-address input[name=telephone]').val() &&
+            $('#payment-address input[name=password]').val() &&
+            $('#payment-address input[name=confirm]').val()<?php if ($text_agree) { ?> && $('#payment-address input[name=agree]').is(':checked')<?php } ?>)
+        {
+            $('#button-register').attr('disabled', false);
+        } else {
+            $('#button-register').attr('disabled', 'disabled');;
+        }
+    }).trigger('change');
+    //--></script>
+<?php
+} else {
+?>
+<div style="margin-bottom: 10px"><?php echo $text_register_logged_in; ?></div>
+
+<div class="buttons">
+        <input type="button" value="<?php echo $button_continue; ?>" id="button-register-account" class="button" />
+</div>
+<?php
+}
+?>

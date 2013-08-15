@@ -46,6 +46,7 @@ class PostcodeAnywhere {
     }
 
     public function getAddressesByPostcode($postcode, $iso3 = 'GBR', $building = null) {
+        
         switch ($iso3) {
             case 'GBR':
                 $data = $this->getAddressesByPostcodeUK($postcode);
@@ -62,6 +63,8 @@ class PostcodeAnywhere {
 
     public function getAddressesByPostcodeUK($postcode) {
 
+        $postcode = preg_replace('%[^0-9a-zA-Z]%', '', strtolower($postcode));
+        
         $endpoint = 'http://services.postcodeanywhere.co.uk/PostcodeAnywhere/Interactive/FindByPostcode/v1.00/json3.ws?';
         $endpoint .= 'Key=' . urlencode($this->key) . '&';
         $endpoint .= 'Postcode=' . urlencode($postcode);
@@ -73,6 +76,9 @@ class PostcodeAnywhere {
     }
 
     public function getAddressesByPostcodeUS($postcode) {
+        
+        $postcode = strtolower($postcode);
+        
         if (preg_match('%\d{5}-\d{4}%', $postcode)) {
             $endpoint = 'http://services.postcodeanywhere.co.uk/PostcodeAnywhereInternational/InteractiveUSA/FindByZip4/v1.00/json3.ws?';
             $endpoint .= 'Key=' . urlencode($this->key) . '&';
@@ -90,6 +96,9 @@ class PostcodeAnywhere {
     }
 
     public function getAddressesByPostcodeInternational($postcode, $iso3, $building = null) {
+        
+        $postcode = strtolower($postcode);
+        
         $endpoint = 'http://services.postcodeanywhere.co.uk/PostcodeAnywhereInternational/Interactive/RetrieveByPostalCode/v2.20/json3.ws?';
         $endpoint .= 'Key=' . urlencode($this->key) . '&';
         $endpoint .= '&PostalCode=' . urlencode($postcode);
@@ -144,8 +153,7 @@ class PostcodeAnywhere {
         if ($cache && isset($this->cache)) {
             $data = $this->cache->get('postcode_anywhere.' . $cache);
 
-            if ($data)
-                return $data;
+            if ((bool)$data) return $data;
         }
 
         $ctx = stream_context_create(array('http' => array('timeout' => $this->timeout)));

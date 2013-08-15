@@ -934,8 +934,16 @@ a.button {
 input.button {
     margin: 0;
     border: 0;
-    height: 24px;
-    padding: 0px 12px 0px 12px;
+    padding: 9px 12px;
+}
+
+input.button[disabled=disabled], input.button:hover[disabled=disabled] {
+    background-color: #EEEEEE;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    color: #fff;
+    cursor: default;
 }
 a.button:hover, input.button:hover {
     background-color: #74964a;
@@ -957,6 +965,13 @@ a.button-account, input.button-account {
     -moz-box-shadow: 0px 2px 2px #DDDDDD;
     box-shadow: 0px 2px 2px #DDDDDD;
 }
+.checkout input.button {
+    text-transform: uppercase;
+    height: auto;
+    padding: 9px 12px;
+    vertical-align: top;
+}
+
 a.button-account {
     display: inline-block;
     text-decoration: none;
@@ -2261,6 +2276,15 @@ a.button-account:hover, input.button-account:hover {
     -moz-border-radius: 8px;
     border-radius: 8px;
 }
+.checkout-heading.active {
+    background: #9CC867;
+    border-color: #83A756;
+    color: #fff;
+}
+.checkout-heading.active a {
+    display: none;
+}
+
 .checkout-heading a {
     float: right;
     margin-top: 1px;
@@ -2274,14 +2298,13 @@ a.button-account:hover, input.button-account:hover {
 }
 .checkout-content .left {
     float: left;
-    width: 46%;
+    width: 49%;
 }
 .checkout-content .right {
-    border-left: 1px solid #DDDDDD;
-    padding-left: 20px;
     float:right;
-    width: 48%;
+    width: 49%;
 }
+
 .checkout-content .new-customer {
     float: left;
 }
@@ -2299,21 +2322,27 @@ a.button-account:hover, input.button-account:hover {
 .checkout-content .prow {
     width: 100%;
     padding-bottom: 15px;
+    display:inline-block;
+    zoom:1;
+    *display:inline;
 }
 .checkout-content .pLabel {
-    display: inline-block;
-    padding-right: 20px;
+    float: left;
     width: 111px;
     vertical-align: top;
 }
 .checkout-content .pInput {
-    display: inline-block;
-    width: 242px;
+    margin-left: 131px;
 }
 .checkout-content .paSelect .pInput {
     float: right;
     width: 100%;
 }
+
+.checkout-content button[name=address_select] {
+    display: none;
+}
+
 .checkout-content .buttons {
     clear: both;
     float: right;
@@ -2343,14 +2372,11 @@ a.button-account:hover, input.button-account:hover {
     float: right;
     margin-top: 0;
 }
-.checkout-content .prow .pselect {
-    max-width: none !important;
-}
 .checkout-content .prow .pInput select {
-    max-width: 205px;
+    max-width: 97%;
 }
 .checkout-content .form select {
-    max-width: 205px;
+    max-width: 97%;
 }
 .checkout-product table {
     width: 100%;

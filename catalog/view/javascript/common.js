@@ -19,6 +19,7 @@
         $(this).on('click','button[name=lookup], input[name=lookup]', function (event) {
             event.preventDefault();
             var paContainer = $(this).parents('.postcodeAnywhereContainer');
+            var paButton = $(this);
             
             paContainer.find('.error').remove();
             
@@ -47,9 +48,10 @@
                 url: 'index.php?route=module/postcode_anywhere/postcode&country_id=' + paContainer.find('select[name=postcode_lookup_country_id]').val() + '&postcode=' + encodeURIComponent(paContainer.find('input[name=postcode_lookup]').val()),
                 dataType: 'json',
                 beforeSend: function() {
-                    $(this).after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+                    paButton.attr('disabled', 'disabled').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
                 },
                 complete: function() {
+                    paButton.attr('disabled', false);
                     $('.wait').remove();
                 },			
                 success: function(json) {
@@ -81,7 +83,9 @@
                         }
                         selectSize = (paSelect.find('option').length > 9) ? 10 : paSelect.find('option').length;
                         paSelect.attr('size', selectSize);
+                        paContainer.find('.paSelect option').removeAttr("selected");
                         paContainer.find('.paSelect').show();
+                        
                     }
                         
                 },
@@ -94,6 +98,7 @@
         $(this).on('click','button[name=address_select], input[name=address_select]', function (event) {
             event.preventDefault();
             var paContainer = $(this).parents('.postcodeAnywhereContainer');
+            var paButton = $(this);
             
             paContainer.find('.error').remove();
             
@@ -101,9 +106,10 @@
                 url: 'index.php?route=module/postcode_anywhere/address&country_id=' + paContainer.find('select[name=postcode_lookup_country_id]').val() + '&address=' + encodeURIComponent(paContainer.find('select[name=address_dropdown]').val()),
                 dataType: 'json',
                 beforeSend: function() {
-                    $(this).after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+                    paButton.attr('disabled', 'disabled').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
                 },
                 complete: function() {
+                    paButton.attr('disabled', false);
                     $('.wait').remove();
                 },			
                 success: function(json) {
