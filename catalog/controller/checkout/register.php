@@ -25,6 +25,8 @@ class ControllerCheckoutRegister extends Controller {
                 } else {
                     $this->data['postcode_lookup_country_id'] = $this->config->get('config_country_id');
                 }
+                
+		$this->data['text_register_logged_in'] = sprintf($this->language->get('text_register_logged_in'), $this->url->link('account/account', '', 'SSL'));
 		
 		$this->data['text_your_details'] = $this->language->get('text_your_details');
 		$this->data['text_your_address'] = $this->language->get('text_your_address');

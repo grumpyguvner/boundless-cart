@@ -46,7 +46,12 @@ class ControllerCheckoutShippingAddress extends Controller {
         $this->data['entry_country'] = $this->language->get('entry_country');
         $this->data['entry_zone'] = $this->language->get('entry_zone');
 
-        $this->data['shipping_address'] = ($this->session->data['payment_address_id'] == $this->session->data['shipping_address_id']) ? true : false;
+        if (isset($this->session->data['payment_address_id']) && isset($this->session->data['shipping_address_id']) && $this->session->data['payment_address_id'] !== $this->session->data['shipping_address_id'])
+        {
+            $this->data['shipping_address'] = false;
+        } else {
+            $this->data['shipping_address'] = true;
+        }
 
         $this->data['button_continue'] = $this->language->get('button_continue');
 

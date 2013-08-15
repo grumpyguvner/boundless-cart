@@ -19,6 +19,7 @@ $_['text_i_am_returning_customer']   = 'I am a returning customer';
 $_['text_register']                  = 'Register Account';
 $_['text_guest']                     = 'Guest Checkout';
 $_['text_register_account']          = 'By creating an account you will be able to shop faster, be up to date on an order\'s status, and keep track of the orders you have previously made.';
+$_['text_register_logged_in']        = 'To change your details, please go the <a href="%s">account</a> section.';
 $_['text_forgotten']                 = 'Forgotten Password';
 $_['text_your_details']              = 'Your Personal Details';
 $_['text_your_address']              = 'Your Address';

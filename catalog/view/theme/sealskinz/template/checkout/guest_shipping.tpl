@@ -234,7 +234,6 @@
 
     $('#payment-address input[name=\'customer_group_id\']:checked').trigger('change');
     //--></script> 
-
 <?php if ($shipping_required) { ?>
     <div style="clear: both; padding: 0 0 15px 0; border-top: 1px solid #DDDDDD;">
         <h2><?php echo $text_your_shipping_address; ?></h2>
@@ -307,7 +306,7 @@
                         <span class="required">*</span> <?php echo $entry_firstname; ?>
                     </div>
                     <div class="pInput">
-                        <input type="text" name="firstname" value="<?php echo $firstname ?>" class="large-field" />
+                        <input type="text" name="firstname" value="<?php echo $firstname ? $firstname : $payment_firstname ?>" class="large-field" />
                     </div>
                 </div>
                 <div class="prow">
@@ -315,7 +314,7 @@
                         <span class="required">*</span> <?php echo $entry_lastname; ?>
                     </div>
                     <div class="pInput">
-                        <input type="text" name="lastname" value="<?php echo $lastname ?>" class="large-field" />
+                        <input type="text" name="lastname" value="<?php echo $lastname ? $lastname : $payment_lastname ?>" class="large-field" />
                     </div>
                 </div>
                 <div class="prow" id="paCompany">
@@ -451,4 +450,26 @@
     });
 
     $('#shippingPostcodeAnywhere select[name=\'country_id\']').trigger('change');
+    //--></script>
+
+<script type="text/javascript"><!--
+    $('#shipping-address input, #shipping-address select').live('keydown, change', function () {
+        if ($('#guestPostcodeAnywhere input[name=address_1]').val() &&
+            $('#guestPostcodeAnywhere input[name=city]').val() &&
+            $('#guestPostcodeAnywhere input[name=postcode]').val() &&
+            $('#guestPostcodeAnywhere select[name=country_id]').val() &&
+            $('#guestPostcodeAnywhere select[name=zone_id]').val() &&
+            ($('#shipping').is(':checked') || ($('#shippingPostcodeAnywhere input[name=firstname]').val() &&
+                $('#shippingPostcodeAnywhere input[name=lastname]').val() &&
+                $('#shippingPostcodeAnywhere input[name=address_1]').val() &&
+                $('#shippingPostcodeAnywhere input[name=city]').val() &&
+                $('#shippingPostcodeAnywhere input[name=postcode]').val() &&
+                $('#shippingPostcodeAnywhere select[name=country_id]').val() &&
+                $('#shippingPostcodeAnywhere select[name=zone_id]').val())))
+        {
+            $('#button-guest-shipping').attr('disabled', false);
+        } else {
+            $('#button-guest-shipping').attr('disabled', 'disabled');
+        }
+    }).trigger('change');
     //--></script>

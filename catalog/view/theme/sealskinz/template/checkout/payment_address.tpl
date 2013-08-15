@@ -19,7 +19,7 @@
         </div>
     <?php } ?>
     <div id="payment-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
-        <div class="left" style="border-right: none;">
+        <div class="left">
             <?php
             if ($use_postcode_anywhere) {
                 ?>
@@ -71,7 +71,7 @@
 
         </div>
 
-        <div class="content right" style="border-left: none;">
+        <div class="right">
 
 
             <div class="paAddress content">

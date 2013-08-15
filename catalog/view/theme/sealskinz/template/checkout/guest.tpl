@@ -62,3 +62,16 @@
 <div class="buttons">
         <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="button" />
 </div>
+<script type="text/javascript"><!--
+    $('#payment-address input').live('keydown, change', function () {
+        if ($('#payment-address input[name=firstname]').val() &&
+            $('#payment-address input[name=lastname]').val() &&
+            $('#payment-address input[name=email]').val() &&
+            $('#payment-address input[name=telephone]').val())
+        {
+            $('#button-guest').attr('disabled', false);
+        } else {
+            $('#button-guest').attr('disabled', 'disabled');
+        }
+    }).trigger('change');
+    //--></script>
