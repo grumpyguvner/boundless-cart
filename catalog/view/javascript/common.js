@@ -132,6 +132,8 @@
                             paContainer.find('.paLookup').prepend('<span class="error">' + json['error'] + '</span>');
                         }
                     } else {
+                        paContainer.find('input[name=\'firstname\']').val(json['address']['firstname']);
+                        paContainer.find('input[name=\'lastname\']').val(json['address']['lastname']);
                         paContainer.find('input[name=\'company\']').val(json['address']['company']);
                         paContainer.find('input[name=\'address_1\']').val(json['address']['address_1']);
                         paContainer.find('input[name=\'address_2\']').val(json['address']['address_2']);

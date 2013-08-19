@@ -17,6 +17,8 @@
             <label for="payment-address-new" class="radio"><input type="radio" name="payment_address" value="new" id="payment-address-new" />
                 <?php echo $text_address_new; ?></label>
         </div>
+    <?php } else { ?>
+        <input type="hidden" name="payment_address" value="new" id="payment-address-new" />
     <?php } ?>
     <div id="payment-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
         <div class="left">
@@ -47,8 +49,7 @@
                 </div>
                 <div class="paSelect content">
                     <div class="payform-right">
-                        <div class="pLabel"><span class="paSelect_required required">*</span> <?php echo $entry_select_address; ?></div>
-                        <div class="pInput">
+                        <div class="pInput"><span class="paSelect_required required">*</span> <?php echo $entry_select_address; ?><br/>
                             <select name="address_dropdown"<?php if ($paAddresses) echo ' size="' . (count($paAddresses) > 9 ? 10 : count($paAddresses)) . '"'; ?> class="pselect">
                                 <?php
                                 if ($paAddresses) {
