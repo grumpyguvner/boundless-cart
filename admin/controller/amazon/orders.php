@@ -306,7 +306,7 @@ class ControllerAmazonOrders extends Controller {
         $startDate      = isset($this->request->post['import-from']) ? $this->request->post['import-from'] : false ;
         $endDate        = isset($this->request->post['import-to']) ? $this->request->post['import-to'] : false ;
 
-        // Today - 15 minutes de temps de latence afin d'éviter les erreur de synchro dus a l'heure systeme
+        // Today - 15 minutes de temps de latence afin d'ï¿½viter les erreur de synchro dus a l'heure systeme
         //
         if ( ! $startDate )
                 $date1 = date('c', strtotime('yesterday midnight')) ;
@@ -519,7 +519,7 @@ class ControllerAmazonOrders extends Controller {
         //
         foreach($orders->Items as $key => $product)
         {
-            $product_info = $this->model_amazon_orders->isProductAvailable($product->SKU, $product->ASIN) ;
+            $product_info = $this->model_amazon_orders->isProductAvailable($product->SKU, $product->ASIN, $language_id) ;
 
             // Not exists
             //
@@ -832,15 +832,32 @@ class ControllerAmazonOrders extends Controller {
             if ( isset($product->ProductModel) )
                 $order_product['model'] = strval($product->ProductModel) ;
 
-            if ( ! $this->model_amazon_orders->addProduct($order_product) )
+            if ( !($order_product_id = $this->model_amazon_orders->addProduct($order_product)) )
             {
                 $pass = false ;
                 $errors[] = sprintf($this->language->get('entry_import_add_product_failed'), $order->AmazonOrderId, $product->ASIN) ;
                 continue ;
+            } else {
+                $product_info = $this->model_amazon_orders->isProductAvailable($order_product['sku'], $order_product['asin'], $language_id);
+                
+                if ($product_info['product_option_value_id'])
+                {
+                    $order_product_option = array();
+
+                    $order_product_option['order_id'] = $order_product['order_id'];
+                    $order_product_option['order_product_id'] = $order_product_id;
+                    $order_product_option['product_option_id'] = $product_info['product_option_id'];
+                    $order_product_option['product_option_value_id'] = $product_info['product_option_value_id'];
+                    $order_product_option['name'] = $product_info['option_description_name'];
+                    $order_product_option['value'] = $product_info['option_value_name'];
+                    $order_product_option['type'] = $product_info['option_name'];
+
+                    $this->model_amazon_orders->addProductOption($order_product_option);
+                }
             }
 
-            if ( isset($order_product['product_id']) && intval($order_product['product_id']) )
-                $this->model_amazon_orders->decreaseQuantity($order_product['product_id'], intval($product->QuantityOrdered)) ;
+            if ( isset($order_product['sku']) && $order_product['sku'] )
+                $this->model_amazon_orders->decreaseQuantity($order_product['sku'], intval($product->QuantityOrdered)) ;
 
             $count ++ ;
         }

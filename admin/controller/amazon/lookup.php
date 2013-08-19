@@ -561,10 +561,18 @@ class ControllerAmazonLookup extends Controller {
     }
     private function _productLookup($code, $value)
     {
-		$query = $this->db->query("SELECT DISTINCT product_id from " . DB_PREFIX . "product WHERE " . $code . " = '" . strval($value) . "'") ;
+        
+        if ($code == 'ean')
+        {
+            $query = $this->db->query("SELECT DISTINCT p.product_id from " . DB_PREFIX . "product p LEFT join `" . DB_PREFIX . "product_option` po on (po.`product_id` = p.`product_id`) LEFT join `" . DB_PREFIX . "product_option_value` pov on (pov.`product_option_id` = po.`product_option_id`) WHERE p.ean = '" . strval($value) . "' or pov.ean = '" . strval($value) . "'") ;
+        } else {
+            $query = $this->db->query("SELECT DISTINCT product_id from " . DB_PREFIX . "product WHERE " . $code . " = '" . strval($value) . "'") ;
+        }
+		
 
 		return $query->row;
 	}
+        
     private function _setManufacturer($manufacturer) {
         $this->load->model('catalog/manufacturer');
 

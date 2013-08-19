@@ -315,6 +315,34 @@ class ControllerAmazonConfig extends Controller {
 
         if ( !isset($fields['isbn'] ) )
             $this->db->query('ALTER TABLE  `' . DB_PREFIX . 'product` ADD  `isbn` VARCHAR( 13 ) NULL AFTER  `sku` , ADD INDEX (`isbn` )') ;
+        
+        // Adding Marketplace fields - product option value
+        //
+        $fields = array() ;
+        $query  = $this->db->query('show columns from `' . DB_PREFIX . 'product_option_value`') ;
+        foreach($query->rows as $row)
+            $fields[ $row['Field'] ] = 1 ;
+
+        if ( !isset($fields['ean']) )
+            $this->db->query('ALTER TABLE  `' . DB_PREFIX . 'product_option_value` ADD  `ean` VARCHAR( 13 ) NULL AFTER  `sku` , ADD INDEX (`ean` )') ;
+
+        if ( !isset($fields['asin'] ) )
+            $this->db->query('ALTER TABLE  `' . DB_PREFIX . 'product_option_value` ADD  `asin` VARCHAR( 13 ) NULL AFTER  `sku` , ADD INDEX (`asin` )') ;
+
+        // Adding Marketplace fields - order product
+        //
+        $fields = array() ;
+        $query  = $this->db->query('show columns from `' . DB_PREFIX . 'order_product`') ;
+        foreach($query->rows as $row)
+            $fields[ $row['Field'] ] = 1 ;
+
+        if ( !isset($fields['asin'] ) )
+            $this->db->query('ALTER TABLE  `' . DB_PREFIX . 'order_product` ADD  `asin` VARCHAR( 13 ) NULL AFTER  `product_id` , ADD INDEX (`asin` )') ;
+
+        if ( !isset($fields['sku'] ) )
+            $this->db->query('ALTER TABLE  `' . DB_PREFIX . 'order_product` ADD  `sku` VARCHAR( 13 ) NULL AFTER  `asin` , ADD INDEX (`sku` )') ;
+        
+        
 
         // Adding Marketplace fields - order product
         //
@@ -350,9 +378,9 @@ class ControllerAmazonConfig extends Controller {
         if ( !isset($tables[DB_PREFIX .'amazon_products'] ) )
             $this->db->query("
             CREATE TABLE `" . DB_PREFIX . "amazon_products` (
-              `product_id` int(11) NOT NULL,
+              `sku` varchar(25) NOT NULL,
               `language_id` int(11) NOT NULL,
-              PRIMARY KEY (`product_id`,`language_id`)
+              PRIMARY KEY (`sku`,`language_id`)
             ) ;") ;
 
 

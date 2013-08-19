@@ -281,7 +281,7 @@ class ControllerAmazonSynchronize extends Controller {
             {
                 if ( $product[$kind] )
                 {
-                  $type = strtoupper($kind) ;
+                  $type = strtoupper($kind);
                   $value = $kind == 'ean' ? sprintf('%013s', $product[$kind]) : $product[$kind] ;
 
                   if ( $this->debug )
@@ -290,18 +290,19 @@ class ControllerAmazonSynchronize extends Controller {
                 }
             }
 
-            // Test : is the product already exported to amazon ?
-            //
-            if ( ! $this->model_amazon_synchronize->isOnAmazon($product) )
-            {
-                $amazonProducts[] = intval($product['product_id']) ;
-                $action = self::CREATE ;
-            }
-            else
-                $action = self::UPDATE ;
-
             $productPrice   = floatval($product['price']) ;
-            $productQty     = intval($product['quantity']) ;
+            
+            $productQty     = intval($product['quantity']);
+            
+            if ($product['sku'])
+            {
+                $productSKU = $product['sku'];
+            } else {
+                $productSKU = $product['product_id'];
+                if ($product['product_option_value_id']) {
+                    $productSKU += '-' . $product['product_option_value_id'];
+                }
+            }
 
             // Convert from/to currency
             //
@@ -314,6 +315,16 @@ class ControllerAmazonSynchronize extends Controller {
             // Price CallBack (see Admin > Module > Fnac)
             //
             $newPrice =  Amazon_Tools::CallBack($newPrice, $price_callback) ;
+            
+            // Test : is the product already exported to amazon ?
+            //
+            if ( ! $this->model_amazon_synchronize->isOnAmazon($productSKU, $product['language_id']) )
+            {
+                $amazonProducts[] = $productSKU;
+                $action = self::CREATE ;
+            }
+            else
+                $action = self::UPDATE ;
 
             if ( $this->debug )
                 printf("DEBUG: %s(%d) - Data is %s%s", basename(__FILE__), __LINE__, "newPrice: $newPrice", $cr) ;
@@ -337,14 +348,14 @@ class ControllerAmazonSynchronize extends Controller {
             //
             //  Prepare arrays to send to amazon
             //
-            if ( $action == self::CREATE && $productQty > $out_of_stock)
+            if ( $action == self::CREATE && $productQty >= $out_of_stock)
             {
-                $productsCreate[$c]['SKU'] = $product['product_id'] ;
+                $productsCreate[$c]['SKU'] = $productSKU ;
                 $productsCreate[$c]['ProductIDType'] = $type ;
                 $productsCreate[$c]['ProductIDCode'] = $value ;
                 $productsCreate[$c]['ConditionType'] = 'New';
                 $productsCreate[$c]['ConditionNote'] = '' ; // Created by WS/API on ' . $currentDate;
-                $productsCreate[$c]['Quantity'] = $product['quantity'] ;
+                $productsCreate[$c]['Quantity'] = $productQty;
                 $productsCreate[$c]['Price'] = $newPrice;
 
                 if ( $this->debug )
@@ -352,14 +363,14 @@ class ControllerAmazonSynchronize extends Controller {
 
                 $c++ ;
             }
-            elseif ( $action == self::UPDATE && $productQty > $out_of_stock)
+            elseif ( $action == self::UPDATE && $productQty >= $out_of_stock)
             {
-                $productsUpdate[$u]['SKU'] = $product['product_id'] ;
+                $productsUpdate[$u]['SKU'] = $productSKU ;
                 $productsUpdate[$u]['ProductIDType'] = $type ;
                 $productsUpdate[$u]['ProductIDCode'] = $value ;
                 $productsUpdate[$u]['ConditionType'] = 'New';
                 $productsUpdate[$u]['ConditionNote'] = '' ; // Updated by WS/API on ' . $currentDate;
-                $productsUpdate[$u]['Quantity'] = $product['quantity'] ;
+                $productsUpdate[$u]['Quantity'] = $productQty;
                 $productsUpdate[$u]['Price'] = $newPrice;
 
                 if ( $this->debug )
@@ -369,7 +380,7 @@ class ControllerAmazonSynchronize extends Controller {
             }
             elseif ( $action == self::UPDATE && $productQty < $out_of_stock)
             {
-                $productsUpdate[$u]['SKU'] = $product['product_id'] ;
+                $productsUpdate[$u]['SKU'] = $productSKU ;
                 $productsUpdate[$u]['ProductIDType'] = $type ;
                 $productsUpdate[$u]['ProductIDCode'] = $value ;
                 $productsUpdate[$u]['ConditionType'] = 'New';
@@ -384,7 +395,7 @@ class ControllerAmazonSynchronize extends Controller {
             }
             elseif ( $action == self::CREATE && $productQty < $out_of_stock )
             {
-                $productsDelete[$d]['SKU'] = $product['product_id'] ;
+                $productsDelete[$d]['SKU'] = $productSKU ;
                 $productsDelete[$d]['ProductIDType'] = $type ;
                 $productsDelete[$d]['ProductIDCode'] = $value ;
 
@@ -395,7 +406,7 @@ class ControllerAmazonSynchronize extends Controller {
             }
             else
             {
-                $productsIgnore[$i]['SKU'] = $product['product_id'] ;
+                $productsIgnore[$i]['SKU'] = $productSKU ;
                 $productsIgnore[$i]['ProductIDType'] = $type ;
                 $productsIgnore[$i]['ProductIDCode'] = $value ;
                 $productsIgnore[$i]['ConditionType'] = 'New';
@@ -424,8 +435,8 @@ class ControllerAmazonSynchronize extends Controller {
                 $pass = false ;
             }
             else
-            foreach($amazonProducts as $product_id)
-                $query = $this->db->query('INSERT INTO `'.DB_PREFIX.'amazon_products` values ( ' . intval($product_id) . ',' . intval($language_id) . ')') ;
+            foreach($amazonProducts as $product)
+                $query = $this->db->query('INSERT INTO `'.DB_PREFIX.'amazon_products` values ( "' . $this->db->escape($product) . '",' . intval($language_id) . ')') ;
           }
 
           if ( count($productsUpdate) )
