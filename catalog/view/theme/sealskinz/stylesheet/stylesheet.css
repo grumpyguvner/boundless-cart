@@ -2335,8 +2335,8 @@ a.button-account:hover, input.button-account:hover {
     margin-left: 131px;
 }
 .checkout-content .paSelect .pInput {
-    float: right;
-    width: 100%;
+    margin-left: 0px;
+    float: left;
 }
 
 .checkout-content button[name=address_select] {
@@ -3868,6 +3868,7 @@ select[size] {
     margin-bottom: 10px;
 }
 .postcodeAnywhereContainer select[size] {
-    width: auto;
+    /*2013-08-19 changed width from Auto because it was breaking the checkout page (MH)*/
+    width: 482px;
     display: block;
 }

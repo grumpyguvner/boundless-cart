@@ -138,6 +138,8 @@ class ModelModulePostcodeAnywhere extends Model {
         if (json_last_error() == JSON_ERROR_NONE && is_object($json)) {
             $data = array();
             
+            $data['firstname'] = isset($json->firstname) ? $json->firstname : $this->customer->getFirstName();
+            $data['lastname'] = isset($json->lastname) ? $json->lastname : $this->customer->getLastName();
             $data['company'] = isset($json->company) ? $json->company : '';
             $data['address_1'] = isset($json->address_1) ? $json->address_1 : '';
             $data['address_2'] = isset($json->address_2) ? $json->address_2 : '';
@@ -158,6 +160,8 @@ class ModelModulePostcodeAnywhere extends Model {
             if ($address) {
 
                 $data = array();
+                $data['firstname'] = $this->customer->getFirstName();
+                $data['lastname'] = $this->customer->getLastName();
 
                 switch ($country['iso_code_3']) {
                     case 'GBR':
