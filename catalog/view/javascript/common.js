@@ -170,6 +170,18 @@
             paContainer.find('.paSelect').hide();
             paContainer.find('.paAddress').show();
         });
+        
+        $(this).on('click','.searchAddress', function (event) {
+            event.preventDefault();
+            var paContainer = $(this).parents('.postcodeAnywhereContainer');
+            
+            paContainer.find('.error').remove();
+            
+            paContainer.find('.paAddress').hide();
+            paContainer.find('.paLookup').show();
+            paContainer.find('.paSelect').hide();
+            
+        });
     }; 
 })( jQuery );
 

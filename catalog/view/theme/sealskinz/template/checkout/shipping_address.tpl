@@ -1,35 +1,50 @@
-<div style="clear: both; padding: 0 0 15px 0; border-top: 1px solid #DDDDDD;">
-    <h2><?php echo $text_your_shipping_address; ?></h2>
-
-    <label for="shipping" class="checkbox"><?php if ($shipping_address) { ?>
-        <input type="checkbox" id="shipping" value="payment" checked="checked" />
-        <?php } else { ?>
-            <input type="checkbox" id="shipping" value="payment" />
-        <?php } ?>
-        <?php echo $entry_shipping; ?></label>
-
-</div>
-<div id="shippingPostcodeAnywhere" class="postcodeAnywhereContainer paCheckout paNoHide">
+<h2><?php echo $text_your_shipping_address ?></h2>
+<?php 
+    $continueEnabled = true;
+    if (!$address_id && $use_postcode_anywhere) {
+        $continueEnabled = false;
+    }
+?>
+<div id="shippingPostcodeAnywhere" class="postcodeAnywhereContainer paCheckout">
     <?php if ($addresses) { ?>
-        <div><label for="shipping-address-existing" class="radio"><input type="radio" name="shipping_address_radio" value="existing" id="shipping-address-existing" checked="checked" />
-                <?php echo $text_address_existing; ?></label></div>
+        <?php $continueEnabled = ($address_id != 0); ?>
+        <div><input type="hidden" id="shipping_address" name="shipping_address" value="existing" /><input type="hidden" id="address_id" name="address_id" value="<?php echo $address_id; ?>" /></div>
         <div id="shipping-existing">
-            <select name="address_id" style="width: 100%; margin-bottom: 15px;" size="5">
-                <?php foreach ($addresses as $address) { ?>
-                    <?php if ($address['address_id'] == $address_id) { ?>
-                        <option value="<?php echo $address['address_id']; ?>" selected="selected"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
-                    <?php } else { ?>
-                        <option value="<?php echo $address['address_id']; ?>"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
-                    <?php } ?>
+            <?php foreach ($addresses as $address) { ?>
+                <?php if ($address_id == $address['address_id']) { ?>
+                <div id="<?php echo $address['address_id']; ?>" style="display: inline-block;">
+                    <?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?><br/>
+                    <?php echo $address['address_1']; ?><br/>
+                    <?php echo $address['city']; ?><br/>
+                    <?php echo $address['zone']; ?><br/>
+                    <?php echo $address['country']; ?><br/><br/>
+                </div>
                 <?php } ?>
-            </select>
+            <?php } ?>
         </div>
-
-        <div><label for="shipping-address-new" class="radio"><input type="radio" name="shipping_address_radio" value="new" id="shipping-address-new" /> <?php echo $text_address_new; ?></label></div>
-        <input type="hidden" name="shipping_address" value="<?php if ($shipping_address) { ?>payment<?php } else { ?>existing<?php } ?>" />
+        <br/><input type="button" class="button shippingAddressNew" value="<?php echo $text_address_new; ?>" />
+    <?php } else { ?>
+        <div><input type="hidden" id="shipping_address" name="shipping_address" value="new" /><input type="hidden" id="address_id" name="address_id" value="0" /></div>
     <?php } ?>
     <div id="shipping-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
-        <div class="left" style="border-right: none;">
+        <?php if ($addresses) { ?>
+            <div class="right">
+                <p><?php echo $text_your_addresses; ?></p>
+                <div style="clear: both;">
+                <?php foreach ($addresses as $address) { ?>
+                    <div id="<?php echo $address['address_id']; ?>" style="display: inline-block">
+                        <?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?><br/>
+                        <?php echo $address['address_1']; ?><br/>
+                        <?php echo $address['city']; ?><br/>
+                        <?php echo $address['zone']; ?><br/>
+                        <?php echo $address['country']; ?><br/><br/>
+                        <input type="button" class="button shippingAddressSelect" value="<?php echo $text_select_continue; ?>" />
+                    </div>
+                <?php } ?>
+                </div>
+            </div>
+        <?php } ?>
+        <div class="left">
             <?php
             if ($use_postcode_anywhere) {
                 ?>
@@ -57,8 +72,7 @@
                 </div>
                 <div class="paSelect content">
                     <div class="payform-right">
-                        <div class="pLabel"><span class="paSelect_required required">*</span> <?php echo $entry_select_address; ?></div>
-                        <div class="pInput">
+                        <div class="pInput"><span class="paSelect_required required">*</span> <?php echo $entry_select_address; ?><br/>
                             <select name="address_dropdown"<?php if ($paAddresses) echo ' size="' . (count($paAddresses) > 9 ? 10 : count($paAddresses)) . '"'; ?> class="pselect">
                                 <?php
                                 if ($paAddresses) {
@@ -78,11 +92,20 @@
                 <?php
             }
             ?>
+
         </div>
-        <div class="right">
-            <div class="paAddress">
+
+        <div class="left">
+
+
+            <div class="paAddress content">
+            <?php if ($use_postcode_anywhere) { ?>
                 <div class="prow">
-                    <div class="pLabel">  
+                    <a href="#" class="searchAddress"><?php echo $text_search_address; ?></a>
+                </div>
+            <?php } ?>
+                <div class="prow">
+                    <div class="pLabel">
                         <span class="required">*</span> <?php echo $entry_firstname; ?>
                     </div>
                     <div class="pInput">
@@ -95,16 +118,44 @@
                     </div>
                     <div class="pInput">
                         <input type="text" name="lastname" value="" class="large-field" />
-                    </div>
+                    </div>    
                 </div>
+
                 <div class="prow" id="paCompany">
-                    <div class="pLabel">
+                    <div class="pLabel" >
                         <?php echo $entry_company; ?>
                     </div>
                     <div class="pInput">
                         <input type="text" name="company" value="" class="large-field" />
                     </div>
                 </div>
+                <?php if ($company_id_display) { ?>
+                    <div class="prow" id="paCompanyId">
+                        <div class="pLabel">
+                            <?php if ($company_id_required) { ?>
+                                <span class="required">*</span>
+                            <?php } ?>
+                            <?php echo $entry_company_id; ?>
+                            <td></td>
+                        </div>
+                        <div class="pInput">
+                            <input type="text" name="company_id" value="" class="large-field" />
+                        </div>
+                    </div>
+                <?php } ?>
+                <?php if ($tax_id_display) { ?>
+                    <div class="prow">
+                        <div class="pLabel">
+                            <?php if ($tax_id_required) { ?>
+                                <span class="required">*</span>
+                            <?php } ?>
+                            <?php echo $entry_tax_id; ?>
+                        </div>
+                        <div class="pInput">
+                            <input type="text" name="tax_id" value="" class="large-field" />
+                        </div>
+                    </div>
+                <?php } ?>
                 <div class="prow">
                     <div class="pLabel">
                         <span class="required">*</span> <?php echo $entry_address_1; ?>
@@ -165,37 +216,30 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <br />
 <div class="buttons">
     <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-address" class="button" />
 </div>
+
 <script type="text/javascript"><!--
     $('#shippingPostcodeAnywhere').postcodeAnywhere();
     
-    $('#shippingPostcodeAnywhere input[name=\'shipping_address_radio\']').live('change', function() {
-        if (this.value == 'new') {
-            $('#shipping-existing').hide();
-            $('#shipping-new').show();
-        } else {
-            $('#shipping-existing').show();
-            $('#shipping-new').hide();
-        }
-        $('#shippingPostcodeAnywhere input[name=\'shipping_address\']').val(this.value);
+    $('.shippingAddressExisting').bind('click', function() {
+        $('#shipping_address').val("existing");
+        $('#shipping-new').hide();
+        $('#shipping-existing').show();
     });
-    
-    $('#shipping').live('change', function() {
-        if ($(this).is(':checked')) {
-            $('#shippingPostcodeAnywhere').hide();
-            $('#shippingPostcodeAnywhere input[name=\'shipping_address\']').val(this.value);
-        } else {
-            $('#shippingPostcodeAnywhere input[name=\'shipping_address\']').val($('#shippingPostcodeAnywhere input[name=\'shipping_address_radio\']').val());
-            $('#shippingPostcodeAnywhere').show();
-        }
+    $('.shippingAddressNew').bind('click', function() {
+        $('#shipping_address').val("new");
+        $('#address_id').val("0");
+        $('.shippingAddressNew').hide();
+        $('#shipping-existing').hide();
+        $('#shipping-new').show();
+        $('#button-shipping-address').attr('disabled',true);
     });
-    
-    $('#shipping').trigger('change');
     //--></script> 
 <script type="text/javascript"><!--
     $('#shippingPostcodeAnywhere select[name=\'country_id\']').bind('change', function() {
@@ -219,7 +263,13 @@
 			
                 if (json['zone'] != '') {
                     for (i = 0; i < json['zone'].length; i++) {
-                        html += '<option value="' + json['zone'][i]['zone_id'] + '">' + json['zone'][i]['name'] + '</option>';
+                        html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+	    			
+                        if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
+                            html += ' selected="selected"';
+                        }
+	
+                        html += '>' + json['zone'][i]['name'] + '</option>';
                     }
                 } else {
                     html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
@@ -232,28 +282,28 @@
             }
         });
     });
+    
+    $('.shippingAddressSelect').bind('click', function() {
+        varId=$(this).parent().attr('id');
+        $('#address_id').val(varId);
+        $('#shipping_address').val("existing");
+        $('#button-shipping-address').attr('disabled', false);
+        $('#button-shipping-address').trigger('click');
+    });
+    $('.manualAddress').bind('click', function() {
+        $('#button-shipping-address').attr('disabled', false);
+    });
+    $('#shippingPostcodeAnywhere select[name=\'address_dropdown\']').bind('click', function() {
+        $('#button-shipping-address').attr('disabled', false);
+    });
+    $('.searchAddress').bind('click', function() {
+        $('#button-shipping-address').attr('disabled', true);
+    });
 
     $('#shippingPostcodeAnywhere select[name=\'country_id\']').trigger('change');
     //--></script>
-
+<?php if (!$continueEnabled) { ?>
 <script type="text/javascript"><!--
-    $('#shipping-address input, #shipping-address select').live('keydown, change', function () {
-        if ($('#paymentPostcodeAnywhere select[name=address_id]').val() || ($('#paymentPostcodeAnywhere input[name=address_1]').val() &&
-            $('#paymentPostcodeAnywhere input[name=city]').val() &&
-            $('#paymentPostcodeAnywhere input[name=postcode]').val() &&
-            $('#paymentPostcodeAnywhere select[name=country_id]').val() &&
-            $('#paymentPostcodeAnywhere select[name=zone_id]').val()) &&
-            ($('#shipping').is(':checked') || $('#shippingPostcodeAnywhere select[name=address_id]').val() || ($('#shippingPostcodeAnywhere input[name=firstname]').val() &&
-                $('#shippingPostcodeAnywhere input[name=lastname]').val() &&
-                $('#shippingPostcodeAnywhere input[name=address_1]').val() &&
-                $('#shippingPostcodeAnywhere input[name=city]').val() &&
-                $('#shippingPostcodeAnywhere input[name=postcode]').val() &&
-                $('#shippingPostcodeAnywhere select[name=country_id]').val() &&
-                $('#shippingPostcodeAnywhere select[name=zone_id]').val())))
-        {
-            $('#button-shipping-address').attr('disabled', false);
-        } else {
-            $('#button-shipping-address').attr('disabled', 'disabled');
-        }
-    }).trigger('change');
+    $('#button-shipping-address').attr('disabled', true);
     //--></script>
+<?php } ?>
