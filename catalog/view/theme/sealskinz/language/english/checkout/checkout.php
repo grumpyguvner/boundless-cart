@@ -4,13 +4,13 @@ $_['heading_title']                  = 'Checkout';
 
 // Text
 $_['text_cart']                      = 'Shopping Cart';
-$_['text_checkout_option']           = 'Step %s: Checkout Options';
-$_['text_checkout_account']          = 'Step %s: Account Details';
-$_['text_checkout_payment_address']  = 'Step %s: Billing Address';
-$_['text_checkout_shipping_address'] = 'Step %s: Shipping Address';
-$_['text_checkout_shipping_method']  = 'Step %s: Delivery Method';
+$_['text_checkout_option']           = 'Step %s: Login to your Account or Create a new one';
+$_['text_checkout_account']          = 'Step %s: Your Details';
+$_['text_checkout_payment_address']  = 'Step %s: Confirm your Billing Address';
+$_['text_checkout_shipping_address'] = 'Step %s: Confirm your Shipping Address';
+$_['text_checkout_shipping_method']  = 'Step %s: Select your Delivery Method';
 $_['text_checkout_payment_method']   = 'Step %s: Review Your Order &amp; Pay';
-$_['text_checkout_confirm']          = 'Step %s: Review Your Order &amp; Pay';
+$_['text_checkout_confirm']          = 'Step %s: Confirm Your Order';
 $_['text_modify']                    = 'Modify &raquo;';
 $_['text_select_continue']           = 'Use this Address';
 $_['text_search_address']            = 'Search for Address';
@@ -24,7 +24,7 @@ $_['text_guest']                     = 'Guest Checkout';
 $_['text_register_account']          = 'By creating an account you will be able to shop faster, be up to date on an order\'s status, and keep track of the orders you have previously made.';
 $_['text_forgotten']                 = 'Forgotten Password';
 $_['text_your_details']              = 'Your Personal Details';
-$_['text_your_address']              = 'Your Billing Address';
+$_['text_your_address']              = 'Your Address';
 $_['text_your_password']             = 'Your Password';
 $_['text_agree']                     = 'I have read and agree to the <a class="colorbox" href="%s" alt="%s"><b>%s</b></a>';
 $_['text_address_new']               = 'I want to use a different address';
@@ -33,6 +33,7 @@ $_['text_shipping_method']           = 'Please select the preferred shipping met
 $_['text_payment_method']            = 'Please select the preferred payment method to use on this order.';
 $_['text_comments']                  = 'Add Comments About Your Order';
 $_['text_personal_details']          = 'Your Personal Details';
+$_['text_your_billing_address']      = 'Your Billing Address';
 $_['text_your_shipping_address']     = 'Your Delivery Address';
 
 // Column
@@ -52,7 +53,7 @@ $_['entry_firstname']                = 'First Name:';
 $_['entry_lastname']                 = 'Last Name:';
 $_['entry_telephone']                = 'Telephone:';
 $_['entry_fax']                      = 'Fax:';
-$_['entry_company']                  = 'Name:';
+$_['entry_company']                  = 'Company:';
 $_['entry_customer_group']           = 'Business Type:';
 $_['entry_company_id']               = 'Company ID:';
 $_['entry_tax_id']                   = 'Tax ID:';

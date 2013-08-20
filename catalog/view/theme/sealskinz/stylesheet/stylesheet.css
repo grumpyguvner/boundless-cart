@@ -3860,7 +3860,7 @@ select[size] {
 {
     display: none;
 }
-.postcodeAnywhereContainer .paAddress #paCompany, .postcodeAnywhereContainer .paAddress #paCompanyId, .postcodeAnywhereContainer .paAddress .paCompanyId
+.postcodeAnywhereContainer .paAddress #paCompanyId, .postcodeAnywhereContainer .paAddress .paCompanyId
 {
     display: none !important;
 }

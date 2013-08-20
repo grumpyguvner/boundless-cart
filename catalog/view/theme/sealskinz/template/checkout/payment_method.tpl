@@ -16,8 +16,8 @@
               <?php foreach ($products as $product) { ?>
               <tr>
                 <td class="name"><a href="<?php echo $product['href']; ?>"><h4><?php echo $product['name']; ?></h4></a>
-                  <?php foreach ($product['option'] as $option) { ?>
-                  <br />
+                  <?php foreach ($product['option'] as $key => $option) { ?>
+                    <?php echo ($key > 0 ? "<br />" : ""); ?>
                   &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
                   <?php } ?></td>
                 <td class="model"><h4 style="font-weight: normal"><?php echo $product['model']; ?></h4></td>
@@ -50,21 +50,6 @@
             
         </div>
         
-        <?php if (isset($error_warning) && $error_warning) { ?>
-        <div class="warning"><?php echo $error_warning; ?></div>
-        <?php } ?>
-        <?php if ($text_agree) { ?>
-        <p class="buttons">
-          <label class="checkbox"><?php echo $text_agree; ?>
-            <?php if ($agree) { ?>
-            <input type="checkbox" name="agree" value="1" checked="checked" />
-            <?php } else { ?>
-            <input type="checkbox" name="agree" value="1" />
-            <?php } ?>
-             </label> 
-           
-        </p>
-        <?php } ?>
         <?php if ($payment_methods) { ?>
         <p><?php echo $text_payment_method; ?></p>
         <table class="radio">
@@ -82,20 +67,26 @@
         </table>
         <br />
         <?php } ?>
-        <div class="buttons">
-            <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button" />
-        </div>
+        <?php if (isset($error_warning) && $error_warning) { ?>
+        <div class="warning"><?php echo $error_warning; ?></div>
+        <?php } ?>
 
-<script type="text/javascript"><!--
-$('.colorbox').colorbox({
-	width: 640,
-	height: 480
-});
-//--></script> 
+        <?php if ($text_agree) { ?>
+            <div class="buttons">
+                    <label class="checkbox"><?php echo $text_agree; ?>
+                    <input type="checkbox" id="agree" name="agree" value="1" /></label>
+                    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button" />
+            </div>
+        <?php } else { ?>
+            <div class="buttons">
+                    <input type="checkbox" id="agree" name="agree" value="1" checked />
+                    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button" />
+            </div>
+        <?php } ?>
 
 <?php if ($text_agree) { ?>
 <script type="text/javascript"><!--
-    $('input[name=agree]').live('click', function () {
+    $('#agree').on('click', function () {
         if ($(this).is(':checked'))
         {
             $('#button-payment-method').attr('disabled', false);
@@ -104,4 +95,4 @@ $('.colorbox').colorbox({
         }
     }).trigger('click');
     //--></script>
-        <?php } ?>
+<?php } ?>

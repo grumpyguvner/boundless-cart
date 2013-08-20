@@ -9,6 +9,7 @@ class ControllerCheckoutShippingAddress extends Controller {
         $this->load->model('module/postcode_anywhere');
 
         $this->data['text_enter_manually'] = $this->language->get('text_enter_manually');
+        $this->data['text_search_address'] = $this->language->get('text_search_address');
         $this->data['entry_search_address'] = $this->language->get('entry_search_address');
         $this->data['entry_select_address'] = $this->language->get('entry_select_address');
         $this->data['button_find_address'] = $this->language->get('button_find_address');

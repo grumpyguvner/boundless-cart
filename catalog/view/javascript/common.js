@@ -132,6 +132,7 @@
                             paContainer.find('.paLookup').prepend('<span class="error">' + json['error'] + '</span>');
                         }
                     } else {
+                        console.log(json['address']);
                         paContainer.find('input[name=\'firstname\']').val(json['address']['firstname']);
                         paContainer.find('input[name=\'lastname\']').val(json['address']['lastname']);
                         paContainer.find('input[name=\'company\']').val(json['address']['company']);
@@ -148,6 +149,7 @@
                             paContainer.find('.paSelect').hide();
                         }
                         paContainer.find('.paAddress').show();
+                        paContainer.find('input[name=\'address_1\']').trigger('keyup');
                     }
                         
                 },

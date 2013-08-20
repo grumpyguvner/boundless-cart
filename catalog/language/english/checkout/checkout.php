@@ -23,6 +23,7 @@ $_['text_register_logged_in']        = 'To change your details, please go the <a
 $_['text_forgotten']                 = 'Forgotten Password';
 $_['text_your_details']              = 'Your Personal Details';
 $_['text_your_address']              = 'Your Address';
+$_['text_your_billing_address']      = 'Your Billing Address';
 $_['text_your_shipping_address']     = 'Your Shipping Address';
 $_['text_your_password']             = 'Your Password';
 $_['text_agree']                     = 'I have read and agree to the <a class="colorbox" href="%s" alt="%s"><b>%s</b></a>';

@@ -219,10 +219,6 @@
 
     </div>
 </div>
-<br />
-<div class="buttons">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-address" class="button" />
-</div>
 
 <script type="text/javascript"><!--
     $('#shippingPostcodeAnywhere').postcodeAnywhere();
@@ -302,6 +298,12 @@
 
     $('#shippingPostcodeAnywhere select[name=\'country_id\']').trigger('change');
     //--></script>
+
+<br />
+<div class="buttons">
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-address" class="button" />
+</div>
+
 <?php if (!$continueEnabled) { ?>
 <script type="text/javascript"><!--
     $('#button-shipping-address').attr('disabled', true);

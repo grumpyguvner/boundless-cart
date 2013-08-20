@@ -219,10 +219,6 @@
 
     </div>
 </div>
-<br />
-<div class="buttons">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address" class="button" />
-</div>
 
 <script type="text/javascript"><!--
     $('#paymentPostcodeAnywhere').postcodeAnywhere();
@@ -302,6 +298,12 @@
 
     $('#paymentPostcodeAnywhere select[name=\'country_id\']').trigger('change');
     //--></script>
+
+<br />
+<div class="buttons">
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address" class="button" />
+</div>
+
 <?php if (!$continueEnabled) { ?>
 <script type="text/javascript"><!--
     $('#button-payment-address').attr('disabled', true);
