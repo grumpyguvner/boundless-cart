@@ -31,8 +31,10 @@ class ControllerCheckoutShippingAddress extends Controller {
         $this->data['text_your_shipping_address'] = $this->language->get('text_your_shipping_address');
         $this->data['text_address_existing'] = $this->language->get('text_address_existing');
         $this->data['text_address_new'] = $this->language->get('text_address_new');
+        $this->data['text_select_continue'] = $this->language->get('text_select_continue');
         $this->data['text_select'] = $this->language->get('text_select');
         $this->data['text_none'] = $this->language->get('text_none');
+        $this->data['text_your_addresses'] = $this->language->get('text_your_addresses');
 
         $this->data['entry_shipping'] = $this->language->get('entry_shipping');
 

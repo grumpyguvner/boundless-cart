@@ -1,26 +1,49 @@
 <h2><?php echo $text_your_address ?></h2>
-<div id="paymentPostcodeAnywhere" class="postcodeAnywhereContainer paCheckout paNoHide">
+<?php 
+    $continueEnabled = true;
+    if (!$address_id && $use_postcode_anywhere) {
+        $continueEnabled = false;
+    }
+?>
+<div id="paymentPostcodeAnywhere" class="postcodeAnywhereContainer paCheckout">
     <?php if ($addresses) { ?>
-        <div><label for="payment-address-existing" class="radio"><input type="radio" name="payment_address" value="existing" id="payment-address-existing" checked="checked" /> <?php echo $text_address_existing; ?></label></div>
+        <?php $continueEnabled = ($address_id != 0); ?>
+        <div><input type="hidden" id="payment_address" name="payment_address" value="existing" /><input type="hidden" id="address_id" name="address_id" value="<?php echo $address_id; ?>" /></div>
         <div id="payment-existing">
-            <select name="address_id" style="width: 100%; margin-bottom: 15px;" size="5">
-                <?php foreach ($addresses as $address) { ?>
-                    <?php if ($address['address_id'] == $address_id) { ?>
-                        <option value="<?php echo $address['address_id']; ?>" selected="selected"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
-                    <?php } else { ?>
-                        <option value="<?php echo $address['address_id']; ?>"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
-                    <?php } ?>
+            <?php foreach ($addresses as $address) { ?>
+                <?php if ($address_id == $address['address_id']) { ?>
+                <div id="<?php echo $address['address_id']; ?>" style="display: inline-block;">
+                    <?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?><br/>
+                    <?php echo $address['address_1']; ?><br/>
+                    <?php echo $address['city']; ?><br/>
+                    <?php echo $address['zone']; ?><br/>
+                    <?php echo $address['country']; ?><br/><br/>
+                </div>
                 <?php } ?>
-            </select>
+            <?php } ?>
         </div>
-        <div>
-            <label for="payment-address-new" class="radio"><input type="radio" name="payment_address" value="new" id="payment-address-new" />
-                <?php echo $text_address_new; ?></label>
-        </div>
+        <br/><input type="button" class="button paymentAddressNew" value="<?php echo $text_address_new; ?>" />
     <?php } else { ?>
-        <input type="hidden" name="payment_address" value="new" id="payment-address-new" />
+        <div><input type="hidden" id="payment_address" name="payment_address" value="new" /><input type="hidden" id="address_id" name="address_id" value="0" /></div>
     <?php } ?>
     <div id="payment-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
+        <?php if ($addresses) { ?>
+            <div class="right">
+                <p><?php echo $text_your_addresses; ?></p>
+                <div style="clear: both;">
+                <?php foreach ($addresses as $address) { ?>
+                    <div id="<?php echo $address['address_id']; ?>" style="display: inline-block">
+                        <?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?><br/>
+                        <?php echo $address['address_1']; ?><br/>
+                        <?php echo $address['city']; ?><br/>
+                        <?php echo $address['zone']; ?><br/>
+                        <?php echo $address['country']; ?><br/><br/>
+                        <input type="button" class="button paymentAddressSelect" value="<?php echo $text_select_continue; ?>" />
+                    </div>
+                <?php } ?>
+                </div>
+            </div>
+        <?php } ?>
         <div class="left">
             <?php
             if ($use_postcode_anywhere) {
@@ -72,10 +95,15 @@
 
         </div>
 
-        <div class="right">
+        <div class="left">
 
 
             <div class="paAddress content">
+            <?php if ($use_postcode_anywhere) { ?>
+                <div class="prow">
+                    <a href="#" class="searchAddress"><?php echo $text_search_address; ?></a>
+                </div>
+            <?php } ?>
                 <div class="prow">
                     <div class="pLabel">
                         <span class="required">*</span> <?php echo $entry_firstname; ?>
@@ -192,18 +220,25 @@
     </div>
 </div>
 <br />
+<div class="buttons">
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address" class="button" />
+</div>
 
 <script type="text/javascript"><!--
     $('#paymentPostcodeAnywhere').postcodeAnywhere();
     
-    $('#paymentPostcodeAnywhere input[name=\'payment_address\']').live('change', function() {
-        if (this.value == 'new') {
-            $('#payment-existing').hide();
-            $('#payment-new').show();
-        } else {
-            $('#payment-existing').show();
-            $('#payment-new').hide();
-        }
+    $('.paymentAddressExisting').bind('click', function() {
+        $('#payment_address').val("existing");
+        $('#payment-new').hide();
+        $('#payment-existing').show();
+    });
+    $('.paymentAddressNew').bind('click', function() {
+        $('#payment_address').val("new");
+        $('#address_id').val("0");
+        $('.paymentAddressNew').hide();
+        $('#payment-existing').hide();
+        $('#payment-new').show();
+        $('#button-payment-address').attr('disabled',true);
     });
     //--></script> 
 <script type="text/javascript"><!--
@@ -247,6 +282,28 @@
             }
         });
     });
+    
+    $('.paymentAddressSelect').bind('click', function() {
+        varId=$(this).parent().attr('id');
+        $('#address_id').val(varId);
+        $('#payment_address').val("existing");
+        $('#button-payment-address').attr('disabled', false);
+        $('#button-payment-address').trigger('click');
+    });
+    $('.manualAddress').bind('click', function() {
+        $('#button-payment-address').attr('disabled', false);
+    });
+    $('#paymentPostcodeAnywhere select[name=\'address_dropdown\']').bind('click', function() {
+        $('#button-payment-address').attr('disabled', false);
+    });
+    $('.searchAddress').bind('click', function() {
+        $('#button-payment-address').attr('disabled', true);
+    });
 
     $('#paymentPostcodeAnywhere select[name=\'country_id\']').trigger('change');
     //--></script>
+<?php if (!$continueEnabled) { ?>
+<script type="text/javascript"><!--
+    $('#button-payment-address').attr('disabled', true);
+    //--></script>
+<?php } ?>

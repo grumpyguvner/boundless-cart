@@ -7,6 +7,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
                 $this->load->model('module/postcode_anywhere');
                 
                 $this->data['text_enter_manually'] = $this->language->get('text_enter_manually');
+                $this->data['text_search_address'] = $this->language->get('text_search_address');
                 $this->data['entry_search_address'] = $this->language->get('entry_search_address');
                 $this->data['entry_select_address'] = $this->language->get('entry_select_address');
                 $this->data['button_find_address'] = $this->language->get('button_find_address');
@@ -28,10 +29,12 @@ class ControllerCheckoutPaymentAddress extends Controller {
                 
 		$this->data['text_address_existing'] = $this->language->get('text_address_existing');
 		$this->data['text_address_new'] = $this->language->get('text_address_new');
+		$this->data['text_select_continue'] = $this->language->get('text_select_continue');
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
                 $this->data['text_personal_details'] = $this->language->get('text_personal_details');
                 $this->data['text_your_address'] = $this->language->get('text_your_address');
+                $this->data['text_your_addresses'] = $this->language->get('text_your_addresses');
                 
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
