@@ -88,30 +88,40 @@ class ControllerExtensionAmazon extends Controller {
 				$this->load->language('amazon/' . $extension);
 
 				$action = array();
-                $image = $extension . '.png' ;
+                                $image = $extension . '.png' ;
+				
+                                if ($this->user->isSuperuser() || $this->user->hasPermission('access', 'amazon/' . $extension)) {
+                                    if (!in_array($extension, $extensions)) {
+                                        if ($this->user->isSuperuser()) {
+                                            $action[] = array(
+                                                    'text' => $this->language->get('text_install'),
+                                                    'href' => $this->url->link('extension/amazon/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
+                                            );
+                                        }
+                                    } else {
+                                            $action[] = array(
+                                                    'text' => $this->language->get('text_edit'),
+                                                    'href' => $this->url->link('amazon/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
+                                            );
 
-				if (!in_array($extension, $extensions)) {
-					$action[] = array(
-						'text' => $this->language->get('text_install'),
-						'href' => $this->url->link('extension/amazon/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				} else {
-					$action[] = array(
-						'text' => $this->language->get('text_edit'),
-						'href' => $this->url->link('amazon/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
-					);
-
-					$action[] = array(
-						'text' => $this->language->get('text_uninstall'),
-						'href' => $this->url->link('extension/amazon/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				}
-				$this->data['extensions'][] = array(
-					'name'   => $this->language->get('heading_title'),
-					'status' => $this->config->get('status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'href' => $this->url->link('amazon/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL'),
-                    'image' => $image
-				);
+                                            if ($this->user->isSuperuser()) {
+                                                $action[] = array(
+                                                        'text' => $this->language->get('text_uninstall'),
+                                                        'href' => $this->url->link('extension/amazon/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
+                                                );
+                                            }
+                                    }
+                                }
+                                
+                                if (!empty($action))
+                                {
+                                    $this->data['extensions'][] = array(
+                                            'name'   => $this->language->get('heading_title'),
+                                            'status' => $this->config->get('status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+                                            'href' => $this->url->link('amazon/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL'),
+                                            'image' => $image
+                                    );
+                                }
 			}
 		}
 
