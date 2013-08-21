@@ -52,12 +52,17 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		$this->data['entry_zone'] = $this->language->get('entry_zone');
 	
 		$this->data['button_continue'] = $this->language->get('button_continue');
+                $this->data['button_update'] = $this->language->get('button_update');
         
-		if (isset($this->session->data['payment_address_id'])) {
-			$this->data['address_id'] = $this->session->data['payment_address_id'];
-		} else {
-			$this->data['address_id'] = $this->customer->getAddressId();
-		}
+                //Set current shipping address to default address if not alreday set
+                if ($this->customer->isLogged()) {
+                    if (!isset($this->session->data['payment_address_id']))
+                        $this->session->data['payment_address_id'] = $this->customer->getAddressId();
+                    $this->data['address_id'] = $this->session->data['payment_address_id'];
+                } else {
+                    //Guest ??
+                    $this->data['address_id'] = 0;
+                }
 		
 		$this->data['addresses'] = array();
 		

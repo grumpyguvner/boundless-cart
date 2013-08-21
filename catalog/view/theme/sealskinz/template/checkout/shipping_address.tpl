@@ -239,7 +239,7 @@
         $('#shipping-method.checkout-content').slideUp('slow');
         
         $('#shipping_address').val("new");
-        $('#address_id').val("0");
+        $('#shippingPostcodeAnywhere #address_id').val("0");
         $('.shippingAddressNew').hide();
         $('#shipping-existing').hide();
         $('#shipping-new').show();
@@ -291,7 +291,7 @@
     
     $('.shippingAddressSelect').bind('click', function() {
         varId=$(this).parent().attr('id');
-        $('#address_id').val(varId);
+        $('#shippingPostcodeAnywhere #address_id').val(varId);
         $('#shipping_address').val("existing");
         $('.paAddress #button-shipping-address').trigger('click');
     });

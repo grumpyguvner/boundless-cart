@@ -1,9 +1,9 @@
 <h2><?php echo $text_your_address ?></h2>
 <?php 
-    $continueEnabled = true;
-    if (!$address_id && $use_postcode_anywhere) {
-        $continueEnabled = false;
-    }
+    $continueEnabled = false;
+//    if (!$address_id || !$use_postcode_anywhere) {
+//        $continueEnabled = true;
+//    }
 ?>
 <div id="paymentPostcodeAnywhere" class="postcodeAnywhereContainer paCheckout">
     <?php if ($addresses) { ?>
@@ -38,7 +38,7 @@
                         <?php echo $address['city']; ?><br/>
                         <?php echo $address['zone']; ?><br/>
                         <?php echo $address['country']; ?><br/><br/>
-                        <input type="button" class="button paymentAddressSelect" value="<?php echo $text_select_continue; ?>" />
+                        <input type="button" id="button-payment-address" class="button paymentAddressSelect" value="<?php echo $text_select_continue; ?>" />
                     </div>
                 <?php } ?>
                 </div>
@@ -214,6 +214,10 @@
                         </select>
                     </div>
                 </div>
+                <br />
+                <div class="buttons">
+                    <input type="button" value="<?php echo $button_update; ?>" id="button-payment-address" class="button" />
+                </div>
             </div>
         </div>
 
@@ -226,15 +230,21 @@
     $('.paymentAddressExisting').bind('click', function() {
         $('#payment_address').val("existing");
         $('#payment-new').hide();
+        $('.paAddress #button-payment-address').hide();
         $('#payment-existing').show();
+        
+        $('#payment-method.checkout-content').slideDown('slow');
     });
     $('.paymentAddressNew').bind('click', function() {
+        $('#payment-method.checkout-content').slideUp('slow');
+        
         $('#payment_address').val("new");
-        $('#address_id').val("0");
+        $('#paymentPostcodeAnywhere #address_id').val("0");
         $('.paymentAddressNew').hide();
         $('#payment-existing').hide();
         $('#payment-new').show();
-        $('#button-payment-address').attr('disabled',true);
+        $('.paAddress #button-payment-address').show();
+        $('.paAddress #button-payment-address').attr('disabled',true);
     });
     //--></script> 
 <script type="text/javascript"><!--
@@ -281,31 +291,27 @@
     
     $('.paymentAddressSelect').bind('click', function() {
         varId=$(this).parent().attr('id');
-        $('#address_id').val(varId);
+        $('#paymentPostcodeAnywhere #address_id').val(varId);
         $('#payment_address').val("existing");
-        $('#button-payment-address').attr('disabled', false);
-        $('#button-payment-address').trigger('click');
+        $('.paAddress #button-payment-address').trigger('click');
     });
     $('.manualAddress').bind('click', function() {
-        $('#button-payment-address').attr('disabled', false);
+        $('.paAddress #button-payment-address').show();
+        $('.paAddress #button-payment-address').attr('disabled',false);
     });
     $('#paymentPostcodeAnywhere select[name=\'address_dropdown\']').bind('click', function() {
-        $('#button-payment-address').attr('disabled', false);
+        $('.paAddress #button-payment-address').show();
+        $('.paAddress #button-payment-address').attr('disabled',false);
     });
     $('.searchAddress').bind('click', function() {
-        $('#button-payment-address').attr('disabled', true);
+        $('.paAddress #button-payment-address').hide();
     });
 
     $('#paymentPostcodeAnywhere select[name=\'country_id\']').trigger('change');
     //--></script>
 
-<br />
-<div class="buttons">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address" class="button" />
-</div>
-
-<?php if (!$continueEnabled) { ?>
+<?php // if (!$continueEnabled) { ?>
 <script type="text/javascript"><!--
-    $('#button-payment-address').attr('disabled', true);
-    //--></script>
-<?php } ?>
+    $('.paAddress #button-payment-address').hide();
+//--></script>
+<?php // } ?>
