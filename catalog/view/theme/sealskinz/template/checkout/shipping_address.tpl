@@ -38,7 +38,7 @@
                         <?php echo $address['city']; ?><br/>
                         <?php echo $address['zone']; ?><br/>
                         <?php echo $address['country']; ?><br/><br/>
-                        <input type="button" class="button shippingAddressSelect" value="<?php echo $text_select_continue; ?>" />
+                        <input type="button" id="button-shipping-address" class="button shippingAddressSelect" value="<?php echo $text_select_continue; ?>" />
                     </div>
                 <?php } ?>
                 </div>
@@ -230,7 +230,7 @@
     $('.shippingAddressExisting').bind('click', function() {
         $('#shipping_address').val("existing");
         $('#shipping-new').hide();
-        $('#button-shipping-address').hide();
+        $('.paAddress #button-shipping-address').hide();
         $('#shipping-existing').show();
         
         $('#shipping-method.checkout-content').slideDown('slow');
@@ -243,8 +243,8 @@
         $('.shippingAddressNew').hide();
         $('#shipping-existing').hide();
         $('#shipping-new').show();
-        $('#button-shipping-address').show();
-        $('#button-shipping-address').attr('disabled',true);
+        $('.paAddress #button-shipping-address').show();
+        $('.paAddress #button-shipping-address').attr('disabled',true);
     });
     //--></script> 
 <script type="text/javascript"><!--
@@ -293,18 +293,18 @@
         varId=$(this).parent().attr('id');
         $('#address_id').val(varId);
         $('#shipping_address').val("existing");
-        $('#button-shipping-address').trigger('click');
+        $('.paAddress #button-shipping-address').trigger('click');
     });
     $('.manualAddress').bind('click', function() {
-        $('#button-shipping-address').show();
-        $('#button-shipping-address').attr('disabled',false);
+        $('.paAddress #button-shipping-address').show();
+        $('.paAddress #button-shipping-address').attr('disabled',false);
     });
     $('#shippingPostcodeAnywhere select[name=\'address_dropdown\']').bind('click', function() {
-        $('#button-shipping-address').show();
-        $('#button-shipping-address').attr('disabled',false);
+        $('.paAddress #button-shipping-address').show();
+        $('.paAddress #button-shipping-address').attr('disabled',false);
     });
     $('.searchAddress').bind('click', function() {
-        $('#button-shipping-address').hide();
+        $('.paAddress #button-shipping-address').hide();
     });
 
     $('#shippingPostcodeAnywhere select[name=\'country_id\']').trigger('change');
@@ -312,6 +312,6 @@
 
 <?php // if (!$updateEnabled) { ?>
 <script type="text/javascript"><!--
-    $('#button-shipping-address').hide();
+    $('.paAddress #button-shipping-address').hide();
 //--></script>
 <?php // } ?>
