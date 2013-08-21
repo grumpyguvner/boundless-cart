@@ -1,13 +1,13 @@
 <h2><?php echo $text_your_shipping_address ?></h2>
 <?php 
-    $continueEnabled = true;
-    if (!$address_id && $use_postcode_anywhere) {
-        $continueEnabled = false;
-    }
+    $updateEnabled = false;
+//    if (!$address_id || !$use_postcode_anywhere) {
+//        $updateEnabled = true;
+//    }
 ?>
 <div id="shippingPostcodeAnywhere" class="postcodeAnywhereContainer paCheckout">
     <?php if ($addresses) { ?>
-        <?php $continueEnabled = ($address_id != 0); ?>
+        <?php $updateEnabled = ($address_id != 0); ?>
         <div><input type="hidden" id="shipping_address" name="shipping_address" value="existing" /><input type="hidden" id="address_id" name="address_id" value="<?php echo $address_id; ?>" /></div>
         <div id="shipping-existing">
             <?php foreach ($addresses as $address) { ?>
@@ -214,6 +214,10 @@
                         </select>
                     </div>
                 </div>
+                <br />
+                <div class="buttons">
+                    <input type="button" value="<?php echo $button_update; ?>" id="button-shipping-address" class="button" />
+                </div>
             </div>
         </div>
 
@@ -226,14 +230,20 @@
     $('.shippingAddressExisting').bind('click', function() {
         $('#shipping_address').val("existing");
         $('#shipping-new').hide();
+        $('#button-shipping-address').hide();
         $('#shipping-existing').show();
+        
+        $('#shipping-method.checkout-content').slideDown('slow');
     });
     $('.shippingAddressNew').bind('click', function() {
+        $('#shipping-method.checkout-content').slideUp('slow');
+        
         $('#shipping_address').val("new");
         $('#address_id').val("0");
         $('.shippingAddressNew').hide();
         $('#shipping-existing').hide();
         $('#shipping-new').show();
+        $('#button-shipping-address').show();
         $('#button-shipping-address').attr('disabled',true);
     });
     //--></script> 
@@ -283,29 +293,25 @@
         varId=$(this).parent().attr('id');
         $('#address_id').val(varId);
         $('#shipping_address').val("existing");
-        $('#button-shipping-address').attr('disabled', false);
         $('#button-shipping-address').trigger('click');
     });
     $('.manualAddress').bind('click', function() {
-        $('#button-shipping-address').attr('disabled', false);
+        $('#button-shipping-address').show();
+        $('#button-shipping-address').attr('disabled',false);
     });
     $('#shippingPostcodeAnywhere select[name=\'address_dropdown\']').bind('click', function() {
-        $('#button-shipping-address').attr('disabled', false);
+        $('#button-shipping-address').show();
+        $('#button-shipping-address').attr('disabled',false);
     });
     $('.searchAddress').bind('click', function() {
-        $('#button-shipping-address').attr('disabled', true);
+        $('#button-shipping-address').hide();
     });
 
     $('#shippingPostcodeAnywhere select[name=\'country_id\']').trigger('change');
     //--></script>
 
-<br />
-<div class="buttons">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-address" class="button" />
-</div>
-
-<?php if (!$continueEnabled) { ?>
+<?php // if (!$updateEnabled) { ?>
 <script type="text/javascript"><!--
-    $('#button-shipping-address').attr('disabled', true);
-    //--></script>
-<?php } ?>
+    $('#button-shipping-address').hide();
+//--></script>
+<?php // } ?>

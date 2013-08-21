@@ -39,10 +39,7 @@ $count = 1;
                     <div id="shipping-address">
                         <div class="checkout-heading"><span><?php echo sprintf($text_checkout_shipping_address, $count++); ?></span></div>
                         <div class="checkout-content"></div>
-                    </div>
-                    <div id="shipping-method">
-                        <div class="checkout-heading"><?php echo sprintf($text_checkout_shipping_method, $count++); ?></div>
-                        <div class="checkout-content"></div>
+                        <div id="shipping-method" class="checkout-content"></div>
                     </div>
                 <?php } ?>
                 <div id="payment-address">
@@ -88,7 +85,6 @@ $count = 1;
                 dataType: 'html',
                 success: function(html) {
                     $('#checkout .checkout-content').html(html);
-                    $('.checkout-heading').removeClass('active');
                     $('#checkout .checkout-heading').addClass('active');
                     $('#checkout .checkout-content').slideDown('slow');
                 },
@@ -104,10 +100,21 @@ $count = 1;
                     url: 'index.php?route=checkout/shipping_address',
                     dataType: 'html',
                     success: function(html) {
-                                $('#shipping-address .checkout-content').html(html);
+                                $('#shipping-address .checkout-content:first').html(html);
                                 $('.checkout-heading').removeClass('active');
                                 $('#shipping-address .checkout-heading').addClass('active');
-                                $('#shipping-address .checkout-content').slideDown('slow');
+                                $('#shipping-address .checkout-content:first').slideDown('slow');
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                });	
+                $.ajax({
+                    url: 'index.php?route=checkout/shipping_method',
+                    dataType: 'html',
+                    success: function(html) {
+                                $('#shipping-method.checkout-content').html(html);
+                                $('#shipping-method.checkout-content').slideDown('slow');
                         },
                         error: function(xhr, ajaxOptions, thrownError) {
                                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -227,7 +234,7 @@ $('#button-shipping-address').live('click', function() {
                 location = json['redirect'];
             } else if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#shipping-address .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+                    $('#shipping-address .checkout-content:first').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 
                     $('.warning').fadeIn('slow');
                 }
@@ -272,21 +279,15 @@ $('#button-shipping-address').live('click', function() {
                     url: 'index.php?route=checkout/shipping_method',
                     dataType: 'html',
                     success: function(html) {
-                        $('#shipping-method .checkout-content').html(html);
+                        $('#shipping-method.checkout-content').html(html);
 
-                        $('#shipping-address .checkout-heading').removeClass('active');
-                        $('#shipping-address .checkout-content').slideUp('slow');
-                        $('#shipping-address .checkout-heading a').remove();							
-                        $('#shipping-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');							
-
-                        $('#shipping-method .checkout-heading').addClass('active');
-                        $('#shipping-method .checkout-content').slideDown('slow');
+                        $('#shipping-method.checkout-content').slideDown('slow');
 
                         $.ajax({
                             url: 'index.php?route=checkout/shipping_address',
                             dataType: 'html',
                             success: function(html) {
-                                $('#shipping-address .checkout-content').html(html);
+                                $('#shipping-address .checkout-content:first').html(html);
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
                                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -330,7 +331,7 @@ $('#button-shipping-method').live('click', function() {
                 location = json['redirect'];
             } else if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#shipping-method .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+                    $('#shipping-method.checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 
                     $('.warning').fadeIn('slow');
                 }			
@@ -342,10 +343,10 @@ $('#button-shipping-method').live('click', function() {
                     success: function(html) {
                         $('#payment-address .checkout-content').html(html);
 
-                        $('#shipping-method .checkout-heading').removeClass('active');
-                        $('#shipping-method .checkout-content').slideUp('slow');
-                        $('#shipping-method .checkout-heading a').remove();							
-                        $('#shipping-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');							
+                        $('#shipping-address .checkout-heading').removeClass('active');
+                        $('#shipping-address .checkout-content').slideUp('slow');
+                        $('#shipping-address .checkout-heading a').remove();							
+                        $('#shipping-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');							
 
                         $('#payment-address .checkout-heading').addClass('active');
                         $('#payment-address .checkout-content').slideDown('slow');

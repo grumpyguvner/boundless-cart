@@ -57,11 +57,16 @@ class ControllerCheckoutShippingAddress extends Controller {
         }
 
         $this->data['button_continue'] = $this->language->get('button_continue');
+        $this->data['button_update'] = $this->language->get('button_update');
 
-        if (isset($this->session->data['shipping_address_id'])) {
+        //Set current shipping address to default address if not alreday set
+        if ($this->customer->isLogged()) {
+            if (!isset($this->session->data['shipping_address_id']))
+                $this->session->data['shipping_address_id'] = $this->customer->getAddressId();
             $this->data['address_id'] = $this->session->data['shipping_address_id'];
         } else {
-            $this->data['address_id'] = $this->customer->getAddressId();
+            //Guest shipping SHOULDN'T BE HERE for guest shipping!!
+            $this->data['address_id'] = 0;
         }
 
         $this->load->model('account/address');
