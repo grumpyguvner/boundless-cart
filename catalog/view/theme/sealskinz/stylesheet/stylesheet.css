@@ -3846,3 +3846,60 @@ select[size] {
     width: auto;
     display: block;
 }
+/************* Facebook login ***********/
+.pluginFaviconButton {
+    background-color: #5F78AB;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 20px;
+    height: 22px;
+}
+.uiGrid {
+    border: 0 none;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.sx_login-button_medium {
+    background-position: 0 -132px;
+    height: 22px;
+    width: 22px;
+}
+.sp_login-button {
+    background-image: url("http://static.ak.fbcdn.net/rsrc.php/v2/yx/r/j_i0CTUUUEe.png");
+    background-repeat: no-repeat;
+    background-size: auto auto;
+    display: inline-block;
+}
+.pluginFaviconButtonIcon, .pluginFaviconButtonIconActive, .pluginFaviconButtonIconThrobber, .pluginFaviconButtonIconThrobber .img, .pluginFaviconButtonIconDisabled {
+    vertical-align: top;
+}
+.pluginFaviconButtonBorder, form.async_saving .pluginFaviconButtonBorder:active {
+    border-bottom: 1px solid #1A356E;
+    border-right: 1px solid #29447E;
+    border-top: 1px solid #29447E;
+    display: inline-block;
+}
+.pluginFaviconButtonMedium .pluginFaviconButtonText {
+    font-size: 11px;
+    line-height: 14px;
+    padding: 2px 6px 3px;
+}
+.fwb {
+    font-weight: bold;
+}
+.pluginFaviconButtonText, form.async_saving .pluginFaviconButtonEnabled:active .pluginFaviconButtonText {
+    border-top: 1px solid #879AC0;
+    display: inline-block;
+    white-space: nowrap;
+}
+.pluginFaviconButton td {
+    font-size: 11px;
+}
+.pluginFaviconButtonText {
+    color: #fff !important;
+    font-family: 'lucida grande',tahoma,verdana,arial,sans-serif !important;
+    
+}
+/************* End Facebook login ***********/
