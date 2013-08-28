@@ -68,10 +68,6 @@ class ControllerAccountFbconnect extends Controller {
 				$add_data['fax'] = '';
 				$add_data['telephone'] = '';
 				$add_data['company'] = '';
-				$add_data['address_1'] = '';
-				$add_data['address_2'] = '';
-				$add_data['city'] = '';
-				$add_data['postcode'] = '';
 				$add_data['country_id'] = 0;
 				$add_data['zone_id'] = 0;
 
