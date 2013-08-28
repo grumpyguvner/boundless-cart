@@ -4,7 +4,7 @@
 <?php   ?>
 </div>
 <div id="footerlast">
-    <p><?php foreach ($informations as $information) { ?><a href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a> &nbsp;&nbsp;<?php } ?><br /><br />This site is intended to be used and accessed only by individuals of legal drinking age within the UK.</p>
+    <div class="footer-right"><p><?php foreach ($informations as $information) { ?><a href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a> &nbsp;&nbsp;<?php } ?><br /><br />This site is intended to be used and accessed only by individuals of legal drinking age within the UK.</p></div><a href="http://www.drinkaware.co.uk"><img class="drinkawareimg" src="image/whisky/data/drinkaware.png" alt="Drink Aware"></a>
 </div>
 </div>
 <?php echo $welcome_popup; ?>

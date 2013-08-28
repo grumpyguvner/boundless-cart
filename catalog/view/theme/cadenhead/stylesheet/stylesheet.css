@@ -1936,3 +1936,14 @@ div#textfooter2{
     color: #4D4D4D;
     margin-bottom: 16px;
 }
+#footerlast .drinkawareimg{
+    width: 16%;
+    float: right;
+    margin-right: 30px;
+    margin-top: 4px;
+}
+
+#footerlast .footer-right{
+    width: 75%;
+    float: left;
+}
