@@ -118,6 +118,7 @@ DD_belatedPNG.fix('#logo img');
     <?php } ?>
     <li><a href="index.php?route=information/event/events&event_id=2">Event Calendar</a></li>
     <li><a href="index.php?route=information/information&information_id=9">Location</a></li>
+    <li><a href="newsletter-archive">Newsletter Archive</a></li>
     <li><a href="index.php?route=information/contact">Contact us</a></li>
     
   </ul>
