@@ -182,8 +182,6 @@ label {
 	min-width: 300px;
 }
 #header #cart .heading {
-	float: right;
-	margin-right: 172px;
 	margin-top: 15px;
 	padding-left: 14px;
 	padding-right: 14px;
@@ -210,7 +208,8 @@ label {
 	padding-right: 15px;
 }
 #header #cart .content {
-	clear: both;
+	width: 340px;
+        clear: both;
 	display: none;
 	position: relative;
 	top: -1px;
