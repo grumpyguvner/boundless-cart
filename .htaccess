@@ -1,0 +1,28 @@
+# *** WARNING CHANGES TO THIS FILE MAY AFFECT THE OPERATION OF THE WEBSITE ***
+# *** PROCEED WITH CAUTION ***
+
+Options +FollowSymlinks
+
+RewriteEngine On
+
+# Prevent Directoy listing 
+Options -Indexes
+# Prevent Direct Access to files
+<FilesMatch "\.(tpl|ini|log|sql)">
+ Order deny,allow
+ Deny from all
+</FilesMatch>
+
+# SEO URL Settings
+RewriteBase /
+
+# Sealskinz rewrite for multiregion
+#RewriteRule ^(UK|US)/image/(.*) image/$1/$2 [L,QSA]
+#RewriteRule ^(UK|US)(/.*|$) $2 [L,QSA]
+
+RewriteRule ^sitemap.xml$ index.php?route=feed/google_sitemap
+RewriteRule ^googlebase.xml$ index.php?route=feed/google_base
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|js|css)
+RewriteRule ^([^?]*) index.php?_route_=$1 [QSA]

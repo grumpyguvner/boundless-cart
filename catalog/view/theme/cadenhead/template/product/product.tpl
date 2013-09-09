@@ -392,7 +392,9 @@ $('#button-cart').bind('click', function() {
 					
 				$('#cart-total').html(json['total']);
 				
-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
+				$('html, body').animate({ scrollTop: 0 }, 'slow');
+                                
+                                openCart(3000, true);
 			}	
 		}
 	});
