@@ -108,6 +108,7 @@ class ControllerCommonHeader extends Controller {
         $this->data['text_voucher_theme'] = $this->language->get('text_voucher_theme');
         $this->data['text_weight_class'] = $this->language->get('text_weight_class');
         $this->data['text_length_class'] = $this->language->get('text_length_class');
+        $this->data['text_sealskinz_b2b'] = $this->language->get('text_sealskinz_b2b');
         $this->data['text_sage'] = $this->language->get('text_sage');
         $this->data['text_syspro'] = $this->language->get('text_syspro');
         $this->data['text_zencart'] = $this->language->get('text_zencart');
@@ -196,6 +197,7 @@ class ControllerCommonHeader extends Controller {
             $this->data['voucher_theme'] = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['weight_class'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['sealskinz_b2b'] = $this->url->link('tool/sealskinz_b2b', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['sage'] = $this->url->link('tool/sage', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['syspro'] = $this->url->link('tool/syspro', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['zencart'] = $this->url->link('tool/zencart', 'token=' . $this->session->data['token'], 'SSL');

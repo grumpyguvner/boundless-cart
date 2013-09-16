@@ -187,6 +187,7 @@ ob_start("fixMenu");
           </li>
           <li><a href="<?php echo $error_log; ?>"><?php echo $text_error_log; ?></a></li>
           <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
+          <li><a href="<?php echo $sealskinz_b2b; ?>"><?php echo $text_sealskinz_b2b; ?></a></li>
           <li><a href="<?php echo $sage; ?>"><?php echo $text_sage; ?></a></li>
           <li><a href="<?php echo $syspro; ?>"><?php echo $text_syspro; ?></a></li>
           <li><a href="<?php echo $zencart; ?>"><?php echo $text_zencart; ?></a></li>
