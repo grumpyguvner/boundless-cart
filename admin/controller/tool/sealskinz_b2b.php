@@ -30,7 +30,7 @@ class ControllerToolSealskinzB2b extends Controller {
 		$this->data['button_import'] = $this->language->get('button_import');
 		
 		$this->data['tab_general'] = $this->language->get('tab_general');
-		$this->data['entry_url_server'] = $this->language->get('entry_url_server');
+		$this->data['entry_b2b_server_url'] = $this->language->get('entry_b2b_server_url');
 
 		if (isset($this->request->post['b2b_server_url'])) {
 			$this->data['b2b_server_url'] = $this->request->post['b2b_server_url'];

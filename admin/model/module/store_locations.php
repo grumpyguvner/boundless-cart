@@ -63,8 +63,10 @@ class ModelModuleStoreLocations extends Model {
 	public function editLocation($data, $id, $cords) {
 		
 		if($cords == false) {
+		 	//die("UPDATE " . DB_PREFIX . "store_locations SET Name='" . $this->db->escape($data['Name']) . "', Details= '" . $this->db->escape($data['Details']) . "',  Address='" . $this->db->escape($data['Address']) . "', Email='" . $this->db->escape($data['Email']) . "', WebSite='" . $this->db->escape($data['Website']) . "',Phone='" . $this->db->escape($data['Phone']) . "', SpecialOffers='" .  $this->db->escape($data['SpecialOffers']) . "', Timing='" . $this->db->escape($data['Timing']) . "', sort_order='" . $this->db->escape($data['sort_order']) . "' WHERE ID=" . $id );
 		 	$this->db->query("UPDATE " . DB_PREFIX . "store_locations SET Name='" . $this->db->escape($data['Name']) . "', Details= '" . $this->db->escape($data['Details']) . "',  Address='" . $this->db->escape($data['Address']) . "', Email='" . $this->db->escape($data['Email']) . "', WebSite='" . $this->db->escape($data['Website']) . "',Phone='" . $this->db->escape($data['Phone']) . "', SpecialOffers='" .  $this->db->escape($data['SpecialOffers']) . "', Timing='" . $this->db->escape($data['Timing']) . "', sort_order='" . $this->db->escape($data['sort_order']) . "' WHERE ID=" . $id );
-		}
+                        
+                }
 		else {
 	
 			$this->db->query("UPDATE " . DB_PREFIX . "store_locations SET Name='" . $this->db->escape($data['Name']) . "', Details= '" . $this->db->escape($data['Details']) . "',  Address='" . $this->db->escape($data['Address']) . "', Email='" . $this->db->escape($data['Email']) . "', WebSite='" . $this->db->escape($data['Website']) . "',Phone='" . $this->db->escape($data['Phone']) . "', SpecialOffers='" .  $this->db->escape($data['SpecialOffers']) . "', Timing='" . $this->db->escape($data['Timing']) . "', lon='" . $this->db->escape($cords['lon']) . "', lat='" . $this->db->escape($cords['lat']) . "', sort_order='" . $this->db->escape($data['sort_order']) . "' WHERE ID=" . $id );
