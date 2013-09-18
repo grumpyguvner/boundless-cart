@@ -24,6 +24,7 @@ class ModelToolSealskinzB2b extends Model {
             return false;
         }
 
+        $stockValues = array();
         $store_location_id = 0;
         $myStoreIds = array(); //Use this as a collection of id's created/ updated when you determine which records to delete
         $error = false;
@@ -38,14 +39,23 @@ class ModelToolSealskinzB2b extends Model {
                 // Check to see if stockist already exists and update details
                 // If stockist doesn't exist then insert a new one
                 $store_item = unserialize($row['data']);
-                $store_location_id = $this->createLocation($row['stockist_id'], $store_item);
+                $store_location_id = $this->createLocation($row['store_location_id'], $store_item);
                 
                 // Update cache table with id from stockist table
                 if ($store_location_id) {
                     $this->log->write("updating sage cache data");
                     $sql = "UPDATE `" . DB_PREFIX . "b2b_stockist` SET date_processed = NOW(), store_location_id = " . $store_location_id . " WHERE stockist_id = " . (int) $row['stockist_id'];
                     $this->db->query($sql);
+                    $stockValues[] = $store_location_id;
                 }
+                
+                //Delete all products that should not be in the cache database.
+                //$now = date('Y-m-d H:i:s');
+                //if ($row['date_modified'] < $now)
+                //{
+                //    $this->model_module_store_locations->deleteLocations($row['stockist_id']);
+                //    //$this->db->query("DELETE FROM " . DB_PREFIX . "b2b_stockist WHERE stockist_id=" . $row['stockist_id']);
+                //}
                 
             }
 
@@ -55,7 +65,10 @@ class ModelToolSealskinzB2b extends Model {
             $this->log->write("Errors were encountered whilst importing store_locations.");
             return false;
         }
-
+        
+        //delete the stockists which are still in the main table but no in the cached table.
+        $this->db->query("DELETE FROM " . DB_PREFIX . "store_locations WHERE ID NOT IN (" . implode(", ", $stockValues) . ")" );
+        
         $this->log->write("Import Complete");
         return true;
     }
@@ -71,7 +84,8 @@ class ModelToolSealskinzB2b extends Model {
         if (!count($importRefs) && !$forceRefresh) {
             $sql = "SELECT TIMESTAMPDIFF(MINUTE, date_modified, NOW()) AS last_run FROM `" . DB_PREFIX . "b2b_stockist` ORDER BY date_modified LIMIT 1";
             $result = $this->db->query($sql);
-            if ($result->num_rows && (int) $result->row['last_run'] < 1440) {
+//            if ($result->num_rows && (int) $result->row['last_run'] < 1440) {
+            if ($result->num_rows && (int) $result->row['last_run'] < 0) {
                 $this->log->write("oldest record in the cache is less than a day old so not refreshing cache.");
                 return true;
             }
@@ -163,7 +177,7 @@ class ModelToolSealskinzB2b extends Model {
             $existing_id = $this->model_module_store_locations->addLocation($store_location_info);
             return $existing_id;
         }
-
+        
         return false;
     }
 }
