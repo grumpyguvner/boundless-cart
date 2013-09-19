@@ -539,3 +539,10 @@ CREATE TABLE IF NOT EXISTS `oc_b2b_stockist` (
   PRIMARY KEY (`stockist_id`),
   KEY `store_location_id` (`store_location_id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+#### Start 1.5.4:BC1.2.9
+
+ALTER TABLE oc_order_product ADD INDEX product_order_id (order_id);
+ALTER TABLE oc_order ADD INDEX group_id_index (order_group_id);
+ALTER TABLE oc_order_option ADD INDEX order_option_product (order_product_id);
+ALTER TABLE oc_order_option ADD INDEX order_option_id (order_id);
