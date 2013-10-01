@@ -37,23 +37,10 @@ class ControllerCommonGeolocation extends Controller {
         
         if (array_key_exists('iso_code_2', $this->session->data['geolocation'][$user_ip]))
         {
-            switch ($this->session->data['geolocation'][$user_ip]['iso_code_2'])
-            {
-                case 'NO':
-                case 'SE':
-                case 'DK':
-                case 'FI':
-                case 'DE':
-                case 'BE':
-                case 'NL':
-                case 'LU':
-                case 'IS':
-                case 'ES':
-                case 'CH':
-                case 'AT':
-                case 'FR':
-                    $this->config->set('config_block_buy', true);
-                    break;
+            //Check if we need to block the user buying in their country
+            $okToBuy = $this->model_localisation_country->getCountryByISO2($this->session->data['geolocation'][$user_ip]['iso_code_2']);
+            if(!$okToBuy) {
+                $this->config->set('config_block_buy', true);
             }
         }
     }
