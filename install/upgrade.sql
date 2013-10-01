@@ -523,3 +523,26 @@ CREATE TABLE IF NOT EXISTS `oc_syspro_order` (
   `date_processed` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`order_id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+#### Start 1.5.4:BC1.2.8
+
+CREATE TABLE IF NOT EXISTS `oc_b2b_stockist` (
+  `stockist_id` int(11) NOT NULL,
+  `stockist_name` text COLLATE utf8_bin NOT NULL,
+  `data` blob,
+  `store_location_id` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_processed` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`stockist_id`),
+  KEY `store_location_id` (`store_location_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+#### Start 1.5.4:BC1.2.9
+
+ALTER TABLE oc_order_product ADD INDEX product_order_id (order_id);
+ALTER TABLE oc_order ADD INDEX group_id_index (customer_group_id);
+ALTER TABLE oc_order_option ADD INDEX order_option_product (order_product_id);
+ALTER TABLE oc_order_option ADD INDEX order_option_id (order_id);

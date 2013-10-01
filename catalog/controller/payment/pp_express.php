@@ -165,10 +165,12 @@ class ControllerPaymentPPExpress extends Controller {
     }
 
     public function finish() {
+        
+        
         $audit = new Log(date("Y-m-d") . "-paypal.log");
         
         if (!defined('PP_CONFIG_PATH')) {
-            if (!$this->config->get('pp_standard_test'))
+            if (!$this->config->get('pp_express_test'))
             {
                 define('PP_CONFIG_PATH', DIR_SYSTEM . 'vendor/paypal/config_live/');
             } else {

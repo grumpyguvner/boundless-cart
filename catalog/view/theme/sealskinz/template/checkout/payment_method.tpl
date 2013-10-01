@@ -86,6 +86,13 @@
 
 <?php if ($text_agree) { ?>
 <script type="text/javascript"><!--
+    if ($(this).is(':checked'))
+    {
+        $('#button-payment-method').attr('disabled', false);
+    } else {
+        $('#button-payment-method').attr('disabled', 'disabled');
+    }
+
     $('#agree').on('click', function () {
         if ($(this).is(':checked'))
         {
@@ -93,6 +100,6 @@
         } else {
             $('#button-payment-method').attr('disabled', 'disabled');
         }
-    }).trigger('click');
+    })
     //--></script>
 <?php } ?>

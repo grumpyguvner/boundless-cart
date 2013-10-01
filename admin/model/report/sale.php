@@ -27,14 +27,14 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql .= " GROUP BY DAY(tmp.date_added)";
+				$sql .= " GROUP BY YEAR(tmp.date_added), MONTH(tmp.date_added), DAY(tmp.date_added)";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY WEEK(tmp.date_added)";
+				$sql .= " GROUP BY YEAR(tmp.date_added), WEEK(tmp.date_added)";
 				break;	
 			case 'month':
-				$sql .= " GROUP BY MONTH(tmp.date_added)";
+				$sql .= " GROUP BY YEAR(tmp.date_added), MONTH(tmp.date_added)";
 				break;
 			case 'year':
 				$sql .= " GROUP BY YEAR(tmp.date_added)";
@@ -59,7 +59,7 @@ class ModelReportSale extends Model {
 		
 		return $query->rows;
 	}	
-	
+	        
 	public function getTotalOrders($data = array()) {
 		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
@@ -69,14 +69,14 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql = "SELECT COUNT(DISTINCT DAY(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT YEAR(date_added), MONTH(date_added), DAY(date_added)) AS total FROM `" . DB_PREFIX . "order`";
 				break;
 			default:
 			case 'week':
-				$sql = "SELECT COUNT(DISTINCT WEEK(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT YEAR(date_added), WEEK(date_added)) AS total FROM `" . DB_PREFIX . "order`";
 				break;	
 			case 'month':
-				$sql = "SELECT COUNT(DISTINCT MONTH(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT YEAR(date_added), MONTH(date_added)) AS total FROM `" . DB_PREFIX . "order`";
 				break;
 			case 'year':
 				$sql = "SELECT COUNT(DISTINCT YEAR(date_added)) AS total FROM `" . DB_PREFIX . "order`";
@@ -127,14 +127,14 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql .= " GROUP BY ot.title, DAY(o.date_added)";
+				$sql .= " GROUP BY ot.title, YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added)";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY ot.title, WEEK(o.date_added)";
+				$sql .= " GROUP BY ot.title, YEAR(o.date_added), WEEK(o.date_added)";
 				break;	
 			case 'month':
-				$sql .= " GROUP BY ot.title, MONTH(o.date_added)";
+				$sql .= " GROUP BY ot.title, YEAR(o.date_added), MONTH(o.date_added)";
 				break;
 			case 'year':
 				$sql .= " GROUP BY ot.title, YEAR(o.date_added)";
@@ -183,14 +183,14 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql .= " GROUP BY DAY(o.date_added), ot.title";
+				$sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added), ot.title";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY WEEK(o.date_added), ot.title";
+				$sql .= " GROUP BY YEAR(o.date_added), WEEK(o.date_added), ot.title";
 				break;	
 			case 'month':
-				$sql .= " GROUP BY MONTH(o.date_added), ot.title";
+				$sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added), ot.title";
 				break;
 			case 'year':
 				$sql .= " GROUP BY YEAR(o.date_added), ot.title";
@@ -229,14 +229,14 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql .= " GROUP BY ot.title, DAY(o.date_added)";
+				$sql .= " GROUP BY ot.title, YEAR(o.date_added). MONTH(o.date_added). DAY(o.date_added)";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY ot.title, WEEK(o.date_added)";
+				$sql .= " GROUP BY ot.title, YEAR(o.date_added), WEEK(o.date_added)";
 				break;	
 			case 'month':
-				$sql .= " GROUP BY ot.title, MONTH(o.date_added)";
+				$sql .= " GROUP BY ot.title, YEAR(o.date_added), MONTH(o.date_added)";
 				break;
 			case 'year':
 				$sql .= " GROUP BY ot.title, YEAR(o.date_added)";
@@ -285,14 +285,14 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql .= " GROUP BY DAY(o.date_added), ot.title";
+				$sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added), ot.title";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY WEEK(o.date_added), ot.title";
+				$sql .= " GROUP BY YEAR(o.date_added), WEEK(o.date_added), ot.title";
 				break;	
 			case 'month':
-				$sql .= " GROUP BY MONTH(o.date_added), ot.title";
+				$sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added), ot.title";
 				break;
 			case 'year':
 				$sql .= " GROUP BY YEAR(o.date_added), ot.title";

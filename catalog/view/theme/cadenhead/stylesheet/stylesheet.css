@@ -188,8 +188,6 @@ label {
 	min-width: 300px;
 }
 #header #cart .heading {
-	float: right;
-	margin-right: 172px;
 	margin-top: 15px;
 	padding-left: 14px;
 	padding-right: 14px;
@@ -216,7 +214,8 @@ label {
 	padding-right: 15px;
 }
 #header #cart .content {
-	clear: both;
+	width: 340px;
+        clear: both;
 	display: none;
 	position: relative;
 	top: -1px;
@@ -335,7 +334,7 @@ label {
 }
 #header #welcome {
 	position: absolute;
-	top: 58px;
+	top: 30px;
 	right: 0px;
 	z-index: 5;
 	width: 146px;
@@ -1869,12 +1868,57 @@ div#textfooter2{
 }
 
 /* Newsletter */
-
+#newsletter_wrapper{
+    position: absolute;
+    top: 70px;
+    right: 0px;
+    z-index: 5;
+    width: 146px;
+    text-align: right;
+    color: #000000;
+    margin-right: 28px;
+}
 .newsletter_input input{
-    background: transparent url('../image/bg.jpg') no-repeat;
-    margin-left: 10px;
-    width: 232px;
-    height: 26px;
+    background: #FFF;
+    padding: 1px 1px 1px 12px;
+    width: 160px;
+    height: 21px;
+    border: 1px solid #CCCCCC;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -khtml-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
+    -webkit-box-shadow: 0px 2px 0px #F0F0F0;
+    -moz-box-shadow: 0px 2px 0px #F0F0F0;
+    box-shadow: 0px 2px 0px #F0F0F0;
+}
+.newsletter_input .gobutton{
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: none;
+    -moz-border-radius: none;
+    -khtml-border-radius: none;
+    font-weight: bold;
+    position: absolute;
+    top: 2px;
+    right: -28px;
+    width: 30px;
+    cursor: pointer;
+    padding: 0px;
+}
+::-webkit-input-placeholder {
+   color: #000000;
+}
+:-moz-placeholder {
+   color: #000000;  
+}
+::-moz-placeholder {
+   color: #000000; 
+}
+:-ms-input-placeholder {  
+   color: #000000;  
 }
 .newsletter_input a{
     position: absolute;
@@ -1895,4 +1939,15 @@ div#textfooter2{
 .banner_description {
     color: #4D4D4D;
     margin-bottom: 16px;
+}
+#footerlast .drinkawareimg{
+    width: 16%;
+    float: right;
+    margin-right: 30px;
+    margin-top: 4px;
+}
+
+#footerlast .footer-right{
+    width: 75%;
+    float: left;
 }

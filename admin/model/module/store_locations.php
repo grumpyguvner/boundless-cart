@@ -46,9 +46,9 @@ class ModelModuleStoreLocations extends Model {
 	}
 	
 	public function addLocation($data,$cords) {
-			
-		$this->db->query("INSERT INTO " . DB_PREFIX . "store_locations( Name, Details, Address, Email, WebSite, Phone, SpecialOffers, Timing, sort_order, lon, lat) VALUES ('" .  $this->db->escape($data['Name']) . "','" . $this->db->escape($data['Details']) . "','" . $this->db->escape($data['Address']) . "','" . $this->db->escape($data['Email']) . "','" . $this->db->escape($data['Website']) . "','" . $this->db->escape($data['Phone']) . "','" . $this->db->escape($data['SpecialOffers']) . "','" . $this->db->escape($data['Timing']) . "','" . $this->db->escape($data['sort_order']) . "','" . $this->db->escape($cords['lon']) . "','" . $this->db->escape($cords['lat']) .  "')" );
 		
+                $this->db->query("INSERT INTO " . DB_PREFIX . "store_locations( Name, Details, Address, Email, WebSite, Phone, SpecialOffers, Timing, sort_order, lon, lat) VALUES ('" .  $this->db->escape($data['Name']) . "','" . $this->db->escape($data['Details']) . "','" . $this->db->escape($data['Address']) . "','" . $this->db->escape($data['Email']) . "','" . $this->db->escape($data['Website']) . "','" . $this->db->escape($data['Phone']) . "','" . $this->db->escape($data['SpecialOffers']) . "','" . $this->db->escape($data['Timing']) . "','" . $this->db->escape($data['sort_order']) . "','" . $this->db->escape($cords['lon']) . "','" . $this->db->escape($cords['lat']) .  "')" );
+                
 		$id = $this->db->getLastId();
 		
 		if(isset($data['location_image'])) {
@@ -57,14 +57,17 @@ class ModelModuleStoreLocations extends Model {
 				
 			}
 		}
+                // previously nothing was being returned but it is better to return the
+                // newly created id.
+                return $id;
 		
 	}
 	
 	public function editLocation($data, $id, $cords) {
 		
 		if($cords == false) {
-		 	$this->db->query("UPDATE " . DB_PREFIX . "store_locations SET Name='" . $this->db->escape($data['Name']) . "', Details= '" . $this->db->escape($data['Details']) . "',  Address='" . $this->db->escape($data['Address']) . "', Email='" . $this->db->escape($data['Email']) . "', WebSite='" . $this->db->escape($data['Website']) . "',Phone='" . $this->db->escape($data['Phone']) . "', SpecialOffers='" .  $this->db->escape($data['SpecialOffers']) . "', Timing='" . $this->db->escape($data['Timing']) . "', sort_order='" . $this->db->escape($data['sort_order']) . "' WHERE ID=" . $id );
-		}
+                        $this->db->query("UPDATE " . DB_PREFIX . "store_locations SET Name='" . $this->db->escape($data['Name']) . "', Details= '" . $this->db->escape($data['Details']) . "',  Address='" . $this->db->escape($data['Address']) . "', Email='" . $this->db->escape($data['Email']) . "', WebSite='" . $this->db->escape($data['Website']) . "',Phone='" . $this->db->escape($data['Phone']) . "', SpecialOffers='" .  $this->db->escape($data['SpecialOffers']) . "', Timing='" . $this->db->escape($data['Timing']) . "', sort_order='" . $this->db->escape($data['sort_order']) . "' WHERE ID=" . $id );
+                }
 		else {
 	
 			$this->db->query("UPDATE " . DB_PREFIX . "store_locations SET Name='" . $this->db->escape($data['Name']) . "', Details= '" . $this->db->escape($data['Details']) . "',  Address='" . $this->db->escape($data['Address']) . "', Email='" . $this->db->escape($data['Email']) . "', WebSite='" . $this->db->escape($data['Website']) . "',Phone='" . $this->db->escape($data['Phone']) . "', SpecialOffers='" .  $this->db->escape($data['SpecialOffers']) . "', Timing='" . $this->db->escape($data['Timing']) . "', lon='" . $this->db->escape($cords['lon']) . "', lat='" . $this->db->escape($cords['lat']) . "', sort_order='" . $this->db->escape($data['sort_order']) . "' WHERE ID=" . $id );

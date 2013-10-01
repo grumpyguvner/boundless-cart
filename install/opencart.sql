@@ -1663,7 +1663,8 @@ CREATE TABLE `oc_order` (
   `accept_language` varchar(255) COLLATE utf8_bin NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
-  PRIMARY KEY (`order_id`)
+  PRIMARY KEY (`order_id`),
+  INDEX group_id_index (customer_group_id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1792,7 +1793,9 @@ CREATE TABLE `oc_order_option` (
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   `value` text COLLATE utf8_bin NOT NULL,
   `type` varchar(32) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`order_option_id`)
+  PRIMARY KEY (`order_option_id`),
+  INDEX order_option_product (order_product_id),
+  INDEX order_option_id (order_id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -1818,7 +1821,8 @@ CREATE TABLE `oc_order_product` (
   `total` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `tax` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `reward` int(8) NOT NULL,
-  PRIMARY KEY (`order_product_id`)
+  PRIMARY KEY (`order_product_id`),
+  INDEX group_id_index (order_group_id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --

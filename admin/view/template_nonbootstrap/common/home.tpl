@@ -79,43 +79,45 @@
           <div id="report" style="width: 390px; height: 170px; margin: auto;"></div>
         </div>
       </div>
-      <div class="latest">
-        <div class="dashboard-heading"><?php echo $text_latest_10_orders; ?></div>
-        <div class="dashboard-content">
-          <table class="list">
-            <thead>
-              <tr>
-                <td class="right"><?php echo $column_order; ?></td>
-                <td class="left"><?php echo $column_customer; ?></td>
-                <td class="left"><?php echo $column_status; ?></td>
-                <td class="left"><?php echo $column_date_added; ?></td>
-                <td class="right"><?php echo $column_total; ?></td>
-                <td class="right"><?php echo $column_action; ?></td>
-              </tr>
-            </thead>
-            <tbody>
-              <?php if ($orders) { ?>
-              <?php foreach ($orders as $order) { ?>
-              <tr>
-                <td class="right"><?php echo $order['order_id']; ?></td>
-                <td class="left"><?php echo $order['customer']; ?></td>
-                <td class="left"><?php echo $order['status']; ?></td>
-                <td class="left"><?php echo $order['date_added']; ?></td>
-                <td class="right"><?php echo $order['total']; ?></td>
-                <td class="right"><?php foreach ($order['action'] as $action) { ?>
-                  [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-                  <?php } ?></td>
-              </tr>
-              <?php } ?>
-              <?php } else { ?>
-              <tr>
-                <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
-              </tr>
-              <?php } ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
+        <?php if ($this->user->hasPermission('access', 'sale/order')) { ?>
+            <div class="latest">
+                <div class="dashboard-heading"><?php echo $text_latest_10_orders; ?></div>
+                <div class="dashboard-content">
+                    <table class="list">
+                        <thead>
+                            <tr>
+                                <td class="right"><?php echo $column_order; ?></td>
+                                <td class="left"><?php echo $column_customer; ?></td>
+                                <td class="left"><?php echo $column_status; ?></td>
+                                <td class="left"><?php echo $column_date_added; ?></td>
+                                <td class="right"><?php echo $column_total; ?></td>
+                                <td class="right"><?php echo $column_action; ?></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($orders) { ?>
+                                <?php foreach ($orders as $order) { ?>
+                                    <tr>
+                                        <td class="right"><?php echo $order['order_id']; ?></td>
+                                        <td class="left"><?php echo $order['customer']; ?></td>
+                                        <td class="left"><?php echo $order['status']; ?></td>
+                                        <td class="left"><?php echo $order['date_added']; ?></td>
+                                        <td class="right"><?php echo $order['total']; ?></td>
+                                        <td class="right"><?php foreach ($order['action'] as $action) { ?>
+                                                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                                            <?php } ?></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <tr>
+                                    <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <?php } ?>   
     </div>
   </div>
 </div>

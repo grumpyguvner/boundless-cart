@@ -103,7 +103,7 @@ p3html::set_order_status_label_for_orders($this, $orders);
 				</div>
 
 			</div>
-
+     <?php if ($this->user->hasPermission('access', 'sale/order')) { ?>
       <div class="latest">
         <div class="dashboard-heading"><h4><i class="icon-dollar"></i> <?php echo $text_latest_10_orders; ?></div>
         <div class="dashboard-content">
@@ -156,6 +156,7 @@ p3html::set_order_status_label_for_orders($this, $orders);
 					<?php } ?>
         </div>
       </div>
+     <?php } ?>   
     </div>
 
   </div>
