@@ -58,6 +58,7 @@ if (!$this->customer->isLogged())
 </div>
 <div style="clear: both; padding-top: 15px;">
     <h2><?php echo $text_your_address ?></h2>
+    <p><?php echo $text_your_address_note ?></p>
     <div id="paymentPostcodeAnywhere" class="postcodeAnywhereContainer paCheckout">
         <?php if ($addresses) { ?>
             <?php $continueEnabled = ($address_id != 0); ?>
