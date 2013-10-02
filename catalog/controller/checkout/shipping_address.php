@@ -64,6 +64,9 @@ class ControllerCheckoutShippingAddress extends Controller {
             if (!isset($this->session->data['shipping_address_id']))
                 $this->session->data['shipping_address_id'] = $this->customer->getAddressId();
             $this->data['address_id'] = $this->session->data['shipping_address_id'];
+            $this->data['firstname'] = $this->customer->getFirstName();
+            $this->data['lastname'] = $this->customer->getLastName();
+            $this->data['email'] = $this->customer->getEmail();
         } else {
             //Guest shipping SHOULDN'T BE HERE for guest shipping!!
             $this->data['address_id'] = 0;

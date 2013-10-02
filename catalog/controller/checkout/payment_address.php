@@ -59,6 +59,9 @@ class ControllerCheckoutPaymentAddress extends Controller {
                     if (!isset($this->session->data['payment_address_id']))
                         $this->session->data['payment_address_id'] = $this->customer->getAddressId();
                     $this->data['address_id'] = $this->session->data['payment_address_id'];
+                    $this->data['firstname'] = $this->customer->getFirstName();
+                    $this->data['lastname'] = $this->customer->getLastName();
+                    $this->data['email'] = $this->customer->getEmail();
                 } else {
                     //Guest ??
                     $this->data['address_id'] = 0;

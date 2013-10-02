@@ -109,7 +109,7 @@
                         <span class="required">*</span> <?php echo $entry_firstname; ?>
                     </div>
                     <div class="pInput">
-                        <input type="text" name="firstname" value="" class="large-field" />
+                        <input type="text" name="firstname" value="<?php echo $firstname; ?>" class="large-field" />
                     </div>
                 </div>
                 <div class="prow">
@@ -117,7 +117,7 @@
                         <span class="required">*</span> <?php echo $entry_lastname; ?>
                     </div>
                     <div class="pInput">
-                        <input type="text" name="lastname" value="" class="large-field" />
+                        <input type="text" name="lastname" value="<?php echo $lastname; ?>" class="large-field" />
                     </div>    
                 </div>
 
@@ -244,7 +244,6 @@
         $('#shipping-existing').hide();
         $('#shipping-new').show();
         $('.paAddress #button-shipping-address').show();
-        $('.paAddress #button-shipping-address').attr('disabled',true);
     });
     //--></script> 
 <script type="text/javascript"><!--
@@ -297,11 +296,9 @@
     });
     $('.manualAddress').bind('click', function() {
         $('.paAddress #button-shipping-address').show();
-        $('.paAddress #button-shipping-address').attr('disabled',false);
     });
     $('#shippingPostcodeAnywhere select[name=\'address_dropdown\']').bind('click', function() {
         $('.paAddress #button-shipping-address').show();
-        $('.paAddress #button-shipping-address').attr('disabled',false);
     });
     $('.searchAddress').bind('click', function() {
         $('.paAddress #button-shipping-address').hide();
