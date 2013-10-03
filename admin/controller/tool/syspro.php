@@ -169,6 +169,7 @@ class ControllerToolSyspro extends Controller {
 
 	public function import() {
 		
+        $this->import_order_statuses();
         $this->import_products();
         $this->import_orders();
         
@@ -184,6 +185,24 @@ class ControllerToolSyspro extends Controller {
                 $this->model_tool_syspro_products->import();
                 
                 $this->process_end('import_products');
+            }
+
+		} else {
+
+			// return a permission error page
+			return $this->forward('error/permission');
+		}
+	}
+
+    public function import_order_statuses() {
+		if ($this->validate()) {
+            
+            if ($this->process_start('import_statuses'))
+            {
+                $this->load->model('tool/syspro_order_statuses');
+                $this->model_tool_syspro_order_statuses->import();
+                
+                $this->process_end('import_statuses');
             }
 
 		} else {
