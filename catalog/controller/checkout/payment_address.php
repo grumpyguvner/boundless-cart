@@ -261,6 +261,9 @@ class ControllerCheckoutPaymentAddress extends Controller {
 				if ($this->request->post['zone_id'] == '') {
 					$json['error']['zone'] = $this->language->get('error_zone');
 				}
+                                if (array_count_values($json['error']) > 0) {
+					$json['error']['warning'] = "Please correct the errors highlighted and try again!";
+				}
 				
 				if (!$json) {
 					// Default Payment Address

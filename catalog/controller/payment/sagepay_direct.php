@@ -93,6 +93,9 @@ class ControllerPaymentSagepayDirect extends Controller {
 				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)) 
 			);
 		}
+
+                if ($this->customer->isLogged())
+                    $this->data['cardholder'] = $this->customer->getFirstName() . " " . $this->customer->getLastName();
 		
 		$this->setTemplate('payment/sagepay_direct.tpl');	
 		
