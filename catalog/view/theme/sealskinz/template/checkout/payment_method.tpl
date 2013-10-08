@@ -16,10 +16,12 @@
               <?php foreach ($products as $product) { ?>
               <tr>
                 <td class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></td>
-                <td class="options"><?php foreach ($product['option'] as $key => $option) { ?>
-                    <?php echo ($key > 0 ? "<br />" : ""); ?>
-                  &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
-                  <?php } ?></td>
+                <td class="options">
+                    <?php foreach ($product['option'] as $key => $option) { ?>
+                        <?php echo ($key > 0 ? ", " : ""); ?>
+                        <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
+                    <?php } ?>
+                </td>
                 <td class="model"><?php echo $product['model']; ?></td>
                 <!--td class="rrp"></td-->
                 <td class="quantity"><?php echo $product['quantity']; ?></td>
@@ -79,7 +81,7 @@
             </div>
         <?php } else { ?>
             <div class="buttons">
-                    <input type="checkbox" id="agree" name="agree" value="1" checked />
+                    <input type="hidden" id="agree" name="agree" value="1" />
                     <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button" />
             </div>
         <?php } ?>
