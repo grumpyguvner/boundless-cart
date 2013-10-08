@@ -2,8 +2,7 @@
 if (!$this->customer->isLogged())
 {
 ?>
-<div class="left" style="border-right: none;">
-    
+<div style="clear: both; padding-top: 15px;">
         <h2><?php echo $text_your_details; ?></h2>
         <div id="registerAccount">
             <div class="prow">
