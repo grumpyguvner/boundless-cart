@@ -72,6 +72,7 @@ $('#button-confirm').bind('click', function() {
 		dataType: 'json',		
 		beforeSend: function() {
 			$('#button-confirm').attr('disabled', true);
+                        $('.warning').remove();
 			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
@@ -94,12 +95,9 @@ $('#button-confirm').bind('click', function() {
 			}
 			
 			if (json['error']) {
-                                $('#payment .content:first').prepend('<div class="warning" style="display: none;">' + json['error'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+                                $('#payment').before('<div class="warning" style="display: none;">' + json['error'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 
                                 $('.warning').fadeIn('slow');
-                                $('html, body').stop(true, true).animate({
-                                    scrollTop: $("#payment .content:first").offset().top
-                                }, 2000);
 			}
 			
 			if (json['success']) {
