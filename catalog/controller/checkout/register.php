@@ -113,6 +113,14 @@ class ControllerCheckoutRegister extends Controller {
 		}
 		
 		$this->data['shipping_required'] = $this->cart->hasShipping();
+                        
+                if (($this->config->get('newsletter_mailcampaign_enabled') && !$this->config->get('newsletter_mailcampaign_account_optin')) ||
+                    ($this->config->get('newsletter_mailchimp_enabled') && !$this->config->get('newsletter_mailchimp_account_optin')))
+                {
+                    $this->data['show_newsletter'] = false;
+                } else {
+                    $this->data['show_newsletter'] = true;
+                }
 			
 		$this->setTemplate('checkout/register.tpl');
 		

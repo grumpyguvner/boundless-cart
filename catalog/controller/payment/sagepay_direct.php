@@ -5,6 +5,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 		
 		$this->data['text_credit_card'] = $this->language->get('text_credit_card');
 		$this->data['text_start_date'] = $this->language->get('text_start_date');
+		$this->data['text_cvv2'] = $this->language->get('text_cvv2');
 		$this->data['text_issue'] = $this->language->get('text_issue');
 		$this->data['text_wait'] = $this->language->get('text_wait');
 		

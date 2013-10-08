@@ -25,7 +25,7 @@
           <?php } ?>
         </select>
         /
-        <select name="cc_start_date_year" class="span1">
+        <select name="cc_start_date_year" class="span2">
           <?php foreach ($year_valid as $year) { ?>
           <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
           <?php } ?>
@@ -40,7 +40,7 @@
           <?php } ?>
         </select>
         /
-        <select name="cc_expire_date_year" class="span1">
+        <select name="cc_expire_date_year" class="span2">
           <?php foreach ($year_expire as $year) { ?>
           <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
           <?php } ?>
@@ -49,6 +49,7 @@
     <div class="row">
       <label for="cc_cvv2" class="span2"><?php echo $entry_cc_cvv2; ?></label>
       <input type="text" name="cc_cvv2" value="" size="3" />
+        <?php echo $text_cvv2; ?>
     </div>
     <div class="row">
       <label for="cc_issue" class="span2"><?php echo $entry_cc_issue; ?></label>

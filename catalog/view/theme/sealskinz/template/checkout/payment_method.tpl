@@ -86,6 +86,8 @@
 
 <?php if ($text_agree) { ?>
 <script type="text/javascript"><!--
+    $('a.colorbox').colorbox({width:"50%", height:"50%"});
+    
     if ($(this).is(':checked'))
     {
         $('#button-payment-method').attr('disabled', false);

@@ -35,9 +35,10 @@ class ControllerCommonGeolocation extends Controller {
             $this->session->data['geolocation'][$user_ip]['timeadded'] = strtotime("now");
         }
         
-        if (array_key_exists('iso_code_2', $this->session->data['geolocation'][$user_ip]))
+        if (array_key_exists('iso_code_2', $this->session->data['geolocation'][$user_ip]) && $user_ip <> "127.0.0.1")
         {
             //Check if we need to block the user buying in their country
+            $this->load->model('localisation/country');
             $okToBuy = $this->model_localisation_country->getCountryByISO2($this->session->data['geolocation'][$user_ip]['iso_code_2']);
             if(!$okToBuy) {
                 $this->config->set('config_block_buy', true);

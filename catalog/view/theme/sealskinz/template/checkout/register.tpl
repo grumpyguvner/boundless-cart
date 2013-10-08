@@ -29,6 +29,20 @@ if (!$this->customer->isLogged())
                 <div class="pInput">  
                     <input type="text" name="email" value="" class="large-field" />
                 </div>
+                <?php
+                if ($show_newsletter) {
+                    ?>
+                    <div class="pInput">  
+                        <label for="newsletter" class="checkbox"><input type="checkbox" name="newsletter" value="1" id="newsletter" checked />
+                        <?php echo $entry_newsletter; ?></label>
+                    </div>
+                    <?php
+                } else {
+                    ?>
+                    <input type="hidden" name="newsletter" value="1" />
+                    <?php
+                }
+                ?>
             </div>
             <div class="prow">
                 <div class="pLabel">
@@ -278,21 +292,6 @@ if (!$this->customer->isLogged())
         </div>
     </div>
 </div>
-<div style="clear: both; padding-top: 15px; border-top: 1px solid #EEEEEE;">  
-    <?php
-    if ($show_newsletter) {
-        ?>
-        <label for="newsletter" class="checkbox"><input type="checkbox" name="newsletter" value="1" id="newsletter" />
-            <?php echo $entry_newsletter; ?></label>
-        <br />
-        <?php
-    } else {
-        ?>
-        <input type="hidden" name="newsletter" value="1" />
-        <?php
-    }
-    ?>
-</div>
 
 <?php if ($text_agree) { ?>
     <div class="buttons">
@@ -308,6 +307,8 @@ if (!$this->customer->isLogged())
 <?php } ?>
 
 <script type="text/javascript"><!--
+    $('a.colorbox').colorbox({width:"50%", height:"50%"});
+    
     $('#registerAccount input, .paAddress input, #registerPassword input').on('keyup', function () {
         var txtInput = $('#registerAccount input[name=firstname]').val()+":"+
             $('#registerAccount input[name=lastname]').val()+":"+
