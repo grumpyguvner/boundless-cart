@@ -144,6 +144,7 @@ ob_start("fixMenu");
               <li><a href="<?php echo $voucher_theme; ?>"><?php echo $text_voucher_theme; ?></a></li>
             </ul>
           </li>
+          <li><a href="<?php echo $redeem; ?>"><?php echo $text_redeem; ?></a></li>
           <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
         </ul>
       </li>

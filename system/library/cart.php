@@ -223,6 +223,7 @@ class Cart {
 						'name'            => $product_query->row['name'],
 						'model'           => $product_query->row['model'],
 						'shipping'        => $product_query->row['shipping'],
+                                                'redeem'          => $product_query->row['redeem'],
 						'image'           => $product_query->row['image'],
 						'option'          => $option_data,
 						'download'        => $download_data,

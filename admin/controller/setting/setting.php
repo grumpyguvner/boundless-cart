@@ -74,6 +74,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_review'] = $this->language->get('entry_review');
         $this->data['entry_anonymous_review'] = $this->language->get('entry_anonymous_review');
 		$this->data['entry_download'] = $this->language->get('entry_download');
+                $this->data['entry_redeem'] = $this->language->get('entry_redeem');
 		$this->data['entry_upload_allowed'] = $this->language->get('entry_upload_allowed');
 		$this->data['entry_voucher_min'] = $this->language->get('entry_voucher_min');
 		$this->data['entry_voucher_max'] = $this->language->get('entry_voucher_max');
@@ -520,6 +521,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_download'] = $this->request->post['config_download'];
 		} else {
 			$this->data['config_download'] = $this->config->get('config_download');
+		}
+                
+                if (isset($this->request->post['config_redeem'])) {
+			$this->data['config_redeem'] = $this->request->post['config_redeem'];
+		} else {
+			$this->data['config_redeem'] = $this->config->get('config_redeem');
 		}
 		
 		if (isset($this->request->post['config_upload_allowed'])) {

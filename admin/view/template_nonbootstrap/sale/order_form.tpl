@@ -305,7 +305,8 @@
                 <td class="right"><?php echo $order_product['quantity']; ?>
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
                 <td class="right"><?php echo $order_product['price']; ?>
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" /></td>
+                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" />
+                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][redeem]" value="<?php echo $order_product['redeem']; ?>" /></td>
                 <td class="right"><?php echo $order_product['total']; ?>
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][total]" value="<?php echo $order_product['total']; ?>" />
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][tax]" value="<?php echo $order_product['tax']; ?>" />
