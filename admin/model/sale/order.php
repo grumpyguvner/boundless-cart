@@ -666,7 +666,32 @@ class ModelSaleOrder extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$data['order_status_id'] . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
                 
                 $notes = ($data['notes']) ? $this->user->getUserName() . ' [' . $_SERVER['REMOTE_ADDR'] . ']: ' . $data['notes'] : $this->user->getUserName() . ' [' . $_SERVER['REMOTE_ADDR'] . ']'; 
-
+                
+                //add the codes to the comments section.
+		if ($this->config->get('config_complete_status_id') == $data['order_status_id']) {
+                        $this->load->model('sale/redeem');
+                        $this->load->model('catalog/product');
+                        $order_info = $this->model_sale_redeem->getRedeemByOrderId($order_id);
+                        $has_downloads = $this->model_catalog_product->getProductDownloads($order_info[0]['product_id']);
+                        
+                        if ($has_downloads) {
+                            $data['comment'] .= 'Please go to your downloads section to retrieve your voucher.' . "\n";
+                            $message .= 'Please go to your downloads section to retrieve your voucher.' . "\n";
+                        }
+                        
+                        $redeems = $this->model_sale_redeem->getRedeemByOrderId($order_id);
+                        $i = 0;
+                        foreach ($redeems as $redeem) {
+                            $i++;
+                            if ($redeem['status'] == 1)
+                            {
+                                $data['comment'] .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
+                                $message .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
+                            }
+                        }
+                        
+		}
+                
 		$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$data['order_status_id'] . "', notify = '" . (isset($data['notify']) ? (int)$data['notify'] : 0) . "', comment = '" . $this->db->escape(strip_tags($data['comment'])) . "', notes = '" . $this->db->escape(strip_tags($notes)) . "', date_added = NOW()");
 
 		$order_info = $this->getOrder($order_id);

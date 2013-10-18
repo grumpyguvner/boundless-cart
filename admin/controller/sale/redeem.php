@@ -111,6 +111,11 @@ class ControllerSaleRedeem extends Controller {
   	}
 
   	private function getList() {
+                $this->data['text_enabled'] = $this->language->get('text_enabled');
+                $this->data['text_disabled'] = $this->language->get('text_disabled');
+                $this->data['text_yes'] = $this->language->get('text_yes');
+                $this->data['text_no'] = $this->language->get('text_no');
+            
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -180,6 +185,9 @@ class ControllerSaleRedeem extends Controller {
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('sale/redeem/update', 'token=' . $this->session->data['token'] . '&redeem_id=' . $result['redeem_id'] . $url, 'SSL')
 			);
+
+                $this->load->model('catalog/product');
+                $product_info = $this->model_catalog_product->getProduct($result['product_id']);
 						
 			$this->data['redeems'][] = array(
 				'redeem_id'  => $result['redeem_id'],
@@ -189,7 +197,10 @@ class ControllerSaleRedeem extends Controller {
 				'status'      => $result['status'],
 				'redeem'     => $result['redeem'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-                                'action'     => $action
+                                'action'     => $action,
+                                'product_link' => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+                                'order_link'  => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
+                                'product_model' => $product_info['name']
 			);
 		}
 									
@@ -280,10 +291,12 @@ class ControllerSaleRedeem extends Controller {
 
   	private function getForm() {
     	$this->data['heading_title'] = $this->language->get('heading_title');
-
-    	$this->data['text_enabled'] = $this->language->get('text_enabled');
-    	$this->data['text_disabled'] = $this->language->get('text_disabled');
-		
+        
+        $this->data['text_enabled'] = $this->language->get('text_enabled');
+        $this->data['text_disabled'] = $this->language->get('text_disabled');
+        $this->data['text_yes'] = $this->language->get('text_yes');
+        $this->data['text_no'] = $this->language->get('text_no');
+        
     	$this->data['entry_redeem_id'] = $this->language->get('entry_redeem_id');
         $this->data['entry_product_id'] = $this->language->get('entry_product_id');
         $this->data['entry_order_id'] = $this->language->get('entry_order_id');
@@ -291,9 +304,6 @@ class ControllerSaleRedeem extends Controller {
         $this->data['entry_status'] = $this->language->get('entry_status');
         $this->data['entry_redeem'] = $this->language->get('entry_redeem');
         $this->data['entry_date_added'] = $this->language->get('entry_date_added');
-        
-        $this->data['text_yes'] = $this->language->get('text_yes');
-        $this->data['text_no'] = $this->language->get('text_no');
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -391,6 +401,22 @@ class ControllerSaleRedeem extends Controller {
 		
 		$this->data['token'] = $this->session->data['token'];
 
+        if (isset($this->request->post['product_id'])) {
+      		$this->data['product_id'] = $this->request->post['product_id'];
+    	} elseif (!empty($redeem_info)) {
+			$this->data['product_id'] = $redeem_info['product_id'];
+		} else {
+      		$this->data['product_id'] = '';
+    	}
+        
+        if (isset($this->request->post['order_id'])) {
+      		$this->data['order_id'] = $this->request->post['order_id'];
+    	} elseif (!empty($redeem_info)) {
+			$this->data['order_id'] = $redeem_info['order_id'];
+		} else {
+      		$this->data['order_id'] = '';
+    	}
+        
     	if (isset($this->request->post['code'])) {
       		$this->data['code'] = $this->request->post['code'];
     	} elseif (!empty($redeem_info)) {
@@ -398,75 +424,31 @@ class ControllerSaleRedeem extends Controller {
 		} else {
       		$this->data['code'] = '';
     	}
-		
-    	if (isset($this->request->post['from_name'])) {
-      		$this->data['from_name'] = $this->request->post['from_name'];
-    	} elseif (!empty($redeem_info)) {
-			$this->data['from_name'] = $redeem_info['from_name'];
-		} else {
-      		$this->data['from_name'] = '';
-    	}
-		
-    	if (isset($this->request->post['from_email'])) {
-      		$this->data['from_email'] = $this->request->post['from_email'];
-    	} elseif (!empty($redeem_info)) {
-			$this->data['from_email'] = $redeem_info['from_email'];
-		} else {
-      		$this->data['from_email'] = '';
-    	}
-
-    	if (isset($this->request->post['to_name'])) {
-      		$this->data['to_name'] = $this->request->post['to_name'];
-    	} elseif (!empty($redeem_info)) {
-			$this->data['to_name'] = $redeem_info['to_name'];
-		} else {
-      		$this->data['to_name'] = '';
-    	}
-		
-    	if (isset($this->request->post['to_email'])) {
-      		$this->data['to_email'] = $this->request->post['to_email'];
-    	} elseif (!empty($redeem_info)) {
-			$this->data['to_email'] = $redeem_info['to_email'];
-		} else {
-      		$this->data['to_email'] = '';
-    	}
- 
- 		//$this->load->model('sale/redeem_theme');
-			
-		//$this->data['redeem_themes'] = $this->model_sale_redeem_theme->getRedeemThemes();
-
-    	if (isset($this->request->post['redeem_theme_id'])) {
-      		$this->data['redeem_theme_id'] = $this->request->post['redeem_theme_id'];
-    	} elseif (!empty($redeem_info)) { 
-			$this->data['redeem_theme_id'] = $redeem_info['redeem_theme_id'];
-		} else {
-      		$this->data['redeem_theme_id'] = '';
-    	}	
-		
-    	if (isset($this->request->post['message'])) {
-      		$this->data['message'] = $this->request->post['message'];
-    	} elseif (!empty($redeem_info)) {
-			$this->data['message'] = $redeem_info['message'];
-		} else {
-      		$this->data['message'] = '';
-    	}
-		
-    	if (isset($this->request->post['amount'])) {
-      		$this->data['amount'] = $this->request->post['amount'];
-    	} elseif (!empty($redeem_info)) {
-			$this->data['amount'] = $redeem_info['amount'];
-		} else {
-      		$this->data['amount'] = '';
-    	}
-	
-    	if (isset($this->request->post['status'])) { 
+        
+        if (isset($this->request->post['status'])) {
       		$this->data['status'] = $this->request->post['status'];
     	} elseif (!empty($redeem_info)) {
 			$this->data['status'] = $redeem_info['status'];
 		} else {
-      		$this->data['status'] = 1;
+      		$this->data['status'] = '';
     	}
+        
+        if (isset($this->request->post['redeem'])) {
+      		$this->data['redeem'] = $this->request->post['redeem'];
+    	} elseif (!empty($redeem_info)) {
+			$this->data['redeem'] = $redeem_info['redeem'];
+		} else {
+      		$this->data['redeem'] = '';
+    	}
+        
+        $this->data['product_link'] = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $this->data['product_id'] . $url, 'SSL');
+        
+        $this->data['order_link'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $this->data['order_id'] . $url, 'SSL');
 
+        $this->load->model('catalog/product');
+	$product_info = $this->model_catalog_product->getProduct($this->data['product_id']);
+        $this->data['product_model'] = $product_info['name'];
+        
 		$this->template = 'sale/redeem_form.tpl';
 		$this->children = array(
 			'common/header',
@@ -520,52 +502,6 @@ class ControllerSaleRedeem extends Controller {
 	  		return false;
 		}
   	}	
-	
-	public function history() {
-    	$this->language->load('sale/redeem');
-		
-		$this->load->model('sale/redeem');
-				
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		
-		$this->data['column_order_id'] = $this->language->get('column_order_id');
-		$this->data['column_customer'] = $this->language->get('column_customer');
-		$this->data['column_amount'] = $this->language->get('column_amount');
-		$this->data['column_date_added'] = $this->language->get('column_date_added');
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}  
-		
-		$this->data['histories'] = array();
-			
-		$results = $this->model_sale_redeem->getRedeemHistories($this->request->get['redeem_id'], ($page - 1) * 10, 10);
-      		
-		foreach ($results as $result) {
-        	$this->data['histories'][] = array(
-				'order_id'   => $result['order_id'],
-				'customer'   => $result['customer'],
-				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
-        		'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-        	);
-      	}			
-		
-		$history_total = $this->model_sale_redeem->getTotalRedeemHistories($this->request->get['redeem_id']);
-			
-		$pagination = new Pagination();
-		$pagination->total = $history_total;
-		$pagination->page = $page;
-		$pagination->limit = 10; 
-		$pagination->url = $this->url->link('sale/redeem/history', 'token=' . $this->session->data['token'] . '&redeem_id=' . $this->request->get['redeem_id'] . '&page={page}', 'SSL');
-			
-		$this->data['pagination'] = $pagination->render();
-		
-		$this->template = 'sale/redeem_history.tpl';		
-		
-		$this->response->setOutput($this->render());
-  	}
 	
 	public function send() {
     	$this->language->load('sale/redeem');

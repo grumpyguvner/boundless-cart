@@ -14,7 +14,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/payment.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="location = '<?php echo $insert; ?>'" class="button"><?php echo $button_insert; ?></a><a onclick="document.getElementById('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
+      <div class="buttons"><!--<a onclick="location = '<?php //echo $insert; ?>'" class="button"><?php //echo $button_insert; ?></a>--><a onclick="document.getElementById('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -70,11 +70,27 @@
                 <input type="checkbox" name="selected[]" value="<?php echo $redeem['redeem_id']; ?>" />
                 <?php } ?></td>
               <td class="left"><?php echo $redeem['redeem_id']; ?></td>
-              <td class="left"><?php echo $redeem['product_id']; ?></td>
-              <td class="left"><?php echo $redeem['order_id']; ?></td>
+              <td class="left"><a href="<?php echo $redeem['product_link']; ?>"><?php echo $redeem['product_id']; ?></a> - <?php echo $redeem['product_model']; ?></td>
+              <td class="left"><a href="<?php echo $redeem['order_link']; ?>"><?php echo $redeem['order_id']; ?></a></td>
               <td class="left"><?php echo $redeem['code']; ?></td>
-              <td class="left"><?php echo $redeem['status']; ?></td>
-              <td class="left"><?php echo $redeem['redeem']; ?></td>
+              <td class="left">
+                  <?php
+                    if ($redeem['status']) {
+                        echo $text_enabled;
+                    } else {
+                        echo $text_disabled;
+                    }
+                  ?>
+              </td>
+              <td class="left">
+                  <?php
+                    if ($redeem['redeem']) {
+                        echo $text_yes;
+                    } else {
+                        echo $text_no;
+                    }
+                  ?>
+              </td>
               <td class="left"><?php echo $redeem['date_added']; ?></td>
               <td class="right">
                 <?php foreach ($redeem['action'] as $action) { ?>
