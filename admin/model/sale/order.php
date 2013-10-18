@@ -674,12 +674,12 @@ class ModelSaleOrder extends Model {
                         $order_info = $this->model_sale_redeem->getRedeemByOrderId($order_id);
                         $has_downloads = $this->model_catalog_product->getProductDownloads($order_info[0]['product_id']);
                         
-                        if ($has_downloads) {
+                        $redeems = $this->model_sale_redeem->getRedeemByOrderId($order_id);
+                        if ($has_downloads && $redeems) {
                             $data['comment'] .= 'Please go to your downloads section to retrieve your voucher.' . "\n";
                             $message .= 'Please go to your downloads section to retrieve your voucher.' . "\n";
                         }
                         
-                        $redeems = $this->model_sale_redeem->getRedeemByOrderId($order_id);
                         $i = 0;
                         foreach ($redeems as $redeem) {
                             $i++;
