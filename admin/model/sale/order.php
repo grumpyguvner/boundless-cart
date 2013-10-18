@@ -676,8 +676,12 @@ class ModelSaleOrder extends Model {
                         
                         $redeems = $this->model_sale_redeem->getRedeemByOrderId($order_id);
                         if ($has_downloads && $redeems) {
-                            $data['comment'] .= 'Please go to your downloads section to retrieve your voucher.' . "\n";
-                            $message .= 'Please go to your downloads section to retrieve your voucher.' . "\n";
+                            $data['comment'] .= "\n" . 'Please go to your downloads section to retrieve your voucher.' . "\n";
+                            $message .= "\n" . 'Please go to your downloads section to retrieve your voucher.' . "\n";
+                        }
+                        else {
+                            $data['comment'] .= "\n";
+                            $message .= "\n";
                         }
                         
                         $i = 0;
