@@ -1,11 +1,12 @@
-<div id="cart">
+<div id="cart" class="mouseover<?php if ($products || $vouchers) echo ' hasItems' ?>">
   <div class="heading">
     
-    <h4><a><img src="catalog/view/theme/cadenhead/image/cart.png" alt="" title="cart" /><span id="cart-total"><?php echo $text_items; ?></span></a></h4></div>
+    <h4><a><img src="catalog/view/theme/cadenhead/image/cart.png" alt="" title="cart" ><span id="cart-total"><?php echo $text_items; ?></span></a></h4></div>
   <div class="content">
     <?php if ($products || $vouchers) { ?>
     <div class="mini-cart-info">
       <table>
+       <tbody>
         <?php foreach ($products as $product) { ?>
         <tr>
           <td class="image"><?php if ($product['thumb']) { ?>
@@ -19,7 +20,7 @@
             </div></td>
           <td class="quantity">x&nbsp;<?php echo $product['quantity']; ?></td>
           <td class="total"><?php echo $product['total']; ?></td>
-          <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove=<?php echo $product['key']; ?>' : $('#cart').load('index.php?route=module/cart&remove=<?php echo $product['key']; ?>' + ' #cart > *');" /></td>
+          <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove=<?php echo $product['key']; ?>' : $('#cart').load('index.php?route=module/cart&remove=<?php echo $product['key']; ?> #cart > *');" /></td>
         </tr>
         <?php } ?>
         <?php foreach ($vouchers as $voucher) { ?>
@@ -28,19 +29,22 @@
           <td class="name"><?php echo $voucher['description']; ?></td>
           <td class="quantity">x&nbsp;1</td>
           <td class="total"><?php echo $voucher['amount']; ?></td>
-          <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove=<?php echo $voucher['key']; ?>' : $('#cart').load('index.php?route=module/cart&remove=<?php echo $voucher['key']; ?>' + ' #cart > *');" /></td>
+          <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove=<?php echo $voucher['key']; ?>' : $('#cart').load('index.php?route=module/cart&remove=<?php echo $voucher['key']; ?> #cart > *');" /></td>
         </tr>
         <?php } ?>
+        </tbody>
       </table>
     </div>
     <div class="mini-cart-total">
       <table>
+        <tbody>
         <?php foreach ($totals as $total) { ?>
         <tr>
           <td class="right"><b><?php echo $total['title']; ?>:</b></td>
           <td class="right"><?php echo $total['text']; ?></td>
         </tr>
         <?php } ?>
+        </tbody>
       </table>
     </div>
     <div class="checkout"><a href="<?php echo $cart; ?>"><?php echo $text_cart; ?></a> | <a href="<?php echo $checkout; ?>"><?php echo $text_checkout; ?></a></div>

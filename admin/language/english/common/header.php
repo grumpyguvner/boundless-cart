@@ -15,6 +15,7 @@ $_['text_country']                     = 'Countries';
 $_['text_coupon']                      = 'Coupons';
 $_['text_cms']                         = 'CMS';
 $_['text_advanced_coupon']             = 'Advanced Coupons';
+$_['text_redeem']                      = 'Redeem Codes';
 $_['text_currency']                    = 'Currencies';
 $_['text_customer']                    = 'Customers';
 $_['text_customer_group']              = 'Customer Groups';

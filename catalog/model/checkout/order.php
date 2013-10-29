@@ -16,7 +16,16 @@ class ModelCheckoutOrder extends Model {
 				
 			foreach ($product['download'] as $download) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "order_download SET order_id = '" . (int)$order_id . "', order_product_id = '" . (int)$order_product_id . "', name = '" . $this->db->escape($download['name']) . "', filename = '" . $this->db->escape($download['filename']) . "', mask = '" . $this->db->escape($download['mask']) . "', remaining = '" . (int)($download['remaining'] * $product['quantity']) . "'");
-			}	
+			}
+                        
+                    //Add the redeem codes.
+                    if ($this->config->get('config_redeem') == 1) {
+                        if ($product['redeem'] == 1) {
+                            for ($i = 0; $i < (int)$product['quantity']; $i++) {
+                                $this->db->query("INSERT INTO " . DB_PREFIX . "redeem SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', code = 'ts" . substr(md5(mt_rand()), 0, 6) . "', status = '1', `redeem` = '0', date_added = NOW()");
+                            }
+                        }
+                    }
 		}
 		
 		foreach ($data['vouchers'] as $voucher) {

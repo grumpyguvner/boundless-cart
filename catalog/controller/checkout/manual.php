@@ -168,7 +168,8 @@ class ControllerCheckoutManual extends Controller {
 					'option'     => $option_data,
 					'download'   => $download_data,
 					'quantity'   => $product['quantity'],
-					'price'      => $product['price'],	
+					'price'      => $product['price'],
+                                        'redeem'     => $product['redeem'],
 					'total'      => $product['total'],	
 					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
 					'reward'     => $product['reward']				
