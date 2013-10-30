@@ -2287,6 +2287,7 @@ CREATE TABLE `oc_product` (
   `image` varchar(255) DEFAULT NULL,
   `manufacturer_id` int(11) NOT NULL,
   `shipping` tinyint(1) NOT NULL DEFAULT '1',
+  `redeem` tinyint(1) DEFAULT '0',
   `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `points` int(8) NOT NULL DEFAULT '0',
   `tax_class_id` int(11) NOT NULL,
@@ -2835,6 +2836,28 @@ INSERT INTO `oc_product_to_store` (`product_id`, `store_id`) VALUES
 (47, 0),
 (48, 0),
 (49, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_redeem`
+--
+
+CREATE TABLE `oc_redeem` (
+  `redeem_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `code` varchar(10) COLLATE utf8_bin NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `redeem` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`redeem_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+--
+-- Dumping data for table `oc_redeem`
+--
 
 -- --------------------------------------------------------
 
