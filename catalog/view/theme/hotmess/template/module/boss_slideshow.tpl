@@ -12,8 +12,8 @@
 			<?php } ?>
 		</div><!-- #camera_wrap_3 -->
 	</div>
-<?php if (file_exists('catalog/view/theme/bt_topwear/stylesheet/camera.css')) {
-		echo '<link rel="stylesheet" type="text/css" href="catalog/view/theme/bt_topwear/stylesheet/camera.css" media="screen" />';
+<?php if (file_exists('catalog/view/theme/hotmess/stylesheet/camera.css')) {
+		echo '<link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess/stylesheet/camera.css" media="screen" />';
 	} else {
 		echo '<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/camera.css" media="screen" />';
 	}
@@ -40,7 +40,7 @@ if(in_array("",$Slide_value_effects)){
 			if($Slide_value_effect == 'stampede')
 				$effect = $effect."stampede,";
 			if($Slide_value_effect == 'scroll')
-				$effect = $effect."scrollLeft, scrollRight, scrollHorz, scrollBottom, scrollTop";
+				$effect = $effect."scrollLeft";
 		}
 	}
 }
@@ -49,13 +49,13 @@ if(in_array("",$Slide_value_effects)){
 	jQuery(function(){
 		jQuery('#camera_wrap_<?php echo $module; ?>').camera({
 			pagination: true,
-			navigation: false,
+			navigation: true,
 			playPause: false,
-			height: '51,14%',
+			height: '<?php echo $height; ?>px',
 			mobileAutoAdvance: true,
 			thumbnails: false,
 			fx:'<?php echo $effect; ?>',
-			imagePath: 'catalog/view/theme/bt_topwear/image/',
+			imagePath: 'catalog/view/theme/hotmess/image/',
 			time: 2000
 		});
 

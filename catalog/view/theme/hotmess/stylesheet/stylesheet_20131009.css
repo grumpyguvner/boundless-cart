@@ -124,6 +124,7 @@ img {
   font-size: 0;
   vertical-align: middle;
   -ms-interpolation-mode: bicubic;
+  max-width: 100%;
 }
 
 ul,
@@ -185,11 +186,12 @@ svg {
 html {
 	margin: 0;
 	padding: 0;
+        -webkit-text-size-adjust: none;
 }
 body {
-	background-color: #ffffff;
+	background-color: #000;
 	color: #202020;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: "Courier New", Courier, monospace;
 	margin: 0px;
 	padding: 0px;
 }
@@ -224,6 +226,7 @@ h1
 {
 	color: #202020;
 	font-family:'Conv_AdventPro-Medium';
+        font-family: "Courier New", Courier, monospace;
 	margin-top:0px;
 	margin-bottom:20px;
 	font-size:30px;
@@ -243,9 +246,10 @@ p {
 	color:#202020;
 }
 a, a:visited, a b {
-	color: #202020;
+	color: #b235cb;
 	cursor: pointer;
-	text-decoration:none
+	text-decoration:none;
+        font-weight: bold;
 }
 a:hover{color:#F46253}
 a img {
@@ -262,6 +266,8 @@ input[type='text'], input[type='password'] {
 	padding: 2px 3px 4px 7px;
 	
 	font-family:arial;
+        
+        font-family: "Courier New", Courier, monospace;
 }
  textarea{width:296px}
 select {
@@ -294,10 +300,15 @@ input:focus{outline:none;}
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
+        background-attachment: fixed;
+}
+html #container {
+        background-color: #FFF;
 }
 #column-left {
 	float: left; margin-right:40px;
 	border-bottom:1px solid #dcdcdc;
+        background: #fff;
 	margin-top:9px;
 	margin-bottom:60px
 }
@@ -315,19 +326,38 @@ input:focus{outline:none;}
 h1.h1margin{margin-top:29px}
 #banner1.banner{margin-top:9px}
 /*price*/
-.price{color:#202020;font-family:'Conv_AdventPro-Bold';font-weight:400;font-size:24px}
+.price{color:#202020;font-family:'Conv_AdventPro-Bold';font-weight:400;font-size:24px;
+        font-family: "Courier New", Courier, monospace;}
 .name{font-weight:700}
 /* header */
 #header {
-	height: 129px;
+	height: 156px;
 	position: relative;
 	z-index: 99;
-	padding:7px 0;
-	
-	
-	
+	padding:7px 0 0;
+        background-color: #FFF;
+        
 }
-#header #logo {float:left;margin-right:20px}
+#header_placeholder
+{
+    display: none;
+    height: 163px;
+
+}
+@media only screen and (min-device-width: 1200px) and (min-height: 750px) {
+    #header {
+        position: fixed;
+        
+    }
+    #header_placeholder {
+        display: block;
+    }
+}
+
+#tayla-blue {float:right;margin-left: 10px;position: relative;width: 180px; height: 150px;}
+#tayla-blue img {width: 100%;position: absolute;}
+#header #logo {text-align: center; position: absolute; top: 20px; right: 442px;}
+#header #logo img {height: 100px; width: 290px;}
 #language .title,#currency .title{color:#707070;padding-left:10px;padding-top:7px}
 #language img {}
 #currency {	float:right;border:1px solid #dcdcdc; border-left:none;margin-top:2px;padding-bottom:6px;z-index:200;position:relative}
@@ -348,25 +378,46 @@ h1.h1margin{margin-top:29px}
 	float:right;
 	margin-left:20px;
 	position:relative;
-	background-image:url(../image/cart_img.png);
-	height:52px;
-	min-width:180px;
+        background: #000;
+	height:16px;
+	min-width:220px;
 	padding-left:12px;
 	padding-top:8px;
 	padding-right:12px;
-	margin-top:2px;
+	margin-top:22px;
 	
 }
-#header #cart .heading { display: block;   position: relative;   z-index: 100;}
-#header #cart .heading h4 {font-weight:400}
-#header #cart .heading a {color: #38B0E3;	text-decoration: none;}
+#header .madeuk {
+        color: #000;
+        background-image: url(/image/data/HEADER/heart.png);
+        background-position: right;
+        background-repeat: no-repeat;
+        padding-left: 42px;
+        height: 35px;
+        line-height: 35px;
+        font-weight: bold;
+        float: right;
+        margin: 0 35px 0;
+        position: absolute;
+        right: 235px;
+        top: 32px;
+}
+#header .madeuk span {
+    margin-right: 32px;
+    font-weight: 100;
+}
+#header #cart .heading { margin-top: -4px; display: block;   position: relative;   z-index: 100;}
+#header #cart .heading h4 {font-weight:400; display: inline;}
+#header #cart .heading a {color: #38B0E3; text-decoration: none;}
  #header #cart .heading a span {
-	background: url('../image/cart_dropdown.png') 100% 61% no-repeat;
+	margin-left: 20px;
+        background: url('../image/cart_dropdown.png') 100% 61% no-repeat;
 	padding-right: 32px;
 	font-family:'Conv_AdventPro-Medium';
-	font-size:24px;
+        font-family: "Courier New", Courier, monospace;
+	font-size:12px;
 	position:relative;
-	display:block
+	display:block;
 }
 .static-home-link{display:block;text-align:right}
 .sbSelector
@@ -374,6 +425,7 @@ h1.h1margin{margin-top:29px}
 	cursor:pointer;
 	border:1px solid transparent;
 	font-family:'Conv_AdventPro-Light';
+        font-family: "Courier New", Courier, monospace;
 	font-size:24px;
 	height:36px;
 	background:transparent;
@@ -393,12 +445,13 @@ h1.h1margin{margin-top:29px}
 .styled-select{position:relative;z-index:999}
 #header #cart .content {
 	clear: both;
-	display:none;
+	display: none;
 	position: absolute;
-	top: 59px;
+	top: 24px;
 	right:0;
 	padding: 8px 20px;
 	min-height: 70px;
+        min-width: 300px;
 	background: #FFF;
 	width:260px;
 	border:1px solid #dcdcdc; 
@@ -438,6 +491,7 @@ h1.h1margin{margin-top:29px}
 	display:block; 
 	margin-bottom:11px;
 	font-family: 'Conv_AdventPro-Bold';
+        font-family: "Courier New", Courier, monospace;
     font-size: 24px;
     font-weight: 400;
 	color:#333;
@@ -488,7 +542,8 @@ h1.h1margin{margin-top:29px}
 }
 .mini-cart-total td{padding-bottom:4px}
 .mini-cart-total td.right.last{color:#0899f8}
-.mini-cart-total tr.last td.right{color:#F46253;font-size:24px;font-family:'Conv_AdventPro-Bold';font-weight:400}
+.mini-cart-total tr.last td.right{color:#F46253;font-size:24px;font-family:'Conv_AdventPro-Bold';font-weight:400;
+        font-family: "Courier New", Courier, monospace;}
 #header #cart .checkout {
 	  clear: both;
     display: block;
@@ -502,11 +557,12 @@ h1.h1margin{margin-top:29px}
 	border: 3px solid #CBCBCB;
     border-radius: 0 0 0 0;
     font-family: 'Conv_AdventPro-ExtraLight';
+        font-family: "Courier New", Courier, monospace;
     font-size: 24px;
     font-weight: 400;
     padding:3px 15px 4px;
 	height:27px;
-	line-height:22px;
+	line-height:27px;
 	color:#202020;
 	margin-top:0
 	
@@ -519,55 +575,24 @@ h1.h1margin{margin-top:29px}
 	padding-top: 24px;
 	text-align: center;
 }
-#header #search {
-	float:right;
-	background:url(../image/search_bg1.png) no-repeat;
-	position:relative;
-	margin-left:10px;
-	margin-top:2px;
-	margin-right:20px;
-	width: 252px;
-	height:60px;
-	padding:0 8px 0 60px;
-}
-#header .button-search {
-	position: absolute;
-	left: 20px;
-	top:18px;
-	background: url('../image/search_03.png') center center no-repeat;
-	background-color: #f46253;
-	width: 24px;
-	height: 24px;
-	cursor: pointer;
-}
-#header #search input {
-	background:none;
-	padding:0px 0px 0px 0px;
-	width: 252px;
-	height: 57px;
-	border: none;
-	font-family:'Conv_AdventPro-ExtraLight';
-	font-size:24px;
-	color:#202020;
-	font-weight:normal!important
-}
-#header #search input:focus{box-shadow:none;border:none}
-.top_header{overflow:hidden;margin-bottom:38px;overflow:hidden}
+.top_header{overflow:hidden;margin-bottom:15px;overflow:hidden}
 #header #welcome {
 	clear:both; text-align:right; float:left;color:#505050;
 }
 #header #welcome a{font-weight:700}
 #header #welcome a:hover{text-decoration:underline}
-.list_carousel_footer{border:1px solid #dcdcdc; padding:17px 42px;margin-bottom:30px}
+.list_carousel_footer{padding:0px 0px;margin-bottom:30px}
 #header .links 
 {
-	float:right;
+        width: 450px;
+        left: -5px;
+	top: 40px;
+        position: absolute;
 }
-.bottom_header{height:81px}
 #header .links a {
 	display: inline;
-	padding: 0px 0px 0px 10px;
-	
+	padding: 0px 0px 0px 5px;
+	font-weight: 100;
 	font-size: 12px;
 }
 #header .links a:hover{}
@@ -705,6 +730,7 @@ h1.h1margin{margin-top:29px}
 	font-size: 10px;
 	font-weight: normal;
 	font-family: Verdana, Geneva, sans-serif;
+        font-family: "Courier New", Courier, monospace;
 	display: block;
 }
 table.form {
@@ -860,16 +886,18 @@ table.radio tr.highlight:hover td {
 
 
 /*******************************************************CHECK OUT*************************************/
-.checkout-content h2.block_pass{margin-top:31px;font-family:'Conv_Bitter-Bold';font-weight:400}
+.checkout-content h2.block_pass{margin-top:31px;font-family:'Conv_Bitter-Bold';font-weight:400;
+        font-family: "Courier New", Courier, monospace;}
 .checkout-content h2{margin-bottom:13px}
 .checkout-heading {
-    background: none repeat scroll 0 0 #1ba1a5;
+    background: #b235cb url(../image/cart_img.png) repeat scroll 0 0;
    font-family:'Conv_AdventPro-Regular';
+        font-family: "Courier New", Courier, monospace;
     color: #fff;
     font-size: 20px;
     margin-bottom: 16px;
     padding:6px 0 9px 20px;
-   
+   text-transform: uppercase;
 	font-weight:700;
 }
 .checkout-content .left {
@@ -963,13 +991,15 @@ p.checkoutp{height:41px}
 	text-align: right;
 	border-bottom: 1px solid #DDDDDD;
 }
-.checkout-product tfoot td.price{font-size:12px;font-family:Arial}
+.checkout-product tfoot td.price{font-size:12px;font-family:Arial;
+        font-family: "Courier New", Courier, monospace;}
 .checkout-content {
     display: none;
     overflow: auto;
     padding: 0 0 15px;
 }
-.checkout-product tbody .price{font-size:12px;font-family:Arial;}
+.checkout-product tbody .price{font-size:12px;font-family:Arial;
+        font-family: "Courier New", Courier, monospace;}
 #shipping-method input[type="radio"],#payment-method input[type="radio"],#payment-method input[type="checkbox"]{margin-right:4px;margin-bottom:0}
 /******************************************** shopping cart *************************************/
 .cart-info tbody .name .price{display:none}
@@ -980,7 +1010,8 @@ p.checkoutp{height:41px}
 .account_fr li{margin-bottom:13px}
 .account_fr h1{margin-bottom:25px}
 .account_fr h2{margin-bottom:12px}
-.box.account ul li a{font-family:'HelveticaBold';font-weight:400;}
+.box.account ul li a{font-family:'HelveticaBold';font-weight:400;
+        font-family: "Courier New", Courier, monospace;}
 
 
 .box.account ul li + li{border-top:1px solid #dedede;}
@@ -1094,7 +1125,7 @@ p.checkoutp{height:41px}
 }
 
 .product-info .image-additional {
-	width: 260px;
+	width: 500px;
 	margin-left: -10px;
 	clear: both;
 	overflow: hidden;
@@ -1115,6 +1146,7 @@ p.checkoutp{height:41px}
 	font-weight: normal;
 	color: #808080;
 	font-family:arial;
+        font-family: "Courier New", Courier, monospace;
 	display:block;
 }
 .product-info .discount{margin-top:10px;color:#202020;float:left;}
@@ -1218,6 +1250,7 @@ input.button {
 	border-radius:14px;
 	background:#fff;
 	font-family:Arial;
+        font-family: "Courier New", Courier, monospace;
 }
 .ie10 input.button.cst{padding-left:27px;padding-right:26px;padding-bottom:6px;padding-top:5px}
 .ie10 .login-content input.button.cst{padding-left:27px;padding-right:26px;padding-bottom:7px;padding-top:5px}
@@ -1237,7 +1270,8 @@ a.button {
 	font-size:14px;
 	text-decoration:none;
 	border-radius:14px;
-	font-family:Arial
+	font-family:Arial;
+        font-family: "Courier New", Courier, monospace;
 	
 }
 .ie10 a.button{padding-left:25px;padding-right:25px}
@@ -1291,13 +1325,17 @@ a.sft_quickshop_icon:hover{background:#202020;border:3px solid #202020}
 
 
 #tab-review textarea{width:297px!important;display:block}
-.productdetail .tags b{font-family:'adventprosemibold';font-weight:400;font-size:20px;opacity:0.7}
+
+.productdetail .htabs {background: #F0ABFB url(../image/bgStripes.png) repeat top left}
+.productdetail .tags b{font-family:'adventprosemibold';font-weight:400;font-size:20px;opacity:0.7;
+        font-family: "Courier New", Courier, monospace;}
 .productdetail .tags a{color:#02979b;font-weight:700;transition-duration:0.2s;-webkit-transition-duration:0.2s;
 -moz-transition-duration:0.2s;}
 .productdetail .tags a:hover{font-size:15px;transition-duration:0.2s;-webkit-transition-duration:0.2s;
 -moz-transition-duration:0.2s;}
 #tab-related.tab-content{margin-top:55px;margin-bottom:55px}
-#tab-related h2{font-family:'adventprosemibold';font-weight:400;font-size:20px;color:#505050;border:1px solid #dcdcdc;padding:5px 0 8px 18px}
+#tab-related h2{font-family:'adventprosemibold';font-weight:400;font-size:20px;color:#505050;border:1px solid #dcdcdc;padding:5px 0 8px 18px; background: #A4F9FB url(../image/bgStripes.png) repeat top left;
+        font-family: "Courier New", Courier, monospace;}
 
 #tab-related .list_carousel .next,.article_fr .list_carousel .next
 {
@@ -1335,6 +1373,7 @@ a.sft_quickshop_icon:hover{background:#202020;border:3px solid #202020}
 .htabs a {
 	padding:6px 16px 9px;
 	font-family:'adventprosemibold';
+        font-family: "Courier New", Courier, monospace;
 	font-size: 20px;
 	font-weight: 400;
 	text-align: center;
@@ -1362,9 +1401,10 @@ a.sft_quickshop_icon:hover{background:#202020;border:3px solid #202020}
 	/*overflow: auto;*/
 }
 /******************************************** Category *********************************/
-.box .box-heading{font-size:20px;font-family:'Conv_AdventPro-Bold';font-weight:400;padding:6px 15px 9px}
+.box .box-heading{font-size:20px;font-family:'Conv_AdventPro-Bold';font-weight:400;padding:6px 15px 9px;
+        font-family: "Courier New", Courier, monospace;}
 
-.box .box-content {padding: 20px 15px 23px;}
+.box .box-content {padding: 20px 15px 23px; background: #fff}
 #column-left .box .box-content {border:1px solid #dcdcdc;border-bottom:none;border-top:none}
 #column-left .banner{border:1px solid #dcdcdc;border-top:none;border-bottom:none}
 #column-right .box .box-content {border:1px solid #dcdcdc;border-bottom:none}
@@ -1472,7 +1512,7 @@ ul.box-filter > li ul {
 /* content */
 #content .content {
 	overflow:hidden;
-	
+	margin: 10px 0 20px;
 }
 #content .content .left {
 	float: left;
@@ -1497,7 +1537,8 @@ ul.box-filter > li ul {
 .category-list ul li a:hover{font-weight:700}
 #banner1.banner img{margin-bottom:0}
 .cate-description .boss_info{overflow:hidden;padding-top:21px;padding-left:29px;padding-right:20px}
-.cate-description .boss_info h3{font-family:'Conv_AdventPro-Medium';font-size:30px;margin-bottom:9px;overflow:hidden;font-weight:400}
+.cate-description .boss_info h3{font-family:'Conv_AdventPro-Medium';font-size:30px;margin-bottom:9px;overflow:hidden;font-weight:400;
+        font-family: "Courier New", Courier, monospace;}
 .cate-description .boss_info p{overflow:hidden;margin-bottom:24px}
 .category-info .image {
 	float: left;
@@ -1656,6 +1697,7 @@ ul.box-filter > li ul {
 	border-radius:0;
 	border:3px solid #cbcbcb;
 	font-family:'adventprosemibold';
+        font-family: "Courier New", Courier, monospace;
 	text-transform:uppercase;
 	font-weight:400;
 	font-size:16px;
@@ -1671,6 +1713,7 @@ ul.box-filter > li ul {
 	border-radius:0;
 	border:3px solid #cbcbcb;
 	font-family:'adventprosemibold';
+        font-family: "Courier New", Courier, monospace;
 	text-transform:uppercase;
 	font-weight:400;
 	font-size:16px;
@@ -1682,6 +1725,10 @@ ul.box-filter > li ul {
 .product-list .cart  input.button:hover{border:3px solid #202020}
 .product-grid .cart  input.button{border-radius:0;border:3px solid #cbcbcb}
 .product-grid .cart  input.button:hover{border:3px solid #202020}
+.product-list .view  a.button{border-radius:0;border:3px solid #FBDB75; text-transform:uppercase; color: #b235cb}
+.product-list .view  a:hover{border:3px solid #b235cb;color:#FBDB75;background:#3E3E3E;}
+.product-grid .view  a{border-radius:0;border:3px solid #FBDB75;text-transform:uppercase; color: #b235cb}
+.product-grid .view  a:hover{border:3px solid #b235cb;color:#FBDB75;background:#3E3E3E;}
 .product-grid .cart,.product-grid .compare,.product-grid .wishlist,.product-grid .name,.product-grid .price,.product-grid .rating{}
 .product-grid .name{margin-top:17px;margin-bottom:6px}
 .wishlist-info .action input.button{border-radius:0;border:3px solid #cbcbcb}
@@ -1691,15 +1738,25 @@ ul.box-filter > li ul {
 	float:left
 }
 .product-grid .name a{display:inline}
+.product-info .wishlist {
+    float: right;
+}
 .product-list .wishlist a,.product-grid .wishlist a,.product-info .wishlist a  {
 	text-decoration: none;
 	display: block;
-	background: url('../image/wishlist.jpg') left center no-repeat;
-	text-indent:-9999px;
-	height:30px;
-	width:40px
+	background: #fff url('../image/wishlist.png') left center no-repeat;
+	height:24px;
+        border-radius:0;
+	border:3px solid #cbcbcb;
+	font-family:'adventprosemibold';
+        font-family: "Courier New", Courier, monospace;
+	text-transform:uppercase;
+	font-weight:400;
+	font-size:15px;
+        line-height: 24px;
+	padding:2px 9px 3px 30px;
 }
-.product-list .wishlist a:hover,.product-grid .wishlist a:hover,.product-info .wishlist a:hover{background: url('../image/wishlist_hover.jpg') left center no-repeat;}
+.product-list .wishlist a:hover,.product-grid .wishlist a:hover,.product-info .wishlist a:hover{background: #000 url('../image/wishlist_hover.png') left center no-repeat;color: #fff;}
 .product-list .compare{margin-right:5px;}
 .product-list .compare a,.product-grid .compare a,.product-info .compare a   {
 	text-decoration: none;
@@ -1777,7 +1834,7 @@ ul.box-filter > li ul {
 }
 .grid_bt
 {
-	bottom: 85px;
+	bottom: 81px;
     overflow: hidden;
     position: absolute;
 	transition-duration:0.3s;
@@ -1796,7 +1853,7 @@ ul.box-filter > li ul {
 .product-grid .cart{margin-right:15px; margin-left:0}
 .product-grid .wishlist{margin:0;}
 .grid_bt{opacity:0;filter: alpha(opacity = 0);}
-.grid_hover:hover .grid_bt{opacity:1;margin-bottom:30px;transition-duration:0.3s;-webkit-transition-duration:0.3s;
+.grid_hover:hover .grid_bt{opacity:1;margin-bottom:150px;transition-duration:0.3s;-webkit-transition-duration:0.3s;
 -moz-transition-duration:0.3s;filter: alpha(opacity = 100);}
 
 
@@ -1808,13 +1865,13 @@ ul.box-filter > li ul {
 /* Product */
 
 .product-info {overflow: hidden;margin-bottom: 10px;}
-.product-info h1{margin-bottom:10px}
+.product-info h1{margin-bottom:10px; color: #B335CB}
 .product-info > .left {float: left;margin-right: 30px;}
 .product-info > .left + .right {display:block;overflow:hidden;}
 .product-info .image { margin-bottom:31px;margin-top:9px;text-align:center;padding-left:1px}
 .product-info .image img {max-width:100% }
 .product-info .image-additional {
-	width: 260px;
+	width: 500px;
 	margin-left: -10px;
 	clear: both;
 	overflow: hidden;
@@ -1861,20 +1918,23 @@ ul.box-filter > li ul {
     overflow: hidden;
     padding: 3px 1px;
 	box-shadow:8px -4px 8px 2px #E3E3E3 inset;
-	width:137px;
+	width:140px;
 	margin-top:17px
 }
 .product-info .share a{}
 .product-info .price-tax{display:block}
-.product-info h2{text-transform:uppercase;font-size:16px;font-family:'adventprosemibold';font-weight:400;margin-bottom:8px}
+.product-info h2{text-transform:uppercase;font-size:16px;font-family:'adventprosemibold';font-weight:400;margin-bottom:8px;
+        font-family: "Courier New", Courier, monospace;}
 .product-info .description span {color: #202020;}
 .product-info .description span.stock{color:#63bf00;}
 .product-info .description span.stock span{color:#202020;}
 
 .product-info .price {
 	overflow: hidden;
-	margin-bottom:17px;
-	
+        margin-bottom: 10px;
+        color: #B335CB;
+        
+	font-size: 30px;
 }
 
 .product-info .price-old {text-decoration: line-through;}
@@ -2409,7 +2469,8 @@ ul.box-filter > li ul {
 .cart-total table {float: right;}
 .cart-total td.left {	padding: 3px;text-align: left;font-weight:700;font-size:14px;}
 .cart-total td.right{text-align: right;font-weight:700;font-size:14px;width:58%;padding-top:3px}
-.cart-total td.right.last{font-family:'Conv_AdventPro-Bold';color:#f46253;font-size:24px;font-weight:400}
+.cart-total td.right.last{font-family:'Conv_AdventPro-Bold';color:#f46253;font-size:24px;font-weight:400;
+        font-family: "Courier New", Courier, monospace;}
 .cart-total td.left.last{padding-top:13px}
 .shoppingcart_fr .success,.wishlist-fr .success,.compare_fr .success{margin-top:-7px;margin-bottom:10px}
 .shoppingcart_fr h2
@@ -2417,6 +2478,7 @@ ul.box-filter > li ul {
 	border:1px solid #e2e2e2;
 	
 	font-family:'Conv_AdventPro-Bold';
+        font-family: "Courier New", Courier, monospace;
 	font-weight:400;
 	font-size:20px;
 	padding:5px 0px 8px 19px
@@ -2425,8 +2487,68 @@ ul.box-filter > li ul {
 .shoppingcart_fr input[type="radio"]{margin-bottom:3px}
 .shoppingcart_fr table.radio td{padding-left:0}
 /**********infomation_fr*********/
+.infomation_fr .heading_title {
+    
+    text-align: center;
+    background-color: #ffffff;
+    background: #fff;
+    border: 1px solid #000;
+    color: #000;
+    font-family: 'Conv_AdventPro-Medium';
+    font-family: "Courier New", Courier, monospace;
+    font-size: 30px;
+    text-transform: uppercase;
+    padding: 5px 15px 8px;
+    margin-bottom: 27px;
+    
+}
+.infomation_fr {
+    margin: 1em 0 2em;
+}
+.infomation_fr ul, .infomation_fr ol {
+margin-top: 0px;
+margin-bottom: 11px;
+color: #202020;
+list-style:disc;
+}
+.infomation_fr ol {
+    list-style:decimal;
+}
+.infomation_fr ul li, .infomation_fr ol li {
+margin-left: 1.5em;
+}
 .infomation_fr .buttons{overflow:hidden;margin-top:23px}
 /* checkout */
+.contact_fr .heading_title {
+    
+    text-align: center;
+    background-color: #ffffff;
+    background: #fff;
+    border: 1px solid #000;
+    color: #000;
+    font-family: 'Conv_AdventPro-Medium';
+    font-family: "Courier New", Courier, monospace;
+    font-size: 30px;
+    text-transform: uppercase;
+    padding: 5px 15px 8px;
+    margin-bottom: 27px;
+    
+}
+.contact_fr {
+    margin: 1em 0 2em;
+}
+.contact_fr ul, .contact_fr ol {
+margin-top: 0px;
+margin-bottom: 11px;
+color: #202020;
+list-style:disc;
+}
+.contact_fr ol {
+    list-style:decimal;
+}
+.contact_fr ul li, .contact_fr ol li {
+margin-left: 1.5em;
+}
 .contact_fr input{margin:7px 0px 0px}
 .contact_fr .buttons{overflow:hidden;margin-top:20px}
 .contact-info {
@@ -2461,31 +2583,45 @@ ul.box-filter > li ul {
 	clear: both;
 	min-height: 100px;
 	padding: 20px 0;
-	
-	padding-top:52px;
 	padding-bottom:8px;
-	margin-top:20px
 }
-#footer .about-des a.read-more:hover{text-decoration:underline}
-#footer .about-des p{overflow:hidden;height:44px;max-height:44px;font-weight:700}
+#footer .block-about-us .about-des a.read-more{color: #B335CB;}
+#footer .about-des a.read-more:hover{text-decoration:underline; color: #B335CB;}
+#footer .about-des p{overflow:hidden;margin: 0;color: #545454;}
+#footer .about-des {height: auto; width: 282px; background: #fff; box-shadow: none;font-family: 'Conv_AdventPro-Medium';font-size: 14px;color: #545454;
+        font-family: "Courier New", Courier, monospace;}
+#footer .about-des h2 {
+    color: #5FCBCB;
+    font-size: 18px;
+    margin: 0;
+    font-weight: bold;
+}
 #footer h3 {
 	
 	font-size: 18px;
 	margin-top: 3px;
-	margin-bottom: 14px;
+        margin-bottom: 0;
 	font-family:'Conv_AdventPro-Bold';
-	font-weight:400;
+        font-family: "Courier New", Courier, monospace;
+	
 	text-transform:uppercase;
 }
 #footer .column {
 	float:left;
-	width: 16.5%;
+	width: 190px;;
 	min-height: 100px;
+        margin-right: 5px;
 	
 }
-#footer .column ul {}
-#footer .column ul li {
-	margin-bottom: 13px;
+#footer .column ul {margin-bottom: 14px;}
+#footer .column ul li,
+#footer .column ul li a {
+	font-size: 18px;
+        font-wight: bold;
+	font-family:'Conv_AdventPro-Light';
+        font-family: "Courier New", Courier, monospace;
+	text-transform:uppercase;
+        font-weight: normal;
 }
 
 #footer .column a:hover {
@@ -2499,7 +2635,27 @@ ul.box-filter > li ul {
 	margin-bottom:15px
 
 }
+#footer .top-footer {
+    width: 782px;
+    position: relative;
+    height: 130px;
+}
 
+#footer .middle-footer {
+    width: 782px;
+    position: relative;
+}
+
+#footer .bottom-footer {
+    width: 782px;
+    position: relative;
+}
+#footer .footer-right {
+    margin-left: 30px;
+    width: 800px;
+    float: right;
+    position: relative;
+}
 .footer-column .footer-block-setting
 { 
 	float: left; 
@@ -2508,10 +2664,11 @@ ul.box-filter > li ul {
 	margin-right:39px
 	
 }
-.footer-column{overflow:hidden;border-bottom:3px solid #505050;padding-bottom:50px}
+.footer-column{overflow:hidden;}
 .about-des a.footer_logo
 {
 	font-family: 'Conv_AdventPro-Medium';
+        font-family: "Courier New", Courier, monospace;
     font-size: 62px;
     font-weight: 700;
     text-transform: uppercase;
@@ -2519,7 +2676,7 @@ ul.box-filter > li ul {
 	text-align:center;
 	margin-bottom:13px
 }
-.about-des{width:300px;height:157px;padding:29px;padding-top:14px;box-shadow:0 6px 25px #000000 inset}
+.about-des{width:300px;height:157px;padding:29px;padding-top:14px;background:#fff;}
 .about-des a.read-more{float:right}
 #footer .column a  img:hover {
 opacity:100;
@@ -2527,12 +2684,38 @@ opacity:100;
 	filter: alpha(opacity=100);
 
 }
-#footer p,#footer a{text-decoration:none}
+#footer p,#footer a{text-decoration:none; font-weight: normal;}
 #footer a:hover{}
+
+.media-links a {
+    vertical-align: middle;
+    display: inline-block;
+}
+#social-footer {
+    float: left;
+    margin-top: 20px;
+}
+#social-footer .media-links {
+    vertical-align: middle;
+    margin-right: 20px;
+    display: inline;
+}
+#social-footer .youth {
+    display: inline;
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
+.boss_menu .media-links {
+    position: absolute; right: 0;bottom: 6px
+}
+.boss_menu .media-links a {
+    margin-right: 8px;
+}
 
 #powered {
 	
-	text-align: center;
+	text-align: right;
 	clear: both;
 	
 }
@@ -2574,14 +2757,30 @@ opacity:100;
 }
 #container.box #footer {margin:0 10px;margin-top:20px}
 
+
+#inner_container {
+	width:1180px;
+        padding: 0 10px;
+	margin:0 auto;
+        background: #fff;
+        background: rgba(255,255,255,.9);
+        overflow:auto;
+}
+
 #container { overflow:auto}
 /************************************* home fillter*************************************/
+.home_filter_content {
+    clear: both;
+}
 .home_filter_content .box .box-content{padding:0;border:none;padding-left:2px}
 .home_filter_content .list_carousel{}
 .home_filter_content .box .box-heading
 {
-	background-image:url(../image/repeat.png);
+	background: #fff;
+        border: 1px solid #000;
+        color: #000;
 	font-family:'Conv_AdventPro-Medium';
+        font-family: "Courier New", Courier, monospace;
 	font-size:30px;
 	text-transform:uppercase;
 	padding:5px 15px 8px;
@@ -2590,7 +2789,7 @@ opacity:100;
 .home_filter_content .list_carousel li{padding-left:3px}
 .home_filter_content .list_carousel .box-product .image{width:180px;margin-bottom:16px;margin-right:0}
 .home_filter_content .list_carousel .box-product .name{margin-bottom:7px}
-].home_filter_content .list_carousel .box-product .price{margin-bottom:5px}
+.home_filter_content .list_carousel .box-product .price{margin-bottom:5px}
 .home_filter_content .list_carousel .box-product .name,.home_filter_content .list_carousel .box-product .price,.home_filter_content .list_carousel .box-product .rating{padding-left:5px;opacity:0.3;transition-duration:0.3s;-webkit-transition-duration:0.3s;-moz-transition-duration:0.3s;}
 .home_filter_content .list_carousel .box-product .rating {margin-top:6px}
 .home_filter_content .list_carousel .hover_img:hover{box-shadow:0 0 5px #a5a4a4}
@@ -2601,12 +2800,29 @@ opacity:100;
 .home_filter_content .list_carousel .hover_img:hover .name{opacity:1}
 .home_filter_content .list_carousel .hover_img:hover .price{opacity:1}
 .home_filter_content .list_carousel .hover_img:hover .rating{opacity:1}
+
+#home_week_love.home_filter_content  .box .box-heading {
+    text-align: center;
+}
+#home_week_love.home_filter_content .box .box-content {
+    background: none;
+}
+#home_week_love.home_filter_content .box .box-content .week-element {
+    float: left;
+    width: 30%;
+    text-align: center;
+    padding: 0 1.66%;
+}
+#home_week_love.home_filter_content .box .box-content .week-element a + h2 {
+    margin-top: 1em;
+}
+
 /******************************* block *******************************************/
 .static-home-banner-2 ul li {float:left;padding-left:20px}
 .static-home-banner-2 ul li:first-child{padding-left:0}
 .static-home-banner-2{overflow:hidden}
 /********************************** about us *******************************/
-.block-about-us{float:left;margin-right:40px;margin-top:7px}
+.block-about-us{float:left;margin-top:7px}
 
 /***********************************  Grid *********************************/
 /* grid 3 */
@@ -2773,6 +2989,7 @@ opacity:100;
 	padding-right:0;
 	text-transform:uppercase;
 	font-family:'Conv_AdventPro-Regular';
+        font-family: "Courier New", Courier, monospace;
 	height:46px;
 	transition-duration:0.2s;
 	-webkit-transition-duration:0.2s;
@@ -2828,6 +3045,7 @@ opacity:100;
 	font:bold 14px Arial;
 	text-transform:uppercase;
 	font-family:'Conv_AdventPro-Bold';
+        font-family: "Courier New", Courier, monospace;
 	font-weight:400;
 	font-size:17px;
 }
@@ -2835,14 +3053,15 @@ opacity:100;
 
 #menu > ul > li > div.dropdown .manufacturer  a img{margin-bottom:10px}
 
-#menu > ul > li > div.dropdown ul { display:inline-block}
-#menu > ul > li > div.dropdown ul.product a{ display:inline-block;font-weight:700;padding-right:0}
+#menu > ul > li > div.dropdown ul { display: inline-block;zoom: 1;*display: inline;}
+#menu > ul > li > div.dropdown ul.product a{ font-weight:700;padding-right:0;display: inline-block;}
 #menu > ul > li > div.dropdown ul.product span { padding-left:20px}
 #menu > ul > li > div.dropdown ul.product span.price-old 
 {
 	 text-decoration:line-through ; 
 	 color: #202020;
     font-family: 'Conv_AdventPro-Bold';
+        font-family: "Courier New", Courier, monospace;
     font-size: 24px;
     font-weight: 400;
 	margin-bottom:36px;
@@ -2851,6 +3070,7 @@ opacity:100;
 { 
 	padding-left:10px;
 	font-family: 'Conv_AdventPro-Bold';
+        font-family: "Courier New", Courier, monospace;
     font-size: 24px;
     font-weight: 400;
 	margin-bottom:36px;
@@ -2870,7 +3090,8 @@ opacity:100;
 #menu ul li ul li:hover > div.sub_menu, #boss_menu ul li:hover > div{display:block;}
 .right.bt_right{margin-top:15px}
 .cart-info tbody .quantity.vouchers input[type="text"]{background:#fff}
-.order_info .price{font-size:12px;font-family:Arial}
+.order_info .price{font-size:12px;font-family:Arial;
+        font-family: "Courier New", Courier, monospace;}
 
 /*.boss_article-item #productRelated .relProduct .name,.boss_article-item #productRelated .relProduct .price{opacity:0.3}*/
 .boss_article-item  .relProduct .boss_hover:hover{}
@@ -2909,12 +3130,14 @@ h1.h1success{margin-top:30px}
 #boss-image-additional li img:hover{border:1px solid #808080}
 
 .product-grid .grid_5 .grid_hover .name,.product-grid .grid_4 .grid_hover .name,.product-grid .grid_3 .grid_hover .name{margin-top:6px}
-.price-tax{font-family:arial}
+.price-tax{font-family:arial;
+        font-family: "Courier New", Courier, monospace;}
 .cpanelContainer #bt_category input{padding-bottom:2px}
 .shoppingcart_fr .cart-info tbody .quantity,.shoppingcart_fr .cart-info tbody .update{padding-top:8px!important}
 
 .shoppingcart_fr .cart-info tbody tr.first .quantity, .shoppingcart_fr .cart-info tbody tr.first .update{padding-top:23px!important}
-.discount.boss_label{font-family:'Conv_AdventPro-Medium';font-size:20px;font-weight:400;width:50px;height:30px;text-align:center;position:absolute;top:0;right:0}
+.discount.boss_label{font-family:'Conv_AdventPro-Medium';font-size:20px;font-weight:400;width:50px;height:30px;text-align:center;position:absolute;top:0;right:0;
+        font-family: "Courier New", Courier, monospace;}
 .product-grid .discount.boss_label{top:2px}
 
 .categories_fr .pagination{margin-bottom:21px}
@@ -2954,8 +3177,127 @@ h1.h1success{margin-top:30px}
 #payment-address .buttons .left input[type="checkbox"] {margin-right:6px}
 .product-info .error{margin-bottom:10px;clear:both}
 
+.inputContainer {
+	background-color: #FFF;
+	position:relative;
+	margin:0;
+	width: 290px;
+	height:32px;
+	padding:0 60px 0 8px;
+}
+#header .inputContainer {
+        border: solid 1px #a5a5a5;
+	width: 10px;
+        height:26px;
+        float: left;
+        top: 74px;
+}
+.inputContainer .button-search,
+.inputContainer .button-enter {
+	position: absolute;
+	right: 3px;
+	top:3px;
+	background: url('../image/search.png') center center no-repeat;
+	background-color: #f46253;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+.inputContainer .button-enter {
+	background: url('../image/grey-arrow.png') center center no-repeat;
+}
+.inputContainer input {
+	background:none;
+	padding:0px 0px 0px 0px;
+	width: 290px;
+	height: 32px;
+	border: none;
+	font-family:'Conv_AdventPro-ExtraLight';
+        font-family: "Courier New", Courier, monospace;
+	line-height:24px;
+	font-size:12px;
+        text-transform: uppercase;
+	color:#202020;
+	font-weight:normal!important
+}
+#header .inputContainer input {
+	background:none;
+	padding:0px 0px 0px 0px;
+	width: 45px;
+	height: 26px;
+	border: none;
+	font-family:'Conv_AdventPro-ExtraLight';
+        font-family: "Courier New", Courier, monospace;
+	line-height:24px;
+	font-size:12px;
+        text-transform: uppercase;
+	color:#202020;
+	font-weight:normal!important
+}
 
+#header .inputContainerTop {
+    float: left;
+    width: 153px;
+}
 
+#header .inputContainerTop input {
+    float: left;
+    width: 190px;
+}
+
+.inputContainer input:focus{box-shadow:none;border:none}
+
+#header #headerInputs #newsletter {
+    margin-right: 8px;
+}
+
+#newsletter_footer {
+  vertical-align: middle;
+    display: inline-block;zoom: 1;*display: inline;
+  
+}
+
+#welcomeSplash {
+    
+    background: #000;
+    height: 100%;
+    width: 100%;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    
+}
+#welcomeSplash img {
+    
+    max-width: 100%;
+    max-height: 100%;
+}
+#welcomeSplash .topElement {
+    
+    height: 60px;
+    padding: 10px;
+    text-align: center;
+}
+#welcomeSplash .middleElement {
+    height: 100%;
+}
+#welcomeSplash .bottomElement {
+    height: 60px;
+    padding: 10px;
+    text-align: center;
+    color: #FFF; 
+    font-weight: bold;
+    font-size: 14px;
+}
+#welcomeSplash .bottomElement div {
+    margin-bottom: 10px;
+}
+#welcomeSplash #ytplayer {
+    width: 100%;
+    height: 100%;
+}
 
 /********************** ie 10 *******************************/
 .ie10 .search_fr input.button.cst{padding-top:6px!important;padding-bottom:6px!important}
@@ -2965,7 +3307,7 @@ h1.h1success{margin-top:30px}
 .ie10 .blogsearch_fr input.button.cst{padding-top:6px;padding-bottom:6px}
 .ie10 .compare_fr a.button.cst{padding-top:5px;padding-bottom:7px}
 .ie10 #language .sbHolder,.ie10 #currency .sbHolder{height:31px}
-.ie10 #header #search input{height:30px;padding-top:13px}
+.ie10 .inputContainer input{height:30px;padding-top:13px}
 .ie10 .box-product .image{margin-top:1px}
 .ie10 .boss-alphabet ul li a{line-height:22px}
 
@@ -3119,3 +3461,65 @@ a.button.cst:hover span.button_fr{background:url(../image/left_button_hover1.png
 	-moz-border-radius: 0 ;
 	-khtml-border-radius: 0 ;
 	border-radius: 0 ; }
+.product-info .image > a, .product-info .image > a:hover {
+        color: #514f4f;
+}
+.product-info .image-additional {
+	margin-left: -6px;
+        margin-bottom: 9px;
+	clear: both;
+	overflow: hidden;
+}
+.product-info .image-additional a {
+	float: left;
+	margin-left: 7px;
+	margin-bottom: 0;
+        display: block;
+        position: relative;
+}
+.product-info .image-additional a .play-button {
+        background: url("../image/play_icon.png") no-repeat scroll center center rgba(255, 255, 255, 0.2);
+        display: block;
+        left: 0;
+        position: absolute;
+        top: 0;
+        border: 1px solid #B9BDBD;
+        z-index: 2;
+}
+.homepage-header{
+    margin-top: 15px;
+    padding-top: 10px;
+    padding-left: 10px;
+    border-top: solid 1px #b7b7b7;
+    font-size: 20px;
+    color: #444444;
+}
+
+#header #tagline
+{
+    font-size: 14px;
+    position: absolute;
+    bottom: -6px;
+    left: 476px;
+}
+
+#header #welcome
+{
+    float: right;
+    margin-top: 24px;
+    margin-right: 51px;
+}
+
+#top-inputs {
+    height: 30px;
+    position: absolute;
+    top: -3px;
+}
+.text-right-top{
+    position: absolute;
+    right: 0;
+    top: 5px;
+    height: 32px;
+    overflow: hidden;
+    text-align: right;
+}

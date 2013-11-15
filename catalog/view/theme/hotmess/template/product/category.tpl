@@ -11,13 +11,16 @@
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
 <div class="categories_fr">
-	<?php if ($thumb || $description) { ?>
+    <?php if ($thumb) { ?>
+    <img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" />
+        <?php } ?>
+	<?php if ($description) { ?>
   <div class="category-info">
     <?php if ($description) { ?>
     <div class="cate-description">
 	
 	<div class="boss_info">
-	<img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" />
+	
 	<h3><?php echo $heading_title; ?></h3>
 		<?php echo $description; ?>
 		<div class="refine_search"><?php if ($categories) { ?>
@@ -51,7 +54,7 @@
   <?php } ?>
   <?php if ($products) { ?>
   <div class="product-filter">
-  <div class="product-compare"><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></div>
+<!--  <div class="product-compare"><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></div>-->
     <div class="sort"><b><?php echo $text_sort; ?></b>
       <div class="boss_select">
 	  <div class="catg_styled-select">
@@ -81,10 +84,10 @@
       </select>
 	  </div>
 	  </div>
-    </div><div class="display"><b><?php echo $text_display; ?></b> <?php echo $text_list; ?> <b>/</b> <a onclick="display('grid');"><?php echo $text_list; ?> <b>/</b><?php echo $text_grid; ?></a></div>
+</div><!-- <div class="display"><b><?php echo $text_display; ?></b> <?php echo $text_list; ?> <b>/</b> <a onclick="display('grid');"><?php echo $text_list; ?> <b>/</b><?php echo $text_grid; ?></a></div>-->
   </div>
   <?php
-	$b_Layout_Settings = explode(',', $this->config->get('b_Layout_Setting'));
+	$B_Layout_Settings = explode(',', $this->config->get('b_Layout_Setting'));
 	if(isset($B_Layout_Settings)){
 		$div_product = $B_Layout_Settings[2];
 	}else{
@@ -110,7 +113,7 @@
       <?php } ?>
       <div class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
       <?php if ($product['rating']) { ?>
-      <div class="rating"><img src="catalog/view/theme/bt_topwear/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+      <div class="rating"><img src="catalog/view/theme/hotmess/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
       <?php } ?>
       <div class="description"><?php echo $product['description']; ?></div>
 	  <?php if ($product['price']) { ?>
@@ -125,11 +128,14 @@
         <?php } ?>
       </div>
       <?php } ?>
-      <div class="cart">
+      <div class="view">
+          <a class="button" href="<?php echo $product['href']; ?>"><span><?php echo $button_view; ?></span></a>
+      </div>
+      <!--    <div class="cart">
         <span class="button"><input type="button" value="<?php echo $button_cart; ?>" onclick="boss_addToCart('<?php echo $product['product_id']; ?>');" class="button" /></span>
       </div>
-      <div class="compare"><a title="<?php echo $button_compare; ?>" class="action-button" onclick="boss_addToCompare('<?php echo $product['product_id']; ?>');"><span><?php echo $button_compare; ?></span></a></div>
-      <div class="wishlist"><a title="<?php echo $button_wishlist; ?>" class="action-button" onclick="boss_addToWishList('<?php echo $product['product_id']; ?>');"><span><?php echo $button_wishlist; ?></span></a></div>
+  <div class="compare"><a title="<?php echo $button_compare; ?>" class="action-button" onclick="boss_addToCompare('<?php echo $product['product_id']; ?>');"><span><?php echo $button_compare; ?></span></a></div>
+      <div class="wishlist"><a title="<?php echo $button_wishlist; ?>" class="action-button" onclick="boss_addToWishList('<?php echo $product['product_id']; ?>');"><span><?php echo $button_wishlist; ?></span></a></div>-->
     </div><?php } ?>
   </div>
   <div class="pagination"><?php echo $pagination; ?></div>
@@ -173,9 +179,10 @@ function display(view) {
 			if (price != null) {
 				html += '<div class="price">' + price  + '</div>';
 			}
-			html += '  <div class="cart">' + $(element).find('.cart').html() + '</div>';
-			html += '  <div class="compare">' + $(element).find('.compare').html() + '</div>';
-			html += '  <div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
+			html += '<div class="view">' + $(element).find('.view').html() + '</div>';
+			//html += '  <div class="cart">' + $(element).find('.cart').html() + '</div>';
+//			html += '  <div class="compare">' + $(element).find('.compare').html() + '</div>';
+//			html += '  <div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
 			html += '</div>';	
 						
 			$(element).html(html);
@@ -198,9 +205,10 @@ function display(view) {
 			
 			html += '<div class="grid_bt">';
 			html += '<div class="boss_bt">'
-			html += '<div class="cart">' + $(element).find('.cart').html() + '</div>';
-			html += '<div class="compare">' + $(element).find('.compare').html() + '</div>';
-			html += '<div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
+			html += '<div class="view">' + $(element).find('.view').html() + '</div>';
+			//html += '<div class="cart">' + $(element).find('.cart').html() + '</div>';
+			//html += '<div class="compare">' + $(element).find('.compare').html() + '</div>';
+			//html += '<div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
 			html += '</div>';
 			html += '</div>';
 			html += '<div class="name">' + $(element).find('.name').html() + '</div>';
@@ -232,10 +240,10 @@ view = $.totalStorage('display');
 if (view) { 
 	display(view);
 } else {
-	<?php if ($this->config->get('b_General_P_Display') == 'grid') { ?>
-	display('grid');
-	<?php }else { ?>
+	<?php if ($this->config->get('b_General_P_Display') == 'list') { ?>
 	display('list');
+	<?php }else { ?>
+	display('grid');
 	<?php } ?>
 }
 //--></script> 

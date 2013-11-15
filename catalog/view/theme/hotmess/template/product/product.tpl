@@ -15,13 +15,37 @@
   <div class="product-info">
     <?php if ($thumb || $images) { ?>
     <div class="left">
-      <?php if ($thumb) { ?>
-      <div class="image"><a href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>" class="colorbox"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" id="image" /></a></div>
-      <?php } ?>
-      <?php if ($images) { ?>
-	  <div class="list_carousel responsive"><ul id="boss-image-additional"><?php foreach ($images as $image) { ?><li><a href="<?php echo $image['popup']; ?>" title="<?php echo $heading_title; ?>" class="colorbox"><img src="<?php echo $image['thumb']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a></li><?php } ?></ul>  
-      </div>
-      <?php } ?>	  
+      <div class="product-img">
+            <?php if ($thumb || $images) { ?>
+                <div class="image" id="wrap-image">
+                    <?php if ($thumb) { ?>
+                        <img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" id="image" data-colorbox="" />
+                    <?php } ?>
+                </div>
+                
+                <div class="image-additional">
+                    <?php
+                    if ($additional) {
+                        ?><a href="<?php echo $popup; ?>" target="_blank" class="colorbox imageAdditional" id="mainImage" rel="colorbox" data-main="<?php echo $thumb; ?>"><img src="<?php echo $additional; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" class="imageAdditional"/><?php
+
+                    }
+
+                    if ($images) {
+                      for ($i = 0; $i < count($images); $i++)  {
+
+                          if (empty($images[$i]['video'])) {
+                                        ?><a href="<?php echo $images[$i]['popup']; ?>" target="_blank" class="colorbox imageAdditional" rel="colorbox" data-main="<?php echo $images[$i]['main']; ?>" <?php if ($i > 1) echo 'style="display: none;"' ?>><img src="<?php echo $images[$i]['thumb']; ?>" alt="" /></a><?php
+                        } else {
+                                        ?><a href="http://www.youtube.com/v/<?php echo $images[$i]['video']; ?>?rel=0&wmode=transparent" class="colorbox videoAdditional" rel="colorbox" data-video="<?php echo $images[$i]['video']; ?>" target="_blank" style="line-height:<?php echo $additionalHeight; ?>px;height:<?php echo $additionalHeight; ?>px;width:<?php echo $additionalWidth; ?>px;"><img src="http://img.youtube.com/vi/<?php echo $images[$i]['video']; ?>/0.jpg" alt="" /><span class="play-button" style="height:<?php echo $additionalHeight; ?>px;width:<?php echo $additionalWidth; ?>px;"></span></a><?php
+                            }
+                      }
+
+                        }
+                    ?>
+                </div>
+                
+            <?php } ?>
+        </div>	  
     </div>
     <?php } ?>
     <div class="right">
@@ -38,7 +62,7 @@
         </div>
       <?php if ($options) { ?>
       <div class="options">
-        <h2><?php echo $text_option; ?></h2>
+<!--        <h2><?php echo $text_option; ?></h2>-->
         <?php foreach ($options as $option) { ?>
         <?php if ($option['type'] == 'select') { ?>
         <div id="option-<?php echo $option['product_option_id']; ?>" class="option">
@@ -179,7 +203,7 @@
       <?php } ?>
 	  
       <div class="cart">
-		<div class="rating"><img src="catalog/view/theme/bt_topwear/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" />&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');goToByScroll('tab-review');"><?php echo $reviews; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="write_review" onclick="$('a[href=\'#tab-review\']').trigger('click');goToByScroll('review-title');"><?php echo $text_write; ?></a></div>
+		<div class="rating"><img src="catalog/view/theme/hotmess/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" />&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');goToByScroll('tab-review');"><?php echo $reviews; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="write_review" onclick="$('a[href=\'#tab-review\']').trigger('click');goToByScroll('review-title');"><?php echo $text_write; ?></a></div>
         
 		<div class="quantily_info"><b><?php echo $text_qty; ?></b>
 		</br><input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" />
@@ -188,6 +212,7 @@
 	   
 		
 		<div class="price">
+			<div class="wishlist"><a title="<?php echo $button_wishlist; ?>"onclick="boss_addToWishList('<?php echo $product_id; ?>');"><?php echo $button_wishlist; ?></a></div>
 			<?php if ($price) { ?>
 			<?php if (!$special) { ?>
 			<?php echo $price; ?>
@@ -195,9 +220,9 @@
 			<span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
 			<?php } ?>
 			<?php } ?>
-			<?php if ($tax) { ?>
+			<?php /* if ($tax) { ?>
 			</br><span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span>
-			<?php } ?>
+			<?php } */ ?>
 			<?php if ($points) { ?>
 			<span class="reward"><small><?php echo $text_points; ?> <?php echo $points; ?></small></span>
 			<?php } ?>
@@ -209,8 +234,7 @@
 			</div>
 			<?php } ?>
 			<div class="action">
-			<div class="compare"><a title="<?php echo $button_compare; ?>" onclick="boss_addToCompare('<?php echo $product_id; ?>');"><?php echo $button_compare; ?></a></div>
-			<div class="wishlist"><a title="<?php echo $button_wishlist; ?>"onclick="boss_addToWishList('<?php echo $product_id; ?>');"><?php echo $button_wishlist; ?></a></div>
+<!--			<div class="compare"><a title="<?php echo $button_compare; ?>" onclick="boss_addToCompare('<?php echo $product_id; ?>');"><?php echo $button_compare; ?></a></div>-->
 			</div>
 		</div>
 		<span class="button-gray"><input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" title="<?php echo $button_cart; ?>" /></span>
@@ -230,9 +254,14 @@
   <div id="tabs" class="htabs"><a class="left-htab" href="#tab-description"><span class="right-htab"><span class="text-tab"><?php echo $tab_description; ?></span></span></a>
     <?php if ($attribute_groups) { ?>
     <a class="left-htab" href="#tab-attribute"><span class="right-htab"><span class="text-tab"><?php echo $tab_attribute; ?></span></span></a>
-    <?php } ?>
-    <?php if ($review_status) { ?>
-    <a class="left-htab" href="#tab-review"><span class="right-htab"><span class="text-tab"><?php echo $tab_review; ?></a></span></span>
+    <?php } 
+    if ($product_tabs) {
+        foreach ($product_tabs as $key => $tab) {
+            echo '<a class="left-htab" href="#productTabAttr' . $key . '"><span class="right-htab"><span class="text-tab">' . $tab['name'] . '</span></span></a>';
+        }
+    }
+    if ($review_status) { ?>
+    <a class="left-htab" href="#tab-review"><span class="right-htab"><span class="text-tab"><?php echo $tab_review; ?></span></span></a>
     <?php } ?>
   </div>
   <h2 class="ta-header"><span><?php echo $tab_description; ?></span></h2>
@@ -259,6 +288,18 @@
     </table>
   </div>
   <?php } ?>
+    <?php
+    if ($product_tabs) {
+        foreach ($product_tabs as $key => $tab) {
+            ?>
+            <h2 class="ta-header"><span><?php echo $tab['name']; ?></span></h2>
+            <div id="productTabAttr<?php echo $key; ?>" class="tab-content">
+                <?php echo $tab['text']; ?>
+            </div>
+            <?php
+        }
+    }
+    ?>
   <?php if ($review_status) { ?>
    <h2 class="ta-header"><span><?php echo $tab_review; ?></span></h2>
   <div id="tab-review" class="tab-content">
@@ -330,7 +371,7 @@
 				  <span class="price-old"><?php echo $product['price']; ?></span> <span class="price-new"><?php echo $product['special']; ?></span>
 				  <?php } ?>
 				</div>
-				<div class="rating"><img src="catalog/view/theme/bt_topwear/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+				<div class="rating"><img src="catalog/view/theme/hotmess/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
 				<?php } ?>
 				<div class="cart">
 				<span class="button-gray"><input type="button" value="<?php echo $button_cart; ?>" onclick="boss_addToCart('<?php echo $product['product_id']; ?>');" class="button" /></span>
@@ -350,8 +391,8 @@
   
 <?php echo $content_bottom; ?></div></div></div>
   
-<?php if (file_exists('catalog/view/theme/bt_topwear/stylesheet/boss_carousel.css')) {
-		echo '<link rel="stylesheet" type="text/css" href="catalog/view/theme/bt_topwear/stylesheet/boss_carousel.css" media="screen" />';
+<?php if (file_exists('catalog/view/theme/hotmess/stylesheet/boss_carousel.css')) {
+		echo '<link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess/stylesheet/boss_carousel.css" media="screen" />';
 	} else {
 		echo '<link rel="stylesheet" type="text/css" href="catalog/view/theme/default/stylesheet/boss_carousel.css" media="screen" />';
 	}
@@ -429,8 +470,32 @@ $('h2.ta-header').click(function() {
 
 $('#tabs a').tabs();
 
-//--></script>  
-  
+//--></script>
+<?php
+$html = '';
+if (isset($upselling_products) && $upselling_products)
+{
+    $html = '<div style="clear: both;"></div>';
+    $html .= '<div class="iconline homepage-header" style="padding-left: 0px; clear:both; font-size: 16px;margin-bottom: 10px;">COMPLETE YOUR LOOK WITH...</div>';
+    foreach ($upselling_products as $key => $product) {
+         $html .= '<div class="product" style="clear: both;">';
+        if ($product['thumb']) {
+            $html .= '<div class="image" style="float: left;"><a href="'.$product['href'].'"><img width="70" height="86" src="'.$product['thumb'].'" alt="'.$product['name'].'" title="'.$product['name'].'" /></a></div>';
+        }
+
+        $html .= '<div class="name"><a href="'.$product['href'].'">'.$product['name'].'</a></div>';
+
+        $html .= '<div class="price">';
+        if (!$product['special']) {
+        $html .= $product['price'];
+        } else {
+        $html .= '<span class="price-old">'.$product['price'].'</span> <span class="price-new">'.$product['special'].'</span>';
+        }
+        $html .= '</div>';
+        $html .= '</div>';
+    }
+}
+?>
   <script type="text/javascript"><!--
 $('#button-cart').bind('click', function() {
 	$.ajax({
@@ -449,7 +514,7 @@ $('#button-cart').bind('click', function() {
 			}  
 
           if (json['success']) {
-              addProductNotice(json['title'], json['thumb'], json['success'], 'success');
+              addProductNotice(json['title'], json['thumb'], json['success'], 'success', '<?php echo $html; ?>');
               $('#cart_menu span.s_grand_total').html(json['total_sum']);
               $('#cart_menu div.s_cart_holder').html(json['output']);
 			  $('#cart-total').html(json['total']);
@@ -464,15 +529,40 @@ $(document).ready(function() {
 		overlayClose: true,
 		opacity: 0.5,
 		rel: "colorbox",
-		slideshow: "false",
+		slideshow: false,
 		width: '95%', 
 		height: '95%',
 		maxWidth: <?php echo $this->config->get('config_image_popup_width') ?>,
-        maxHeight: <?php echo ($this->config->get('config_image_popup_height') + 15); ?>
+                maxHeight: <?php echo ($this->config->get('config_image_popup_height') + 15); ?>        
 	});
 });
 //--></script> 
-
+<script type="text/javascript">
+        
+    $(document).ready(function () {
+            
+        $('.image-additional').delegate('a.videoAdditional','click', function(){
+            $('.product-img .image').html('<iframe id="playingMovie" width="500" height="613" src="http://www.youtube.com/embed/' + $(this).data('video') + '?autoplay=1&rel=0&theme=light&autohide=1" frameborder="0" allowfullscreen></iframe>');
+            return false;
+        });
+            
+        $('.image-additional').delegate('a.imageAdditional','click', function(){
+            $('.product-img .image').html('<img src="' + $(this).data('main') + '" alt="" />');
+            return false;
+        });
+            
+        $('.product-img .image').delegate('img','click', function(){
+            $('.colorbox, .videoAdditional').colorbox({
+                overlayClose: true,
+                opacity: 0.5,
+                open: true
+            });
+            $('.videoAdditional').colorbox({iframe:true, innerWidth:'640', innerHeight:'390'});
+        });
+        
+    });
+        
+</script>
 <?php if ($options) { ?>
 <script type="text/javascript" src="catalog/view/javascript/jquery/ajaxupload.js"></script>
 <?php foreach ($options as $option) { ?>
