@@ -1,43 +1,49 @@
 <?php echo $header; ?>
-<?php if ($attention) { ?>
-<div class="attention"><?php echo $attention; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
-<?php } ?>
-<?php if ($success) { ?>
-<div class="success"><?php echo $success; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
-<?php } ?>
-<?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
-<?php } ?>
-<?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-    <?php } ?>
-  </div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <?php if ($attention) { ?>
+            <div class="attention"><?php echo $attention; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+            <?php } ?>
+            <?php if ($success) { ?>
+            <div class="success"><?php echo $success; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+            <?php } ?>
+            <?php if ($error_warning) { ?>
+            <div class="warning"><?php echo $error_warning; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+            <?php } ?>
+          <div class="breadcrumb">
+            <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+            <?php } ?>
+          </div>
+        </div>
+    </div>
+</div>
+<div class="container"><div class="row"><?php echo $column_left; ?><?php echo $column_right; ?>
+<div id="content" class="<?php if(empty($column_left) && empty($column_right)){echo 'col-sm-12';} else if (empty($column_left) || empty($column_right)){echo 'col-sm-9';}else{echo 'col-sm-6';} ?>"><?php echo $content_top; ?>
   <h1><?php echo $heading_title; ?>
     <?php if ($weight) { ?>
     &nbsp;(<?php echo $weight; ?>)
     <?php } ?>
   </h1>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-    <div class="cart-info">
+    <div class="cart-info hidden-xs">
       <table>
         <thead>
           <tr>
-            <td class="image"><?php echo $column_image; ?></td>
-            <td class="name"><?php echo $column_name; ?></td>
+            <td colspan="2" class="name"><?php echo $column_name; ?></td>
             <td class="model"><?php echo $column_model; ?></td>
-            <td class="quantity"><?php echo $column_quantity; ?></td>
             <td class="price"><?php echo $column_price; ?></td>
+            <td class="quantity"><?php echo $column_quantity; ?></td>
             <td class="total"><?php echo $column_total; ?></td>
+            <td class="remove"><?php echo $column_remove; ?></td>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($products as $product) { ?>
           <tr>
             <td class="image"><?php if ($product['thumb']) { ?>
-              <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
+              <a href="<?php echo $product['href']; ?>"><img style="max-width: 70px; width:100%;" src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
               <?php } ?></td>
             <td class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
               <?php if (!$product['stock']) { ?>
@@ -52,12 +58,62 @@
               <small><?php echo $product['reward']; ?></small>
               <?php } ?></td>
             <td class="model"><?php echo $product['model']; ?></td>
+            <td class="price"><?php echo $product['price']; ?></td>
             <td class="quantity"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" />
               &nbsp;
-              <input type="image" src="catalog/view/theme/default/image/update.png" alt="<?php echo $button_update; ?>" title="<?php echo $button_update; ?>" />
-              &nbsp;<a href="<?php echo $product['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
-            <td class="price"><?php echo $product['price']; ?></td>
+              <input type="image" src="catalog/view/theme/default/image/update.png" alt="<?php echo $button_update; ?>" title="<?php echo $button_update; ?>" /></td>
             <td class="total"><?php echo $product['total']; ?></td>
+            <td class="remove"><a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
+          </tr>
+          <?php } ?>
+          <?php foreach ($vouchers as $vouchers) { ?>
+          <tr>
+            <td class="image"></td>
+            <td class="name"><?php echo $vouchers['description']; ?></td>
+            <td class="model"></td>
+            <td class="quantity"><input type="text" name="" value="1" size="1" disabled="disabled" />
+              &nbsp;<a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
+            <td class="price"><?php echo $vouchers['amount']; ?></td>
+            <td class="total"><?php echo $vouchers['amount']; ?></td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+      
+    <div class="cart-info visible-xs">
+    <table>
+        <thead>
+          <tr>
+            <td class="image"><?php echo $column_image; ?></td>
+            <td colspan="2" class="image"></td>
+            <td><?php echo $column_remove; ?></td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($products as $product) { ?>
+          <tr>
+            <td class="image"><?php if ($product['thumb']) { ?>
+              <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
+              <?php } ?></td>
+            <td colspan="2" class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+              <?php if (!$product['stock']) { ?>
+              <span class="stock">***</span>
+              <?php } ?>
+              <div>
+                <?php foreach ($product['option'] as $option) { ?>
+                - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                <?php } ?>
+              </div>
+              <?php if ($product['reward']) { ?>
+              <small><?php echo $product['reward']; ?></small>
+              <?php } ?>
+            <input style="width: 25px; text-align: center;" type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" />
+              &nbsp;
+              <input type="image" src="catalog/view/theme/default/image/update.png" alt="<?php echo $button_update; ?>" title="<?php echo $button_update; ?>" />
+              <br><span style="border:0px;" class="price"><?php echo $product['total']; ?></span>
+            </td>
+            <td><a href="<?php echo $product['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
           </tr>
           <?php } ?>
           <?php foreach ($vouchers as $vouchers) { ?>
@@ -76,7 +132,7 @@
     </div>
   </form>
   <?php if ($coupon_status || $advanced_coupon_status || $voucher_status || $reward_status || $shipping_status) { ?>
-  <h2><?php echo $text_next; ?></h2>
+  <h2 class="nexttext"><?php echo $text_next; ?></h2>
   <div class="content">
     <p><?php echo $text_next_choice; ?></p>
     <table class="radio">
@@ -206,10 +262,11 @@
     </table>
   </div>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $checkout; ?>" class="button"><?php echo $button_checkout; ?></a></div>
-    <div class="center"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_shopping; ?></a></div>
+    <div class="right"><a href="<?php echo $checkout; ?>" class="button"><?php echo $button_checkout; ?></a></div><br><br>
+    <div class="right"><a href="<?php echo $continue; ?>"><?php echo $button_shopping; ?></a></div>
   </div>
   <?php echo $content_bottom; ?></div>
+  </div></div>
 <script type="text/javascript"><!--
 $('input[name=\'next\']').bind('change', function() {
 	$('.cart-module > div').hide();

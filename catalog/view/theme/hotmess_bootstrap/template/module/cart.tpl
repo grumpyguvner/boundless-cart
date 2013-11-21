@@ -1,6 +1,6 @@
 <div id="cart">
   <div class="heading">
-    <a><span id="cart-total" class="hidden-xs"><?php echo $text_items; ?></span></a>
+    <a><span id="cart-total" class="hidden-xs"><h4 style="font-weight: 400;"><?php echo $text_bag; ?></h4> <?php echo $text_items; ?></span></a>
     <?php if($products) { ?>
     <a><span id="cart-total" class="glyphicon glyphicon-shopping-cart green visible-xs"></span></a>
     <?php } else { ?>
@@ -14,18 +14,17 @@
         <?php foreach ($products as $product) { ?>
         <tr>
           <td class="image"><?php if ($product['thumb']) { ?>
-            <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
+            <a href="<?php echo $product['href']; ?>"><img  src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
             <?php } ?></td>
           <td class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
             <div>
               <?php foreach ($product['option'] as $option) { ?>
               - <small><?php echo $option['name']; ?> <?php echo $option['value']; ?></small><br />
               <?php } ?>
-            </div></td>
-        </tr>
-        <tr>
-            <td class="quantity">x&nbsp;<?php echo $product['quantity']; ?></td>
-            <td class="total"><?php echo $product['total']; ?></td>
+            </div>
+            <div style="font-size: 24px; font-weight: 400; color:#333;"><?php echo $product['total']; ?></div>
+            <div style="">x&nbsp;<?php echo $product['quantity']; ?></div>
+          </td>
             <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove=<?php echo $product['key']; ?>' : $('#cart').load('index.php?route=module/cart&remove=<?php echo $product['key']; ?>' + ' #cart > *');" /></td>
         </tr>
         <?php } ?>
@@ -50,7 +49,10 @@
         <?php } ?>
       </table>
     </div>
-    <div class="checkout"><a href="<?php echo $cart; ?>"><?php echo $text_cart; ?></a> | <a href="<?php echo $checkout; ?>"><?php echo $text_checkout; ?></a></div>
+    <div class="checkout">
+        <a href="<?php echo $cart; ?>"><?php echo $text_cart; ?></a>
+        <a class="button " href="<?php echo $checkout; ?>">Checkout</a>
+    </div>
     <?php } else { ?>
     <div class="empty"><?php echo $text_empty; ?></div>
     <?php } ?>

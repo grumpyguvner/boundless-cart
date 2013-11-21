@@ -52,7 +52,7 @@
   <div class="product-filter">
     <?php /* <div class="display"><b><?php echo $text_display; ?></b> <?php echo $text_list; ?> <b>/</b> <a onclick="display('grid');"><?php echo $text_grid; ?></a></div> */ ?>
     <div class="limit"><b><?php echo $text_limit; ?></b>
-      <select onchange="location = this.value;">
+      <select style="width: auto;" onchange="location = this.value;">
         <?php foreach ($limits as $limits) { ?>
         <?php if ($limits['value'] == $limit) { ?>
         <option value="<?php echo $limits['href']; ?>" selected="selected"><?php echo $limits['text']; ?></option>

@@ -52,6 +52,7 @@ class ControllerModuleCart extends Controller {
 		$this->data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
 		$this->data['text_empty'] = $this->language->get('text_empty');
 		$this->data['text_cart'] = $this->language->get('text_cart');
+                $this->data['text_bag'] = $this->language->get('text_bag');
 		$this->data['text_checkout'] = $this->language->get('text_checkout');
 		
 		$this->data['button_remove'] = $this->language->get('button_remove');

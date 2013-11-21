@@ -1,19 +1,25 @@
 <?php echo $header; ?>
-<?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?></div>
-<?php } ?>
-<?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><div style="margin-left: 14px;"><?php echo $content_top; ?>
-  <div class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-    <?php } ?>
-  </div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <?php if ($error_warning) { ?>
+            <div class="warning"><?php echo $error_warning; ?></div>
+            <?php } ?>
+            <div class="breadcrumb">
+                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+                <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container"><div class="row"><?php echo $column_left; ?><?php echo $column_right; ?>
+<div id="content" class="<?php if(empty($column_left) && empty($column_right)){echo 'col-sm-12';} else if (empty($column_left) || empty($column_right)){echo 'col-sm-9';}else{echo 'col-sm-6';} ?>"><div><?php echo $content_top; ?>
   <h1><?php echo $heading_title; ?></h1>
   <p><?php echo $text_account_already; ?></p>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <h2><?php echo $text_your_details; ?></h2>
-    <div class="content">
+    <div class="content register">
       <table class="form">
         <tr>
           <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
@@ -193,6 +199,7 @@
     <?php } ?>
   </form>
   <?php echo $content_bottom; ?></div></div>
+  </div></div>
 <script type="text/javascript"><!--
 $('input[name=\'customer_group_id\']:checked').live('change', function() {
 	var customer_group = [];

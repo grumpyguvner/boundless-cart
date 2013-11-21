@@ -19,6 +19,7 @@
 <?php } ?>
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess_bootstrap/stylesheet/bootstrap.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess_bootstrap/stylesheet/megamenu.css" />
+<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/colorbox/colorbox.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess_bootstrap/stylesheet/stylesheet.css" />
 <?php foreach ($styles as $style) { ?>
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
@@ -29,7 +30,6 @@
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" />
 <script type="text/javascript" src="catalog/view/javascript/jquery/ui/external/jquery.cookie.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery/colorbox/jquery.colorbox.js"></script>
-<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/colorbox/colorbox.css" media="screen" />
 <script type="text/javascript" src="catalog/view/javascript/jquery/tabs.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/common.js"></script>
 <?php foreach ($scripts as $script) { ?>
@@ -52,7 +52,7 @@ DD_belatedPNG.fix('#logo img');
 <div id="header">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 visible-xs">
+            <div class="col-xs-12 visible-xs">
                 <div class="row top_mobile">
                     <div class="col-xs-1">
                         <div id="nav_list"><span class="glyphicon glyphicon-align-justify"></span></div>
@@ -64,8 +64,8 @@ DD_belatedPNG.fix('#logo img');
                     </div>
                     <div class="col-xs-7">
                         <div class="media-links-mobile" style="z-index: 1700;">
-                            <span class="glyphicon glyphicon-search"></span>
-                            <?php echo $cart; ?>
+                            <span style="position: absolute; top: 13px; right: 25px;"class="glyphicon glyphicon-search"></span>
+                            <?php //echo $cart; ?>
                         </div>
                     </div>
                 </div>
@@ -73,9 +73,8 @@ DD_belatedPNG.fix('#logo img');
             
             <div class="col-sm-4 text-center col-sm-push-4 hidden-xs">
                 <?php if ($logo) { ?>
-                    <div id="logo"><a href="<?php echo $home; ?>" style="display: inline-block;position: relative; top: -20px;"><img class="img-responsive" src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
+                    <div id="logo"><a href="<?php echo $home; ?>" style="display: inline-block; position: relative; top: -20px;"><img style="width: 100%; max-width: 290px;" src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
                 <?php } ?>
-                <div id="tagline"><?php echo $text_tag; ?></div>
             </div>
             
             <div class="col-sm-4 col-sm-pull-4 hidden-xs">
@@ -94,14 +93,14 @@ DD_belatedPNG.fix('#logo img');
                 </div>
             </div>
 
-            <div class="col-sm-4 hidden-xs">
-                <div style="text-align: right; margin-top: 5px;"><?php if(isset($blocks[1]['description'])){echo $blocks[1]['description'];} ?></div>
+            <div class="col-sm-4">
+                <div class="tag-line hidden-xs" style="text-align: right; margin-top: 5px;"><?php if(isset($blocks[1]['description'])){echo $blocks[1]['description'];} ?></div>
 
-                <div class="madeuk"><span>MADE IN THE UK</span></div>
+                <div class="madeuk hidden-xs"><span>MADE IN THE UK</span></div>
 
                 <?php echo $cart; ?>
 
-                <div id="welcome" class="purple">
+                <div id="welcome" class="purple visible-lg hidden-xs">
                     <?php if (!$logged) { ?>
                     <?php echo $text_welcome; ?>
                     <?php } else { ?>
@@ -118,6 +117,7 @@ DD_belatedPNG.fix('#logo img');
         </div>
     </div>
 </div>
+<div id="header_placeholder"></div>
 
 <div id="notification"></div>
 <script>

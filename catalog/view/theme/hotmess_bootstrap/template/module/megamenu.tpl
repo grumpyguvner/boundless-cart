@@ -100,7 +100,7 @@ function showSubmenu($category) {
 	</li>
   <?php } ?>
   </ul>
-  <div class="media-links" style="z-index: 1700;">
+  <div class="media-links" style="z-index: 850;">
     <a href="http://twitter.com/hotmessclothes" target="_blank"><img src="catalog/view/theme/hotmess_bootstrap/image/header/twitter.png"></a>
     <a href="http://www.facebook.com/pages/Hotmess/467402680008369" target="_blank"><img src="catalog/view/theme/hotmess_bootstrap/image/header/facebook.png"></a>
     <a href="http://www.youtube.com/channel/UC_0MRGFFNu7z7GByJwXqnQA" target="_blank"><img src="catalog/view/theme/hotmess_bootstrap/image/header/youtube.png"></a>

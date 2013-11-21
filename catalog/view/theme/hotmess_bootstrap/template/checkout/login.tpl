@@ -1,4 +1,5 @@
-<div class="left">
+<div class="row">
+<div class="left col-sm-6">
   <h2><?php echo $text_new_customer; ?></h2>
   <p><?php echo $text_checkout; ?></p>
   <label for="register">
@@ -25,7 +26,7 @@
   <br />
   <br />
 </div>
-<div id="login" class="right">
+<div id="login" class="right col-sm-6">
   <h2><?php echo $text_returning_customer; ?></h2>
   <p><?php echo $text_i_am_returning_customer; ?></p>
   <b><?php echo $entry_email; ?></b><br />
@@ -39,4 +40,5 @@
   <br />
   <input type="button" value="<?php echo $button_login; ?>" id="button-login" class="button" /><br />
   <br />
+</div>
 </div>

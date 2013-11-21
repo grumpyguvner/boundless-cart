@@ -1,8 +1,10 @@
-<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%; max-height: <?php echo $height; ?>px;">
+<div id="carousel-generic" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%; max-height: <?php echo $height; ?>px;">
         <ol class="carousel-indicators">
-          <li data-target="#carousel-example-generic" data-slide-to="0" class=""></li>
-          <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
-          <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
+          <?php for ($x=1; $x==1; $x++) { ?>
+          <li data-target="#carousel-generic" data-slide-to="<?php echo $x; ?>" class="active"></li>
+          <?php } if(count($banners) > 1) { for ($x=2; $x<=count($banners); $x++) { ?>
+          <li data-target="#carousel-generic" data-slide-to="<?php echo $x; ?>" class=""></li>
+          <?php }} ?>
         </ol>
         <div class="carousel-inner">
             <?php
@@ -34,8 +36,8 @@
             <?php } ?>
             <?php } ?>
         </div>
-        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+        <a class="left carousel-control" href="#carousel-generic" data-slide="prev">
         </a>
-        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+        <a class="right carousel-control" href="#carousel-generic" data-slide="next">
         </a>
 </div>
