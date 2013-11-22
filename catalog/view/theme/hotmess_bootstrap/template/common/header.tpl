@@ -52,25 +52,6 @@ DD_belatedPNG.fix('#logo img');
 <div id="header">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 visible-xs">
-                <div class="row top_mobile">
-                    <div class="col-xs-1">
-                        <div id="nav_list"><span class="glyphicon glyphicon-align-justify"></span></div>
-                    </div>
-                    <div class="col-xs-4">
-                        <?php if ($logo) { ?>
-                        <div id="logo"><a href="<?php echo $home; ?>" style="display: inline-block;position: relative; top: -20px;"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
-                        <?php } ?>
-                    </div>
-                    <div class="col-xs-7">
-                        <div class="media-links-mobile" style="z-index: 1700;">
-                            <span style="position: absolute; top: 13px; right: 25px;"class="glyphicon glyphicon-search"></span>
-                            <?php //echo $cart; ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
             <div class="col-sm-4 text-center col-sm-push-4 hidden-xs">
                 <?php if ($logo) { ?>
                     <div id="logo"><a href="<?php echo $home; ?>" style="display: inline-block; position: relative; top: -20px;"><img style="width: 100%; max-width: 290px;" src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
@@ -108,6 +89,34 @@ DD_belatedPNG.fix('#logo img');
                     <?php } ?>
                 </div>
             </div>
+            
+            <div class="col-xs-12 visible-xs">
+                <div class="row top_mobile">
+                    <div class="col-xs-1">
+                        <div id="nav_list"><span class="glyphicon glyphicon-align-justify"></span></div>
+                    </div>
+                    <div class="col-xs-4">
+                        <?php if ($logo) { ?>
+                        <div id="logo"><a href="<?php echo $home; ?>" style="display: inline-block;position: relative; top: -20px;"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
+                        <?php } ?>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="media-links-mobile" style="z-index: 1700;">
+                            <span id="searchicon" style="position: absolute; top: 13px; right: 25px; cursor: pointer;"class="glyphicon glyphicon-search"></span>
+                            <?php //echo $cart; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xs-12 visible-xs">
+                <div class="email" style="display: none;">
+                    <div id="search" class="inputContainer">
+                    <div class="button-search" title="<?php echo $text_search; ?>"></div>
+                    <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" />
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="row">
@@ -117,7 +126,7 @@ DD_belatedPNG.fix('#logo img');
         </div>
     </div>
 </div>
-<div id="header_placeholder"></div>
+<?php /* <div id="header_placeholder"></div> */ ?>
 
 <div id="notification"></div>
 <script>
@@ -129,6 +138,10 @@ DD_belatedPNG.fix('#logo img');
                         $(this).toggleClass('active');
                         $('.pushmenu-push').toggleClass('pushmenu-push-toright');
                         $menuLeft.toggleClass('pushmenu-open');
+                });
+                
+                $('#searchicon').click(function(){
+                    $(".email").slideToggle();
                 });
         });
 </script>

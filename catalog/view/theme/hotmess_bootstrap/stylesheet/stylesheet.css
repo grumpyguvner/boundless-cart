@@ -367,6 +367,9 @@ label {
 #menu > ul > li > div > ul > li > a {
 	color: #FFFFFF;
 }
+#boss_menu {
+    margin: 0px;
+}
 .success, .warning, .attention, .information {
 	padding: 10px 10px 10px 33px;
 	margin-bottom: 10px;
@@ -741,6 +744,19 @@ ul.box-category > li:last-child {
 }
 .box-category > ul > li ul > li > a.active {
 	font-weight: bold;
+}
+.discount.boss_label {
+    background-color: #A64FB6;
+}
+.discount.boss_label {
+    font-size:20px;
+    font-weight:400;
+    width:50px;
+    height:30px;
+    text-align:center;
+    position:absolute;
+    top:0;
+    right:0;
 }
 /* content */
 #content .content {
@@ -1890,7 +1906,7 @@ margin-top: 54px;
 	background: url("../image/arrow-right.png") no-repeat;
 	display: block;
 	height: 36px;
-	width: 35px;
+	width: 40px;
         top: 50%;
 }
 .carousel {
@@ -2024,6 +2040,20 @@ margin-top: 54px;
         display: none !important;
 
     }
+    #header .inputContainer {
+        width: 100%;
+        top: 0;
+    }
+    #header .inputContainer input {
+        width: 96%;
+    }
+    input[type="text"] {
+        max-width: none;
+    }
+    #header #search {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
     /*END OF HEADER*/
     
     /*START OF FOOTER*/
@@ -2148,8 +2178,9 @@ margin-top: 54px;
         width: auto;
         display: block !important;
         position: absolute;
-        top: -38px;
+        top: 8px;
         right: 0px;
+        margin-bottom: 0px;
     }
     #header #cart .content {
         width: 100%;

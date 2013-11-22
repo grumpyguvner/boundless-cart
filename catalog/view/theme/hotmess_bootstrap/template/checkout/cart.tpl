@@ -70,11 +70,11 @@
           <tr>
             <td class="image"></td>
             <td class="name"><?php echo $vouchers['description']; ?></td>
-            <td class="model"></td>
-            <td class="quantity"><input type="text" name="" value="1" size="1" disabled="disabled" />
-              &nbsp;<a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
+            <td class="model">-</td>
             <td class="price"><?php echo $vouchers['amount']; ?></td>
+            <td class="quantity"><input type="text" name="" value="1" size="1" disabled="disabled" /></td>
             <td class="total"><?php echo $vouchers['amount']; ?></td>
+            <td class="remove"><a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
           </tr>
           <?php } ?>
         </tbody>
@@ -118,13 +118,12 @@
           <?php } ?>
           <?php foreach ($vouchers as $vouchers) { ?>
           <tr>
-            <td class="image"></td>
-            <td class="name"><?php echo $vouchers['description']; ?></td>
-            <td class="model"></td>
-            <td class="quantity"><input type="text" name="" value="1" size="1" disabled="disabled" />
-              &nbsp;<a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
-            <td class="price"><?php echo $vouchers['amount']; ?></td>
-            <td class="total"><?php echo $vouchers['amount']; ?></td>
+              <td colspan="2">
+                  <?php echo $vouchers['description']; ?>
+                  <input type="text" name="" value="1" size="1" disabled="disabled" />
+                  <?php echo $vouchers['amount']; ?>
+              </td>
+              <td><a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
           </tr>
           <?php } ?>
         </tbody>

@@ -30,11 +30,12 @@
         <?php } ?>
         <?php foreach ($vouchers as $voucher) { ?>
         <tr>
-          <td class="image"></td>
-          <td class="name"><?php echo $voucher['description']; ?></td>
-          <td class="quantity">x&nbsp;1</td>
-          <td class="total"><?php echo $voucher['amount']; ?></td>
-          <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove=<?php echo $voucher['key']; ?>' : $('#cart').load('index.php?route=module/cart&remove=<?php echo $voucher['key']; ?>' + ' #cart > *');" /></td>
+            <td colspan="2" class="name">
+                <b><?php echo $voucher['description']; ?></b>
+                x&nbsp;1
+                <?php echo $voucher['amount']; ?>
+            </td>
+            <td class="remove"><img src="catalog/view/theme/default/image/remove-small.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove=<?php echo $voucher['key']; ?>' : $('#cart').load('index.php?route=module/cart&remove=<?php echo $voucher['key']; ?>' + ' #cart > *');" /></td>
         </tr>
         <?php } ?>
       </table>
