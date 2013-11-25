@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 
-                <div class="row">
+                <div class="row foot_text">
                     <div class="col-sm-12">
                         <div class="middle-footer">                            
                             <div id="social-footer" style="display: inline-block;margin-top: 20px;float: none">
@@ -81,7 +81,7 @@
                                     <a href="http://instagram.com/HOTMESSCLOTHING" target="_blank"><img src="catalog/view/theme/hotmess_bootstrap/image/footer/instagramb.png" ></a>
                                 </div>
                                 <div class="youth">
-                                <a href="uk-youth-charity"><img src="catalog/view/theme/hotmess_bootstrap/image/footer/UK-Youth.png" ></a>
+                                <a href="uk-youth-charity"><img style="width: 100%; max-width: 179px;" src="catalog/view/theme/hotmess_bootstrap/image/footer/UK-Youth.png" ></a>
                                 </div>
                                 <div id="newsletter_footer" class="inputContainer" style="display: inline-block;">
                                   <div style="margin-top: 4px;"class="button-enter" title="sign up"></div>
@@ -92,10 +92,10 @@
                     </div>
                 </div>
                 
-                <div class="row">
+                <div class="row foot_text">
                     <div class="col-sm-6">
                         <div class="payment">
-                            <img src="catalog/view/theme/hotmess_bootstrap/image/footer/payment.png" >
+                            <img style="width: 100%;" src="catalog/view/theme/hotmess_bootstrap/image/footer/payment.png" >
                         </div>
                     </div>
                     <div class="col-sm-6">

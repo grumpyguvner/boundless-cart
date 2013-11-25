@@ -59,7 +59,7 @@ DD_belatedPNG.fix('#logo img');
             </div>
             
             <div class="col-sm-4 col-sm-pull-4 hidden-xs">
-                <div class="toplinks"><?php if(isset($blocks[0]['description'])) {echo $blocks[0]['description'];} ?></div>
+                <div class="toplinks visible-lg"><?php if(isset($blocks[0]['description'])) {echo $blocks[0]['description'];} ?></div>
                 
                 <div id="top-inputs">
                     <div id="newsletter" class="inputContainer topEmail">
@@ -75,7 +75,7 @@ DD_belatedPNG.fix('#logo img');
             </div>
 
             <div class="col-sm-4">
-                <div class="tag-line hidden-xs" style="text-align: right; margin-top: 5px;"><?php if(isset($blocks[1]['description'])){echo $blocks[1]['description'];} ?></div>
+                <div class="tag-line visible-lg" style="text-align: right; margin-top: 5px;"><?php if(isset($blocks[1]['description'])){echo $blocks[1]['description'];} ?></div>
 
                 <div class="madeuk hidden-xs"><span>MADE IN THE UK</span></div>
 
@@ -143,5 +143,24 @@ DD_belatedPNG.fix('#logo img');
                 $('#searchicon').click(function(){
                     $(".email").slideToggle();
                 });
+                
+                
+                
+                /*Resize the youtube video on resize.*/
+                $(window).resize(function(){
+
+                    $("iframe").css({
+
+                        width: "100%",
+                        height: ($(this).width()) * .58
+
+                    });
+
+                });
+
+                $(window).resize();
+                
+                
+                
         });
 </script>

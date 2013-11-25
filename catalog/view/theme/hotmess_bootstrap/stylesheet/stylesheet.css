@@ -757,6 +757,7 @@ ul.box-category > li:last-child {
     position:absolute;
     top:0;
     right:0;
+    color: #FFF;
 }
 /* content */
 #content .content {
@@ -894,7 +895,6 @@ ul.box-category > li:last-child {
 	text-decoration: line-through;
 }
 .product-list .price-new {
-	font-weight: bold;
         color: #A64FB6;
 }
 .product-list .price-tax {
@@ -1917,7 +1917,7 @@ margin-top: 54px;
     margin-top: 40px;
 }
 .product {
-    margin-bottom: 20px;
+    margin-bottom: 75px;
 }
 
 .cart input.button
@@ -2077,6 +2077,12 @@ margin-top: 54px;
         margin-top: 22px;
         display: block;
     }
+    .inputContainer input {
+        width: 254px;
+    }
+    .inputContainer {
+        width: 282px;
+    }
     /*END OF FOOTER*/
     
     /*START OF SIDENAV*/
@@ -2200,6 +2206,7 @@ margin-top: 54px;
 	width:260px;
 	border:1px solid #dcdcdc; 
 	z-index:999;
+        padding: 0px;
 }
     #header #cart.active .content {
         width: 100%;
@@ -2278,6 +2285,12 @@ margin-top: 54px;
     .product-filter .sort select {
         width: 90px;
     }
+    
+    .login-content input[type="text"], .login-content input[type="password"] {
+        width: 100%;
+        max-width: none;
+    }
+    
 }
 
 /*small*/
@@ -2288,6 +2301,45 @@ margin-top: 54px;
     #boss_menu ul li {
         padding-right: 21px;
     }
+    #header .inputContainer {
+        float: none;
+    }
+    #header #newsletter {
+        margin-bottom: 10px;
+    }
+    #header #search {
+        width: 220px;
+    }
+    #header .topSearch input {
+        width: 188px;
+    }
+    #top-inputs {
+        top: -43px;
+    }
+    #header #cart {
+        margin-top: 4px;
+        margin-bottom: 9px;
+        float: right;
+    }
+    #header #welcome {
+        clear: both;
+        text-align: right;
+    }
+    #header .madeuk {
+        float: right;
+    }
+    #footer ul li, #footer ul li a {
+        font-size: 14px;
+    }
+    #newsletter_footer {
+        margin-top: 15px;
+    }
+    .payment {
+        margin-top: 15px;
+    }
+    .powered-1 {
+        margin-top: 11px;
+    }
 }
 
 /*medium*/
@@ -2297,6 +2349,42 @@ margin-top: 54px;
     }
     #boss_menu ul li {
         padding-right: 30px;
+    }
+    #header .inputContainer {
+        float: none;
+    }
+    #header #newsletter {
+        margin-bottom: 10px;
+    }
+    #header #search {
+        width: 220px;
+    }
+    #header .topSearch input {
+        width: 188px;
+    }
+    #top-inputs {
+        top: -43px;
+    }
+    #header #cart {
+        margin-top: 4px;
+        margin-bottom: 9px;
+        float: right;
+    }
+    #header #welcome {
+        clear: both;
+        text-align: right;
+    }
+    #header .madeuk {
+        float: right;
+    }
+    #newsletter_footer {
+        margin-top: 15px;
+    }
+    .payment {
+        margin-top: 15px;
+    }
+    .powered-1 {
+        margin-top: 16px;
     }
 }
 
