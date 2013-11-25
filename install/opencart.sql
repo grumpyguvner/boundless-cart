@@ -2848,6 +2848,7 @@ CREATE TABLE `oc_redeem` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `code` varchar(10) NOT NULL,
+  `redeem_theme_id` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `redeem` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -2857,6 +2858,41 @@ CREATE TABLE `oc_redeem` (
 
 --
 -- Dumping data for table `oc_redeem`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_redeem_theme`
+--
+
+DROP TABLE IF EXISTS `oc_redeem_theme`;
+CREATE TABLE `oc_redeem_theme` (
+  `redeem_theme_id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  PRIMARY KEY (`redeem_theme_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_voucher_theme`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_redeem_theme_description`
+--
+
+DROP TABLE IF EXISTS `oc_redeem_theme_description`;
+CREATE TABLE `oc_redeem_theme_description` (
+  `redeem_theme_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`redeem_theme_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_voucher_theme_description`
 --
 
 -- --------------------------------------------------------
