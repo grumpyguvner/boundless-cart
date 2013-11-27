@@ -168,18 +168,28 @@
                 <?php } ?></td>
             </tr>
             <tr>
-              <td><?php echo $entry_redeem; ?></td>
-              <td><?php if ($redeem) { ?>
-                <input type="radio" name="redeem" value="1" checked="checked" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="redeem" value="0" />
-                <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="redeem" value="1" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="redeem" value="0" checked="checked" />
-                <?php echo $text_no; ?>
-                <?php } ?></td>
+                <td><?php echo $entry_redeem; ?></td>
+                <td>
+                    <select name="redeem">
+                    <option value="0"><?php echo $text_no ?></option>
+                    <?php foreach ($redeem_themes as $themes) { ?>
+                    <?php if ($themes['redeem_theme_id'] == $redeem) { ?>
+                    <option value="<?php echo $themes['redeem_theme_id']; ?>" selected="selected"><?php echo $themes['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $themes['redeem_theme_id']; ?>"><?php echo $themes['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                    </select>
+                    
+                    <?php /*
+                    <?php if ($themes['redeem_theme_id'] == 0) { ?>
+                    <option value="0" selected="selected"><?php echo $text_no ?></option>
+                    <?php } else { ?>
+                    <option value="0"><?php echo $text_no ?></option>
+                    <?php } ?> */
+                    ?>
+                    
+                </td>
             </tr>
             <tr>
               <td><?php echo $entry_keyword; ?></td>

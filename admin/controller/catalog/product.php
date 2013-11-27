@@ -1276,6 +1276,10 @@ class ControllerCatalogProduct extends Controller {
         $this->load->model('design/layout');
 
         $this->data['layouts'] = $this->model_design_layout->getLayouts();
+        
+        /*Get the redeem themes*/
+        $this->load->model('sale/redeem_theme');
+        $this->data['redeem_themes'] = $this->model_sale_redeem_theme->getRedeemThemes();
 
         $this->template = 'catalog/product_form.tpl';
         $this->children = array(

@@ -667,22 +667,24 @@ class ModelSaleOrder extends Model {
                 
                 $notes = ($data['notes']) ? $this->user->getUserName() . ' [' . $_SERVER['REMOTE_ADDR'] . ']: ' . $data['notes'] : $this->user->getUserName() . ' [' . $_SERVER['REMOTE_ADDR'] . ']'; 
                 
+                $order_info = $this->getOrder($order_id);
+                
                 //add the codes to the comments section.
 		if ($this->config->get('config_complete_status_id') == $data['order_status_id']) {
                         $this->load->model('sale/redeem');
                         $this->load->model('catalog/product');
                         $order_info = $this->model_sale_redeem->getRedeemByOrderId($order_id);
-                        $has_downloads = $this->model_catalog_product->getProductDownloads($order_info[0]['product_id']);
+                        //$has_downloads = $this->model_catalog_product->getProductDownloads($order_info[0]['product_id']);
                         
                         $redeems = $this->model_sale_redeem->getRedeemByOrderId($order_id);
-                        if ($has_downloads && $redeems) {
-                            $data['comment'] .= "\n" . 'Please go to your downloads section to retrieve your voucher.' . "\n";
-                            $message .= "\n" . 'Please go to your downloads section to retrieve your voucher.' . "\n";
-                        }
-                        else {
-                            $data['comment'] .= "\n";
-                            $message .= "\n";
-                        }
+                        //if ($has_downloads && $redeems) {
+                        //    $data['comment'] .= "\n" . 'Please go to your downloads section to retrieve your voucher.' . "\n";
+                        //    $message .= "\n" . 'Please go to your downloads section to retrieve your voucher.' . "\n";
+                        //}
+                        //else {
+                        //    $data['comment'] .= "\n";
+                        //    $message .= "\n";
+                        //}
                         
                         $i = 0;
                         foreach ($redeems as $redeem) {
@@ -691,6 +693,35 @@ class ModelSaleOrder extends Model {
                             {
                                 $data['comment'] .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
                                 $message .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
+                                
+                                //get product information for the redeem code.
+                                $this->load->model('catalog/product');
+                                $product_info = $this->model_catalog_product->getProduct($redeem['product_id']);
+                                
+                                //get the theme that the product is assigned with.
+                                $this->load->model('sale/redeem_theme');
+                                $theme_info = $this->model_sale_redeem_theme->getRedeemTheme($product_info['redeem']);
+                                
+                                //create the html file.
+                                $attachment = fopen(DIR_DOWNLOAD.'voucher-'.$redeem['code'].'.html','w') or die('An error has occured with the file.');
+                                $file_names[] = DIR_DOWNLOAD.'voucher-'.$redeem['code'].'.html';
+                                
+                                //replace the keyword with the redeem code.
+                                $content_message = str_replace("[CODE]", $redeem['code'], $theme_info['content']);
+                                
+                                $attachment_text =
+                                "
+                                <!DOCTYPE HTML>
+                                <html>
+                                <body>
+                                    ".$content_message."
+                                </body>
+                                </html>
+                                ";
+                                
+                                fwrite($attachment, $attachment_text) or die('Could not write to the file.');
+                                
+                                fclose($attachment);
                             }
                         }
                         
@@ -741,6 +772,12 @@ class ModelSaleOrder extends Model {
 			$message .= $language->get('text_footer');
 
 			$mail = new Mail();
+                        
+                        foreach($file_names as $file)
+                        {
+                            $mail->AddAttachment($file);
+                        }
+                        
 			$mail->protocol = $this->config->get('config_mail_protocol');
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->hostname = $this->config->get('config_smtp_host');

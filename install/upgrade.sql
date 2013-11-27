@@ -642,4 +642,21 @@ CREATE TABLE `oc_redeem` (
   PRIMARY KEY (`redeem_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-ALTER TABLE oc_product ADD redeem tinyint(1) DEFAULT '0' AFTER shipping
+ALTER TABLE oc_product ADD redeem tinyint(1) DEFAULT '0' AFTER shipping;
+
+#### Start 1.5.4:BC1.2.19
+
+CREATE TABLE IF NOT EXISTS `oc_redeem_theme` (
+  `redeem_theme_id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  PRIMARY KEY (`redeem_theme_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `oc_redeem_theme_description` (
+  `redeem_theme_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`redeem_theme_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+ALTER TABLE oc_redeem ADD redeem_theme_id int(11) NOT NULL AFTER code;

@@ -20,7 +20,7 @@ class ModelCheckoutOrder extends Model {
                         
                     //Add the redeem codes.
                     if ($this->config->get('config_redeem') == 1) {
-                        if ($product['redeem'] == 1) {
+                        if ($product['redeem'] > 0) {
                             for ($i = 0; $i < (int)$product['quantity']; $i++) {
                                 $this->db->query("INSERT INTO " . DB_PREFIX . "redeem SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', code = 'ts" . substr(md5(mt_rand()), 0, 6) . "', status = '1', `redeem` = '0', date_added = NOW()");
                             }

@@ -156,6 +156,12 @@ ob_start("fixMenu");
           <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li> 
           <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
           <li><a href="<?php echo $advanced_coupon; ?>"><?php echo $text_advanced_coupon; ?></a></li>
+          <li><a class="parent"><?php echo $text_redeem; ?></a>
+            <ul>
+              <li><a href="<?php echo $redeem; ?>"><?php echo $text_redeem; ?></a></li>
+              <li><a href="<?php echo $redeem_theme; ?>"><?php echo $text_redeem_theme; ?></a></li>
+            </ul>
+          </li>
           <li><a class="parent"><?php echo $text_voucher; ?></a>
             <ul>
               <li><a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a></li>

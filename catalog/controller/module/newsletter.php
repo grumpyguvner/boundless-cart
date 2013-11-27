@@ -46,12 +46,16 @@ class ControllerModuleNewsletter extends Controller {
             $this->config->set('newsletter_mailchimp_listid', $this->request->get['listId']);
         }
         
-        if ($this->request->get['firstname'] == '') {
-            $error = $this->language->get('error_firstname');
+        if (isset($this->request->get['firstname'])) {
+            if ($this->request->get['firstname'] == '') {
+                $error = $this->language->get('error_firstname');
+            }
         }
 
-        else if ($this->request->get['lastname'] == '') {
-            $error = $this->language->get('error_lastname');
+        else if (isset($this->request->get['lastname'])) {
+            if ($this->request->get['lastname'] == '') {
+                $error = $this->language->get('error_lastname');
+            }
         }
         
         else if (!$this->request->get['email'] || !filter_var($this->request->get['email'], FILTER_VALIDATE_EMAIL)) {
