@@ -1,5 +1,5 @@
 <?php
-class ModelSaleRedeem extends Model {
+class ModelAccountRedeem extends Model {
 	
 	public function getRedeem($redeem_id) {
       	$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "redeem WHERE redeem_id = '" . (int)$redeem_id . "'");

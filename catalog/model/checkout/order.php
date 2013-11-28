@@ -250,8 +250,8 @@ class ModelCheckoutOrder extends Model {
                                         if ($redeem['redeem_theme_id'])
                                         {
                                             //get the theme that the product is assigned with.
-                                            $this->load->model('sale/redeem_theme');
-                                            $theme_info = $this->model_sale_redeem_theme->getRedeemTheme($redeem['redeem_theme_id']);
+                                            $this->load->model('account/redeem_theme');
+                                            $theme_info = $this->model_account_redeem_theme->getRedeemTheme($redeem['redeem_theme_id']);
 
                                             //replace the keyword with the redeem code.
                                             $content_message = str_replace("[CODE]", $redeem['code'], $theme_info['content']);
@@ -680,10 +680,6 @@ class ModelCheckoutOrder extends Model {
 
 				$mail = new Mail();
                         
-                                foreach($attachments as $file)
-                                {
-                                    $mail->AddAttachment($file);
-                                }
 				$mail->protocol = $this->config->get('config_mail_protocol');
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->hostname = $this->config->get('config_smtp_host');

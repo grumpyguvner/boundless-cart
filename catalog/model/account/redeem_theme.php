@@ -1,5 +1,5 @@
 <?php 
-class ModelSaleRedeemTheme extends Model {
+class ModelAccountRedeemTheme extends Model {
 	
 		
 	public function getRedeemTheme($redeem_theme_id) {
