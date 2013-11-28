@@ -2954,8 +2954,6 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_DIV($param, $other='div')
         {
-            if ($this->parsingCss->value['page-break-after'] == "always")
-                $this->_setNewPage();
                 
             if ($this->_isForOneLine) return false;
 
@@ -3016,6 +3014,8 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
             if ($block) $this->_tag_open_BR(array());
             if ($this->_debugActif) $this->_DEBUG_add(strtoupper($other), false);
+            if ($this->parsingCss->value['page-break-after'] == "always")
+                $this->_setNewPage();
 
             return true;
         }
@@ -4162,8 +4162,6 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         protected function _tag_close_P($param)
         {
-            if($this->parsingCss->value['page-break-after'] == "always")
-                $this->_setNewPage();
             
             if ($this->_isForOneLine) return false;
 
@@ -4176,6 +4174,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
             $this->parsingCss->fontSet();
             $this->_makeBreakLine($h);
 
+            if($this->parsingCss->value['page-break-after'] == "always")
+                $this->_setNewPage();
+            
             return true;
         }
 
