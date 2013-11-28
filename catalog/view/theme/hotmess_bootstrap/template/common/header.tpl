@@ -102,7 +102,7 @@ DD_belatedPNG.fix('#logo img');
                     </div>
                     <div class="col-xs-7">
                         <div class="media-links-mobile" style="z-index: 1700;">
-                            <span id="searchicon" style="position: absolute; top: 13px; right: 25px; cursor: pointer;"class="glyphicon glyphicon-search"></span>
+                            <span id="searchicon" style="font-size: 18px; position: absolute; top: 19px; right: 48px; cursor: pointer;"class="glyphicon glyphicon-search"></span>
                             <?php //echo $cart; ?>
                         </div>
                     </div>

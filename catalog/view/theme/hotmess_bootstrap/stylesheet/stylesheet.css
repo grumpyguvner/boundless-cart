@@ -64,6 +64,9 @@ form {
 	margin: 0;
 	display: inline;
 }
+img {
+    height: auto;
+}
 input[type='text'], input[type='password'], textarea {
 	background: #F8F8F8;
 	border: 1px solid #CCCCCC;
@@ -134,7 +137,7 @@ label {
 }
 #header #logo {
 	position: absolute;
-	top: 25px;
+	top: 30px;
 	left: 15px;
 }
 #language {
@@ -2018,7 +2021,7 @@ margin-top: 54px;
         
     }
     .top_mobile {
-        height: 45px;
+        height: 60px;
         border-bottom: solid 1px #999;
     }
     .media-links-mobile {
@@ -2053,6 +2056,9 @@ margin-top: 54px;
     #header #search {
         margin-top: 10px;
         margin-bottom: 10px;
+    }
+    #header #cart .heading {
+        margin-top: 2px;
     }
     /*END OF HEADER*/
     
@@ -2173,8 +2179,9 @@ margin-top: 54px;
     }
 
     #nav_list {
+            font-size: 18px;
             cursor: pointer;
-            line-height: 40px;
+            line-height: 56px;
     }
     /*END OF SIDENAV*/
     
@@ -2197,8 +2204,8 @@ margin-top: 54px;
 	clear: both;
 	display: none;
 	position: absolute;
-	top: 24px;
-	right:0;
+	top: 30px;
+	right:5;
 	padding: 8px 20px;
 	min-height: 70px;
         min-width: 300px;
@@ -2217,6 +2224,7 @@ margin-top: 54px;
         margin-left: 0px;
         padding-right: 0px;
         color: #000;
+        margin-right: 18px;
     }
     /*END OF CART*/
     
