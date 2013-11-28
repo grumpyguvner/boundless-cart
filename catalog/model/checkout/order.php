@@ -230,6 +230,9 @@ class ModelCheckoutOrder extends Model {
 			
 			// Downloads
 			$order_download_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_download WHERE order_id = '" . (int)$order_id . "'");
+                        
+			// Redeem
+			$order_redeem_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "redeem WHERE order_id = '" . (int)$order_id . "'");
 			
 			// Gift Voucher
 			$this->load->model('checkout/voucher');

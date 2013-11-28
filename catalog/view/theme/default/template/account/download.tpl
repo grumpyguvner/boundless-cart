@@ -6,6 +6,10 @@
     <?php } ?>
   </div>
   <h1><?php echo $heading_title; ?></h1>
+  <?php
+  if (!isset($text_error))
+  {
+  ?>
   <?php foreach ($downloads as $download) { ?>
   <div class="download-list">
     <div class="download-id"><b><?php echo $text_order; ?></b> <?php echo $download['order_id']; ?></div>
@@ -23,6 +27,12 @@
   </div>
   <?php } ?>
   <div class="pagination"><?php echo $pagination; ?></div>
+  
+  <?php
+  } else {
+     echo '<p>' . $text_error . '</p>';
+  }
+  ?>
   <div class="buttons">
     <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>

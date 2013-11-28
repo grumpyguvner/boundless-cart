@@ -638,11 +638,13 @@ CREATE TABLE `oc_redeem` (
   `code` varchar(10) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `redeem` tinyint(1) NOT NULL,
+  `redeem_theme_id` int(11) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`redeem_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 ALTER TABLE oc_product ADD redeem tinyint(1) DEFAULT '0' AFTER shipping;
+ALTER TABLE oc_product ADD redeem_theme_id int(11) int DEFAULT '0' AFTER redeem;
 
 #### Start 1.5.4:BC1.2.19
 
@@ -658,5 +660,3 @@ CREATE TABLE IF NOT EXISTS `oc_redeem_theme_description` (
   `name` varchar(32) NOT NULL,
   PRIMARY KEY (`redeem_theme_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
-ALTER TABLE oc_redeem ADD redeem_theme_id int(11) NOT NULL AFTER code;

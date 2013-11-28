@@ -45,7 +45,8 @@ $_['entry_mpn']              = 'MPN:<br/><span class="help">Manufacturer Part Nu
 $_['entry_location']         = 'Location:';
 $_['entry_manufacturer']     = 'Manufacturer:';
 $_['entry_shipping']         = 'Requires Shipping:';
-$_['entry_redeem']           = 'Allows Redeem:'; 
+$_['entry_redeem']           = 'Redeemable Code:'; 
+$_['entry_redeem_theme']     = 'Redeemable Voucher:'; 
 $_['entry_date_available']   = 'Date Available:';
 $_['entry_quantity']         = 'Quantity:';
 $_['entry_minimum']          = 'Minimum Quantity:<br/><span class="help">Force a minimum ordered amount</span>';

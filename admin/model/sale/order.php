@@ -702,26 +702,34 @@ class ModelSaleOrder extends Model {
                                 $this->load->model('sale/redeem_theme');
                                 $theme_info = $this->model_sale_redeem_theme->getRedeemTheme($product_info['redeem']);
                                 
-                                //create the html file.
-                                $attachment = fopen(DIR_DOWNLOAD.'voucher-'.$redeem['code'].'.html','w') or die('An error has occured with the file.');
-                                $file_names[] = DIR_DOWNLOAD.'voucher-'.$redeem['code'].'.html';
-                                
                                 //replace the keyword with the redeem code.
                                 $content_message = str_replace("[CODE]", $redeem['code'], $theme_info['content']);
                                 
                                 $attachment_text =
-                                "
-                                <!DOCTYPE HTML>
+                                "<!DOCTYPE HTML>
                                 <html>
-                                <body>
-                                    ".$content_message."
-                                </body>
-                                </html>
-                                ";
+                                <head><meta charset=utf-8></head>
+                                <body>".$content_message."</body>
+                                </html>";
                                 
-                                fwrite($attachment, $attachment_text) or die('Could not write to the file.');
+                                $filename = DIR_DOWNLOAD.'voucher-'.$redeem['code'].'.pdf';
                                 
-                                fclose($attachment);
+                                $ch = curl_init();
+                                curl_setopt($ch, CURLOPT_URL, HTTP_CATALOG . 'pdf.php');
+                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                                curl_setopt($ch, CURLOPT_POST, true);
+
+                                $data = array(
+                                    'content' => $attachment_text,
+                                    'filename' => $filename
+                                );
+                                
+                                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                                $output = curl_exec($ch);
+                                $info = curl_getinfo($ch);
+                                curl_close($ch);
+                                
+                                file_put_contents($filename, $output);
                             }
                         }
                         

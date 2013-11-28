@@ -167,30 +167,42 @@
                 <?php echo $text_no; ?>
                 <?php } ?></td>
             </tr>
+            <?php if($this->config->get('config_redeem') == 1) { ?>
             <tr>
-                <td><?php echo $entry_redeem; ?></td>
+              <td><?php echo $entry_redeem; ?></td>
+              <td>
+                    <?php if ($redeem) { ?>
+                    <input type="radio" name="redeem" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <input type="radio" name="redeem" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="redeem" value="1" />
+                    <?php echo $text_yes; ?>
+                    <input type="radio" name="redeem" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+              </td>
+            </tr>
+            <tr>
+                <td><?php echo $entry_redeem_theme; ?></td>
                 <td>
-                    <select name="redeem">
-                    <option value="0"><?php echo $text_no ?></option>
+                    <select name="redeem_theme_id">
+                    <option value="0"><?php echo $text_none ?></option>
                     <?php foreach ($redeem_themes as $themes) { ?>
-                    <?php if ($themes['redeem_theme_id'] == $redeem) { ?>
+                    <?php if ($themes['redeem_theme_id'] == $redeem_theme_id) { ?>
                     <option value="<?php echo $themes['redeem_theme_id']; ?>" selected="selected"><?php echo $themes['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $themes['redeem_theme_id']; ?>"><?php echo $themes['name']; ?></option>
                     <?php } ?>
                     <?php } ?>
                     </select>
-                    
-                    <?php /*
-                    <?php if ($themes['redeem_theme_id'] == 0) { ?>
-                    <option value="0" selected="selected"><?php echo $text_no ?></option>
-                    <?php } else { ?>
-                    <option value="0"><?php echo $text_no ?></option>
-                    <?php } ?> */
-                    ?>
-                    
                 </td>
             </tr>
+            <?php } else { ?>
+                <input type="hidden" name="redeem" value="<?php echo $redeem; ?>">
+                <input type="hidden" name="redeem_theme_id" value="<?php echo $redeem_theme_id; ?>">
+            <?php } ?>
             <tr>
               <td><?php echo $entry_keyword; ?></td>
               <td><input type="text" name="keyword" value="<?php echo $keyword; ?>" /></td>

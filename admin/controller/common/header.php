@@ -145,7 +145,6 @@ class ControllerCommonHeader extends Controller {
             $this->data['country'] = $this->url->link('localisation/country', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['coupon'] = $this->url->link('sale/coupon', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['advanced_coupon'] = $this->url->link('sale/advanced_coupon', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['redeem'] = $this->url->link('sale/redeem', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['currency'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['customer_group'] = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'], 'SSL');
@@ -200,7 +199,14 @@ class ControllerCommonHeader extends Controller {
             $this->data['user_group_link'] = $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['voucher'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['voucher_theme'] = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['redeem_theme'] = $this->url->link('sale/redeem_theme', 'token=' . $this->session->data['token'], 'SSL');
+            
+            if ($this->config->get('config_redeem')) {
+                $this->data['redeem'] = $this->url->link('sale/redeem', 'token=' . $this->session->data['token'], 'SSL');
+                $this->data['redeem_theme'] = $this->url->link('sale/redeem_theme', 'token=' . $this->session->data['token'], 'SSL');
+            } else {
+                $this->data['redeem'] = '';
+                $this->data['redeem_theme'] = '';
+            }
             $this->data['weight_class'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['sage'] = $this->url->link('tool/sage', 'token=' . $this->session->data['token'], 'SSL');
