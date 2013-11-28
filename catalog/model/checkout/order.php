@@ -560,7 +560,7 @@ class ModelCheckoutOrder extends Model {
 		
 			$mail = new Mail(); 
                         
-                        foreach($attachments[] as $file)
+                        foreach($attachments as $file)
                         {
                             $mail->AddAttachment($file);
                         }
