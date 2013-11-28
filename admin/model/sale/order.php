@@ -666,6 +666,7 @@ class ModelSaleOrder extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$data['order_status_id'] . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
                 
                 $notes = ($data['notes']) ? $this->user->getUserName() . ' [' . $_SERVER['REMOTE_ADDR'] . ']: ' . $data['notes'] : $this->user->getUserName() . ' [' . $_SERVER['REMOTE_ADDR'] . ']'; 
+                $message = '';
                 
                 $order_info = $this->getOrder($order_id);
                 
@@ -693,43 +694,42 @@ class ModelSaleOrder extends Model {
                             {
                                 $data['comment'] .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
                                 $message .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
-                                
-                                //get product information for the redeem code.
-                                $this->load->model('catalog/product');
-                                $product_info = $this->model_catalog_product->getProduct($redeem['product_id']);
-                                
-                                //get the theme that the product is assigned with.
-                                $this->load->model('sale/redeem_theme');
-                                $theme_info = $this->model_sale_redeem_theme->getRedeemTheme($product_info['redeem']);
-                                
-                                //replace the keyword with the redeem code.
-                                $content_message = str_replace("[CODE]", $redeem['code'], $theme_info['content']);
-                                
-                                $attachment_text =
-                                "<!DOCTYPE HTML>
-                                <html>
-                                <head><meta charset=utf-8></head>
-                                <body>".$content_message."</body>
-                                </html>";
-                                
-                                $filename = DIR_DOWNLOAD.'voucher-'.$redeem['code'].'.pdf';
-                                
-                                $ch = curl_init();
-                                curl_setopt($ch, CURLOPT_URL, HTTP_CATALOG . 'pdf.php');
-                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                                curl_setopt($ch, CURLOPT_POST, true);
+                               
+                                if ($redeem['redeem_theme_id'])
+                                {
+                                    //get the theme that the product is assigned with.
+                                    $this->load->model('sale/redeem_theme');
+                                    $theme_info = $this->model_sale_redeem_theme->getRedeemTheme($redeem['redeem_theme_id']);
 
-                                $data = array(
-                                    'content' => $attachment_text,
-                                    'filename' => $filename
-                                );
-                                
-                                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-                                $output = curl_exec($ch);
-                                $info = curl_getinfo($ch);
-                                curl_close($ch);
-                                
-                                file_put_contents($filename, $output);
+                                    //replace the keyword with the redeem code.
+                                    $content_message = str_replace("[CODE]", $redeem['code'], $theme_info['content']);
+
+                                    $attachment_text =
+                                    "<!DOCTYPE HTML>
+                                    <html>
+                                    <head><meta charset=utf-8></head>
+                                    <body>".$content_message."</body>
+                                    </html>";
+
+                                    $filename = DIR_DOWNLOAD.'voucher-'.$redeem['code'].'.pdf';
+
+                                    $ch = curl_init();
+                                    curl_setopt($ch, CURLOPT_URL, HTTP_CATALOG . 'pdf.php');
+                                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                                    curl_setopt($ch, CURLOPT_POST, true);
+
+                                    $data = array(
+                                        'content' => $attachment_text,
+                                        'filename' => $filename
+                                    );
+
+                                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                                    $output = curl_exec($ch);
+                                    $info = curl_getinfo($ch);
+                                    curl_close($ch);
+
+                                    file_put_contents($filename, $output);
+                                }
                             }
                         }
                         
