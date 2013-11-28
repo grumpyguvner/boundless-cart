@@ -22,7 +22,7 @@ class ModelCheckoutOrder extends Model {
                     if ($this->config->get('config_redeem') == 1) {
                         if ($product['redeem'] > 0) {
                             for ($i = 0; $i < (int)$product['quantity']; $i++) {
-                                $this->db->query("INSERT INTO " . DB_PREFIX . "redeem SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', code = 'ts" . substr(md5(mt_rand()), 0, 6) . "', status = '1', `redeem` = '0', date_added = NOW()");
+                                $this->db->query("INSERT INTO " . DB_PREFIX . "redeem SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', code = 'ts" . substr(md5(mt_rand()), 0, 6) . "', redeem_theme_id = '" . (int)$product['redeem_theme_id'] . "', status = '1', `redeem` = '0', date_added = NOW()");
                             }
                         }
                     }
@@ -233,6 +233,61 @@ class ModelCheckoutOrder extends Model {
                         
 			// Redeem
 			$order_redeem_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "redeem WHERE order_id = '" . (int)$order_id . "'");
+                        
+                        $attachments = array();
+                        
+                        //add the codes to the comments section.
+                        if ($this->config->get('config_complete_status_id') == $order_status_id) {
+                                $this->load->model('account/redeem');
+                                
+                                $redeems = $this->model_account_redeem->getRedeemByOrderId($order_id);
+
+                                $i = 0;
+                                foreach ($redeems as $redeem) {
+                                    $i++;
+                                    if ($redeem['status'] == 1)
+                                    {
+                                        if ($redeem['redeem_theme_id'])
+                                        {
+                                            //get the theme that the product is assigned with.
+                                            $this->load->model('sale/redeem_theme');
+                                            $theme_info = $this->model_sale_redeem_theme->getRedeemTheme($redeem['redeem_theme_id']);
+
+                                            //replace the keyword with the redeem code.
+                                            $content_message = str_replace("[CODE]", $redeem['code'], $theme_info['content']);
+
+                                            $attachment_text =
+                                            "<!DOCTYPE HTML>
+                                            <html>
+                                            <head><meta charset=utf-8></head>
+                                            <body>".$content_message."</body>
+                                            </html>";
+
+                                            $filename = DIR_DOWNLOAD.'voucher-'.$redeem['code'].'.pdf';
+
+                                            $ch = curl_init();
+                                            curl_setopt($ch, CURLOPT_URL, HTTP_SERVER . 'pdf.php');
+                                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                                            curl_setopt($ch, CURLOPT_POST, true);
+
+                                            $data = array(
+                                                'content' => $attachment_text,
+                                                'filename' => $filename
+                                            );
+
+                                            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                                            $output = curl_exec($ch);
+                                            $info = curl_getinfo($ch);
+                                            curl_close($ch);
+
+                                            file_put_contents($filename, $output);
+                                            
+                                            $attachments[] = $filename;
+                                        }
+                                    }
+                                }
+
+                        }
 			
 			// Gift Voucher
 			$this->load->model('checkout/voucher');
@@ -504,6 +559,12 @@ class ModelCheckoutOrder extends Model {
 			$text .= $language->get('text_new_footer') . "\n\n";
 		
 			$mail = new Mail(); 
+                        
+                        foreach($attachments[] as $file)
+                        {
+                            $mail->AddAttachment($file);
+                        }
+                        
 			$mail->protocol = $this->config->get('config_mail_protocol');
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->hostname = $this->config->get('config_smtp_host');
@@ -618,6 +679,11 @@ class ModelCheckoutOrder extends Model {
 				$message .= $language->get('text_update_footer');
 
 				$mail = new Mail();
+                        
+                                foreach($attachments as $file)
+                                {
+                                    $mail->AddAttachment($file);
+                                }
 				$mail->protocol = $this->config->get('config_mail_protocol');
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->hostname = $this->config->get('config_smtp_host');

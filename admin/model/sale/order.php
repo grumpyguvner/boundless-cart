@@ -670,6 +670,8 @@ class ModelSaleOrder extends Model {
                 
                 $order_info = $this->getOrder($order_id);
                 
+                $attachments = array();
+                
                 //add the codes to the comments section.
 		if ($this->config->get('config_complete_status_id') == $data['order_status_id']) {
                         $this->load->model('sale/redeem');
@@ -729,6 +731,9 @@ class ModelSaleOrder extends Model {
                                     curl_close($ch);
 
                                     file_put_contents($filename, $output);
+                                    
+                                    $attachments[] = $filename;
+                                    
                                 }
                             }
                         }
@@ -781,7 +786,7 @@ class ModelSaleOrder extends Model {
 
 			$mail = new Mail();
                         
-                        foreach($file_names as $file)
+                        foreach($attachments as $file)
                         {
                             $mail->AddAttachment($file);
                         }
