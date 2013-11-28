@@ -15,7 +15,7 @@ require('system/helper/html2pdf/html2pdf.class.php');
 
     // get the HTML
     ob_start();
-    echo $_POST['content'];
+    echo $_REQUEST['content'];
     $content = ob_get_clean();
 
     // convert in PDF
@@ -25,7 +25,7 @@ require('system/helper/html2pdf/html2pdf.class.php');
 //      $html2pdf->setModeDebug();
         $html2pdf->setDefaultFont('Arial');
         $html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-        $html2pdf->Output($_POST['filename']);
+        $html2pdf->Output($_REQUEST['filename']);
     }
     catch(HTML2PDF_exception $e) {
         echo $e;
