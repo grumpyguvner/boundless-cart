@@ -107,8 +107,7 @@ DD_belatedPNG.fix('#logo img');
           <li><a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?></a></li>
           <?php } ?>
           <?php } ?>
-           <li><a href="index.php?route=account/voucher">Voucher Gift</a></li>
-            <li><a href="">Voucher Tasting</a></li>
+          <li><a href="index.php?route=account/voucher">Voucher Gift</a></li>
         </ul>
         <?php } ?>
          
