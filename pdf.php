@@ -17,6 +17,8 @@ require('system/helper/html2pdf/html2pdf.class.php');
     ob_start();
     echo $_REQUEST['content'];
     $content = ob_get_clean();
+    
+    $content = preg_replace('%<hr\s+class\=\"newpage\"[^>]*>%i', "<page></page>\n", $content);
 
     // convert in PDF
     try
