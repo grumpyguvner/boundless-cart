@@ -705,7 +705,7 @@ class ModelSaleOrder extends Model {
 
                                     //replace the keyword with the redeem code.
                                     $content_message = str_replace("[CODE]", $redeem['code'], $theme_info['content']);
-                                    $content_message = preg_replace("%[DATE(.*?)]%e", 'date("j F Y", strtotime("\\1"))', $content_message);
+                                    $content_message = preg_replace("%[DATE(.*?)]%ie", 'date("j F Y", strtotime("$1"))', $content_message);
 
                                     $attachment_text =
                                     "<!DOCTYPE HTML>
