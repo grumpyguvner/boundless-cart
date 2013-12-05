@@ -694,8 +694,8 @@ class ModelSaleOrder extends Model {
                             $i++;
                             if ($redeem['status'] == 1)
                             {
-                                $data['comment'] .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
-                                $message .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
+                                //$data['comment'] .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
+                                //$message .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
                                
                                 if ($redeem['redeem_theme_id'])
                                 {
@@ -705,6 +705,7 @@ class ModelSaleOrder extends Model {
 
                                     //replace the keyword with the redeem code.
                                     $content_message = str_replace("[CODE]", $redeem['code'], $theme_info['content']);
+                                    $content_message = preg_replace("%[DATE(.*?)]%e", 'date("j F Y", strtotime("\\1"))', $content_message);
 
                                     $attachment_text =
                                     "<!DOCTYPE HTML>
