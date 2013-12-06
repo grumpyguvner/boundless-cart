@@ -356,7 +356,7 @@
       </div>
       <?php } ?>
       <p><a href="index.php?route=account/voucher"><img src="catalog/view/theme/cadenhead/image/buy_gift_vouchers.png" alt="buy gift vouchers" /></a></p>
-      <p><a href="index.php?route=information/information&information_id=7"><img src="catalog/view/theme/cadenhead/image/buy_tasting_vouchers.png" alt="buy tasting vouchers" /></a></p>
+      <p><a href="/tasting-vouchers"><img src="catalog/view/theme/cadenhead/image/buy_tasting_vouchers.png" alt="buy tasting vouchers" /></a></p>
     </div>
   </div>
         
