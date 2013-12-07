@@ -676,7 +676,7 @@ class ModelSaleOrder extends Model {
 		if ($this->config->get('config_complete_status_id') == $data['order_status_id']) {
                         $this->load->model('sale/redeem');
                         $this->load->model('catalog/product');
-                        $order_info = $this->model_sale_redeem->getRedeemByOrderId($order_id);
+                        //$redeem_info = $this->model_sale_redeem->getRedeemByOrderId($order_id);
                         //$has_downloads = $this->model_catalog_product->getProductDownloads($order_info[0]['product_id']);
                         
                         $redeems = $this->model_sale_redeem->getRedeemByOrderId($order_id);
