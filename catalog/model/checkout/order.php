@@ -272,12 +272,12 @@ class ModelCheckoutOrder extends Model {
                                             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                                             curl_setopt($ch, CURLOPT_POST, true);
 
-                                            $data = array(
+                                            $attached = array(
                                                 'content' => $attachment_text,
                                                 'filename' => $filename
                                             );
 
-                                            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                                            curl_setopt($ch, CURLOPT_POSTFIELDS, $attached);
                                             $output = curl_exec($ch);
                                             $info = curl_getinfo($ch);
                                             curl_close($ch);
