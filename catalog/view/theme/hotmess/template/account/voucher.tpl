@@ -1,54 +1,55 @@
 <?php echo $header; ?>
- <div class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-	<?php if($breadcrumb == end($breadcrumbs)){ ?>
-		<a class="last" href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-	<?php }else{ ?>
-		<a href="<?php echo $breadcrumb['href']; ?>"><span><?php echo $breadcrumb['text']; ?></span></a>
-    <?php } ?>
-    <?php } ?>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+          <div class="breadcrumb">
+            <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+            <?php } ?>
+          </div>
+        </div>
+    </div>
 </div>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
-<?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
- <div class="voucher_fr">
+<div class="container"><div class="row"><?php echo $column_left; ?><?php echo $column_right; ?>
+<div id="content" class="<?php if(empty($column_left) && empty($column_right)){echo 'col-sm-12';} else if (empty($column_left) || empty($column_right)){echo 'col-sm-9';}else{echo 'col-sm-6';} ?>"><?php echo $content_top; ?>
   <h1><?php echo $heading_title; ?></h1>
   <p><?php echo $text_description; ?></p>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <table class="form">
       <tr>
-        <td><?php echo $entry_to_name; ?><span class="required">*</span> </td></tr>
-        <tr><td><input type="text" name="to_name" value="<?php echo $to_name; ?>" />
+        <td><span class="required">*</span> <?php echo $entry_to_name; ?></td>
+        <td><input type="text" name="to_name" value="<?php echo $to_name; ?>" />
           <?php if ($error_to_name) { ?>
           <span class="error"><?php echo $error_to_name; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_to_email; ?><span class="required">*</span> </td></tr>
-        <tr><td><input type="text" name="to_email" value="<?php echo $to_email; ?>" />
+        <td><span class="required">*</span> <?php echo $entry_to_email; ?></td>
+        <td><input type="text" name="to_email" value="<?php echo $to_email; ?>" />
           <?php if ($error_to_email) { ?>
           <span class="error"><?php echo $error_to_email; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_from_name; ?><span class="required">*</span> </td></tr>
-        <tr><td><input type="text" name="from_name" value="<?php echo $from_name; ?>" />
+        <td><span class="required">*</span> <?php echo $entry_from_name; ?></td>
+        <td><input type="text" name="from_name" value="<?php echo $from_name; ?>" />
           <?php if ($error_from_name) { ?>
           <span class="error"><?php echo $error_from_name; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_from_email; ?><span class="required">*</span> </td></tr>
-        <tr><td><input type="text" name="from_email" value="<?php echo $from_email; ?>" />
+        <td><span class="required">*</span> <?php echo $entry_from_email; ?></td>
+        <td><input type="text" name="from_email" value="<?php echo $from_email; ?>" />
           <?php if ($error_from_email) { ?>
           <span class="error"><?php echo $error_from_email; ?></span>
           <?php } ?></td>
       </tr>
       <tr>
-        <td class ="gift"><?php echo $entry_theme; ?><span class="required">*</span> </td></tr>
-        <tr><td><?php foreach ($voucher_themes as $voucher_theme) { ?>
+        <td><span class="required">*</span> <?php echo $entry_theme; ?></td>
+        <td><?php foreach ($voucher_themes as $voucher_theme) { ?>
           <?php if ($voucher_theme['voucher_theme_id'] == $voucher_theme_id) { ?>
           <input type="radio" name="voucher_theme_id" value="<?php echo $voucher_theme['voucher_theme_id']; ?>" id="voucher-<?php echo $voucher_theme['voucher_theme_id']; ?>" checked="checked" />
           <label for="voucher-<?php echo $voucher_theme['voucher_theme_id']; ?>"><?php echo $voucher_theme['name']; ?></label>
@@ -63,27 +64,28 @@
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_message; ?></td></tr>
-        <tr><td><textarea name="message" cols="40" rows="5"><?php echo $message; ?></textarea></td>
+        <td><?php echo $entry_message; ?></td>
+        <td><textarea name="message" cols="40" rows="5"><?php echo $message; ?></textarea></td>
       </tr>
       <tr>
-        <td><span class="required">*</span><?php echo $entry_amount; ?></td></tr>
-        <tr><td><input type="text" name="amount" value="<?php echo $amount; ?>" size="5" />
+        <td><span class="required">*</span> <?php echo $entry_amount; ?></td>
+        <td><input type="text" name="amount" value="<?php echo $amount; ?>" size="5" />
           <?php if ($error_amount) { ?>
           <span class="error"><?php echo $error_amount; ?></span>
           <?php } ?></td>
       </tr>
     </table>
     <div class="buttons">
-      <div class="left">
+      <div class="right"><?php echo $text_agree; ?>
         <?php if ($agree) { ?>
         <input type="checkbox" name="agree" value="1" checked="checked" />
         <?php } else { ?>
         <input type="checkbox" name="agree" value="1" />
-        <?php } ?><?php echo $text_agree; ?>
-        </br></br><span class="button_fr_ip"><input type="submit" value="<?php echo $button_continue; ?>" class="button cst" /></span>
+        <?php } ?>
+        <input type="submit" value="<?php echo $button_continue; ?>" class="button" />
       </div>
     </div>
   </form>
-  <?php echo $content_bottom; ?></div></div>
+  <?php echo $content_bottom; ?></div>
+  </div></div>
 <?php echo $footer; ?>

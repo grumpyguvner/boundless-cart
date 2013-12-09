@@ -20,36 +20,36 @@
 <div id="shipping-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
   <table class="form">
     <tr>
-      <td><?php echo $entry_firstname; ?><span class="required">*</span> </td></tr>
-      <tr><td><input type="text" name="firstname" value="" class="large-field" /></td>
+      <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
+      <td><input type="text" name="firstname" value="" class="large-field" /></td>
     </tr>
     <tr>
-      <td><?php echo $entry_lastname; ?><span class="required">*</span> </td></tr>
-      <tr><td><input type="text" name="lastname" value="" class="large-field" /></td>
+      <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
+      <td><input type="text" name="lastname" value="" class="large-field" /></td>
     </tr>
     <tr>
-      <td><?php echo $entry_company; ?></td></tr>
-      <tr><td><input type="text" name="company" value="" class="large-field" /></td>
+      <td><?php echo $entry_company; ?></td>
+      <td><input type="text" name="company" value="" class="large-field" /></td>
     </tr>
     <tr>
-      <td><?php echo $entry_address_1; ?><span class="required">*</span> </td></tr>
-      <tr><td><input type="text" name="address_1" value="" class="large-field" /></td>
+      <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
+      <td><input type="text" name="address_1" value="" class="large-field" /></td>
     </tr>
     <tr>
-      <td><?php echo $entry_address_2; ?></td></tr>
-      <tr><td><input type="text" name="address_2" value="" class="large-field" /></td>
+      <td><?php echo $entry_address_2; ?></td>
+      <td><input type="text" name="address_2" value="" class="large-field" /></td>
     </tr>
     <tr>
-      <td><?php echo $entry_city; ?><span class="required">*</span> </td></tr>
-      <tr><td><input type="text" name="city" value="" class="large-field" /></td>
+      <td><span class="required">*</span> <?php echo $entry_city; ?></td>
+      <td><input type="text" name="city" value="" class="large-field" /></td>
     </tr>
     <tr>
-      <td><?php echo $entry_postcode; ?><span id="shipping-postcode-required" class="required">*</span> </td></tr>
-      <tr><td><input type="text" name="postcode" value="<?php echo $postcode; ?>" class="large-field" /></td>
+      <td><span id="shipping-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
+      <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" class="large-field" /></td>
     </tr>
     <tr>
-      <td><?php echo $entry_country; ?><span class="required">*</span> </td></tr>
-      <tr><td><select name="country_id" class="large-field">
+      <td><span class="required">*</span> <?php echo $entry_country; ?></td>
+      <td><select name="country_id" class="large-field">
           <option value=""><?php echo $text_select; ?></option>
           <?php foreach ($countries as $country) { ?>
           <?php if ($country['country_id'] == $country_id) { ?>
@@ -61,16 +61,16 @@
         </select></td>
     </tr>
     <tr>
-      <td><?php echo $entry_zone; ?><span class="required">*</span> </td></tr>
-      <tr><td><select name="zone_id" class="large-field">
+      <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
+      <td><select name="zone_id" class="large-field">
         </select></td>
     </tr>
   </table>
 </div>
 <br />
 <div class="buttons">
-  <div class="left">
-    <span class="button_fr_ip"><input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-address" class="button cst" /></span>
+  <div class="right">
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-address" class="button" />
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -86,7 +86,6 @@ $('#shipping-address input[name=\'shipping_address\']').live('change', function(
 //--></script> 
 <script type="text/javascript"><!--
 $('#shipping-address select[name=\'country_id\']').bind('change', function() {
-	if (this.value == '') return;
 	$.ajax({
 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
 		dataType: 'json',

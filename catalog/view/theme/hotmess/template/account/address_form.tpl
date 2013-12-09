@@ -1,43 +1,44 @@
 <?php echo $header; ?>
-<div class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-	<?php if($breadcrumb == end($breadcrumbs)){ ?>
-		<a class="last" href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-	<?php }else{ ?>
-		<a href="<?php echo $breadcrumb['href']; ?>"><span><?php echo $breadcrumb['text']; ?></span></a>
-    <?php } ?>
-    <?php } ?>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+          <div class="breadcrumb">
+            <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+            <?php } ?>
+          </div>
+        </div>
+    </div>
 </div>
-<?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
- <div class="address_form_fr">
+<div class="container"><div class="row"><?php echo $column_left; ?><?php echo $column_right; ?>
+<div id="content" class="<?php if(empty($column_left) && empty($column_right)){echo 'col-sm-12';} else if (empty($column_left) || empty($column_right)){echo 'col-sm-9';}else{echo 'col-sm-6';} ?>"><?php echo $content_top; ?>
   <h1><?php echo $heading_title; ?></h1>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <h2><?php echo $text_edit_address; ?></h2>
     <div class="content">
       <table class="form">
         <tr>
-          <td><?php echo $entry_firstname; ?><span class="required">*</span> </td></tr>
-          <tr><td><input type="text" name="firstname" value="<?php echo $firstname; ?>" />
+          <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
+          <td><input type="text" name="firstname" value="<?php echo $firstname; ?>" />
             <?php if ($error_firstname) { ?>
             <span class="error"><?php echo $error_firstname; ?></span>
             <?php } ?></td>
         </tr>
         <tr>
-          <td><?php echo $entry_lastname; ?><span class="required">*</span> </td></tr>
-          <tr><td><input type="text" name="lastname" value="<?php echo $lastname; ?>" />
+          <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
+          <td><input type="text" name="lastname" value="<?php echo $lastname; ?>" />
             <?php if ($error_lastname) { ?>
             <span class="error"><?php echo $error_lastname; ?></span>
             <?php } ?></td>
         </tr>
         <tr>
-          <td><?php echo $entry_company; ?></td></tr>
-          <tr><td><input type="text" name="company" value="<?php echo $company; ?>" /></td>
+          <td><?php echo $entry_company; ?></td>
+          <td><input type="text" name="company" value="<?php echo $company; ?>" /></td>
         </tr>
         <?php if ($company_id_display) { ?>
         <tr>
-          <td><?php echo $entry_company_id; ?></td></tr>
-          <tr><td><input type="text" name="company_id" value="<?php echo $company_id; ?>" />
+          <td><?php echo $entry_company_id; ?></td>
+          <td><input type="text" name="company_id" value="<?php echo $company_id; ?>" />
             <?php if ($error_company_id) { ?>
             <span class="error"><?php echo $error_company_id; ?></span>
             <?php } ?></td>
@@ -45,41 +46,41 @@
         <?php } ?>
         <?php if ($tax_id_display) { ?>
         <tr>
-          <td><?php echo $entry_tax_id; ?></td></tr>
-          <tr><td><input type="text" name="tax_id" value="<?php echo $tax_id; ?>" />
+          <td><?php echo $entry_tax_id; ?></td>
+          <td><input type="text" name="tax_id" value="<?php echo $tax_id; ?>" />
             <?php if ($error_tax_id) { ?>
             <span class="error"><?php echo $error_tax_id; ?></span>
             <?php } ?></td>
         </tr>
         <?php } ?>
         <tr>
-          <td><?php echo $entry_address_1; ?><span class="required">*</span> </td></tr>
-          <tr><td><input type="text" name="address_1" value="<?php echo $address_1; ?>" />
+          <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
+          <td><input type="text" name="address_1" value="<?php echo $address_1; ?>" />
             <?php if ($error_address_1) { ?>
             <span class="error"><?php echo $error_address_1; ?></span>
             <?php } ?></td>
         </tr>
         <tr>
-          <td><?php echo $entry_address_2; ?></td></tr>
-          <tr><td><input type="text" name="address_2" value="<?php echo $address_2; ?>" /></td>
+          <td><?php echo $entry_address_2; ?></td>
+          <td><input type="text" name="address_2" value="<?php echo $address_2; ?>" /></td>
         </tr>
         <tr>
-          <td><?php echo $entry_city; ?><span class="required">*</span> </td></tr>
-          <tr><td><input type="text" name="city" value="<?php echo $city; ?>" />
+          <td><span class="required">*</span> <?php echo $entry_city; ?></td>
+          <td><input type="text" name="city" value="<?php echo $city; ?>" />
             <?php if ($error_city) { ?>
             <span class="error"><?php echo $error_city; ?></span>
             <?php } ?></td>
         </tr>
         <tr>
-          <td><?php echo $entry_postcode; ?><span id="postcode-required" class="required">*</span> </td></tr>
-          <tr><td><input type="text" name="postcode" value="<?php echo $postcode; ?>" />
+          <td><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
+          <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" />
             <?php if ($error_postcode) { ?>
             <span class="error"><?php echo $error_postcode; ?></span>
             <?php } ?></td>
         </tr>
         <tr>
-          <td><?php echo $entry_country; ?><span class="required">*</span> </td></tr>
-          <tr><td><select name="country_id">
+          <td><span class="required">*</span> <?php echo $entry_country; ?></td>
+          <td><select name="country_id">
               <option value=""><?php echo $text_select; ?></option>
               <?php foreach ($countries as $country) { ?>
               <?php if ($country['country_id'] == $country_id) { ?>
@@ -94,37 +95,38 @@
             <?php } ?></td>
         </tr>
         <tr>
-          <td><?php echo $entry_zone; ?><span class="required">*</span> </td></tr>
-          <tr><td><select name="zone_id">
+          <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
+          <td><select name="zone_id">
             </select>
             <?php if ($error_zone) { ?>
             <span class="error"><?php echo $error_zone; ?></span>
             <?php } ?></td>
         </tr>
         <tr>
-          <td><?php echo $entry_default; ?></td></tr>
-          <tr><td><?php if ($default) { ?>
+          <td><?php echo $entry_default; ?></td>
+          <td><?php if ($default) { ?>
             <input type="radio" name="default" value="1" checked="checked" />
-            <span><?php echo $text_yes; ?></span>
+            <?php echo $text_yes; ?>
             <input type="radio" name="default" value="0" />
-            <span><?php echo $text_no; ?></span>
+            <?php echo $text_no; ?>
             <?php } else { ?>
             <input type="radio" name="default" value="1" />
-            <span><?php echo $text_yes; ?></span>
+            <?php echo $text_yes; ?>
             <input type="radio" name="default" value="0" checked="checked" />
-            <span><?php echo $text_no; ?></span>
+            <?php echo $text_no; ?>
             <?php } ?></td>
         </tr>
       </table>
     </div>
     <div class="buttons">
-      <div class="left"><a href="<?php echo $back; ?>" class="button cst"><span class="button_fr"><?php echo $button_back; ?></span></a></div>
+      <div class="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></div>
       <div class="right">
-        <span class="button_fr_ip"><input type="submit" value="<?php echo $button_continue; ?>" class="button cst" /></span>
+        <input type="submit" value="<?php echo $button_continue; ?>" class="button" />
       </div>
     </div>
   </form>
-  <?php echo $content_bottom; ?></div></div>
+  <?php echo $content_bottom; ?></div>
+  </div></div>
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').bind('change', function() {
 	$.ajax({

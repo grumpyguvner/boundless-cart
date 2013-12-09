@@ -1,16 +1,17 @@
 <?php echo $header; ?>
-<div class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-	<?php if($breadcrumb == end($breadcrumbs)){ ?>
-		<a class="last" href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-	<?php }else{ ?>
-		<a href="<?php echo $breadcrumb['href']; ?>"><span><?php echo $breadcrumb['text']; ?></span></a>
-    <?php } ?>
-    <?php } ?>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+          <div class="breadcrumb">
+            <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+            <?php } ?>
+          </div>
+        </div>
+    </div>
 </div>
-<?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
-  
+<div class="container"><div class="row"><?php echo $column_left; ?><?php echo $column_right; ?>
+<div id="content" class="<?php if(empty($column_left) && empty($column_right)){echo 'col-sm-12';} else if (empty($column_left) || empty($column_right)){echo 'col-sm-9';}else{echo 'col-sm-6';} ?>"><?php echo $content_top; ?>
   <h1><?php echo $heading_title; ?></h1>
   <table class="list">
     <thead>
@@ -96,7 +97,8 @@
   </table>
   <?php } ?>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="button cst"><span class="button_fr"><?php echo $button_continue; ?></span></a></div>
+    <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>
   <?php echo $content_bottom; ?></div>
+  </div></div>
 <?php echo $footer; ?>

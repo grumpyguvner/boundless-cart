@@ -1,6 +1,6 @@
 <div class="buttons">
   <div class="right">
-    <span class="button_fr_ip"><input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button cst" /></span>
+    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button" />
   </div>
 </div>
 <script type="text/javascript"><!--

@@ -1,32 +1,32 @@
 <div class="left">
   <h2><?php echo $text_your_details; ?></h2>
-  <?php echo $entry_firstname; ?><span class="required">*</span> <br />
+  <span class="required">*</span> <?php echo $entry_firstname; ?><br />
   <input type="text" name="firstname" value="<?php echo $firstname; ?>" class="large-field" />
   <br />
-
-  <?php echo $entry_lastname; ?><span class="required">*</span> <br />
+  <br />
+  <span class="required">*</span> <?php echo $entry_lastname; ?><br />
   <input type="text" name="lastname" value="<?php echo $lastname; ?>" class="large-field" />
   <br />
-
-  <?php echo $entry_email; ?><span class="required">*</span> <br />
+  <br />
+  <span class="required">*</span> <?php echo $entry_email; ?><br />
   <input type="text" name="email" value="<?php echo $email; ?>" class="large-field" />
   <br />
-
-  <?php echo $entry_telephone; ?><span class="required">*</span> <br />
+  <br />
+  <span class="required">*</span> <?php echo $entry_telephone; ?><br />
   <input type="text" name="telephone" value="<?php echo $telephone; ?>" class="large-field" />
   <br />
-
+  <br />
   <?php echo $entry_fax; ?><br />
   <input type="text" name="fax" value="<?php echo $fax; ?>" class="large-field" />
   <br />
- 
+  <br />
 </div>
 <div class="right">
   <h2><?php echo $text_your_address; ?></h2>
   <?php echo $entry_company; ?><br />
   <input type="text" name="company" value="<?php echo $company; ?>" class="large-field" />
   <br />
-
+  <br />
   <div style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;"> <?php echo $entry_customer_group; ?><br />
     <?php foreach ($customer_groups as $customer_group) { ?>
     <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
@@ -44,30 +44,30 @@
   <div id="company-id-display"><span id="company-id-required" class="required">*</span> <?php echo $entry_company_id; ?><br />
     <input type="text" name="company_id" value="<?php echo $company_id; ?>" class="large-field" />
     <br />
- 
+    <br />
   </div>
-  <div id="tax-id-display"><?php echo $entry_tax_id; ?><span id="tax-id-required" class="required">*</span> <br />
+  <div id="tax-id-display"><span id="tax-id-required" class="required">*</span> <?php echo $entry_tax_id; ?><br />
     <input type="text" name="tax_id" value="<?php echo $tax_id; ?>" class="large-field" />
     <br />
- 
+    <br />
   </div>
-  <?php echo $entry_address_1; ?><span class="required">*</span> <br />
+  <span class="required">*</span> <?php echo $entry_address_1; ?><br />
   <input type="text" name="address_1" value="<?php echo $address_1; ?>" class="large-field" />
   <br />
-
+  <br />
   <?php echo $entry_address_2; ?><br />
   <input type="text" name="address_2" value="<?php echo $address_2; ?>" class="large-field" />
   <br />
-  
-  <?php echo $entry_city; ?><span class="required">*</span> <br />
+  <br />
+  <span class="required">*</span> <?php echo $entry_city; ?><br />
   <input type="text" name="city" value="<?php echo $city; ?>" class="large-field" />
   <br />
-
-  <?php echo $entry_postcode; ?><span id="payment-postcode-required" class="required">*</span> <br />
+  <br />
+  <span id="payment-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?><br />
   <input type="text" name="postcode" value="<?php echo $postcode; ?>" class="large-field" />
   <br />
-
-  <?php echo $entry_country; ?><span class="required">*</span> <br />
+  <br />
+  <span class="required">*</span> <?php echo $entry_country; ?><br />
   <select name="country_id" class="large-field">
     <option value=""><?php echo $text_select; ?></option>
     <?php foreach ($countries as $country) { ?>
@@ -79,28 +79,30 @@
     <?php } ?>
   </select>
   <br />
-
-  <?php echo $entry_zone; ?><span class="required">*</span> <br />
+  <br />
+  <span class="required">*</span> <?php echo $entry_zone; ?><br />
   <select name="zone_id" class="large-field">
   </select>
   <br />
+  <br />
+  <br />
 </div>
 <?php if ($shipping_required) { ?>
-<div style="clear: both; padding-top: 8px; ">
+<div style="clear: both; padding-top: 15px; border-top: 1px solid #DDDDDD;">
   <?php if ($shipping_address) { ?>
   <input type="checkbox" name="shipping_address" value="1" id="shipping" checked="checked" />
   <?php } else { ?>
   <input type="checkbox" name="shipping_address" value="1" id="shipping" />
   <?php } ?>
   <label for="shipping"><?php echo $entry_shipping; ?></label>
-
-
+  <br />
+  <br />
   <br />
 </div>
 <?php } ?>
 <div class="buttons">
-  <div class="left">
-    <span class="button_fr_ip"><input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="button cst" /></span>
+  <div class="right">
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="button" />
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -146,7 +148,6 @@ $('#payment-address input[name=\'customer_group_id\']:checked').trigger('change'
 //--></script> 
 <script type="text/javascript"><!--
 $('#payment-address select[name=\'country_id\']').bind('change', function() {
-	if (this.value == '') return;
 	$.ajax({
 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
 		dataType: 'json',

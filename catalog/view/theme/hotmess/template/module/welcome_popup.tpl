@@ -1,1 +1,1 @@
-<?php echo $content; ?>
+<?php echo $welcome_popup_content; ?>

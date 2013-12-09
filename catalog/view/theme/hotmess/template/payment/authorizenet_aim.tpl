@@ -30,7 +30,7 @@
   </table>
 </div>
 <div class="buttons">
-  <div class="right"><span><input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button" /></span></div>
+  <div class="right"><input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="button" /></div>
 </div>
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {

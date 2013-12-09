@@ -13,7 +13,7 @@ foreach ($categories as $category) {
 
 foreach ($categories as $category) { ?>
     <?php if ($category['category_id'] == $category_id) { ?>
-    <div class="box">
+    <div class="box hidden-xs">
       <div class="box-heading"><?php echo $category['name']; ?></div>
       <div class="box-content">
         <?php if ($category['children']) { ?>

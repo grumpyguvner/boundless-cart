@@ -1,17 +1,18 @@
 <?php echo $header; ?>
-  <div class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-	<?php if($breadcrumb == end($breadcrumbs)){ ?>
-		<a class="last" href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-	<?php }else{ ?>
-		<a href="<?php echo $breadcrumb['href']; ?>"><span><?php echo $breadcrumb['text']; ?></span></a>
-    <?php } ?>
-    <?php } ?>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+          <div class="breadcrumb">
+            <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+            <?php } ?>
+          </div>
+        </div>
+    </div>
 </div>
-<?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
-<div class="checkout_fr">  
-  <h1 class="h1margin"><?php echo $heading_title; ?></h1>
+<div class="container"><div class="row"><?php echo $column_left; ?><?php echo $column_right; ?>
+<div id="content" class="<?php if(empty($column_left) && empty($column_right)){echo 'col-sm-12';} else if (empty($column_left) || empty($column_right)){echo 'col-sm-9';}else{echo 'col-sm-6';} ?>"><?php echo $content_top; ?>
+  <h1><?php echo $heading_title; ?></h1>
   <div class="checkout">
     <div id="checkout">
       <div class="checkout-heading"><?php echo $text_checkout_option; ?></div>
@@ -47,7 +48,9 @@
       <div class="checkout-content"></div>
     </div>
   </div>
-  <?php echo $content_bottom; ?></div></div>
+</div>
+</div></div>
+  <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
 $('#checkout .checkout-content input[name=\'account\']').live('change', function() {
 	if ($(this).attr('value') == 'register') {
@@ -321,7 +324,7 @@ $('#button-register').live('click', function() {
 					}
 				});					
 				<?php } ?>
-
+				
 				$.ajax({
 					url: 'index.php?route=checkout/payment_address',
 					dataType: 'html',
@@ -462,7 +465,7 @@ $('#button-payment-address').live('click', function() {
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-				});				
+				});					
 			}	  
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -559,24 +562,13 @@ $('#button-shipping-address').live('click', function() {
 							error: function(xhr, ajaxOptions, thrownError) {
 								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 							}
-						});
+						});						
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
 				});	
-				
-				$.ajax({
-					url: 'index.php?route=checkout/payment_address',
-					dataType: 'html',
-					success: function(html) {
-						$('#payment-address .checkout-content').html(html);
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-					}
-				});					
-			}
+			}  
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -589,7 +581,7 @@ $('#button-guest').live('click', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/guest/validate',
 		type: 'post',
-		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
+		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'checkbox\']:checked, #payment-address select'),
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-guest').attr('disabled', true);
@@ -867,6 +859,7 @@ $('#button-shipping-method').live('click', function() {
 						$('#payment-method .checkout-heading a').remove();
 						
 						$('#shipping-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
+
 					},
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -923,7 +916,7 @@ $('#button-payment-method').live('click', function() {
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-				});	
+				});					
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

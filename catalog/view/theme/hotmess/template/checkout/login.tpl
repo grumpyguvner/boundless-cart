@@ -1,4 +1,5 @@
-<div class="left">
+<div class="row">
+<div class="left col-sm-6">
   <h2><?php echo $text_new_customer; ?></h2>
   <p><?php echo $text_checkout; ?></p>
   <label for="register">
@@ -20,25 +21,24 @@
   <br />
   <?php } ?>
   <br />
-  <p class="checkoutp"><?php echo $text_register_account; ?></p>
-  <span class="button_fr_ip"><input type="button" value="<?php echo $button_continue; ?>" id="button-account" class="button cst" /></span>
+  <p><?php echo $text_register_account; ?></p>
+  <input type="button" value="<?php echo $button_continue; ?>" id="button-account" class="button" />
   <br />
   <br />
 </div>
-
-<div id="login" class="right login-content">
+<div id="login" class="right col-sm-6">
   <h2><?php echo $text_returning_customer; ?></h2>
   <p><?php echo $text_i_am_returning_customer; ?></p>
   <b><?php echo $entry_email; ?></b><br />
   <input type="text" name="email" value="" />
   <br />
-  
+  <br />
   <b><?php echo $entry_password; ?></b><br />
   <input type="password" name="password" value="" />
   <br />
-  
-  <br />
-  <span class="button_fr_ip"><input type="button" value="<?php echo $button_login; ?>" id="button-login" class="button cst" /></span><br />
   <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a><br />
   <br />
+  <input type="button" value="<?php echo $button_login; ?>" id="button-login" class="button" /><br />
+  <br />
+</div>
 </div>

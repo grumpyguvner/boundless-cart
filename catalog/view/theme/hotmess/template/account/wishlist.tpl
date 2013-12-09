@@ -1,46 +1,44 @@
 <?php echo $header; ?>
-
-  <div class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-	<?php if($breadcrumb == end($breadcrumbs)){ ?>
-		<a class="last" href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-	<?php }else{ ?>
-		<a href="<?php echo $breadcrumb['href']; ?>"><span><?php echo $breadcrumb['text']; ?></span></a>
-    <?php } ?>
-    <?php } ?>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+          <div class="breadcrumb">
+            <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+            <?php } ?>
+          </div>
+        </div>
+    </div>
 </div>
-
-<?php //echo $column_left; ?><?php //echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
- <div class="wishlist-fr">
-  <h1 class="h1margin"><?php echo $heading_title; ?></h1>
-  <?php if ($success) { ?>
+<?php if ($success) { ?>
 <div class="success"><?php echo $success; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
 <?php } ?>
+<div class="container"><div class="row"><?php echo $column_left; ?><?php echo $column_right; ?>
+<div id="content" class="<?php if(empty($column_left) && empty($column_right)){echo 'col-sm-12';} else if (empty($column_left) || empty($column_right)){echo 'col-sm-9';}else{echo 'col-sm-6';} ?>"><?php echo $content_top; ?>
+  <h1><?php echo $heading_title; ?></h1>
   <?php if ($products) { ?>
- 
- <div class="wishlist-info">
+  <div class="wishlist-info">
     <table>
       <thead>
         <tr>
-          <td class="image"><?php echo $column_name; ?></td>
-          <td class="name"></td>
+          <td class="image"><?php echo $column_image; ?></td>
+          <td class="name"><?php echo $column_name; ?></td>
           <td class="model"><?php echo $column_model; ?></td>
-		  <td class="unitprice"><?php echo $column_price; ?></td>
           <td class="stock"><?php echo $column_stock; ?></td>
-          <td class="action"></td>
-          <td class="remove"></td>
+          <td class="price"><?php echo $column_price; ?></td>
+          <td class="action"><?php echo $column_action; ?></td>
         </tr>
       </thead>
-      <?php foreach ($products as $count => $product) { ?>
-      <tbody <?php if($count==0){echo 'class="first"';} ?>id="wishlist-row<?php echo $product['product_id']; ?>">
+      <?php foreach ($products as $product) { ?>
+      <tbody id="wishlist-row<?php echo $product['product_id']; ?>">
         <tr>
           <td class="image"><?php if ($product['thumb']) { ?>
             <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
             <?php } ?></td>
           <td class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></td>
           <td class="model"><?php echo $product['model']; ?></td>
-		  <td class="unitprice"><?php if ($product['price']) { ?>
+          <td class="stock"><?php echo $product['stock']; ?></td>
+          <td class="price"><?php if ($product['price']) { ?>
             <div class="price">
               <?php if (!$product['special']) { ?>
               <?php echo $product['price']; ?>
@@ -49,22 +47,21 @@
               <?php } ?>
             </div>
             <?php } ?></td>
-          <td class="stock"><?php echo $product['stock']; ?></td>
-          <td class="action<?php echo ($product==end($products) ? ' last' : ''); ?>"><input type="button" class="button" onclick="boss_addToCart('<?php echo $product['product_id']; ?>');" value="<?php echo $button_cart; ?>"></td>
-          <td class="remove<?php echo ($product==end($products) ? ' last' : ''); ?>"><a href="<?php echo $product['remove']; ?>"><img src="catalog/view/theme/hotmess/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
+          <td class="action"><img src="catalog/view/theme/default/image/cart-add.png" alt="<?php echo $button_cart; ?>" title="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" />&nbsp;&nbsp;<a href="<?php echo $product['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
         </tr>
       </tbody>
       <?php } ?>
     </table>
   </div>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="button cst"><span class="button_fr"><?php echo $button_continue; ?></span></a></div>
+    <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>
   <?php } else { ?>
   <div class="content"><?php echo $text_empty; ?></div>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="button cst"><span class="button_fr"><?php echo $button_continue; ?></span></a></div>
+    <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>
   <?php } ?>
-  <?php echo $content_bottom; ?></div></div>
+  <?php echo $content_bottom; ?></div>
+  </div></div>
 <?php echo $footer; ?>

@@ -17,8 +17,8 @@
       <?php } else { ?>
       <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" id="<?php echo $quote['code']; ?>" />
       <?php } ?></td>
-    <td class="flatshippingrate"><label for="<?php echo $quote['code']; ?>"><?php echo $quote['title']; ?></label></td>
-    <td style="text-align: left;"><label for="<?php echo $quote['code']; ?>"><?php echo $quote['text']; ?></label></td>
+    <td><label for="<?php echo $quote['code']; ?>"><?php echo $quote['title']; ?></label></td>
+    <td style="text-align: right;"><label for="<?php echo $quote['code']; ?>"><?php echo $quote['text']; ?></label></td>
   </tr>
   <?php } ?>
   <?php } else { ?>
@@ -35,7 +35,7 @@
 <br />
 <br />
 <div class="buttons">
-  <div class="left">
-    <span class="button_fr_ip"><input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-method" class="button cst" /></span>
+  <div class="right">
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-method" class="button" />
   </div>
 </div>

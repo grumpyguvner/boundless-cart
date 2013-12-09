@@ -24,29 +24,25 @@
 <br />
 <?php if ($text_agree) { ?>
 <div class="buttons">
-  <div class="left">
+  <div class="right"><?php echo $text_agree; ?>
     <?php if ($agree) { ?>
     <input type="checkbox" name="agree" value="1" checked="checked" />
     <?php } else { ?>
     <input type="checkbox" name="agree" value="1" />
-    <?php } ?><?php echo $text_agree; ?><br/><br/>
-    <span class="button_fr_ip"><input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button cst" /></span>
+    <?php } ?>
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button" />
   </div>
 </div>
 <?php } else { ?>
 <div class="buttons">
-  <div class="left">
-    <span class="button_fr_ip"><input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button cst" /></span>
+  <div class="right">
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button" />
   </div>
 </div>
 <?php } ?>
 <script type="text/javascript"><!--
-$(document).ready(function() {
-	$('.colorbox').colorbox({
-		width: '80%', 
-		height: '80%',
-		maxWidth: 640,
-        maxHeight: 480
-	});
+$('.colorbox').colorbox({
+	width: 640,
+	height: 480
 });
-//--></script>  
+//--></script> 

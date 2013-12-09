@@ -1,18 +1,18 @@
 <table class="form">
   <tr>
-    <td><?php echo $entry_firstname; ?><span class="required">*</span> </td></tr>
-    <tr><td><input type="text" name="firstname" value="<?php echo $firstname; ?>" class="large-field" /></td>
+    <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
+    <td><input type="text" name="firstname" value="<?php echo $firstname; ?>" class="large-field" /></td>
   </tr>
   <tr>
-    <td><?php echo $entry_lastname; ?><span class="required">*</span> </td></tr>
-    <tr><td><input type="text" name="lastname" value="<?php echo $lastname; ?>" class="large-field" /></td>
+    <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
+    <td><input type="text" name="lastname" value="<?php echo $lastname; ?>" class="large-field" /></td>
   </tr>
   <tr>
-    <td><?php echo $entry_company; ?></td></tr>
-    <tr><td><input type="text" name="company" value="<?php echo $company; ?>" class="large-field" /></td>
+    <td><?php echo $entry_company; ?></td>
+    <td><input type="text" name="company" value="<?php echo $company; ?>" class="large-field" /></td>
   </tr>
   <tr>
-    <td><?php echo $entry_address_1; ?><span class="required">*</span> </td>
+    <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
     <td><input type="text" name="address_1" value="<?php echo $address_1; ?>" class="large-field" /></td>
   </tr>
   <tr>
@@ -20,15 +20,15 @@
     <td><input type="text" name="address_2" value="<?php echo $address_2; ?>" class="large-field" /></td>
   </tr>
   <tr>
-    <td><?php echo $entry_city; ?><span class="required">*</span> </td>
+    <td><span class="required">*</span> <?php echo $entry_city; ?></td>
     <td><input type="text" name="city" value="<?php echo $city; ?>" class="large-field" /></td>
   </tr>
   <tr>
-    <td><?php echo $entry_postcode; ?><span id="shipping-postcode-required" class="required">*</span> </td>
+    <td><span id="shipping-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
     <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" class="large-field" /></td>
   </tr>
   <tr>
-    <td><?php echo $entry_country; ?><span class="required">*</span> </td>
+    <td><span class="required">*</span> <?php echo $entry_country; ?></td>
     <td><select name="country_id" class="large-field">
         <option value=""><?php echo $text_select; ?></option>
         <?php foreach ($countries as $country) { ?>
@@ -41,18 +41,17 @@
       </select></td>
   </tr>
   <tr>
-    <td><?php echo $entry_zone; ?><span class="required">*</span> </td>
+    <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
     <td><select name="zone_id" class="large-field">
       </select></td>
   </tr>
 </table>
 <br />
 <div class="buttons">
-  <div class="left"><span class="button_fr_ip"><input type="button" value="<?php echo $button_continue; ?>" id="button-guest-shipping" class="button cst" /></span></div>
+  <div class="right"><input type="button" value="<?php echo $button_continue; ?>" id="button-guest-shipping" class="button" /></div>
 </div>
 <script type="text/javascript"><!--
 $('#shipping-address select[name=\'country_id\']').bind('change', function() {
-	if (this.value == '') return;
 	$.ajax({
 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
 		dataType: 'json',

@@ -1,16 +1,17 @@
 <?php echo $header; ?>
-<div class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-	<?php if($breadcrumb == end($breadcrumbs)){ ?>
-		<a class="last" href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-	<?php }else{ ?>
-		<a href="<?php echo $breadcrumb['href']; ?>"><span><?php echo $breadcrumb['text']; ?></span></a>
-    <?php } ?>
-    <?php } ?>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+          <div class="breadcrumb">
+            <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+            <?php } ?>
+          </div>
+        </div>
+    </div>
 </div>
-<?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
-<div class="contact_fr">
+<div class="container"><div class="row"><?php echo $column_left; ?><?php echo $column_right; ?>
+<div id="content" class="<?php if(empty($column_left) && empty($column_right)){echo 'col-sm-12';} else if (empty($column_left) || empty($column_right)){echo 'col-sm-9';}else{echo 'col-sm-6';} ?>"><?php echo $content_top; ?>
   <h1 class="heading_title"><?php echo $heading_title; ?></h1>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <h2><?php echo $text_location; ?></h2>
@@ -28,8 +29,6 @@
         <b><?php echo $text_fax; ?></b><br />
         <?php echo $fax; ?>
         <?php } ?>
-        <b><?php echo $text_email; ?></b><br />
-        <a href="mailto:<?php echo $company_email; ?>"><?php echo $company_email; ?></a>
       </div>
     </div>
     </div>
@@ -59,15 +58,15 @@
     <b><?php echo $entry_captcha; ?></b><br />
     <input type="text" name="captcha" value="<?php echo $captcha; ?>" />
     <br />
-	</br>
-    <img src="index.php?route=information/contact/captcha" alt="" /></br>
+    <img src="index.php?route=information/contact/captcha" alt="" />
     <?php if ($error_captcha) { ?>
     <span class="error"><?php echo $error_captcha; ?></span>
     <?php } ?>
     </div>
     <div class="buttons">
-      <div class="left"><span class="button_fr_ip"><input type="submit" value="<?php echo $button_continue; ?>" class="button cst" /></span></div>
+      <div class="right"><input type="submit" value="<?php echo $button_continue; ?>" class="button" /></div>
     </div>
   </form>
-  <?php echo $content_bottom; ?></div></div>
+  <?php echo $content_bottom; ?></div>
+  </div></div>
 <?php echo $footer; ?>

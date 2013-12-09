@@ -1,17 +1,18 @@
 <?php echo $header; ?>
-<div class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-	<?php if($breadcrumb == end($breadcrumbs)){ ?>
-		<a class="last" href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-	<?php }else{ ?>
-		<a href="<?php echo $breadcrumb['href']; ?>"><span><?php echo $breadcrumb['text']; ?></span></a>
-    <?php } ?>
-    <?php } ?>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+          <div class="breadcrumb">
+            <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+            <?php } ?>
+          </div>
+        </div>
+    </div>
 </div>
-<?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
-<div class="order_info_fr">
-    <h1><?php echo $heading_title; ?></h1>
+<div class="container"><div class="row"><?php echo $column_left; ?><?php echo $column_right; ?>
+<div id="content" class="<?php if(empty($column_left) && empty($column_right)){echo 'col-sm-12';} else if (empty($column_left) || empty($column_right)){echo 'col-sm-9';}else{echo 'col-sm-6';} ?>"><?php echo $content_top; ?>
+  <h1><?php echo $heading_title; ?></h1>
   <table class="list">
     <thead>
       <tr>
@@ -52,13 +53,13 @@
       </tr>
     </tbody>
   </table>
-  <table class="list order_info">
+  <table class="list">
     <thead>
       <tr>
         <td class="left"><?php echo $column_name; ?></td>
-        <td class="left model"><?php echo $column_model; ?></td>
+        <td class="left"><?php echo $column_model; ?></td>
         <td class="right"><?php echo $column_quantity; ?></td>
-        <td class="right price"><?php echo $column_price; ?></td>
+        <td class="right"><?php echo $column_price; ?></td>
         <td class="right"><?php echo $column_total; ?></td>
         <?php if ($products) { ?>
         <td style="width: 1px;"></td>
@@ -73,9 +74,9 @@
           <br />
           &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
           <?php } ?></td>
-        <td class="left model"><?php echo $product['model']; ?></td>
+        <td class="left"><?php echo $product['model']; ?></td>
         <td class="right"><?php echo $product['quantity']; ?></td>
-        <td class="right price"><?php echo $product['price']; ?></td>
+        <td class="right"><?php echo $product['price']; ?></td>
         <td class="right"><?php echo $product['total']; ?></td>
         <td class="right"><a href="<?php echo $product['return']; ?>"><img src="catalog/view/theme/default/image/return.png" alt="<?php echo $button_return; ?>" title="<?php echo $button_return; ?>" /></a></td>
       </tr>
@@ -83,9 +84,9 @@
       <?php foreach ($vouchers as $voucher) { ?>
       <tr>
         <td class="left"><?php echo $voucher['description']; ?></td>
-        <td class="left model"></td>
+        <td class="left"></td>
         <td class="right">1</td>
-        <td class="right price"><?php echo $voucher['amount']; ?></td>
+        <td class="right"><?php echo $voucher['amount']; ?></td>
         <td class="right"><?php echo $voucher['amount']; ?></td>
         <?php if ($products) { ?>
         <td></td>
@@ -96,9 +97,7 @@
     <tfoot>
       <?php foreach ($totals as $total) { ?>
       <tr>
-        <td class="model"></td>
-	    <td class="price"></td>
-        <td colspan="1"></td>
+        <td colspan="3"></td>
         <td class="right"><b><?php echo $total['title']; ?>:</b></td>
         <td class="right"><?php echo $total['text']; ?></td>
         <?php if ($products) { ?>
@@ -144,7 +143,8 @@
   </table>
   <?php } ?>
   <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="button cst"><span class="button_fr"><?php echo $button_continue; ?></span></a></div>
+    <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>
-  <?php echo $content_bottom; ?></div></div>
+  <?php echo $content_bottom; ?></div>
+  </div></div>
 <?php echo $footer; ?> 
