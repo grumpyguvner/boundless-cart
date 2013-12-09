@@ -131,7 +131,7 @@
         <?php if ($product['rating']) { ?>
         <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
         <?php } ?>
-        <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a>
+        <a onclick="addToCart('<?php echo $product['product_id']; ?>'); openCart(3000, true);" class="button"><?php echo $button_cart; ?></a>
         </div>
       <?php } ?>
     </div>
@@ -355,8 +355,8 @@
         </div>
       </div>
       <?php } ?>
-      <p><a href=""><img src="catalog/view/theme/cadenhead/image/buy_gift_vouchers.png" alt="buy gift vouchers" /></a></p>
-      <p><a href=""><img src="catalog/view/theme/cadenhead/image/buy_tasting_vouchers.png" alt="buy tasting vouchers" /></a></p>
+      <p><a href="index.php?route=account/voucher"><img src="catalog/view/theme/cadenhead/image/buy_gift_vouchers.png" alt="buy gift vouchers" /></a></p>
+      <p><a href="/tasting-vouchers"><img src="catalog/view/theme/cadenhead/image/buy_tasting_vouchers.png" alt="buy tasting vouchers" /></a></p>
     </div>
   </div>
         
@@ -392,7 +392,9 @@ $('#button-cart').bind('click', function() {
 					
 				$('#cart-total').html(json['total']);
 				
-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
+				$('html, body').animate({ scrollTop: 0 }, 'slow');
+                                
+                                openCart(3000, true);
 			}	
 		}
 	});

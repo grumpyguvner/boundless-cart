@@ -559,6 +559,12 @@ class ModelSaleOrder extends Model {
 
 		return $query->row;
 	}
+        
+        public function getOrderRedeemByRedeemId($redeem_id) {
+      	$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "redeem` WHERE redeem_id = '" . (int)$redeem_id . "'");
+
+		return $query->row;
+	}
 				
 	public function getOrderTotals($order_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order");
@@ -660,7 +666,81 @@ class ModelSaleOrder extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$data['order_status_id'] . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
                 
                 $notes = ($data['notes']) ? $this->user->getUserName() . ' [' . $_SERVER['REMOTE_ADDR'] . ']: ' . $data['notes'] : $this->user->getUserName() . ' [' . $_SERVER['REMOTE_ADDR'] . ']'; 
+                $message = '';
+                
+                $order_info = $this->getOrder($order_id);
+                
+                $attachments = array();
+                
+                //add the codes to the comments section.
+		if ($this->config->get('config_complete_status_id') == $data['order_status_id']) {
+                        $this->load->model('sale/redeem');
+                        $this->load->model('catalog/product');
+                        //$redeem_info = $this->model_sale_redeem->getRedeemByOrderId($order_id);
+                        //$has_downloads = $this->model_catalog_product->getProductDownloads($order_info[0]['product_id']);
+                        
+                        $redeems = $this->model_sale_redeem->getRedeemByOrderId($order_id);
+                        //if ($has_downloads && $redeems) {
+                        //    $data['comment'] .= "\n" . 'Please go to your downloads section to retrieve your voucher.' . "\n";
+                        //    $message .= "\n" . 'Please go to your downloads section to retrieve your voucher.' . "\n";
+                        //}
+                        //else {
+                        //    $data['comment'] .= "\n";
+                        //    $message .= "\n";
+                        //}
+                        
+                        $i = 0;
+                        foreach ($redeems as $redeem) {
+                            $i++;
+                            if ($redeem['status'] == 1)
+                            {
+                                //$data['comment'] .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
+                                //$message .= 'VOUCHER CODE ' . $i . ': ' . $redeem['code'] . "\n";
+                               
+                                if ($redeem['redeem_theme_id'])
+                                {
+                                    //get the theme that the product is assigned with.
+                                    $this->load->model('sale/redeem_theme');
+                                    $theme_info = $this->model_sale_redeem_theme->getRedeemTheme($redeem['redeem_theme_id']);
 
+                                    //replace the keyword with the redeem code.
+                                    $content_message = str_replace("[CODE]", $redeem['code'], $theme_info['content']);
+                                    $content_message = preg_replace("%\[DATE(.*?)\]%ie", 'date("j F Y", strtotime("$1"))', $content_message);
+
+                                    $attachment_text =
+                                    "<!DOCTYPE HTML>
+                                    <html>
+                                    <head><meta charset=utf-8></head>
+                                    <body>".$content_message."</body>
+                                    </html>";
+
+                                    $filename = DIR_DOWNLOAD.'voucher-'.$redeem['code'].'.pdf';
+
+                                    $ch = curl_init();
+                                    curl_setopt($ch, CURLOPT_URL, HTTP_CATALOG . 'pdf.php');
+                                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                                    curl_setopt($ch, CURLOPT_POST, true);
+
+                                    $attached = array(
+                                        'content' => $attachment_text,
+                                        'filename' => $filename
+                                    );
+
+                                    curl_setopt($ch, CURLOPT_POSTFIELDS, $attached);
+                                    $output = curl_exec($ch);
+                                    $info = curl_getinfo($ch);
+                                    curl_close($ch);
+
+                                    file_put_contents($filename, $output);
+                                    
+                                    $attachments[] = $filename;
+                                    
+                                }
+                            }
+                        }
+                        
+		}
+                
 		$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$data['order_status_id'] . "', notify = '" . (isset($data['notify']) ? (int)$data['notify'] : 0) . "', comment = '" . $this->db->escape(strip_tags($data['comment'])) . "', notes = '" . $this->db->escape(strip_tags($notes)) . "', date_added = NOW()");
 
 		$order_info = $this->getOrder($order_id);
@@ -706,6 +786,12 @@ class ModelSaleOrder extends Model {
 			$message .= $language->get('text_footer');
 
 			$mail = new Mail();
+                        
+                        foreach($attachments as $file)
+                        {
+                            $mail->AddAttachment($file);
+                        }
+                        
 			$mail->protocol = $this->config->get('config_mail_protocol');
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->hostname = $this->config->get('config_smtp_host');

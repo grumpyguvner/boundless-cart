@@ -51,8 +51,6 @@ DD_belatedPNG.fix('#logo img');
 <div id="environment"><div class="warning"><?php echo $error_environment; ?></div></div>
 <?php } ?>
 
-<div id="environment"><div class="warning">Products are available but the online shop is under maintenance. Please telephone <strong>020 7935 6999</strong> to place an order.</div></div>
-
 <div id="header">
  
   <!--?php echo $language; ?-->
@@ -77,6 +75,16 @@ DD_belatedPNG.fix('#logo img');
     <?php echo $text_logged; ?>
     <?php } ?>
   </div>
+  <div id="newsletter_wrapper">
+        <form action="/index.php" method="get" id="newsletter_form" class="newsletter-form" target="_blank">
+            <input type="hidden" name="route" value="module/newsletter/callback">
+            <input type="hidden" name="subscribe" value="1">
+            <div class="newsletter_input">
+                <input type="text" id="newsletter_email" name="email" onfocus="this.placeholder = ''" placeholder="Email newsletter signup">
+                <input class="gobutton" type="submit" value="GO">
+            </div>
+        </form>
+   </div>
   <!--div class="links"><a href="<?php echo $home; ?>"><?php echo $text_home; ?></a><a href="index.php?route=information/information&information_id=7" id="wishlist-total">Whisky Tasting</a><a href="index.php?route=information/information&information_id=8">Cadenheads</a><a href="">Products</a><a href="">Event Calendar</a><a href="index.php?route=information/information&information_id=9">Location</a><a href="index.php?route=information/contact">Contact us</a></div-->
 </div>
     
@@ -99,8 +107,7 @@ DD_belatedPNG.fix('#logo img');
           <li><a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?></a></li>
           <?php } ?>
           <?php } ?>
-           <li><a href="index.php?route=account/voucher">Voucher Gift</a></li>
-            <li><a href="">Voucher Tasting</a></li>
+          <li><a href="index.php?route=account/voucher">Voucher Gift</a></li>
         </ul>
         <?php } ?>
          
@@ -110,6 +117,7 @@ DD_belatedPNG.fix('#logo img');
     <?php } ?>
     <li><a href="index.php?route=information/event/events&event_id=2">Event Calendar</a></li>
     <li><a href="index.php?route=information/information&information_id=9">Location</a></li>
+    <li><a href="newsletter-archive">Newsletter Archive</a></li>
     <li><a href="index.php?route=information/contact">Contact us</a></li>
     
   </ul>

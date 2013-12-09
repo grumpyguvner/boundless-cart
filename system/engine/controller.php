@@ -73,8 +73,14 @@ abstract class Controller {
         foreach ($this->children as $child) {
             $this->data[basename($child)] = $this->getChild($child);
         }
+        
+        $template = DIR_TEMPLATE . $this->template;
+        if (!file_exists(DIR_TEMPLATE . $this->template))
+        {
+            $template = $this->template;
+        }
 
-        if (file_exists(DIR_TEMPLATE . $this->template)) {
+        if (file_exists($template)) {
             
             if (is_object($this->language))
             {
@@ -87,7 +93,7 @@ abstract class Controller {
             
             ob_start();
 
-            require(DIR_TEMPLATE . $this->template);
+            require($template);
 
             $this->output = ob_get_contents();
 

@@ -2620,6 +2620,15 @@ class ControllerSaleOrder extends Controller {
         }
 
         $this->template = 'sale/order_invoice.tpl';
+        
+        if (file_exists(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/template/' . $this->template)) {
+            $this->template = DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/template/' . $this->template;
+        } elseif (file_exists(DIR_CATALOG . 'view/theme/' . $this->config->get('config_base_template') . '/template/' . $this->template)) {
+            $this->template = DIR_CATALOG . 'view/theme/' . $this->config->get('config_base_template') . '/template/' . $this->template;
+        } elseif (file_exists(DIR_CATALOG . 'view/theme/default/template/' . $this->template)) {
+            $this->template = DIR_CATALOG . 'view/theme/default/template/' . $this->template;
+        }
+        
 
         $this->response->setOutput($this->render());
     }

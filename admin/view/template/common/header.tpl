@@ -323,7 +323,7 @@ function fixMenu($menu) {
                                                 </li>
                                             </ul>
                                         </li>
-
+   <?php if ($this->user->isSuperuser()) { ?>
     <?php if (!$this->config->get('p3adminrebooted_hide_helpmenu')) : ?>
                                             <li id="help" class="dropdown">
                                                 <a href="#" class="top dropdown-toggle" data-toggle="dropdown"><i class="icon-help-circled"></i> <?php echo $text_help; ?></a>
@@ -334,6 +334,7 @@ function fixMenu($menu) {
                                                 </ul>
                                             </li>
                                     <?php endif; ?>
+                                   <?php } ?>         
                                     </ul>
                                     <?php
                                     ob_end_flush();

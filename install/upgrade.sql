@@ -627,3 +627,36 @@ ALTER TABLE `oc_customer` MODIFY `salt` varchar(60) NOT NULL;
 #### Start 1.5.4:BC1.2.17
 
 ALTER TABLE `oc_url_alias` ADD `language_id` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `keyword`;
+ALTER TABLE `oc_url_alias` ADD  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+#### Start 1.5.4:BC1.2.18
+
+CREATE TABLE `oc_redeem` (
+  `redeem_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `code` varchar(10) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `redeem` tinyint(1) NOT NULL,
+  `redeem_theme_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`redeem_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+ALTER TABLE oc_product ADD redeem tinyint(1) DEFAULT '0' AFTER shipping;
+ALTER TABLE oc_product ADD redeem_theme_id int(11) int DEFAULT '0' AFTER redeem;
+
+#### Start 1.5.4:BC1.2.19
+
+CREATE TABLE IF NOT EXISTS `oc_redeem_theme` (
+  `redeem_theme_id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  PRIMARY KEY (`redeem_theme_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `oc_redeem_theme_description` (
+  `redeem_theme_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`redeem_theme_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
