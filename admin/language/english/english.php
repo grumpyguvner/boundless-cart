@@ -51,6 +51,7 @@ $_['button_add_attribute']    = 'Add Attribute';
 $_['button_add_banner']       = 'Add Banner';
 $_['button_add_product']      = 'Add Product';
 $_['button_add_voucher']      = 'Add Voucher';
+$_['button_add_filter']       = 'Add Filter';
 $_['button_add_option']       = 'Add Option';
 $_['button_add_option_value'] = 'Add Option Value';
 $_['button_add_discount']     = 'Add Discount';
@@ -105,6 +106,7 @@ $_['tab_total']               = 'Totals';
 $_['tab_transaction']         = 'Transactions';
 $_['tab_voucher']             = 'Vouchers';
 $_['tab_voucher_history']     = 'Voucher History';
+$_['tab_merchandising']       = 'Merchandising';
 
 // Error
 $_['error_upload_1']          = 'Warning: The uploaded file exceeds the upload_max_filesize directive in php.ini!';

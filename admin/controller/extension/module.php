@@ -54,8 +54,6 @@ class ControllerExtensionModule extends Controller {
 				unset($extensions[$key]);
 			}
 		}
-		
-                $this->data['superuser'] = $this->user->isSuperuser();
                 
 		$this->data['extensions'] = array();
 						
@@ -69,41 +67,37 @@ class ControllerExtensionModule extends Controller {
 	
 				$action = array();
 				
-				if (!in_array($extension, $extensions)) {
-                                    if ($this->user->isSuperuser()) {
-					$action[] = array(
-						'text' => $this->language->get('text_install'),
-						'href' => $this->url->link('extension/module/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-                                    } else {
-                                        $action[] = array(
-                                                'text' => '',
-						'href' => ''
-                                                        );
-                                    }
-                                    
-				} else {
-					$action[] = array(
-						'text' => $this->language->get('text_edit'),
-						'href' => $this->url->link('module/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
-					);
-					if ($this->user->isSuperuser()) {			
+                                if ($this->user->isSuperuser() || $this->user->hasPermission('access', 'module/' . $extension)) {
+                                    if (!in_array($extension, $extensions)) {
+                                        if ($this->user->isSuperuser()) {
                                             $action[] = array(
-						'text' => $this->language->get('text_uninstall'),
-						'href' => $this->url->link('extension/module/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-                                            );
-                                        } else {
-                                            $action[] = array(
-						'text' => '',
-						'href' => ''
+                                                    'text' => $this->language->get('text_install'),
+                                                    'href' => $this->url->link('extension/module/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
                                             );
                                         }
-				}
-												
-				$this->data['extensions'][] = array(
-					'name'   => $this->language->get('heading_title'),
-					'action' => $action
-				);
+
+                                    } else {
+                                            $action[] = array(
+                                                    'text' => $this->language->get('text_edit'),
+                                                    'href' => $this->url->link('module/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
+                                            );
+
+                                            if ($this->user->isSuperuser()) {			
+                                                $action[] = array(
+                                                    'text' => $this->language->get('text_uninstall'),
+                                                    'href' => $this->url->link('extension/module/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
+                                                );
+                                            }
+                                    }
+                                }
+				
+                                if (!empty($action))
+                                {
+                                    $this->data['extensions'][] = array(
+                                            'name'   => $this->language->get('heading_title'),
+                                            'action' => $action
+                                    );
+                                }
 			}
 		}
                 
@@ -120,7 +114,7 @@ class ControllerExtensionModule extends Controller {
 	public function install() {
 		$this->load->language('extension/module');
 		
-		if (!$this->user->hasPermission('modify', 'extension/module')) {
+		if (!$this->user->isSuperuser() && !$this->user->hasPermission('modify', 'extension/module')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
 			
 			$this->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
@@ -150,7 +144,7 @@ class ControllerExtensionModule extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/module');
 		
-		if (!$this->user->hasPermission('modify', 'extension/module')) {
+		if (!$this->user->isSuperuser() && !$this->user->hasPermission('modify', 'extension/module')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
 			
 			$this->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));

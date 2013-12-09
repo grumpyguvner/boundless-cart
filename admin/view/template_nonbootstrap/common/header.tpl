@@ -79,7 +79,22 @@ $(document).ready(function(){
   <div class="div1">
     <div class="div2"><img src="view/image/logo.png" title="<?php echo $heading_title; ?>" onclick="location = '<?php echo $home; ?>'" /></div>
     <?php if ($logged) { ?>
-    <div class="div3"><img src="view/image/lock.png" alt="" style="position: relative; top: 3px;" />&nbsp;<?php echo $logged; ?></div>
+    <div class="div3">
+        <img src="view/image/lock.png" alt="" style="position: relative; top: 3px;" />&nbsp;<?php echo $logged; ?>
+        <?php if (isset($user_groups)) { ?>
+        <form style="display: inline;" id="adminForm" name="adminForm" action="" method="POST">
+            <select name="user_group_id" id="user_group_id">
+                <?php foreach ($user_groups as $user_group) { ?>
+                <?php if ($user_group['user_group_id'] == $user_group_id) { ?>
+                <option value="<?php echo $user_group['user_group_id']; ?>" selected="selected"><?php echo $user_group['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $user_group['user_group_id']; ?>"><?php echo $user_group['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+            </select>
+        </form>
+        <?php } ?>
+    </div>
     <?php } ?>
   </div>
   <?php if ($logged) { ?>
@@ -93,7 +108,9 @@ ob_start("fixMenu");
         <ul>
           <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
           <li><a href="<?php echo $banner; ?>"><?php echo $text_banner; ?></a></li>
-          <li><a href="<?php echo $welcome; ?>"><?php echo $text_welcome; ?></a></li>	
+          <li><a href="<?php echo $megamenu; ?>"><?php echo $text_megamenu; ?></a></li>
+          <li><a href="<?php echo $welcome; ?>"><?php echo $text_welcome; ?></a></li>
+          <li><a href="<?php echo $content_block; ?>"><?php echo $text_content_block; ?></a></li>
           <li><a href="<?php echo $news; ?>"><?php echo $text_news; ?></a></li>	
           <li><a href="<?php echo $store_locations; ?>"><?php echo $text_store_locations; ?></a></li>	
           <li><a href="<?php echo $event; ?>"><?php echo $text_event; ?></a></li>	
@@ -109,6 +126,7 @@ ob_start("fixMenu");
               <li><a href="<?php echo $attribute_group; ?>"><?php echo $text_attribute_group; ?></a></li>
             </ul>
           </li>
+          <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
           <li><a href="<?php echo $option; ?>"><?php echo $text_option; ?></a></li>
           <li><a href="<?php echo $manufacturer; ?>"><?php echo $text_manufacturer; ?></a></li>
           <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
@@ -138,13 +156,18 @@ ob_start("fixMenu");
           <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li> 
           <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
           <li><a href="<?php echo $advanced_coupon; ?>"><?php echo $text_advanced_coupon; ?></a></li>
+          <li><a class="parent"><?php echo $text_redeem; ?></a>
+            <ul>
+              <li><a href="<?php echo $redeem; ?>"><?php echo $text_redeem; ?></a></li>
+              <li><a href="<?php echo $redeem_theme; ?>"><?php echo $text_redeem_theme; ?></a></li>
+            </ul>
+          </li>
           <li><a class="parent"><?php echo $text_voucher; ?></a>
             <ul>
               <li><a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a></li>
               <li><a href="<?php echo $voucher_theme; ?>"><?php echo $text_voucher_theme; ?></a></li>
             </ul>
           </li>
-          <li><a href="<?php echo $redeem; ?>"><?php echo $text_redeem; ?></a></li>
           <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
         </ul>
       </li>
@@ -155,7 +178,7 @@ ob_start("fixMenu");
           <li><a class="parent"><?php echo $text_users; ?></a>
             <ul>
               <li><a href="<?php echo $user; ?>"><?php echo $text_user; ?></a></li>
-              <li><a href="<?php echo $user_group; ?>"><?php echo $text_user_group; ?></a></li>
+              <li><a href="<?php echo $user_group_link; ?>"><?php echo $text_user_group; ?></a></li>
             </ul>
           </li>
           <li><a class="parent"><?php echo $text_localisation; ?></a>
@@ -231,15 +254,13 @@ ob_start("fixMenu");
           </li>
         </ul>
       </li>
-          <?php if ($this->user->isSuperuser()) { ?>
-              <li id="help"><a class="top"><?php echo $text_help; ?></a>
-                  <ul>
-                      <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
-                      <li><a href="http://www.opencart.com/index.php?route=documentation/introduction" target="_blank"><?php echo $text_documentation; ?></a></li>
-                      <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
-                  </ul>
-              </li>
-          <?php } ?>
+      <li id="help"><a class="top"><?php echo $text_help; ?></a>
+        <ul>
+          <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
+          <li><a href="http://www.opencart.com/index.php?route=documentation/introduction" target="_blank"><?php echo $text_documentation; ?></a></li>
+          <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
+        </ul>
+      </li>
     </ul>
 <?php
 ob_end_flush();
@@ -257,3 +278,11 @@ ob_end_flush();
   </div>
   <?php } ?>
 </div>
+
+<script>
+$(document).ready(function(){
+    $('#user_group_id').change(function() {
+        $('#adminForm').submit();
+    });
+});
+</script>

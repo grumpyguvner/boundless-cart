@@ -28,7 +28,12 @@ $url_prefix = '';
 
 if (!defined('FILE_CONFIG') && CONFIG_OVERRIDE)
 {
-    $file = (strtoupper(APPLICATION_ENV) == 'PRODUCTION') ? 'config.php' : 'config_' . APPLICATION_ENV . '.php';
+    if (strtoupper(APPLICATION_ENV) == 'PRODUCTION' && !file_exists('config_' . APPLICATION_ENV . '.php'))
+    {
+        $file = 'config.php';
+    } else {
+        $file = 'config_' . APPLICATION_ENV . '.php';
+    }
     $file = file(DIR_OPENCART . $file);
 
     foreach ($file as $num => $line) {
@@ -39,7 +44,13 @@ if (!defined('FILE_CONFIG') && CONFIG_OVERRIDE)
     }
     if (isset($sub_config_file))
     {
-        define('FILE_CONFIG', (strtoupper(APPLICATION_ENV) == 'PRODUCTION') ? 'config_' . $sub_config_file . '.php' : 'config_' . $sub_config_file . '_' . APPLICATION_ENV . '.php');
+        if (strtoupper(APPLICATION_ENV) == 'PRODUCTION' && !file_exists('config_' . $sub_config_file . '_' . APPLICATION_ENV . '.php'))
+        {
+            define('FILE_CONFIG', 'config_' . $sub_config_file . '.php');
+        } else {
+            define('FILE_CONFIG', 'config_' . $sub_config_file . '_' . APPLICATION_ENV . '.php');
+        }
+        
         $url_prefix = '/' . $sub_config_file;
     }
 }
@@ -48,11 +59,9 @@ if (!defined('FILE_CONFIG') && CONFIG_OVERRIDE)
 define('HTTP_SERVER', 'http://' . $_SERVER['HTTP_HOST'] . $url_prefix . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
 define('HTTP_OPENCART', 'http://' . $_SERVER['HTTP_HOST'] . $url_prefix . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
 
-
-
 // set config file name which we will write to
 defined('FILE_CONFIG')
-    || define('FILE_CONFIG', (strtoupper(APPLICATION_ENV) == 'PRODUCTION') ? 'config.php' : 'config_' . APPLICATION_ENV . '.php');
+    || define('FILE_CONFIG', (strtoupper(APPLICATION_ENV) == 'PRODUCTION' && !file_exists('config_' . APPLICATION_ENV . '.php')) ? 'config.php' : 'config_' . APPLICATION_ENV . '.php');
 
 // Upgrade
 $upgrade = false;
@@ -98,6 +107,10 @@ $registry = new Registry();
 // Loader
 $loader = new Loader($registry);
 $registry->set('load', $loader);
+
+// Url
+$url = new Url(HTTP_SERVER);
+$registry->set('url', $url);
 
 // Request
 $request = new Request();

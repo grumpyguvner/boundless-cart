@@ -30,7 +30,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		$this->data['text_address_new'] = $this->language->get('text_address_new');
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
-                $this->data['text_personal_details'] = $this->language->get('text_personal_details');
+                $this->data['text_your_details'] = $this->language->get('text_your_details');
                 $this->data['text_your_address'] = $this->language->get('text_your_address');
                 
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
@@ -47,6 +47,9 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		$this->data['entry_city'] = $this->language->get('entry_city');
 		$this->data['entry_country'] = $this->language->get('entry_country');
 		$this->data['entry_zone'] = $this->language->get('entry_zone');
+                $this->data['entry_title'] = $this->language->get('entry_title');
+                
+		$this->data['select_title'] = explode(',', $this->language->get('select_title'));
 	
 		$this->data['button_continue'] = $this->language->get('button_continue');
         
@@ -193,6 +196,11 @@ class ControllerCheckoutPaymentAddress extends Controller {
 			} 
 			
 			if ($this->request->post['payment_address'] == 'new') {
+                            
+                                if (isset($this->request->post['title']) && empty($this->request->post['title'])) {
+                                        $json['error']['title'] = $this->language->get('error_title');
+                                }
+                                
 				if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 					$json['error']['firstname'] = $this->language->get('error_firstname');
 				}

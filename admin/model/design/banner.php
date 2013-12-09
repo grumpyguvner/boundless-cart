@@ -25,14 +25,14 @@ class ModelDesignBanner extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "banner_image_description WHERE banner_id = '" . (int)$banner_id . "'");
 			
 		if (isset($data['banner_image'])) {
-			foreach ($data['banner_image'] as $banner_image) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "banner_image SET banner_id = '" . (int)$banner_id . "', link = '" .  $this->db->escape($banner_image['link']) . "', image = '" .  $this->db->escape($banner_image['image']) . "', sort_order = '" . (int)$banner_image['sort_order'] . "'");
-				
-				$banner_image_id = $this->db->getLastId();
-				
-				foreach ($banner_image['banner_image_description'] as $language_id => $banner_image_description) {				
-					$this->db->query("INSERT INTO " . DB_PREFIX . "banner_image_description SET banner_image_id = '" . (int)$banner_image_id . "', language_id = '" . (int)$language_id . "', banner_id = '" . (int)$banner_id . "', title = '" .  $this->db->escape($banner_image_description['title']) . "', description = '" .  $this->db->escape($banner_image_description['description']) . "'");
-				}
+			foreach ($data['banner_image'] as $language_id => $banners_image) {
+                          foreach ($banners_image as $banner_image) {  
+                            $this->db->query("INSERT INTO " . DB_PREFIX . "banner_image SET banner_id = '" . (int)$banner_id . "', link = '" .  $this->db->escape($banner_image['link']) . "', image = '" .  $this->db->escape($banner_image['image']) . "', sort_order = '" . (int)$banner_image['sort_order'] . "', status = '" . (int)$banner_image['status'] . "'");
+
+                            $banner_image_id = $this->db->getLastId();
+
+                            $this->db->query("INSERT INTO " . DB_PREFIX . "banner_image_description SET banner_image_id = '" . (int)$banner_image_id . "', language_id = '" . (int)$language_id . "', banner_id = '" . (int)$banner_id . "', title = '" .  $this->db->escape($banner_image['title']) . "', description = '" .  $this->db->escape($banner_image['description']) . "'");
+                          }
 			}
 		}			
 	}
@@ -92,24 +92,35 @@ class ModelDesignBanner extends Model {
 		$banner_image_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image WHERE banner_id = '" . (int)$banner_id . "'");
 		
 		foreach ($banner_image_query->rows as $banner_image) {
-			$banner_image_description_data = array();
+			
 			 
 			$banner_image_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image_description WHERE banner_image_id = '" . (int)$banner_image['banner_image_id'] . "' AND banner_id = '" . (int)$banner_id . "'");
 			
 			foreach ($banner_image_description_query->rows as $banner_image_description) {			
-				$banner_image_description_data[$banner_image_description['language_id']] = array('title' => $banner_image_description['title'], 'description' => $banner_image_description['description']);
-			}
+				
+			
 		
-			$banner_image_data[] = array(
-				'banner_image_description' => $banner_image_description_data,
+			$banner_image_data[$banner_image_description['language_id']][] = array(
+				'title'                    => $banner_image_description['title'],
+                                'description'              => $banner_image_description['description'],
 				'link'                     => $banner_image['link'],
 				'image'                    => $banner_image['image'],
-                                'sort_order'               => $banner_image['sort_order']
+                                'sort_order'               => $banner_image['sort_order'],
+                                'status'                   => $banner_image['status']
 			);
+		}    
+                
+                $sort_order = array();
+                
+		foreach ($banner_image_data[$banner_image_description['language_id']] as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
 		}
-		
+
+		array_multisort($sort_order, SORT_ASC, $banner_image_data[$banner_image_description['language_id']]);
+                }
 		return $banner_image_data;
-	}
+	
+        }
 		
 	public function getTotalBanners() {
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "banner");

@@ -12,6 +12,12 @@ class ControllerModuleAFilters extends Controller {
         $this->data['text_gender'] = $this->language->get('text_gender');
         $this->data['text_activity'] = $this->language->get('text_activity');
 
+        $this->data['text_range'] = $this->language->get('text_range');
+        $this->data['text_low'] = $this->language->get('text_low');
+        $this->data['text_max'] = $this->language->get('text_max');
+        $this->data['text_sale_item'] = $this->language->get('text_sale_item');
+        $this->data['text_new_item'] = $this->language->get('text_new_item');
+        
         $this->load->model('catalog/category');
 
         $this->load->model('catalog/product');

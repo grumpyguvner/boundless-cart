@@ -58,36 +58,60 @@ class ModelLocalisationLanguageManager extends Model {
         }
     }
 
-    public function getLanguageFiles() {
-        $this->load->model('localisation/language');
+    public function getLanguageFiles($data) {
+        
+        $app_dir = self::getApplicationDir();
 
         $languageFiles = array();
+        
+        if ($this->user->isSuperuser() && $data['show_all'])
+        {
+            $folders = self::getLanguageFolders();
+        
+            $this->load->model('localisation/language');
+            $languages = $this->model_localisation_language->getLanguages();
 
-        $folders = self::getLanguageFolders($this->config->get('config_base_template'), $this->config->get('config_template'));
-        $languages = $this->model_localisation_language->getLanguages();
+            foreach ($folders as $folder) {
+                $folderFiles = array();
 
-        foreach ($folders as $folder) {
-            $folderFiles = array();
-
-            $files = glob($folder . '/' . $this->default . '/*/*.php');
-            if ($files) {
-                $folderFiles = $files;
-            }
-
-            foreach ($languages as $language) {
-                $files = glob($folder . '/' . $language['directory'] . '/*/*.php');
+                $files = glob($folder  . '/' . $this->default . '/*/*.php');
                 if ($files) {
                     $folderFiles = $files;
                 }
+
+                foreach ($languages as $language) {
+                    $files = glob($folder . '/' . $language['directory'] . '/*/*.php');
+                    if ($files) {
+                        $folderFiles = $files;
+                    }
+                }
+
+                foreach ($folderFiles as $file) {
+                    $data = explode('/', dirname($file));
+
+                    $file = end($data) . '/' . basename($file, '.php');
+
+                    if (!in_array($file, $languageFiles)) {
+                        $languageFiles[] = $file;
+                    }
+                }
             }
-
-            foreach ($folderFiles as $file) {
-                $data = explode('/', dirname($file));
-
-                $file = end($data) . '/' . basename($file, '.php');
-
-                if (!in_array($file, $languageFiles)) {
-                    $languageFiles[] = $file;
+        } else {
+            $sql = "SELECT filename "
+                . "FROM `" . DB_PREFIX . "language_manager_files` "
+                . "WHERE application = '" . $this->db->escape($app_dir) . "' and store_id = '" . 0 . "' "
+                . "UNION "
+                . "SELECT filename "
+                . "FROM `" . DB_PREFIX . "language_manager` "
+                . "WHERE application = '" . $this->db->escape($app_dir) . "' AND filename != directory "
+                . "GROUP BY filename";
+            $query = $this->db->query($sql);
+            
+            if ($query->num_rows)
+            {
+                foreach ($query->rows as $row)
+                {
+                    $languageFiles[] = $row['filename'];
                 }
             }
         }
@@ -133,8 +157,7 @@ class ModelLocalisationLanguageManager extends Model {
     }
 
     private function dataLoadFiles($directory, $filename) {
-        
-        $app_dir = self::getApplicationDir();
+
         $folders = self::getLanguageFolders($this->config->get('config_base_template'), $this->config->get('config_template'));
         
         $is_default = ($filename == $directory) ? true : false;
@@ -179,9 +202,15 @@ class ModelLocalisationLanguageManager extends Model {
     }
 
     private function dataLoadDB($directory, $filename) {
-        $data = array();
-
+        
         $app_dir = self::getApplicationDir();
+        
+        $sql = "UPDATE `" . DB_PREFIX . "language_manager` "
+                . "SET application = '" . $this->db->escape(str_replace($_SERVER['DOCUMENT_ROOT'], '', DIR_CATALOG)) . "' "
+                . "WHERE application = '" . $this->db->escape(DIR_CATALOG) . "' ";
+        $this->db->query($sql);
+        
+        $data = array();
 
         $sql = "SELECT value "
                 . "FROM `" . DB_PREFIX . "language_manager` "
@@ -207,19 +236,21 @@ class ModelLocalisationLanguageManager extends Model {
     }
 
     static function getApplicationDir() {
-        return DIR_CATALOG;
+        return str_replace($_SERVER['DOCUMENT_ROOT'], '', DIR_CATALOG);
     }
 
     static function getLanguageFolders($base, $default) {
+        
+        $app_dir = self::getApplicationDir();
 
-        $folders = array(DIR_CATALOG . 'language');
+        $folders = array($_SERVER['DOCUMENT_ROOT'] . $app_dir . 'language');
 
-        if (is_dir(DIR_CATALOG . 'view/theme/' . $base . '/language')) {
-            $folders[] = DIR_CATALOG . 'view/theme/' . $base . '/language';
+        if (is_dir($_SERVER['DOCUMENT_ROOT'] . $app_dir . 'view/theme/' . $base . '/language')) {
+            $folders[] = $_SERVER['DOCUMENT_ROOT'] . $app_dir . 'view/theme/' . $base . '/language';
         }
 
-        if (is_dir(DIR_CATALOG . 'view/theme/' . $default . '/language')) {
-            $folders[] = DIR_CATALOG . 'view/theme/' . $default . '/language';
+        if (is_dir($_SERVER['DOCUMENT_ROOT'] . $app_dir . 'view/theme/' . $default . '/language')) {
+            $folders[] = $_SERVER['DOCUMENT_ROOT'] . $app_dir . 'view/theme/' . $default . '/language';
         }
 
         return $folders;

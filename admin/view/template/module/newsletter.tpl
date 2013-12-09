@@ -187,6 +187,7 @@
                     <label class="control-label"><?php echo $mailchimp_account_lists; ?></label>
                     <div class="controls">
                         <select name="newsletter_mailchimp_account_listid">
+                <option><?php echo $text_none; ?></option>
                             <?php
                             foreach ($newsletter_mailchimp_lists as $listid => $listname)
                             {
@@ -226,6 +227,7 @@
                     <label class="control-label"><?php echo $mailchimp_checkout_lists; ?></label>
                     <div class="controls">
                         <select name="newsletter_mailchimp_checkout_listid">
+                <option><?php echo $text_none; ?></option>
                             <?php
                             foreach ($newsletter_mailchimp_lists as $listid => $listname)
                             {
@@ -372,6 +374,7 @@
                     <label class="control-label"><?php echo $mailcampaign_account_lists; ?></label>
                     <div class="controls">
                         <select name="newsletter_mailcampaign_account_listid">
+                <option><?php echo $text_none; ?></option>
                             <?php
                             foreach ($newsletter_mailcampaign_lists as $listid => $listname)
                             {
@@ -411,6 +414,7 @@
                     <label class="control-label"><?php echo $mailcampaign_checkout_lists; ?></label>
                     <div class="controls">
                         <select name="newsletter_mailcampaign_checkout_listid">
+                <option><?php echo $text_none; ?></option>
                             <?php
                             foreach ($newsletter_mailcampaign_lists as $listid => $listname)
                             {

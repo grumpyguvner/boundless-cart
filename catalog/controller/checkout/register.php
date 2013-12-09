@@ -32,6 +32,7 @@ class ControllerCheckoutRegister extends Controller {
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
 						
+		$this->data['entry_title'] = $this->language->get('entry_title');
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
 		$this->data['entry_email'] = $this->language->get('entry_email');
@@ -51,6 +52,18 @@ class ControllerCheckoutRegister extends Controller {
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_confirm'] = $this->language->get('entry_confirm');
 		$this->data['entry_shipping'] = $this->language->get('entry_shipping');
+                $this->data['entry_date_birth'] = $this->language->get('entry_date_birth');
+                $this->data['entry_newsletter'] = $this->language->get('entry_newsletter');
+                
+                if (($this->config->get('newsletter_mailcampaign_enabled') && (!$this->config->get('newsletter_mailcampaign_account_listid') || !$this->config->get('newsletter_mailcampaign_account_optin'))) ||
+                    ($this->config->get('newsletter_mailchimp_enabled') && (!$this->config->get('newsletter_mailchimp_account_listid') || !$this->config->get('newsletter_mailchimp_account_optin'))))
+                {
+                    $this->data['show_newsletter'] = false;
+                } else {
+                    $this->data['show_newsletter'] = true;
+                }
+                
+		$this->data['select_title'] = explode(',', $this->language->get('select_title'));
 
 		$this->data['button_continue'] = $this->language->get('button_continue');
 
@@ -70,24 +83,41 @@ class ControllerCheckoutRegister extends Controller {
 		
 		$this->data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		
+		if (isset($this->request->get['email'])) {
+			$this->data['email'] = $this->request->get['email'];		
+		} else {
+			$this->data['email'] = '';
+		}
+		
 		if (isset($this->session->data['shipping_postcode'])) {
 			$this->data['postcode'] = $this->session->data['shipping_postcode'];		
 		} else {
 			$this->data['postcode'] = '';
 		}
 		
-    	if (isset($this->session->data['shipping_country_id'])) {
-			$this->data['country_id'] = $this->session->data['shipping_country_id'];		
-		} else {	
-      		$this->data['country_id'] = $this->config->get('config_country_id');
-    	}
-		
-    	if (isset($this->session->data['shipping_zone_id'])) {
-			$this->data['zone_id'] = $this->session->data['shipping_zone_id'];			
-		} else {
-      		$this->data['zone_id'] = '';
-    	}
-				
+                if (isset($this->session->data['shipping_country_id'])) {
+                                $this->data['country_id'] = $this->session->data['shipping_country_id'];		
+                        } else {	
+                        $this->data['country_id'] = $this->config->get('config_country_id');
+                }
+
+                if (isset($this->session->data['shipping_zone_id'])) {
+                                $this->data['zone_id'] = $this->session->data['shipping_zone_id'];			
+                        } else {
+                        $this->data['zone_id'] = '';
+                }
+
+                if (isset($this->session->data['day_birth']) && isset($this->session->data['month_birth']) && isset($this->session->data['year_birth'])) {
+                        $this->data['day_birth'] = $this->session->data['day_birth'];
+                        $this->data['month_birth'] = $this->session->data['month_birth'];
+                        $this->data['year_birth'] = $this->session->data['year_birth'];
+                } else {
+                        $this->data['day_birth'] = '';
+                        $this->data['month_birth'] = '';
+                        $this->data['year_birth'] = '';
+                }
+        
+        				
 		$this->load->model('localisation/country');
 		
 		$this->data['countries'] = $this->model_localisation_country->getCountries();
@@ -149,7 +179,13 @@ class ControllerCheckoutRegister extends Controller {
 			}				
 		}
 						
-		if (!$json) {					
+		if (!$json) {		
+                    
+                    				
+			if (isset($this->request->post['title']) && empty($this->request->post['title'])) {
+				$json['error']['title'] = $this->language->get('error_title');
+			}
+                    
 			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
@@ -165,10 +201,28 @@ class ControllerCheckoutRegister extends Controller {
 			if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
+                        
+                        if (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+				$json['error']['email'] = $this->language->get('error_email');
+			}
 			
 			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
+                        
+                        if (isset($this->request->post['day_birth']) || isset($this->request->post['month_birth']) || isset($this->request->post['year_birth'])) {
+                            if (!isset($this->request->post['day_birth'])) {
+                                $this->error['day_birth'] = $this->language->get('error_day_birth');
+                            }
+
+                            if (!isset($this->request->post['month_birth'])) {
+                                $this->error['month_birth'] = $this->language->get('error_month_birth');
+                            }
+
+                            if (!isset($this->request->post['year_birth'])) {
+                                $this->error['year_birth'] = $this->language->get('error_year_birth');
+                            }
+                        }
 	
 			// Customer Group
 			$this->load->model('account/customer_group');
@@ -233,14 +287,6 @@ class ControllerCheckoutRegister extends Controller {
 			if ($this->request->post['confirm'] != $this->request->post['password']) {
 				$json['error']['confirm'] = $this->language->get('error_confirm');
 			}
-                        
-                        if (($this->config->get('newsletter_mailcampaign_enabled') && !$this->config->get('newsletter_mailcampaign_account_optin')) ||
-                            ($this->config->get('newsletter_mailchimp_enabled') && !$this->config->get('newsletter_mailchimp_account_optin')))
-                        {
-                            $this->data['show_newsletter'] = false;
-                        } else {
-                            $this->data['show_newsletter'] = true;
-                        }
 			
 			if ($this->config->get('config_account_id')) {
 				$this->load->model('catalog/information');
@@ -272,13 +318,7 @@ class ControllerCheckoutRegister extends Controller {
 					$this->session->data['shipping_postcode'] = $this->request->post['postcode'];					
 				}
                                 
-                                if (($this->config->get('newsletter_mailcampaign_enabled') && !$this->config->get('newsletter_mailcampaign_account_optin')) ||
-                                    ($this->config->get('newsletter_mailchimp_enabled') && !$this->config->get('newsletter_mailchimp_account_optin')))
-                                {
-                                    $this->session->data['newsletter'] = true;
-                                } else {
-                                    $this->session->data['newsletter'] = false;
-                                }
+                                $this->session->data['newsletter'] = (isset($this->request->post['newsletter']) && $this->request->post['newsletter']) ? true : false;
 			} else {
 				$json['redirect'] = $this->url->link('account/success');
 			}

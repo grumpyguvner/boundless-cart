@@ -14,6 +14,7 @@ $_['text_your_password']   = 'Your Password';
 $_['text_agree']           = 'I have read and agree to the <a class="colorbox" href="%s" alt="%s"><b>%s</b></a>';
 
 // Entry
+$_['entry_title']          = 'Title:';
 $_['entry_firstname']      = 'First Name:';
 $_['entry_lastname']       = 'Last Name:';
 $_['entry_email']          = 'E-Mail:';
@@ -32,6 +33,9 @@ $_['entry_zone']           = 'Region / State:';
 $_['entry_newsletter']     = 'Subscribe:';
 $_['entry_password']       = 'Password:';
 $_['entry_confirm']        = 'Password Confirm:';
+$_['entry_date_birth']     = 'Date Of Birth:';
+$_['entry_title']          = 'Title:';
+
 
 // Error
 $_['error_exists']         = 'Warning: E-Mail Address is already registered!';

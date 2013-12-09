@@ -65,6 +65,14 @@ class ControllerAccountWishList extends Controller {
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		$this->data['button_cart'] = $this->language->get('button_cart');
 		$this->data['button_remove'] = $this->language->get('button_remove');
+                
+                if (count($this->data['breadcrumbs']) > 1)
+                    {
+                        $count = count($this->data['breadcrumbs']) - 2;
+                        $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                    } else {
+                        $this->data['text_breadcrumb_back'] = '';
+                    }
 		
 		if (isset($this->session->data['success'])) {
 			$this->data['success'] = $this->session->data['success'];

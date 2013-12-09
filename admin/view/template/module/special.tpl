@@ -116,7 +116,7 @@ function addModule() {
 	html += '	<td class="column-action"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn btn-small"><i class="icon-trash ims" title="<?php echo $button_remove; ?>"></i><span class="hidden-phone"> <?php echo $button_remove; ?></span></a></td>';
 	html += '</tr>';
 
-	$('#module tbody').append(html);
+	$('#module tfoot').append(html);
 
 	<?php if ($this->config->get('p3adminrebooted_select2')) { ?>
 	$('#module-row' + module_row + ' select').select2();

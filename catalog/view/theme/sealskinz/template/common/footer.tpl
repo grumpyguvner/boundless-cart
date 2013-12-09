@@ -112,4 +112,5 @@
 </script>
 <?php echo $welcome_popup; ?>
 
+<?php echo $welcome_popup; ?>
 </body></html>

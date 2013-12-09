@@ -56,10 +56,22 @@ class ControllerAccountEdit extends Controller {
         $this->data['entry_email'] = $this->language->get('entry_email');
         $this->data['entry_telephone'] = $this->language->get('entry_telephone');
         $this->data['entry_fax'] = $this->language->get('entry_fax');
-
+        $this->data['entry_date_birth'] = $this->language->get('entry_date_birth');
+        $this->data['entry_title'] = $this->language->get('entry_title');
+        
+        $this->data['select_title'] = explode(',', $this->language->get('select_title'));
+        
         $this->data['button_continue'] = $this->language->get('button_continue');
         $this->data['button_back'] = $this->language->get('button_back');
-
+        
+        if (count($this->data['breadcrumbs']) > 1)
+            {
+                $count = count($this->data['breadcrumbs']) - 2;
+                $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+            } else {
+                $this->data['text_breadcrumb_back'] = '';
+            }
+        
         if (isset($this->error['warning'])) {
             $this->data['error_warning'] = $this->error['warning'];
         } else {
@@ -94,6 +106,14 @@ class ControllerAccountEdit extends Controller {
 
         if ($this->request->server['REQUEST_METHOD'] != 'POST') {
             $customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
+        }
+        
+        if (isset($this->request->post['title'])) {
+            $this->data['title'] = $this->request->post['title'];
+        } elseif (isset($customer_info)) {
+            $this->data['title'] = $customer_info['title'];
+        } else {
+            $this->data['title'] = '';
         }
 
         if (isset($this->request->post['firstname'])) {
@@ -135,6 +155,20 @@ class ControllerAccountEdit extends Controller {
         } else {
             $this->data['fax'] = '';
         }
+        
+        if (isset($this->request->post['day_birth']) && isset($this->request->post['month_birth']) && isset($this->request->post['year_birth'])) {
+            $this->data['day_birth'] = $this->request->post['day_birth'];
+            $this->data['month_birth'] = $this->request->post['month_birth'];
+            $this->data['year_birth'] = $this->request->post['year_birth'];
+        } elseif (isset($customer_info)) {
+            $this->data['day_birth'] = date("d", strtotime($customer_info['dob']));
+            $this->data['month_birth'] = date("m", strtotime($customer_info['dob']));
+            $this->data['year_birth'] = date("Y", strtotime($customer_info['dob']));
+        } else {
+            $this->data['day_birth'] = '';
+            $this->data['month_birth'] = '';
+            $this->data['year_birth'] = '';
+        }
 
         $this->data['back'] = $this->url->link('account/account', '', 'SSL');
 
@@ -172,7 +206,21 @@ class ControllerAccountEdit extends Controller {
         if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
             $this->error['telephone'] = $this->language->get('error_telephone');
         }
+        
+        if (isset($this->request->post['day_birth']) || isset($this->request->post['month_birth']) || isset($this->request->post['year_birth'])) {
+            if (!isset($this->request->post['day_birth'])) {
+                $this->error['day_birth'] = $this->language->get('error_day_birth');
+            }
 
+            if (!isset($this->request->post['month_birth'])) {
+                $this->error['month_birth'] = $this->language->get('error_month_birth');
+            }
+
+            if (!isset($this->request->post['year_birth'])) {
+                $this->error['year_birth'] = $this->language->get('error_year_birth');
+            }
+        }
+        
         if (!$this->error) {
             return true;
         } else {

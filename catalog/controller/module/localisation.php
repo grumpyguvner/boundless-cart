@@ -8,7 +8,7 @@
 class ControllerModuleLocalisation extends Controller {
 
     public function index() {
-        if (isset($this->request->post['currency_code'])) {
+        if (isset($this->request->post['currency_code']) && $this->request->post['currency_code']) {
             $this->currency->set($this->request->post['currency_code']);
 
             unset($this->session->data['shipping_method']);
@@ -20,7 +20,8 @@ class ControllerModuleLocalisation extends Controller {
                 $this->redirect($this->url->link('common/home'));
             }
         }
-        if (isset($this->request->post['language_code'])) {
+        
+        if (isset($this->request->post['language_code']) && $this->request->post['language_code']) {
             $this->session->data['language'] = $this->request->post['language_code'];
 
             if (isset($this->request->post['redirect'])) {
@@ -34,6 +35,9 @@ class ControllerModuleLocalisation extends Controller {
 
         $this->data['text_currency'] = $this->language->get('text_currency');
         $this->data['text_language'] = $this->language->get('text_language');
+        $this->data['text_gbp_heading'] = $this->language->get('text_gbp_heading');
+        $this->data['text_eur_heading'] = $this->language->get('text_eur_heading');
+        $this->data['text_usd_heading'] = $this->language->get('text_usd_heading');
 
         if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
             $connection = 'SSL';
@@ -42,8 +46,12 @@ class ControllerModuleLocalisation extends Controller {
         }
 
         $this->data['action'] = $this->url->link('module/localisation', '', $connection);
+        
+        $this->data['logged'] = $this->customer->isLogged();
 
         $this->data['currency_code'] = $this->currency->getCode();
+        $this->data['symbol_left'] = $this->currency->getSymbolLeft();
+        $this->data['symbol_right'] = $this->currency->getSymbolRight();
         $this->data['language_code'] = $this->session->data['language'];
 
         $this->load->model('localisation/currency');
@@ -69,33 +77,20 @@ class ControllerModuleLocalisation extends Controller {
                                 'name'  => $result['name'],
                                 'code'  => $result['code'],
                                 'image' => $result['image']
-                        );	
+                        );  
                 }
         }
 
-        if (!isset($this->request->get['route'])) {
+         if (isset($this->request->server['HTTP_REFERER'])) {
+            $this->data['redirect'] = $this->request->server['HTTP_REFERER'];
+        } else {
             $this->data['redirect'] = $this->url->link('common/home');
-        } else {
-            $data = $this->request->get;
-            unset($data['_route_']);
-            $route = $data['route'];
-            unset($data['route']);
-
-            $url = '';
-            if ($data) {
-                $url = '&' . urldecode(http_build_query($data, '', '&'));
-            }
-
-            $this->data['redirect'] = $this->url->link($route, $url, $connection);
         }
+        
+        $this->setTemplate('module/localisation.tpl');
 
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/localisation.tpl')) {
-            $this->template = $this->config->get('config_template') . '/template/module/localisation.tpl';
-        } else {
-            $this->template = 'default/template/module/localisation.tpl';
-        }
+        $this->response->setOutput($this->render());	
 
-        $this->render();
     }
 
 }

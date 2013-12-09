@@ -138,7 +138,48 @@ class ControllerCommonFooter extends Controller {
         $this->data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');
         $this->data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
         $this->data['stockist'] = $this->url->link('common/store_locations', '', 'SSL');
+        
+/**************************** MODULE CONTENT BLOCK *******************************/
+        $language = $this->config->get('config_language_id');                
+        
+        $module_data = array();
+        
+        $this->load->model('setting/setting');
+        
+        $settings_blocks = $this->model_setting_setting->getSetting('blocks');
+        if ($settings_blocks) {
+            foreach ($settings_blocks as $key => $setting_blocks) {
+                if ($key == 'blocks_module_footer') {
+                    foreach ($setting_blocks as $blocks) {
+                    
+                        if ($blocks['status']) {
+                            $module_data[] = array(
+                                    'description'   => html_entity_decode($blocks['description'][$language], ENT_QUOTES, 'UTF-8'),
+                                    'sort_order'    => $blocks['sort_order']
+                            );
+                        }
+                    }
+                }
+            }
+        }    
+        $sort_order = array(); 
+	  
+        foreach ($module_data as $key => $value) {
+            $sort_order[$key] = $value['sort_order'];
+        }
 
+        array_multisort($sort_order, SORT_ASC, $module_data);
+        
+        $this->data['blocks'] = array();
+        
+        foreach ($module_data as $module) {
+            if ($module) {
+                    $this->data['blocks'][] = $module;
+            }
+        }
+        
+/**************************** END MODULE CONTENT BLOCK *******************************/
+        
         if (ENVIRONMENT_WARNING) {
             $this->data['error_environment'] = 'Warning: You are currently in the <strong>' . strtoupper(APPLICATION_ENV) . '</strong> environment!';
         } else {
@@ -150,9 +191,8 @@ class ControllerCommonFooter extends Controller {
         $this->setTemplate('common/footer.tpl');
 
         $this->children = array(
-               'module/welcome_popup'
+                'module/welcome_popup'
         );
-         
         $this->render();
     }
 

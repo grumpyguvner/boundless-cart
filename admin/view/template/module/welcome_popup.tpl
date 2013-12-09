@@ -6,13 +6,13 @@
 
     <div class="heading">
       <h1><img src="view/image/module.png" alt="" /> <?php echo $heading_title; ?></h1>
-<?php if ($error_warning) { ?>
-<?php echo p3html::tb_alert('error', $error_warning, true, 'warning'); ?>
-<?php } ?>
+			<?php if ($error_warning) { ?>
+				<?php echo p3html::tb_alert('error', $error_warning, true, 'warning'); ?>
+			<?php } ?>
       <div class="buttons form-actions form-actions-top">
-<?php echo p3html::tb_form_button_save($button_save); ?>
-<?php echo p3html::tb_form_button_cancel($button_cancel, $cancel); ?>
-</div>
+				<?php echo p3html::tb_form_button_save($button_save); ?>
+				<?php echo p3html::tb_form_button_cancel($button_cancel, $cancel); ?>
+			</div>
     </div>
     <div class="content">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">

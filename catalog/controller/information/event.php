@@ -41,10 +41,18 @@ class ControllerInformationEvent extends Controller {
 			$this->data['event_id'] = $event_info['event_id'];
 			$this->data['allow_subscribe'] = $event_info['allow_subscribe'];
 			$this->data['button_sub'] = $this->language->get('button_sub');
+                        $this->data['button_back'] = $this->language->get('button_back');
       		
 			$this->data['continue'] = $this->url->link('common/home');
 			$this->data['no_of_sub'] = $event_info['no_of_sub'];
 			$this->data['entry_products'] = $this->language->get('entry_products');
+                        
+                        if (count($this->data['breadcrumbs']) > 1) {
+                            $count = count($this->data['breadcrumbs']) - 2;
+                            $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                        } else {
+                            $this->data['text_breadcrumb_back'] = '';
+                        }
 			
 			if ($event_info['image']) {
 				$this->data['thumb'] = $this->model_tool_image->resize($event_info['image'],150, 150);
@@ -63,8 +71,13 @@ class ControllerInformationEvent extends Controller {
 				$product_related = unserialize($event_info['product_related']);
 				foreach ($product_related as $pid) {
 					$pinfo = $this->model_catalog_product->getProduct($pid);
+                                        $this->data['products'][$pid]['thumb'] = $this->model_tool_image->resize($pinfo['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
 					$this->data['products'][$pid]['name'] = $pinfo['name'];
 					$this->data['products'][$pid]['href'] = $this->url->link('product/product', 'product_id=' . $pid);
+                                        $this->data['products'][$pid]['price'] = $this->currency->format($this->tax->calculate($pinfo['price'], $pinfo['tax_class_id'], $this->config->get('config_tax')));
+                                        $this->data['products'][$pid]['special'] = $this->currency->format($this->tax->calculate($pinfo['special'], $pinfo['tax_class_id'], $this->config->get('config_tax')));
+                                        $this->data['products'][$pid]['saving_percent'] = $pinfo['saving_percent'];
+                                        $this->data['products'][$pid]['new'] = $pinfo['new'];
 				}
 			}
 			
@@ -97,6 +110,14 @@ class ControllerInformationEvent extends Controller {
       		$this->data['button_continue'] = $this->language->get('button_continue');
 
       		$this->data['continue'] = $this->url->link('common/home');
+                
+                if (count($this->data['breadcrumbs']) > 1) {
+                    $count = count($this->data['breadcrumbs']) - 2;
+                    $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                } else {
+                    $this->data['text_breadcrumb_back'] = '';
+                }
+                
 
 			$this->setTemplate('error/not_found.tpl');
 			
@@ -135,6 +156,13 @@ class ControllerInformationEvent extends Controller {
 		$this->data['button_sub'] = $this->language->get('button_sub');
 		$this->data['entry_products'] = $this->language->get('entry_products');
 		
+                if (count($this->data['breadcrumbs']) > 1) {
+                    $count = count($this->data['breadcrumbs']) - 2;
+                    $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                } else {
+                    $this->data['text_breadcrumb_back'] = '';
+                }
+                
 		$wh = '';
 		if(isset($this->request->get['date'])){
 			$wh =" AND DATE_FORMAT(i.event_date,'%Y-%m-%d')='".$this->request->get['date']."'";
@@ -185,6 +213,9 @@ class ControllerInformationEvent extends Controller {
 		$this->data['button_submit'] = $this->language->get('button_submit');
 		
 		$this->data['text_message'] = '';
+                $this->data['text_save'] = $this->language->get('text_save');
+                $this->data['text_rrp'] = $this->language->get('text_rrp');
+                $this->data['text_pay'] = $this->language->get('text_pay');
 		if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
 			$this->db->query("
 			insert into ".DB_PREFIX."event_subscribers set

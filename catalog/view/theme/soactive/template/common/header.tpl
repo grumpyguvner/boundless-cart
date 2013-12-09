@@ -16,13 +16,17 @@
         <?php foreach ($links as $link) { ?>
             <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
         <?php } ?>
+        <meta name="viewport" content="width=1020; initial-scale=1.0">
         <link href="catalog/view/theme/soactive/stylesheet/bootstrap/bootstrap.min.css" rel="stylesheet" media="screen">
         <link rel="stylesheet" type="text/css" href="catalog/view/theme/soactive/stylesheet/stylesheet.css" />
+        <link rel="stylesheet" type="text/css" href="catalog/view/theme/soactive/stylesheet/megamenu.css" />
+        <link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300normal,300italic,700normal|Open+Sans:400normal|Abel:400normal|Oswald:400normal|BenchNine:400normal|Unica+One:400normal|PT+Sans+Narrow:400normal|Droid+Sans:400normal|Droid+Serif:400normal|Cuprum:400normal|Ubuntu+Condensed:400normal&amp;subset=all">
         <?php foreach ($styles as $style) { ?>
             <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
         <?php } ?>
         <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
+        <script type="text/javascript" src="catalog/view/javascript/jquery/jquery.jcarousel.min.js"></script>
         <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" />
         <script type="text/javascript" src="catalog/view/javascript/jquery/ui/external/jquery.cookie.js"></script>
         <script type="text/javascript" src="catalog/view/javascript/jquery/colorbox/jquery.colorbox.js"></script>
@@ -44,10 +48,18 @@
         </script>
         <![endif]-->
         <?php if (isset($data_layer)) echo "<script>dataLayer =[" . json_encode($data_layer) . "];</script>"; ?>
-        <?php echo $google_analytics; ?>
     </head>
     <body>
-        <div id="container">
+        <?php echo $google_analytics; ?>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        <div class="container">
             <div id="header">
                 
             <?php if ($logo) { ?>
@@ -57,11 +69,9 @@
             <?php } ?>
                 <div class="links">
                     <div class="top">
-                        <div class="social">
-                            <span><a target="_blank" href="https://www.facebook.com/sheactivefans"><img alt="facebook" src="catalog/view/theme/soactive/image/facebook.png"></a></span><span><a target="_blank" href="https://twitter.com/sheactive"><img alt="twitter" src="catalog/view/theme/soactive/image/twitter.png"></a></span><span><a target="_blank" href="https://pinterest.com/source/sheactive.co.uk/‎"><img alt="Pinterest" src="catalog/view/theme/soactive/image/p.png"></a></span><span><a target="_blank" href=""><img alt="Instagram" src="catalog/view/theme/soactive/image/instagram_icon.png"></a></span>
-                        </div>
-                        <?php echo $language; ?>
-                        <?php echo $currency; ?>
+                        
+                        <?php echo $localisation; ?>
+                       
                         <div id="welcome">
                             <?php if (!$logged) { ?>
                                 <?php echo $text_welcome; ?>
@@ -70,24 +80,33 @@
                             <?php } ?>
                         </div>
                         <a href="<?php echo $wishlist; ?>" id="wishlist-total"><?php echo $text_wishlist; ?></a>
-                        <?php echo $cart; ?>
+                        <div style="display: inline-block;"><?php echo $cart; ?></div>
                     </div>
                     <div id="search">
                         <div class="button-search"></div>
                         <?php if ($filter_name) { ?>
                             <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" />
                         <?php } else { ?>
-                            <input type="text" name="filter_name" value="<?php echo $text_search; ?>" onclick="this.value = '';" onkeydown="this.style.color = '#000000';" />
+                            <input type="text" name="filter_name" placeholder="<?php echo $text_search; ?>" onclick="this.value = '';" onkeydown="this.style.color = '#000000';" />
                         <?php } ?>
                     </div>
                 </div>
             </div>
-            <?php if ($categories) { ?>
+            <?php 
+            if ($megamenu)
+            {
+                $search = '>home<';
+                $replace = '><img src="catalog/view/theme/soactive/image/home-button.png" alt="Home" class="home" /><';
+                $mega_menu = str_replace($search, $replace, $megamenu);
+                
+                echo $mega_menu;
+                
+            } elseif ($categories) { ?>
                 <div id="menu">
                     <ul>
-                        <li style="border-left: 2px solid #676767;"><a href='<?php echo $home; ?>'><span><img src="catalog/view/theme/soactive/image/home-button.png" alt="Home"/></span></a></li>
+                        <li><a href='<?php echo $home; ?>'><img src="catalog/view/theme/soactive/image/home-button.png" alt="Home"/></a></li>
                         <?php foreach ($categories as $category) { ?>
-                            <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
+                        <li><a href="<?php echo $category['href']; ?>"><?php echo strtoupper($category['name']); ?></a>
                                 <?php if ($category['children']) { ?>
                                     <div>
                                         <?php for ($i = 0; $i < count($category['children']);) { ?>
@@ -104,8 +123,12 @@
                                 <?php } ?>
                             </li>
                         <?php } ?>
+                        <li><a href='index.php?route=information/event/events'>EVENTS</a></li>
                     </ul>
                 </div>
             <?php } ?>
+            <?php foreach ($blocks as $block) { ?>
+                <?php echo $block['description']; ?>
+            <?php } ?>
             <div id="notification"></div>
-        
+    

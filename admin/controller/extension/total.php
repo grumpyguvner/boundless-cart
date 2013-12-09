@@ -69,29 +69,38 @@ class ControllerExtensionTotal extends Controller {
 	
 				$action = array();
 				
-				if (!in_array($extension, $extensions)) {
-					$action[] = array(
-						'text' => $this->language->get('text_install'),
-						'href' => $this->url->link('extension/total/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				} else {
-					$action[] = array(
-						'text' => $this->language->get('text_edit'),
-						'href' => $this->url->link('total/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
-					);
-								
-					$action[] = array(
-						'text' => $this->language->get('text_uninstall'),
-						'href' => $this->url->link('extension/total/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				}
-										
-				$this->data['extensions'][] = array(
-					'name'       => $this->language->get('heading_title'),
-					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'action'     => $action
-				);
+                                if ($this->user->isSuperuser() || $this->user->hasPermission('access', 'total/' . $extension)) {
+                                    if (!in_array($extension, $extensions)) {
+                                        if ($this->user->isSuperuser()) {
+                                            $action[] = array(
+                                                    'text' => $this->language->get('text_install'),
+                                                    'href' => $this->url->link('extension/total/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
+                                            );
+                                        }
+                                    } else {
+                                            $action[] = array(
+                                                    'text' => $this->language->get('text_edit'),
+                                                    'href' => $this->url->link('total/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
+                                            );
+
+                                            if ($this->user->isSuperuser()) {
+                                                $action[] = array(
+                                                        'text' => $this->language->get('text_uninstall'),
+                                                        'href' => $this->url->link('extension/total/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
+                                                );
+                                            }
+                                    }
+                                }
+					
+                                if (!empty($action))
+                                {
+                                    $this->data['extensions'][] = array(
+                                            'name'       => $this->language->get('heading_title'),
+                                            'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+                                            'sort_order' => $this->config->get($extension . '_sort_order'),
+                                            'action'     => $action
+                                    );
+                                }
 			}
 		}
 
@@ -107,7 +116,7 @@ class ControllerExtensionTotal extends Controller {
 	public function install() {
 		$this->load->language('extension/total');
 			
-		if (!$this->user->hasPermission('modify', 'extension/total')) {
+		if (!$this->user->isSuperuser() && !$this->user->hasPermission('modify', 'extension/total')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
 			
 			$this->redirect($this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL'));
@@ -137,7 +146,7 @@ class ControllerExtensionTotal extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/total');
 		
-		if (!$this->user->hasPermission('modify', 'extension/total')) {
+		if (!$this->user->isSuperuser() && !$this->user->hasPermission('modify', 'extension/total')) {
 			$this->session->data['error'] = $this->language->get('error_permission'); 
 			
 			$this->redirect($this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL'));

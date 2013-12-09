@@ -26,6 +26,7 @@ $_['text_download']                    = 'Downloads';
 $_['text_error_log']                   = 'Error Logs';
 $_['text_extension']                   = 'Extensions';
 $_['text_feed']                        = 'Product Feeds';
+$_['text_filter']                      = 'Filters';
 $_['text_front']                       = 'Store Front';
 $_['text_geo_zone']                    = 'Geo Zones';
 $_['text_help']                        = 'Help';
@@ -83,6 +84,7 @@ $_['text_users']                       = 'Users';
 $_['text_user_group']                  = 'User Groups';
 $_['text_voucher']                     = 'Gift Vouchers';
 $_['text_voucher_theme']               = 'Voucher Themes';
+$_['text_redeem_theme']                = 'Redeem Themes';
 $_['text_weight_class']                = 'Weight Classes';
 $_['text_length_class']                = 'Length Classes';
 $_['text_wms']                         = 'WMS Interface';
@@ -92,8 +94,10 @@ $_['text_syspro']                      = 'Syspro Interface';
 $_['text_zone']                        = 'Zones';
 
 $_['text_welcome']                     = 'Blocks';
+$_['text_content_block']               = 'Content Block';
 $_['text_store_locations']             = 'Store locations';
 $_['text_news']                        = 'News / Blog';
+$_['text_megamenu']                    = 'Mega Menu';
 
 ### Event Calendar - Start ###
 $_['text_event']              = 'Events';

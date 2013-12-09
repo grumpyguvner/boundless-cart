@@ -1,7 +1,8 @@
 <?php
 
 class ControllerCommonSeoUrl extends Controller {
-
+    private $keyword = array();
+            
     public function index() {
         // Add rewrite to url class
         if ($this->config->get('config_seo_url')) {
@@ -21,7 +22,7 @@ class ControllerCommonSeoUrl extends Controller {
                 default:
                     $route = "";
                     foreach ($parts as $part) {
-                        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($part) . "'");
+                        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($part) . "' ORDER BY IF(language_id = " . (int)$this->config->get('config_language_id') . ", 1, 0) DESC, date_added, language_id ASC LIMIT 1");
 
                         if ($query->num_rows) {
                             $url = explode('=', $query->row['query']);
@@ -55,8 +56,10 @@ class ControllerCommonSeoUrl extends Controller {
 
                             if ($url[0] == 'information_id') {
                                 $this->request->get['information_id'] = $url[1];
-                            } else {
+                            } elseif ($url[0]) {
                                 $route = $url[0];
+                            } else {
+                                $route = 'common/home';
                             }
                         } else {
                             $this->request->get['route'] = 'error/not_found';
@@ -69,7 +72,7 @@ class ControllerCommonSeoUrl extends Controller {
                     } elseif (isset($this->request->get['path'])) {
                         $this->request->get['route'] = 'product/category';
                     } elseif (isset($this->request->get['manufacturer_id'])) {
-                        $this->request->get['route'] = 'product/manufacturer/product';
+                        $this->request->get['route'] = 'product/manufacturer/info';
                     } elseif (isset($this->request->get['information_id'])) {
                         $this->request->get['route'] = 'information/information';
                     } elseif (isset($this->request->get['news_id'])) {
@@ -132,10 +135,10 @@ class ControllerCommonSeoUrl extends Controller {
                             break;
                         default:
                             if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id') || ($data['route'] == 'news/article' && $key == 'news_id')) {
-                                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($key . '=' . (int) $value) . "'");
+                                $keyword = $this->getKeyword($key . '=' . (int) $value);
 
-                                if ($query->num_rows) {
-                                    $url .= '/' . $query->row['keyword'];
+                                if ($keyword) {
+                                    $url .= '/' . $keyword;
 
                                     unset($data[$key]);
                                 }
@@ -143,10 +146,10 @@ class ControllerCommonSeoUrl extends Controller {
                                 $categories = explode('_', $value);
 
                                 foreach ($categories as $category) {
-                                    $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = 'category_id=" . (int) $category . "'");
+                                    $keyword = $this->getKeyword('category_id=' . (int) $category);
 
-                                    if ($query->num_rows) {
-                                        $url .= '/' . $query->row['keyword'];
+                                    if ($keyword) {
+                                        $url .= '/' . $keyword;
                                     }
                                 }
 
@@ -155,19 +158,19 @@ class ControllerCommonSeoUrl extends Controller {
                                 $ncategories = explode('_', $value);
 
                                 foreach ($ncategories as $ncategory) {
-                                    $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = 'ncategory_id=" . (int) $ncategory . "'");
+                                    $keyword = $this->getKeyword('ncategory_id=' . (int) $ncategory);
 
-                                    if ($query->num_rows) {
-                                        $url .= '/' . $query->row['keyword'];
+                                    if ($keyword) {
+                                        $url .= '/' . $keyword;
                                     }
                                 }
 
                                 unset($data[$key]);
                             } elseif ($key == 'route') {
-                                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($value) . "'");
+                                $keyword = $this->getKeyword($value);
 
-                                if ($query->num_rows) {
-                                    $url .= '/' . $query->row['keyword'];
+                                if ($keyword) {
+                                    $url .= '/' . $keyword;
 
                                     unset($data[$key]);
                                 }
@@ -210,6 +213,24 @@ class ControllerCommonSeoUrl extends Controller {
         }
     }
 
+    public function getKeyword($query) {
+        
+        $cache = md5($query);
+
+        if (!isset($this->keyword[$cache])) {
+            
+            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($query) . "' ORDER BY IF(language_id = " . (int)$this->config->get('config_language_id') . ", 1, 0) DESC, date_added, language_id ASC LIMIT 1");
+            
+            if ($query->num_rows)
+            {
+                $this->keyword[$cache] = $query->row['keyword'];
+            } else {
+                $this->keyword[$cache] = false;
+            }
+        }
+        
+        return $this->keyword[$cache];
+    }
 }
 
 ?>

@@ -2,7 +2,7 @@
 
 class ControllerCommonHeader extends Controller {
 
-    protected function index() {
+    protected function index() { 
         $this->data['title'] = $this->document->getTitle();
 
         if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
@@ -47,6 +47,7 @@ class ControllerCommonHeader extends Controller {
         $this->data['text_error_log'] = $this->language->get('text_error_log');
         $this->data['text_extension'] = $this->language->get('text_extension');
         $this->data['text_feed'] = $this->language->get('text_feed');
+	$this->data['text_filter'] = $this->language->get('text_filter');
         $this->data['text_front'] = $this->language->get('text_front');
         $this->data['text_geo_zone'] = $this->language->get('text_geo_zone');
         $this->data['text_dashboard'] = $this->language->get('text_dashboard');
@@ -106,6 +107,7 @@ class ControllerCommonHeader extends Controller {
         $this->data['text_users'] = $this->language->get('text_users');
         $this->data['text_voucher'] = $this->language->get('text_voucher');
         $this->data['text_voucher_theme'] = $this->language->get('text_voucher_theme');
+        $this->data['text_redeem_theme'] = $this->language->get('text_redeem_theme');
         $this->data['text_weight_class'] = $this->language->get('text_weight_class');
         $this->data['text_length_class'] = $this->language->get('text_length_class');
         $this->data['text_sage'] = $this->language->get('text_sage');
@@ -114,7 +116,9 @@ class ControllerCommonHeader extends Controller {
         $this->data['text_zencart'] = $this->language->get('text_zencart');
         $this->data['text_zone'] = $this->language->get('text_zone');
         
+        $this->data['text_megamenu'] = $this->language->get('text_megamenu');
         $this->data['text_welcome'] = $this->language->get('text_welcome');
+        $this->data['text_content_block'] = $this->language->get('text_content_block');
         $this->data['text_store_locations'] = $this->language->get('text_store_locations');
         $this->data['text_news'] = $this->language->get('text_news');
 
@@ -141,7 +145,6 @@ class ControllerCommonHeader extends Controller {
             $this->data['country'] = $this->url->link('localisation/country', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['coupon'] = $this->url->link('sale/coupon', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['advanced_coupon'] = $this->url->link('sale/advanced_coupon', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['redeem'] = $this->url->link('sale/redeem', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['currency'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['customer_group'] = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'], 'SSL');
@@ -149,6 +152,7 @@ class ControllerCommonHeader extends Controller {
             $this->data['download'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['error_log'] = $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['feed'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['filter'] = $this->url->link('catalog/filter', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['geo_zone'] = $this->url->link('localisation/geo_zone', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['information'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['language'] = $this->url->link('localisation/language', 'token=' . $this->session->data['token'], 'SSL');
@@ -192,9 +196,17 @@ class ControllerCommonHeader extends Controller {
             $this->data['tax_rate'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['total'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['user'] = $this->url->link('user/user', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['user_group'] = $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['user_group_link'] = $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['voucher'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['voucher_theme'] = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'], 'SSL');
+            
+            if ($this->config->get('config_redeem')) {
+                $this->data['redeem'] = $this->url->link('sale/redeem', 'token=' . $this->session->data['token'], 'SSL');
+                $this->data['redeem_theme'] = $this->url->link('sale/redeem_theme', 'token=' . $this->session->data['token'], 'SSL');
+            } else {
+                $this->data['redeem'] = '';
+                $this->data['redeem_theme'] = '';
+            }
             $this->data['weight_class'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['sage'] = $this->url->link('tool/sage', 'token=' . $this->session->data['token'], 'SSL');
@@ -206,9 +218,11 @@ class ControllerCommonHeader extends Controller {
             $this->data['news'] = $this->url->link('catalog/news', '&token=' . $this->session->data['token'], 'SSL');
             $this->data['store_locations'] = $this->url->link('module/store_locations', '&token=' . $this->session->data['token'], 'SSL');
             $this->data['welcome'] = $this->url->link('module/welcome', '&token=' . $this->session->data['token'], 'SSL');
+            $this->data['content_block'] = $this->url->link('module/blocks', '&token=' . $this->session->data['token'], 'SSL');
+            $this->data['megamenu'] = $this->url->link('module/megamenu', '&token=' . $this->session->data['token'], 'SSL');
             
             $this->data['event'] = $this->url->link('catalog/event', '&token=' . $this->session->data['token'], 'SSL');
-
+            
             $this->url->setCheckPermission(false);
 
             $this->data['stores'] = array();
@@ -222,6 +236,23 @@ class ControllerCommonHeader extends Controller {
                     'name' => $result['name'],
                     'href' => $result['url']
                 );
+            }
+            
+            if($this->user->isSuperuser() || $this->user->isDummyUser())
+            {
+                if (isset($this->request->post['user_group_id']))
+                {
+                    $this->session->data['dummy_user_group_id'] = $this->request->post['user_group_id'];
+                    header('location: ' . str_replace('amp;', '', $_SERVER['REQUEST_URI']));
+                    exit();
+                }
+
+                $this->load->model('user/user_group');
+
+                $data = Array('superuser' => 1);
+
+                $this->data['user_group_id'] = isset($this->session->data['dummy_user_group_id']) ? $this->session->data['dummy_user_group_id'] : $this->user->getUserGroupId();
+                $this->data['user_groups'] = $this->model_user_user_group->getUserGroups($data);
             }
         }
 

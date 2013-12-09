@@ -17,10 +17,11 @@ $_['column_action']          = 'Action';
 // Entry
 $_['entry_name']             = 'Category Name:';
 $_['entry_meta_title']       = 'Meta Page Title:';
-$_['entry_meta_keyword'] 	 = 'Meta Tag Keywords:';
+$_['entry_meta_keyword']     = 'Meta Tag Keywords:';
 $_['entry_meta_description'] = 'Meta Tag Description:';
 $_['entry_description']      = 'Description:';
 $_['entry_parent']           = 'Parent Category:';
+$_['entry_filter']           = 'Filters:<br /><span class="help">(Autocomplete)</span>';
 $_['entry_googlebase_text']  = 'Google Base Category Text:';
 $_['entry_googlebase_xml']   = 'Google Base Category XML:';
 $_['entry_store']            = 'Stores:';
@@ -31,6 +32,9 @@ $_['entry_column']           = 'Columns:<br/><span class="help">Number of column
 $_['entry_sort_order']       = 'Sort Order:';
 $_['entry_status']           = 'Status:';
 $_['entry_layout']           = 'Layout Override:';
+$_['entry_members_only']     = 'Members Only:';
+$_['entry_date_start']       = 'Date Start:';
+$_['entry_date_end']         = 'Date End:';
 
 // Error 
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';

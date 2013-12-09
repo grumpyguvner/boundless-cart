@@ -269,7 +269,9 @@ class ControllerDesignBanner extends Controller {
 		$this->data['text_default'] = $this->language->get('text_default');
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
  		$this->data['text_browse'] = $this->language->get('text_browse');
-		$this->data['text_clear'] = $this->language->get('text_clear');			
+		$this->data['text_clear'] = $this->language->get('text_clear');	
+                $this->data['text_hide'] = $this->language->get('text_hide');
+                $this->data['text_show'] = $this->language->get('text_show');
 				
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_title'] = $this->language->get('entry_title');
@@ -359,14 +361,6 @@ class ControllerDesignBanner extends Controller {
 		} else {
 			$this->data['status'] = true;
 		}
-                
-                if (isset($this->request->post['sort_order'])) {
-                    $this->data['sort_order'] = $this->request->post['sort_order'];
-                } elseif (!empty($banner_info)) {
-                    $this->data['sort_order'] = $banner_info['sort_order'];
-                } else {
-                    $this->data['sort_order'] = 1;
-                }
 
 		$this->load->model('localisation/language');
 		
@@ -384,22 +378,26 @@ class ControllerDesignBanner extends Controller {
 		
 		$this->data['banner_images'] = array();
 		
-		foreach ($banner_images as $banner_image) {
+		foreach ($banner_images as $language_id => $banners_image) {
+                    foreach ($banners_image as $key => $banner_image) {
 			if ($banner_image['image'] && file_exists(DIR_IMAGE . $banner_image['image'])) {
 				$image = $banner_image['image'];
 			} else {
 				$image = 'no_image.jpg';
 			}			
 			
-			$this->data['banner_images'][] = array(
-				'banner_image_description' => $banner_image['banner_image_description'],
+			$this->data['banner_images'][$language_id][] = array(
+				'title'                    => $banner_image['title'],
+                                'description'              => $banner_image['description'],
 				'link'                     => $banner_image['link'],
 				'image'                    => $image,
 				'thumb'                    => $this->model_tool_image->resize($image, 100, 100),
-                                'sort_order'               => $banner_image['sort_order']
-			);	
+                                'sort_order'               => $banner_image['sort_order'],
+                                'status'                   => $banner_image['status']
+			);
+                }
 		} 
-	
+                
 		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);		
 
 		$this->template = 'design/banner_form.tpl';
@@ -421,8 +419,8 @@ class ControllerDesignBanner extends Controller {
 		}
 		
 		if (isset($this->request->post['banner_image'])) {
-			foreach ($this->request->post['banner_image'] as $banner_image_id => $banner_image) {
-				foreach ($banner_image['banner_image_description'] as $language_id => $banner_image_description) {
+			foreach ($this->request->post['banner_image'] as $language_id => $banner_image) {
+				foreach ($banner_image['banner_image_description'] as $banner_image_id => $banner_image_description) {
 					if ((utf8_strlen($banner_image_description['title']) < 2) || (utf8_strlen($banner_image_description['title']) > 64)) {
 						$this->error['banner_image'][$banner_image_id][$language_id] = $this->language->get('error_title'); 
 					}					

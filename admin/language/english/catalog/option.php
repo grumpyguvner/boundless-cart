@@ -29,6 +29,7 @@ $_['column_action']       = 'Action';
 $_['entry_name']         = 'Option Name:';
 $_['entry_type']         = 'Type:';
 $_['entry_value']        = 'Option Value Name:';
+$_['entry_is_filter']    = 'Is Filter:';
 $_['entry_image']        = 'Image:';
 $_['entry_sort_order']   = 'Sort Order:';
 

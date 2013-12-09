@@ -19,7 +19,7 @@ h1 {
 }
 .store {
 	width: 100%;
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 }
 .div2 {
 	float: left;
@@ -31,7 +31,7 @@ h1 {
 	padding: 5px;
 }
 .heading td {
-	background: #E7EFEF;
+	background: #FFF;
 }
 .address, .product {
 	border-collapse: collapse;
@@ -53,12 +53,41 @@ h1 {
 }
 .product {
 	width: 100%;
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 	border-top: 1px solid #CDDDDD;
 	border-right: 1px solid #CDDDDD;
 }
 .product td {
-	border-left: 1px solid #CDDDDD;
-	border-bottom: 1px solid #CDDDDD;
+	border: solid 1px #000;
 	padding: 5px;
+}
+
+#product-wrapper {
+    border: solid 1px #000;
+    padding: 2px;
+    margin-bottom: 4px;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
+}
+
+#bottom {
+    height: 230px;
+    width: 793px;
+    position: absolute;
+    bottom: 0;
+}
+
+.page1, .page2 {
+    position: relative;
+    width: 793px;
+    height: 1122px;
+}
+
+.page2 {
+    page-break-before:always;
 }

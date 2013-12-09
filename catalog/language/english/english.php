@@ -17,6 +17,14 @@ $_['text_select']           = ' --- Please Select --- ';
 $_['text_all_zones']        = 'All Zones';
 $_['text_pagination']       = 'Showing {start} to {end} of {total} ({pages} Pages)';
 $_['text_separator']        = ' &raquo; ';
+$_['text_breadcrumb_back']  = '&lt; Back to %s';
+$_['text_first']            = '|&lt;';
+$_['text_prev']             = '&lt;';
+$_['text_next']             = '&gt;';
+$_['text_last']             = '&gt;|';
+
+// Text
+$_['select_title']           = 'Mr,Mrs,Miss,Ms,Reverend,Dr';
 
 // Buttons
 $_['button_add_address']    = 'Add Address';

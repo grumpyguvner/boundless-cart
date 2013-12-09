@@ -8,6 +8,8 @@ class Category {
 	private $meta_keyword;
 	private $image;
 	private $parent_id;
+	private $date_start;
+	private $date_end;
 	
   	public function __construct($registry) {
 		$this->config = $registry->get('config');
@@ -39,6 +41,10 @@ class Category {
                         $this->meta_keyword = $category_query->row['meta_keyword'];
                         $this->image = $category_query->row['image'];
                         $this->parent_id = $category_query->row['parent_id'];
+                        
+                        $this->date_start = null;
+                        $this->date_end = null;
+                        $this->getAvailableDates($category_query->row['category_id']);
 
                         $this->session->data['category_id'] = $category_id;
                 } else {
@@ -91,6 +97,14 @@ class Category {
 		return $this->parent_id;	
   	}
 
+  	public function getDateStart() {
+		return $this->date_start;	
+  	}
+
+  	public function getDateEnd() {
+		return $this->date_end;	
+  	}
+
   	public function getSort() {
 		return (isset($this->request->get['sort']) ? $this->request->get['sort'] : 'p.sort_order');
   	}
@@ -113,28 +127,43 @@ class Category {
                 $excludes = explode (",", $excludes);
             
             $urlQuery = "";
-            if ($this->extensions->isInstalled('afilters') && !in_array("cat_filters", $excludes)) {
-                if (isset($this->request->get['cat_filters']) && (is_array($this->request->get['cat_filters']))) {
-                    foreach ($this->request->get['cat_filters'] as $key=>$val) {
-                        if (!is_array($val))
-                            $val = explode (",", $val);
-                        foreach ($val as $val2) {
-                            $urlQuery .= '&cat_filters['.$key.'][]=' . $val2; }
+            if ($this->extensions->isInstalled('afilters'))
+            {
+                if (!in_array("cat_filters", $excludes)) {
+                    if (isset($this->request->get['cat_filters']) && (is_array($this->request->get['cat_filters']))) {
+                        foreach ($this->request->get['cat_filters'] as $key=>$val) {
+                            if (!is_array($val))
+                                $val = explode (",", $val);
+                            foreach ($val as $val2) {
+                                $urlQuery .= '&cat_filters['.$key.'][]=' . $val2; }
+                        }
+                    }
+                }
+                
+                if (!in_array("att_filters", $excludes)) {
+                    if (isset($this->request->get['att_filters']) && (is_array($this->request->get['att_filters']))) {
+                        foreach ($this->request->get['att_filters'] as $key=>$val) {
+                            if (!is_array($val))
+                                $val = explode (",", $val);
+                            foreach ($val as $val2) {
+                                $val2 = str_replace('&amp;','&',urldecode($val2)); 
+                                $urlQuery .= '&att_filters['.$key.'][]=' . urlencode($val2); 
+                            }
+                        }
                     }
                 }
             }
 
-            if ($this->extensions->isInstalled('afilters') && !in_array("att_filters", $excludes)) {
-                if (isset($this->request->get['att_filters']) && (is_array($this->request->get['att_filters']))) {
-                    foreach ($this->request->get['att_filters'] as $key=>$val) {
-                        if (!is_array($val))
-                            $val = explode (",", $val);
-                        foreach ($val as $val2) {
-                            $val2 = str_replace('&amp;','&',urldecode($val2)); 
-                            $urlQuery .= '&att_filters['.$key.'][]=' . urlencode($val2); 
-                        }
-                    }
-                }
+            if (isset($this->request->get['filter'])&& !in_array("filter", $excludes)) {
+                    $urlQuery .= '&filter=' . $this->request->get['filter'];
+            }
+            
+            if (isset($this->request->get['option'])&& !in_array("option", $excludes)) {
+                    $urlQuery .= '&option=' . $this->request->get['option'];
+            }
+            
+            if (isset($this->request->get['product'])&& !in_array("product", $excludes)) {
+                    $urlQuery .= '&product=' . $this->request->get['product'];
             }
             
             if (isset($this->request->get['manufacturer_id']) && !in_array("manufacturer", $excludes))
@@ -160,25 +189,28 @@ class Category {
                             'group' => $this->getParentId(),
                             'value' => urlencode($this->getId()));
             
-            if (isset($this->request->get['cat_filters']) && (is_array($this->request->get['cat_filters']))) {
-                foreach ($this->request->get['cat_filters'] as $key=>$val) {
-                    if (!is_array($val))
-                        $val = explode (",", $val);
-                    foreach ($val as $val2)
-                        $data[] = array('type'  => "category",
-                                        'group' => $key,
-                                        'value' => urlencode($val2));
+            if ($this->extensions->isInstalled('afilters'))
+            {
+                if (isset($this->request->get['cat_filters']) && (is_array($this->request->get['cat_filters']))) {
+                    foreach ($this->request->get['cat_filters'] as $key=>$val) {
+                        if (!is_array($val))
+                            $val = explode (",", $val);
+                        foreach ($val as $val2)
+                            $data[] = array('type'  => "category",
+                                            'group' => $key,
+                                            'value' => urlencode($val2));
+                    }
                 }
-            }
 
-            if (isset($this->request->get['att_filters']) && (is_array($this->request->get['att_filters']))) {
-                foreach ($this->request->get['att_filters'] as $key=>$val) {
-                    if (!is_array($val))
-                        $val = explode (",", $val);
-                    foreach ($val as $val2)
-                        $data[] = array('type'  => "attribute",
-                                        'group' => $key,
-                                        'value' => urlencode($val2));
+                if (isset($this->request->get['att_filters']) && (is_array($this->request->get['att_filters']))) {
+                    foreach ($this->request->get['att_filters'] as $key=>$val) {
+                        if (!is_array($val))
+                            $val = explode (",", $val);
+                        foreach ($val as $val2)
+                            $data[] = array('type'  => "attribute",
+                                            'group' => $key,
+                                            'value' => urlencode($val2));
+                    }
                 }
             }
             
@@ -252,6 +284,67 @@ class Category {
 	public function getChildren() {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON (c.category_id = cd.category_id) LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (c.category_id = c2s.category_id) WHERE c.parent_id = '" . (int)$this->parent_id . "' AND cd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "'  AND c.status = '1' ORDER BY c.sort_order, LCASE(cd.name)");
 		return $query->rows;
+	}
+        
+        public function isMembersOnly($category_id = null) {
+		
+            if (!$category_id) $category_id = $this->category_id;
+            
+		$query = $this->db->query("SELECT members_only, parent_id FROM " . DB_PREFIX . "category WHERE category_id = '" . (int)$category_id . "'");
+
+		if ($query->num_rows) {
+                    if ($query->row['members_only']) {
+                        return true;
+                    }
+                    elseif ($query->row['parent_id'])
+                    {
+                        return $this->isMembersOnly($query->row['parent_id']);
+                    }
+                }
+                return false;
+	}
+        
+        private function getAvailableDates($category_id) {
+		
+		$query = $this->db->query("SELECT if(date_start,date_start,0) AS date_start, if(date_end,date_end,0) AS date_end, parent_id FROM " . DB_PREFIX . "category WHERE category_id = '" . (int)$category_id . "'");
+
+		if ($query->num_rows) {
+                    $date_start = ($query->row['date_start']) ? strtotime($query->row['date_start']) : false;
+                    $date_end = ($query->row['date_end']) ? strtotime($query->row['date_end']) : false;
+                    
+                    
+                    $date_start_prev = ($this->date_start) ? strtotime($this->date_start) : false;
+                    $date_end_prev = ($this->date_end) ? strtotime($this->date_end) : false;
+                    
+                    if ($date_start && (!$date_start_prev || $date_start < $date_start_prev)) {
+                        $this->date_start = $query->row['date_start'];
+                    }
+                    
+                    if ($date_end && (!$date_end_prev || $date_end > $date_end_prev))
+                    {
+                        $this->date_end = $query->row['date_end'];
+                    }
+                    
+                    if ($query->row['parent_id'])
+                    {
+                        $this->getAvailableDates($query->row['parent_id']);
+                    }
+                }
+	}
+        
+        public function isAvailable() {
+                $date_start = ($this->date_start) ? strtotime($this->date_start) : false;
+                $date_end = ($this->date_end) ? strtotime($this->date_end) : false;
+
+                if ($date_start && time() <= $date_start) {
+                    return false;
+                }
+                elseif ($date_end && time() >= $date_end)
+                {
+                    return false;
+                }
+                
+                return true;
 	}
         
 }

@@ -19,6 +19,7 @@ class ControllerModuleAccount extends Controller {
 		$this->data['text_return'] = $this->language->get('text_return');
 		$this->data['text_transaction'] = $this->language->get('text_transaction');
 		$this->data['text_newsletter'] = $this->language->get('text_newsletter');
+                $this->data['text_contact'] = $this->language->get('text_contact');
 		
 		$this->data['logged'] = $this->customer->isLogged();
 		$this->data['register'] = $this->url->link('account/register', '', 'SSL');

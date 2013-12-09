@@ -92,13 +92,25 @@ class ControllerAccountRegister extends Controller {
         $this->data['entry_password'] = $this->language->get('entry_password');
         $this->data['entry_confirm'] = $this->language->get('entry_confirm');
         $this->data['button_continue'] = $this->language->get('button_continue');
+        $this->data['entry_date_birth'] = $this->language->get('entry_date_birth');
+        $this->data['entry_title'] = $this->language->get('entry_title');
+        
+        $this->data['select_title'] = explode(',', $this->language->get('select_title'));
         
         $this->data['text_enter_manually'] = $this->language->get('text_enter_manually');
         $this->data['entry_search_address'] = $this->language->get('entry_search_address');
         $this->data['entry_select_address'] = $this->language->get('entry_select_address');
         $this->data['button_find_address'] = $this->language->get('button_find_address');
         $this->data['button_select_address'] = $this->language->get('button_select_address');
-
+        
+        if (count($this->data['breadcrumbs']) > 1)
+            {
+                $count = count($this->data['breadcrumbs']) - 2;
+                $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+            } else {
+                $this->data['text_breadcrumb_back'] = '';
+            }
+                        
         if (isset($this->error['warning'])) {
             $this->data['error_warning'] = $this->error['warning'];
         } else {
@@ -456,6 +468,20 @@ class ControllerAccountRegister extends Controller {
 
         if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
             $this->error['telephone'] = $this->language->get('error_telephone');
+        }
+        
+        if (isset($this->request->post['day_birth']) || isset($this->request->post['month_birth']) || isset($this->request->post['year_birth'])) {
+            if (!isset($this->request->post['day_birth'])) {
+                $this->error['day_birth'] = $this->language->get('error_day_birth');
+            }
+
+            if (!isset($this->request->post['month_birth'])) {
+                $this->error['month_birth'] = $this->language->get('error_month_birth');
+            }
+
+            if (!isset($this->request->post['year_birth'])) {
+                $this->error['year_birth'] = $this->language->get('error_year_birth');
+            }
         }
 
         // Customer Group

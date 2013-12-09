@@ -1,6 +1,6 @@
 <?php
 
-ini_set('max_execution_time', 3600);
+ini_set('max_execution_time', 0);
 
 static $config = NULL;
 static $log = NULL;
@@ -725,6 +725,7 @@ class ModelToolWMS extends Model {
 
     public $debugMode = false;
     public $languageId = 0;
+    public $languageFr = 0;
     public $size_option_id = 0;
 
     function __construct($registry) {
@@ -754,10 +755,12 @@ class ModelToolWMS extends Model {
         $this->debug("database initialized");
 
         $this->languageId = $this->getDefaultLanguageId();
+        $this->languageFr = 2;
     }
 
     protected function debug($message) {
         if ($this->debugMode) {
+            $this->log->write($message);
             echo $message . "<br/>\n";
         }
     }

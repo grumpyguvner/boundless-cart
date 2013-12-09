@@ -87,6 +87,14 @@ class ControllerAccountOrder extends Controller {
 		$this->data['button_reorder'] = $this->language->get('button_reorder');
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		
+                if (count($this->data['breadcrumbs']) > 1)
+                    {
+                        $count = count($this->data['breadcrumbs']) - 2;
+                        $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                    } else {
+                        $this->data['text_breadcrumb_back'] = '';
+                    }
+                
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -228,6 +236,14 @@ class ControllerAccountOrder extends Controller {
 			
 			$this->data['button_return'] = $this->language->get('button_return');
       		$this->data['button_continue'] = $this->language->get('button_continue');
+                
+                if (count($this->data['breadcrumbs']) > 1)
+                    {
+                        $count = count($this->data['breadcrumbs']) - 2;
+                        $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                    } else {
+                        $this->data['text_breadcrumb_back'] = '';
+                    }
 		
 			if ($order_info['invoice_no']) {
 				$this->data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];

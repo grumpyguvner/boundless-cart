@@ -244,6 +244,12 @@
                                 <h2><?php echo $text_product; ?></h2>
                                 <div class="form well">
                                     <div class="control-group">
+                                        <label class="control-label"><?php echo $entry_new_product_age; ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="config_new_product_age" value="<?php echo $config_new_product_age; ?>" class="input-mini">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
                                         <label class="control-label"><?php echo $entry_product_count; ?></label>
                                         <div class="controls">
                                             <?php if ($this->config->get('p3adminrebooted_toggle_buttons')) { ?>

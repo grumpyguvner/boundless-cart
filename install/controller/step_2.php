@@ -3,8 +3,8 @@ class ControllerStep2 extends Controller {
 	private $error = array();
 	
 	public function index() {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-			$this->redirect(HTTP_SERVER . 'index.php?route=step_3');
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->redirect($this->url->link('step_3'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -13,7 +13,7 @@ class ControllerStep2 extends Controller {
 			$this->data['error_warning'] = '';	
 		}
 		
-		$this->data['action'] = HTTP_SERVER . 'index.php?route=step_2';
+		$this->data['action'] = $this->url->link('step_2');
 
 		$this->data['config_catalog'] = DIR_OPENCART . FILE_CONFIG;
 		$this->data['config_admin'] = DIR_OPENCART . 'admin/' .FILE_CONFIG;
@@ -25,8 +25,9 @@ class ControllerStep2 extends Controller {
 		$this->data['image_data'] = DIR_OPENCART . 'image/data';
 		$this->data['download'] = DIR_OPENCART . 'download';
 		
+		$this->data['back'] = $this->url->link('step_1');
+		
 		$this->template = 'step_2.tpl';
-
 		$this->children = array(
 			'header',
 			'footer'
@@ -70,9 +71,13 @@ class ControllerStep2 extends Controller {
 	
 		if (!is_writable(DIR_OPENCART . FILE_CONFIG)) {
 			$this->error['warning'] = 'Warning: ' . FILE_CONFIG . ' needs to be writable for OpenCart to be installed!';
+		} elseif (!is_writable(DIR_OPENCART . FILE_CONFIG)) {
+			$this->error['warning'] = 'Warning: ' . FILE_CONFIG . ' needs to be writable for OpenCart to be installed!';
 		}
 				
 		if (!is_writable(DIR_OPENCART . 'admin/' . FILE_CONFIG)) {
+			$this->error['warning'] = 'Warning: admin/' . FILE_CONFIG . ' needs to be writable for OpenCart to be installed!';
+		} elseif (!is_writable(DIR_OPENCART . 'admin/' . FILE_CONFIG)) {
 			$this->error['warning'] = 'Warning: admin/' . FILE_CONFIG . ' needs to be writable for OpenCart to be installed!';
 		}
 

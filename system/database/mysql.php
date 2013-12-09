@@ -7,9 +7,9 @@ final class MySQL {
       		trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
 		}
 
-    	if (!mysql_select_db($database, $this->link)) {
-      		trigger_error('Error: Could not connect to database ' . $database);
-    	}
+                if (!mysql_select_db($database, $this->link)) {
+                        trigger_error('Error: Could not connect to database ' . $database);
+                }
 		
 		mysql_query("SET NAMES 'utf8'", $this->link);
 		mysql_query("SET CHARACTER SET utf8", $this->link);

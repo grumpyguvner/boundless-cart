@@ -50,6 +50,14 @@ class ControllerAccountReturn extends Controller {
 
 		$this->data['button_view'] = $this->language->get('button_view');
 		$this->data['button_continue'] = $this->language->get('button_continue');
+                
+                if (count($this->data['breadcrumbs']) > 1)
+                    {
+                        $count = count($this->data['breadcrumbs']) - 2;
+                        $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                    } else {
+                        $this->data['text_breadcrumb_back'] = '';
+                    }
 		
 		$this->load->model('account/return');
 		
@@ -206,6 +214,14 @@ class ControllerAccountReturn extends Controller {
 			$this->data['opened'] = $return_info['opened'] ? $this->language->get('text_yes') : $this->language->get('text_no');
 			$this->data['comment'] = nl2br($return_info['comment']);
 			$this->data['action'] = $return_info['action'];
+                        
+                        if (count($this->data['breadcrumbs']) > 1)
+                            {
+                                $count = count($this->data['breadcrumbs']) - 2;
+                                $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                            } else {
+                                $this->data['text_breadcrumb_back'] = '';
+                            }
 						
 			$this->data['histories'] = array();
 			
@@ -348,6 +364,14 @@ class ControllerAccountReturn extends Controller {
 				
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		$this->data['button_back'] = $this->language->get('button_back');
+                
+                if (count($this->data['breadcrumbs']) > 1)
+                    {
+                        $count = count($this->data['breadcrumbs']) - 2;
+                        $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                    } else {
+                        $this->data['text_breadcrumb_back'] = '';
+                    }
 		    
 		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -563,6 +587,14 @@ class ControllerAccountReturn extends Controller {
     	$this->data['button_continue'] = $this->language->get('button_continue');
 	
     	$this->data['continue'] = $this->url->link('common/home');
+        
+        if (count($this->data['breadcrumbs']) > 1)
+            {
+                $count = count($this->data['breadcrumbs']) - 2;
+                $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+            } else {
+                $this->data['text_breadcrumb_back'] = '';
+            }
 
 		$this->setTemplate('common/success.tpl');
 		

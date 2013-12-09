@@ -33,9 +33,15 @@ class ModelCatalogNews extends Model {
 				}
 			}
 		}
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'news_id=" . (int)$news_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
-		}
+                
+                $this->load->model('module/url_alias');
+                	
+		if (isset($data['keyword'])) {
+                    $url = array('keyword' => $data['keyword'],
+                                 'query' => 'news_id=' . (int)$news_id,
+                                 'language_id' => 0);
+                    $this->model_module_url_alias->addUrlAlias($url);
+                }
 		
 		$this->cache->delete('news');
 	}
@@ -80,11 +86,16 @@ class ModelCatalogNews extends Model {
 				}
 			}
 		}
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'news_id=" . (int)$news_id. "'");
-		
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'news_id=" . (int)$news_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
-		}
+                
+                $this->load->model('module/url_alias');
+                	
+		if (isset($data['keyword'])) {
+                    $url = array('keyword' => $data['keyword'],
+                                 'query' => 'news_id=' . (int)$news_id,
+                                 'language_id' => 0);
+                    $this->model_module_url_alias->addUrlAlias($url);
+                }
+                
 		$this->cache->delete('news');
 	}
     public function copyNews($news_id) {
@@ -111,17 +122,20 @@ class ModelCatalogNews extends Model {
 	public function deleteNews($news_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "news WHERE news_id = '" . (int)$news_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "news_description WHERE news_id = '" . (int)$news_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'news_id=" . (int)$news_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "news_to_ncategory WHERE news_id = '" . (int)$news_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_layout WHERE product_id = '" . (int)$news_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "news_to_store WHERE news_id = '" . (int)$news_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "news_related WHERE news_id = '" . (int)$news_id . "'");
+                
+                $this->load->model('module/url_alias');
+                $this->model_module_url_alias->deleteUrlAliasByQuery('news_id=' . (int)$news_id);
+                
 		$this->cache->delete('news');
 	}	
 
 	public function getNewsStory($news_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "news WHERE news_id = '" . (int)$news_id . "'");
-		$query = $this->db->query("SELECT DISTINCT *, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'news_id=" . (int)$news_id . "') AS keyword FROM " . DB_PREFIX . "news WHERE news_id = '" . (int)$news_id . "'");
+		$query = $this->db->query("SELECT DISTINCT *, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'news_id=" . (int)$news_id . "' and language_id = 0 ORDER BY date_added DESC LIMIT 1) AS keyword FROM " . DB_PREFIX . "news WHERE news_id = '" . (int)$news_id . "'");
 		
 		return $query->row;
 	}

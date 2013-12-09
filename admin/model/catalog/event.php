@@ -30,10 +30,15 @@ class ModelCatalogEvent extends Model {
 				}
 			}
 		}
-				
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'event_id=" . (int)$event_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
-		}
+                
+                $this->load->model('module/url_alias');
+                	
+		if (isset($data['keyword'])) {
+                    $url = array('keyword' => $data['keyword'],
+                                 'query' => 'event_id=' . (int)$event_id,
+                                 'language_id' => 0);
+                    $this->model_module_url_alias->addUrlAlias($url);
+                }
 		
 		$this->cache->delete('event');
 	}
@@ -74,12 +79,15 @@ class ModelCatalogEvent extends Model {
 				}
 			}
 		}
-				
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'event_id=" . (int)$event_id. "'");
-		
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'event_id=" . (int)$event_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
-		}
+                
+                $this->load->model('module/url_alias');
+                	
+		if (isset($data['keyword'])) {
+                    $url = array('keyword' => $data['keyword'],
+                                 'query' => 'event_id=' . (int)$event_id,
+                                 'language_id' => 0);
+                    $this->model_module_url_alias->addUrlAlias($url);
+                }
 		
 		$this->cache->delete('event');
 	}
@@ -89,13 +97,15 @@ class ModelCatalogEvent extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "event_description WHERE event_id = '" . (int)$event_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "event_to_store WHERE event_id = '" . (int)$event_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "event_to_layout WHERE event_id = '" . (int)$event_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'event_id=" . (int)$event_id . "'");
+                
+                $this->load->model('module/url_alias');
+                $this->model_module_url_alias->deleteUrlAliasByQuery('event_id=' . (int)$event_id);
 
 		$this->cache->delete('event');
 	}	
 
 	public function getEvent($event_id) {
-		$query = $this->db->query("SELECT DISTINCT *, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'event_id=" . (int)$event_id . "') AS keyword FROM " . DB_PREFIX . "event WHERE event_id = '" . (int)$event_id . "'");
+		$query = $this->db->query("SELECT DISTINCT *, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'event_id=" . (int)$event_id . "' and language_id = 0 ORDER BY date_added DESC LIMIT 1) AS keyword FROM " . DB_PREFIX . "event WHERE event_id = '" . (int)$event_id . "'");
 		
 		return $query->row;
 	}

@@ -47,7 +47,7 @@
                                 <span class="help"><?php echo $entry_button_desc; ?></span>
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php } ?>   
                 </table>
                 <table id="module" class="list table table-striped table-hover">
                     <thead>
@@ -109,7 +109,7 @@
                                     </select></td>
                                 <td class="column-sort">
                                     <label class="visible-480"><?php echo $entry_sort_order; ?></label>
-                                    <input type="text" name="fbconnect_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" class="span1 i-mini" /></td>
+                                    <input type="text" name="fbconnect_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3"  class="span1 i-mini" /></td>
                                 <td class="column-action">
                                     <a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn btn-small"><i class="icon-trash ims" title="<?php echo $button_remove; ?>"></i><span class="hidden-phone"> <?php echo $button_remove; ?></span></a>
                                 </td>
@@ -133,31 +133,33 @@
         var module_row = <?php echo $module_row; ?>;
 
         function addModule() {	
-            html = '<tbody id="module-row' + module_row + '">';
-            html += ' <tr>';
-            html += ' <td class="left"><select name="fbconnect_module[' + module_row + '][layout_id]" class="span2 i-medium">';
+            html  = '<tbody id="module-row' + module_row + '">';
+            html += '  <tr>';
+            html += '    <td class="left"><select name="fbconnect_module[' + module_row + '][layout_id]"  class="span2 i-medium">';
 <?php foreach ($layouts as $layout) { ?>
-                html += ' <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
+                        html += '      <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
 <?php } ?>
-            html += ' </select></td>';
-            html += ' <td class="column-position"><label class="visible-480"><?php echo addslashes($entry_position); ?></label><select name="fbconnect_module[' + module_row + '][position]" class="span2 i-medium">';
-            html += ' <option value="content_top"><?php echo $text_content_top; ?></option>';
-            html += ' <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
-            html += ' <option value="column_left"><?php echo $text_column_left; ?></option>';
-            html += ' <option value="column_right"><?php echo $text_column_right; ?></option>';
-            html += ' </select></td>';
-            html += ' <td class="column-status"><label class="visible-480"><?php echo addslashes($entry_status); ?></label><select name="fbconnect_module[' + module_row + '][status]" class="input-small">';
-            html += ' <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
-            html += ' <option value="0"><?php echo $text_disabled; ?></option>';
-            html += ' </select></td>';
-            html += ' <td class="column-sort"><label class="visible-480"><?php echo addslashes($entry_sort_order); ?></label><input type="text" name="fbconnect_module[' + module_row + '][sort_order]" value="" size="3" class="span1 i-mini"/></td>';
-            html += ' <td class="column-action"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn btn-small"><i class="icon-trash ims"></i><span class="hidden-phone"> <?php echo $button_remove; ?></span></a></td>';
-            html += ' </tr>';
-            html += '</tbody>';
-            $('#module tfoot').before(html);
+                    html += '    </select></td>';
+                    html += '    <td class="column-position"><label class="visible-480"><?php echo addslashes($entry_position); ?></label><select name="fbconnect_module[' + module_row + '][position]" class="span2 i-medium">';
+                    html += '      <option value="content_top"><?php echo $text_content_top; ?></option>';
+                    html += '      <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
+                    html += '      <option value="column_left"><?php echo $text_column_left; ?></option>';
+                    html += '      <option value="column_right"><?php echo $text_column_right; ?></option>';
+                    html += '    </select></td>';
+                    html += '    <td class="column-status"><label class="visible-480"><?php echo addslashes($entry_status); ?></label><select name="fbconnect_module[' + module_row + '][status]" class="input-small">';
+                    html += '      <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
+                    html += '      <option value="0"><?php echo $text_disabled; ?></option>';
+                    html += '    </select></td>';
+                    html += '    <td class="column-sort"><label class="visible-480"><?php echo addslashes($entry_sort_order); ?></label><input type="text" name="fbconnect_module[' + module_row + '][sort_order]" value="" size="3" class="span1 i-mini"/></td>';
+                    html += '    <td class="column-action"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn btn-small"><i class="icon-trash ims"></i><span class="hidden-phone"> <?php echo $button_remove; ?></span></a></td>';
+                    html += '  </tr>';
+                    html += '</tbody>';
+	
+                    $('#module tfoot').before(html);
+	
 <?php if ($this->config->get('p3adminrebooted_select2')) { ?>
-                $('#module-row' + module_row + ' select').select2();
+                          $('#module-row' + module_row + ' select').select2();
 <?php } ?>
-        }
-        //--></script>
+                  }
+                  //--></script>
     <?php echo $footer; ?>

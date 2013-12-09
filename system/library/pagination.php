@@ -52,7 +52,10 @@ class Pagination {
         $output = '';
 
         if ($page > 1) {
-            $output .= ' <a href="' . str_replace('{page}', 1, $this->url) . '" class="first"><span>' . $this->text_first . '</span></a> <a href="' . str_replace('{page}', $page - 1, $this->url) . '" class="prev"><span>' . $this->text_prev . '</span></a> ';
+            if ($this->text_first != "") {
+                $output .= ' <a href="' . str_replace('{page}', 1, $this->url) . '" class="first"><span>' . $this->text_first . '</span></a>';
+            }
+            $output .= '<a href="' . str_replace('{page}', $page - 1, $this->url) . '" class="prev"><span>' . $this->text_prev . '</span></a> ';
         }
 
         if ($num_pages > 1) {
@@ -92,7 +95,11 @@ class Pagination {
         }
 
         if ($page < $num_pages) {
-            $output .= ' <a href="' . str_replace('{page}', $page + 1, $this->url) . '" class="next"><span>' . $this->text_next . '</span></a> <a href="' . str_replace('{page}', $num_pages, $this->url) . '" class="last"><span>' . $this->text_last . '</span></a> ';
+            
+            $output .= ' <a href="' . str_replace('{page}', $page + 1, $this->url) . '" class="next"><span>' . $this->text_next . '</span></a>';            
+            if ($this->text_last != "") { 
+                $output .= '<a href="' . str_replace('{page}', $num_pages, $this->url) . '" class="last"><span>' . $this->text_last . '</span></a>';
+            }
         }
 
         $find = array(

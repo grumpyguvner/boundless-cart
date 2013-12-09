@@ -3,6 +3,7 @@
 class Language {
 
     private $default = 'english';
+    private $application;
     private $directory;
     private $theme = array('default');
     private $data = array();
@@ -33,10 +34,16 @@ class Language {
         }
 
         $this->directory = $directory;
+        $this->application = str_replace($_SERVER['DOCUMENT_ROOT'], '', DIR_APPLICATION);
     }
-
+    
     public function get($key) {
         return (isset($this->data[$key]) ? $this->data[$key] : $key);
+    }
+    
+    public function getAllData() {
+        
+        return $this->data;
     }
 
     public function load($filename) {
@@ -78,18 +85,30 @@ class Language {
         if ($this->language_manager) {
             $sql = "SELECT value "
                     . "FROM `" . DB_PREFIX . "language_manager` "
-                    . "WHERE application = '" . $this->db->escape(DIR_APPLICATION) . "' "
+                    . "WHERE (application = '" . $this->db->escape($this->application) . "' OR application = '" . $this->db->escape(DIR_APPLICATION) . "') "
                     . "AND directory = '" . $this->db->escape($this->directory) . "' "
                     . "AND filename = '" . $this->db->escape($filename) . "'";
             $query = $this->db->query($sql);
-            if ($query->num_rows > 0) {
+            if ($query->num_rows) {
                 foreach ($query->rows as $row) {
-                    $_ = unserialize($row['value']);
+                    if (!empty($row['value']))
+                    {
+                        $_ = unserialize($row['value']);
 
-                    if (is_array($_)) {
-                        $this->data = array_merge($this->data, $_);
+                        if (is_array($_)) {
+                            $this->data = array_merge($this->data, $_);
+                        }
                     }
                 }
+            }
+            
+            if ($this->config->get("language_manager_files") && !$is_default)
+            {
+                $sql = "INSERT IGNORE INTO `" . DB_PREFIX . "language_manager_files` "
+                    . "SET application = '" . $this->db->escape($this->application) . "', "
+                    . "filename = '" . $this->db->escape($filename) . "', "
+                    . "store_id = '" . $this->config->get("config_store_id") . "'";
+                $this->db->query($sql);
             }
         }
 

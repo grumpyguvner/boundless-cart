@@ -4,6 +4,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 		$this->language->load('checkout/checkout');
 		
 		$this->load->model('account/address');
+                
 		
 		if ($this->customer->isLogged() && isset($this->session->data['payment_address_id'])) {
 			$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);		
@@ -115,6 +116,73 @@ class ControllerCheckoutPaymentMethod extends Controller {
 		} else {
 			$this->data['agree'] = '';
 		}
+                
+                /* copied from confirm */
+                $this->data['column_name'] = $this->language->get('column_name');
+            $this->data['column_model'] = $this->language->get('column_model');
+            $this->data['column_rrp'] = $this->language->get('column_rrp');
+            $this->data['column_quantity'] = $this->language->get('column_quantity');
+            $this->data['column_price'] = $this->language->get('column_price');
+            $this->data['column_total'] = $this->language->get('column_total');
+
+            
+	    $this->load->model('tool/image');
+            
+            $this->data['products'] = array();
+
+            foreach ($this->cart->getProducts() as $product) {
+                $option_data = array();
+
+                foreach ($product['option'] as $option) {
+                    if ($option['type'] != 'file') {
+                        $value = $option['option_value'];
+                    } else {
+                        $filename = $this->encryption->decrypt($option['option_value']);
+
+                        $value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+                    }
+
+                    $option_data[] = array(
+                        'name' => $option['name'],
+                        'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+                    );
+                }		
+                
+                if ($product['image']) {
+                        $image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+                } else {
+                        $image = '';
+                }
+
+                $this->data['products'][] = array(
+                    'product_id' => $product['product_id'],
+                    'name' => $product['name'],
+                    'model' => $product['model'],
+                    'option' => $option_data,
+                    'thumb' => $image,
+                    'quantity' => $product['quantity'],
+                    'subtract' => $product['subtract'],
+                    'price' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
+                    'total' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),
+                    'href' => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+                );
+            }
+
+            // Gift Voucher
+            $this->data['vouchers'] = array();
+
+            if (!empty($this->session->data['vouchers'])) {
+                foreach ($this->session->data['vouchers'] as $voucher) {
+                    $this->data['vouchers'][] = array(
+                        'description' => $voucher['description'],
+                        'amount' => $this->currency->format($voucher['amount'])
+                    );
+                }
+            }
+
+            $this->data['totals'] = $total_data;
+            /* End copy from confirm */
+                
 			
 		$this->setTemplate('checkout/payment_method.tpl');
 		

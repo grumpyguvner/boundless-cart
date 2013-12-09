@@ -8,6 +8,7 @@ class User {
   	private $permission = array();
 	private $user_group_id;
 	private $superuser;
+	private $is_dummy_group = false;
 
   	public function __construct($registry) {
 		$this->db = $registry->get('db');
@@ -30,6 +31,19 @@ class User {
       			$user_group_query = $this->db->query("SELECT superuser, permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
 				
 				$this->superuser = (bool)$user_group_query->row['superuser'];
+                                
+                                if ($this->superuser && isset($this->session->data['dummy_user_group_id']))
+                                {
+                                    if ($this->session->data['dummy_user_group_id'] != $this->user_group_id)
+                                    {
+                                        $user_group_query = $this->db->query("SELECT superuser, permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$this->session->data['dummy_user_group_id'] . "'");
+
+                                        $this->superuser = (bool)$user_group_query->row['superuser'];
+                                        $this->is_dummy_group = true;
+                                    } else {
+                                        unset($this->session->data['dummy_user_group_id']);
+                                    }
+                                }
                 
 	  			$permissions = unserialize($user_group_query->row['permission']);
 
@@ -49,6 +63,7 @@ class User {
 
     	if ($user_query->num_rows) {
 			$this->session->data['user_id'] = $user_query->row['user_id'];
+                        unset($this->session->data['dummy_user_group_id']);
                         $this->db->setAuditUsername($user_query->row['username']);
 			
 			$this->user_id = $user_query->row['user_id'];
@@ -74,6 +89,7 @@ class User {
 
   	public function logout() {
 		unset($this->session->data['user_id']);
+		unset($this->session->data['dummy_user_group_id']);
 	
 		$this->user_id = '';
 		$this->username = '';
@@ -87,6 +103,10 @@ class User {
   
   	public function isSuperuser() {
     	return (bool)$this->superuser;
+  	}
+  
+  	public function isDummyUser() {
+    	return (bool)$this->is_dummy_group;
   	}
 
   	public function hasPermission($key, $value) {

@@ -12,23 +12,28 @@ class ModelAccountCustomer extends Model {
 
         $customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 
-        $this->load->model('account/newsletter');
+        $this->db->query("INSERT INTO " . DB_PREFIX . "customer SET store_id = '" . (int) $this->config->get('config_store_id') . "', title = '" . $this->db->escape($data['title']) . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', dob = '" . (!empty($data['day_birth']) && !empty($data['month_birth']) && !empty($data['year_birth']) ? $this->db->escape(date("Y-m-d", mktime(0,0,0,$data['month_birth'],$data['day_birth'],$data['year_birth']))) : NULL) . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', newsletter = '" . (isset($data['newsletter']) ? (int) $data['newsletter'] : 0) . "', customer_group_id = '" . (int) $customer_group_id . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '1', approved = '" . (int) !$customer_group_info['approval'] . "', date_added = NOW()");
 
-        if (isset($data['newsletter']) && $data['newsletter'] == 1) {
-            $this->model_account_newsletter->subscribe($data['email'], $data['firstname'], $data['lastname'], 'account');
-        } elseif (isset($data['newsletter']) && $data['newsletter'] == 0) {
-            $this->model_account_newsletter->unsubscribe($data['email']);
-        }
-
-        $this->db->query("INSERT INTO " . DB_PREFIX . "customer SET store_id = '" . (int) $this->config->get('config_store_id') . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', newsletter = '" . (isset($data['newsletter']) ? (int) $data['newsletter'] : 0) . "', customer_group_id = '" . (int) $customer_group_id . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '1', approved = '" . (int) !$customer_group_info['approval'] . "', date_added = NOW()");
 
         $customer_id = $this->db->getLastId();
 
-        $this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '" . (int) $customer_id . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', company = '" . $this->db->escape($data['company']) . "', company_id = '" . $this->db->escape($data['company_id']) . "', tax_id = '" . $this->db->escape($data['tax_id']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', city = '" . $this->db->escape($data['city']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', country_id = '" . (int) $data['country_id'] . "', zone_id = '" . (int) $data['zone_id'] . "'");
+        if (isset($data['address_1']))
+        {
+            $this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '" . (int) $customer_id . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', company = '" . $this->db->escape($data['company']) . "', company_id = '" . $this->db->escape($data['company_id']) . "', tax_id = '" . $this->db->escape($data['tax_id']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', city = '" . $this->db->escape($data['city']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', country_id = '" . (int) $data['country_id'] . "', zone_id = '" . (int) $data['zone_id'] . "'");
 
-        $address_id = $this->db->getLastId();
+            $address_id = $this->db->getLastId();
 
-        $this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int) $address_id . "' WHERE customer_id = '" . (int) $customer_id . "'");
+            $this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int) $address_id . "' WHERE customer_id = '" . (int) $customer_id . "'");
+        }
+        
+        $this->load->model('account/newsletter');
+
+        if ($data['newsletter'] == 1 || (($this->config->get('newsletter_mailcampaign_enabled') && !$this->config->get('newsletter_mailcampaign_account_optin')) || ($this->config->get('newsletter_mailchimp_enabled') && !$this->config->get('newsletter_mailchimp_account_optin')))) {
+            $customer_info = $this->getCustomer($customer_id);
+            $this->model_account_newsletter->subscribe($data['email'], $customer_info, 'account');
+        } elseif ($data['newsletter'] == 0) {
+            $this->model_account_newsletter->unsubscribe($data['email']);
+        }
 
         $this->language->load('mail/customer');
 
@@ -80,7 +85,7 @@ class ModelAccountCustomer extends Model {
     }
 
     public function editCustomer($data) {
-        $this->db->query("UPDATE " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "' WHERE customer_id = '" . (int) $this->customer->getId() . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "customer SET title = '" . $this->db->escape($data['title']) . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', dob = '" . (!empty($data['day_birth']) && !empty($data['month_birth']) && !empty($data['year_birth']) ? $this->db->escape(date("Y-m-d", mktime(0,0,0,$data['month_birth'],$data['day_birth'],$data['year_birth']))) : NULL) . "' WHERE customer_id = '" . (int) $this->customer->getId() . "'");
     }
 
     public function editPassword($email, $password) {

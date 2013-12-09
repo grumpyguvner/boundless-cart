@@ -14,8 +14,9 @@ class ControllerAccountNewsletter extends Controller {
         $this->document->setTitle($this->language->get('heading_title'));
 
         if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+            
             if ($this->request->post['newsletter']) {
-                $this->model_account_newsletter->subscribe($this->customer->getEmail(), $this->customer->getFirstName(), $this->customer->getLastName(), 'account');
+                $this->model_account_newsletter->subscribe($this->customer->getEmail(), array(), 'account');
             } else {
                 $this->model_account_newsletter->unsubscribe($this->customer->getEmail());
             }
@@ -49,6 +50,10 @@ class ControllerAccountNewsletter extends Controller {
 
         $this->data['text_yes'] = $this->language->get('text_yes');
         $this->data['text_no'] = $this->language->get('text_no');
+        $this->data['text_choose_newsletter'] = $this->language->get('text_choose_newsletter');
+        $this->data['text_choose_newsletter_womens'] = $this->language->get('text_choose_newsletter_womens');
+        $this->data['text_choose_newsletter_mens'] = $this->language->get('text_choose_newsletter_mens');
+        $this->data['text_choose_newsletter_main'] = $this->language->get('text_choose_newsletter_main');
 
         $this->data['entry_newsletter'] = $this->language->get('entry_newsletter');
 
@@ -60,6 +65,14 @@ class ControllerAccountNewsletter extends Controller {
         $this->data['newsletter'] = $this->model_account_newsletter->getTotalNewsletterByEmail($this->customer->getEmail());
 
         $this->data['back'] = $this->url->link('account/account', '', 'SSL');
+        
+        if (count($this->data['breadcrumbs']) > 1)
+            {
+                $count = count($this->data['breadcrumbs']) - 2;
+                $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+            } else {
+                $this->data['text_breadcrumb_back'] = '';
+            }
 
         $this->setTemplate('account/newsletter.tpl');
 

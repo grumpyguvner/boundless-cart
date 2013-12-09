@@ -30,6 +30,9 @@ class ControllerModuleWelcomePopup extends Controller {
         $this->data['entry_status'] = $this->language->get('entry_status');
         $this->data['entry_content'] = $this->language->get('entry_content');
         $this->data['entry_reset_cookie'] = $this->language->get('entry_reset_cookie');
+        $this->data['entry_site_region'] = $this->language->get('entry_site_region');
+        $this->data['entry_layout'] = $this->language->get('entry_layout');
+        $this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
         $this->data['button_save'] = $this->language->get('button_save');
         $this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -66,29 +69,18 @@ class ControllerModuleWelcomePopup extends Controller {
         } else {
             $this->data['error_warning'] = '';
         }
+        
+        $this->data['modules'] = array();
 
-        if (isset($this->request->post['welcome_popup_status'])) {
-            $this->data['welcome_popup_status'] = $this->request->post['welcome_popup_status'];
-        } elseif ($this->config->get('welcome_popup_status')) {
-            $this->data['welcome_popup_status'] = $this->config->get('welcome_popup_status');
-        } else {
-            $this->data['welcome_popup_status'] = 0;
-        }
-        
-        if (isset($this->request->post['welcome_popup_content'])) {
-            $this->data['welcome_popup_content'] = $this->request->post['welcome_popup_content'];
-        } elseif ($this->config->get('welcome_popup_content')) {
-            $this->data['welcome_popup_content'] = $this->config->get('welcome_popup_content');
-        } else {
-            $this->data['welcome_popup_content'] = '';
-        }
-        
-        if (isset($this->request->post['welcome_popup_reset_cookie'])) {
-            $this->data['welcome_popup_reset_cookie'] = $this->request->post['welcome_popup_reset_cookie'];
-        } else {
-            $this->data['welcome_popup_reset_cookie'] = '';
+        if (isset($this->request->post['welcome_popup'])) {
+                $this->data['modules'] = $this->request->post['welcome_popup'];
+        } elseif ($this->config->get('welcome_popup')) { 
+                $this->data['modules'] = $this->config->get('welcome_popup');
         }
 
+        $this->load->model('design/layout');
+        $this->data['layouts'] = $this->model_design_layout->getLayouts();
+        
         $this->template = 'module/welcome_popup.tpl';
         $this->children = array(
             'common/header',

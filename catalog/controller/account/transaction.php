@@ -43,6 +43,14 @@ class ControllerAccountTransaction extends Controller {
 		$this->data['text_empty'] = $this->language->get('text_empty');
 		
 		$this->data['button_continue'] = $this->language->get('button_continue');
+                
+                if (count($this->data['breadcrumbs']) > 1)
+                    {
+                        $count = count($this->data['breadcrumbs']) - 2;
+                        $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                    } else {
+                        $this->data['text_breadcrumb_back'] = '';
+                    }
 				
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];

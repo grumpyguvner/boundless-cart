@@ -28,6 +28,13 @@ $_['text_wait']         = 'Please Wait!';
 $_['text_tags']         = 'Tags:';
 $_['text_error']        = 'Product not found!';
 $_['text_says']         = 'We say:';
+$_['text_zoom']         = 'Zoom';
+$_['text_save']         = 'SAVE';
+$_['text_rrp']          = 'RRP:';
+$_['text_pay']          = 'Pay:';
+$_['text_expert']       = 'OUR EXPERTS REVIEW';
+$_['text_question']     = 'Got a question about this product?';
+$_['text_ask']          = 'ASK ONE OF OUR EXPERTS...';
 
 // Entry
 $_['entry_name']        = 'Your Name:';

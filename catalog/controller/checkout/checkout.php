@@ -59,6 +59,14 @@ class ControllerCheckoutCheckout extends Controller {
         $this->data['text_checkout_payment_method'] = $this->language->get('text_checkout_payment_method');
         $this->data['text_checkout_confirm'] = $this->language->get('text_checkout_confirm');
         $this->data['text_modify'] = $this->language->get('text_modify');
+        
+        if (count($this->data['breadcrumbs']) > 1)
+            {
+                $count = count($this->data['breadcrumbs']) - 2;
+                $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+            } else {
+                $this->data['text_breadcrumb_back'] = '';
+            }
 
         $this->data['logged'] = $this->customer->isLogged();
         $this->data['shipping_required'] = $this->cart->hasShipping();

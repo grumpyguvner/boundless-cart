@@ -14,5 +14,8 @@ $_['entry_comments'] = 'Comments';
 $_['entry_products'] = 'Products: ';
 
 $_['text_message'] = 'You have successfully Subscribe for this event!';
+$_['text_save']        = 'SAVE';
+$_['text_rrp']        = 'RRP:';
+$_['text_pay']        = 'Pay:';
 
 ?>

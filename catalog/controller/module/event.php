@@ -37,13 +37,13 @@ class ControllerModuleEvent extends Controller {
 		$cal_str = "<table border = '0' cellspacing = '1' bgcolor='#e4e4e4' cellpadding ='2' width='100%' style='margin-top:3px;'>
 		<tr><td colspan='7'><strong>$m - $YN</strong></td></tr>
 		<tr>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Sun</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Mon</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Tue</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Wed</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Thu</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Fri</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Sat</font></td>
+		<td style='background-color:#fff; font-weight:bold;'><font size = '1'>Sun</font></td>
+		<td style='background-color:#fff; font-weight:bold;'><font size = '1'>Mon</font></td>
+		<td style='background-color:#fff; font-weight:bold;'><font size = '1'>Tue</font></td>
+		<td style='background-color:#fff; font-weight:bold;'><font size = '1'>Wed</font></td>
+		<td style='background-color:#fff; font-weight:bold;'><font size = '1'>Thu</font></td>
+		<td style='background-color:#fff; font-weight:bold;'><font size = '1'>Fri</font></td>
+		<td style='background-color:#fff; font-weight:bold;'><font size = '1'>Sat</font></td>
 		</tr>";
 
 		if($day=="Sun") $st=1;
@@ -69,14 +69,14 @@ class ControllerModuleEvent extends Controller {
 				//echo '<br />';
 				
 				if(in_array($cdate,$dates)){
-					$bgcol = 'background-color:#e4e4e4';
-					$link = "<a href='".$this->url->link("information/event/events&date=$cdate")."' style='text-decoration:none'>$d</a>";
+					$bgcol = 'background-color:#fff; font-weight:bold;';
+					$link = "<a href='".$this->url->link("information/event/events&date=$cdate")."' style='text-decoration:none; color:#1db4b7; font-weight: bold;'>$d</a>";
 				}else{
-					$bgcol = 'background-color:#fff';
+					$bgcol = 'background-color:#fff; font-weight:bold;';
 					$link = $d;
 				}
 				
-				$cal_str.= "<td align='center' style='$bgcol'><font size = '2' face = 'tahoma'>$link</font></td>";
+				$cal_str.= "<td align='center' style='$bgcol'><font size = '2'>$link</font></td>";
 				$d++;
 			}
 			else{
@@ -100,8 +100,8 @@ class ControllerModuleEvent extends Controller {
 		if($prev==1){$prev = 12;$pryr = $yr-1;}else{$pryr = $yr;}
 		if($next>12){$nxyr = $yr+1;$next = 1;}else{$nxyr = $yr;}
 		$cal_str.= '</table>
-		<div style="text-align:right; "><br />
-		<a onclick="do_cal(\''.$pryr.'\',\''.$prev.'\');" style="font-weight:bold; padding:3px 5px; background:#e4e4e4; text-decoration:none; -moz-border-radius:4px;">Previous</a>   <a onclick="do_cal(\''.$nxyr.'\',\''.$next.'\');"  style="font-weight:bold; padding:3px 5px; background:#e4e4e4; text-decoration:none; -moz-border-radius:4px;">Next</a></div>';  
+		<div style="text-align:right; margin-top: 8px;">
+		<a onclick="do_cal(\''.$pryr.'\',\''.$prev.'\');" class="button">Previous</a>   <a onclick="do_cal(\''.$nxyr.'\',\''.$next.'\');" class="button">Next</a></div>';  
 		
 		$this->data['event_cal'] = $cal_str;
 		
@@ -138,13 +138,13 @@ class ControllerModuleEvent extends Controller {
 		$cal_str = "<table border = '0' cellspacing = '1' bgcolor='#e4e4e4' cellpadding ='2' width='100%' style='margin-top:3px;'>
 		<tr><td colspan='7'><strong>$m - $YN</strong></td></tr>
 		<tr>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Sun</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Mon</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Tue</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Wed</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Thu</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Fri</font></td>
-		<td style='background-color:#fff'><font size = '1' face = 'tahoma'>Sat</font></td>
+		<td style='background-color:#fff'><font size = '1'>Sun</font></td>
+		<td style='background-color:#fff'><font size = '1'>Mon</font></td>
+		<td style='background-color:#fff'><font size = '1'>Tue</font></td>
+		<td style='background-color:#fff'><font size = '1'>Wed</font></td>
+		<td style='background-color:#fff'><font size = '1'>Thu</font></td>
+		<td style='background-color:#fff'><font size = '1'>Fri</font></td>
+		<td style='background-color:#fff'><font size = '1'>Sat</font></td>
 		</tr>";
 
 		if($day=="Sun") $st=1;
@@ -169,13 +169,13 @@ class ControllerModuleEvent extends Controller {
 				$cdate = $yr."-". str_pad($x,2,'0',STR_PAD_LEFT) ."-".str_pad($d,2,'0',STR_PAD_LEFT);
 				if(in_array($cdate,$dates)){
 					$bgcol = 'background-color:#e4e4e4';
-					$link = "<a href='".$this->url->link("information/event/events&date=$cdate")."' style='text-decoration:none'>$d</a>";
+					$link = "<a href='".$this->url->link("information/event/events&date=$cdate")."' style='text-decoration:none; font-weight: bold;'>$d</a>";
 				}else{
 					$bgcol = 'background-color:#fff';
 					$link = $d;
 				}
 				
-				$cal_str.= "<td align='center' style='$bgcol'><font size = '2' face = 'tahoma'>$link</font></td>";
+				$cal_str.= "<td align='center' style='$bgcol'><font size = '2'>$link</font></td>";
 				$d++;
 			}
 			else{

@@ -175,6 +175,10 @@
           <div class="form">
             <div>
               <div class="control-group">
+                <label class="control-label"><?php echo $entry_account_commission; ?></label>
+                <div class="controls"><input type="text" name="account_commission" value="<?php echo $account_commission; ?>" class="span2"></div>
+              </div>
+              <div class="control-group">
                 <label class="control-label"><?php echo $entry_commission; ?></label>
                 <div class="controls"><input type="text" name="commission" value="<?php echo $commission; ?>" class="span2"></div>
               </div>

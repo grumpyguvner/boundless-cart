@@ -31,5 +31,15 @@ class ModelLocalisationZone extends Model {
 	
 		return $query->row;
 	}
+        
+	public function addZone($data) {
+		$this->db->query("INSERT INTO " . DB_PREFIX . "zone SET status = '" . (int)$data['status'] . "', name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', country_id = '" . (int)$data['country_id'] . "'");
+                
+		$zone_id = $this->db->getLastId();
+			
+		$this->cache->delete('zone');
+                
+                return $zone_id;
+	}
 }
 ?>

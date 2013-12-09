@@ -467,9 +467,70 @@ ALTER TABLE `oc_return` ADD `refund_amount` DECIMAL(15,4) NOT NULL DEFAULT '0.00
 
 #### Start 1.5.4:BC1.2.6
 
-ALTER TABLE `oc_return` ADD `new_order_id` int(11) NOT NULL AFTER `refund_amount`;
+ALTER TABLE `oc_category` ADD `is_filter` tinyint(1) NOT NULL DEFAULT 0 AFTER `sort_order`;
+ALTER TABLE `oc_category` ADD `members_only` tinyint(1) NOT NULL AFTER `is_filter`;
+ALTER TABLE `oc_category` ADD `date_start` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `members_only`;
+ALTER TABLE `oc_category` ADD `date_end` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `date_start`;
 
 #### Start 1.5.4:BC1.2.7
+
+ALTER TABLE `oc_customer` ADD `dob` DATE NOT NULL DEFAULT '0000-00-00 00:00:00'  AFTER `fax`;
+
+#### Start 1.5.4:BC1.2.8
+
+ALTER TABLE `oc_customer` ADD `title` varchar(9) COLLATE utf8_bin NOT NULL DEFAULT ''  AFTER `store_id`;
+
+#### Start 1.5.4:BC1.2.9
+
+ALTER TABLE `oc_product_description` ADD `brief_summary` varchar(255) NOT NULL AFTER `description`;
+
+#### Start 1.5.4.1:BC1.2.10 
+
+CREATE TABLE IF NOT EXISTS `oc_category_filter` (
+  `category_id` int(11) NOT NULL,
+  `filter_id` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`filter_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `oc_filter_group` (
+  `filter_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`filter_group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `oc_filter_group_description` (
+  `filter_group_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`filter_group_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `oc_filter` (
+  `filter_id` int(11) NOT NULL AUTO_INCREMENT,
+  `filter_group_id` int(11) NOT NULL,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`filter_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `oc_filter_description` (
+  `filter_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `filter_group_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`filter_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `oc_product_filter` (
+  `product_id` int(11) NOT NULL,
+  `filter_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_id`,`filter_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+#### Start 1.5.4:BC1.2.11
+
+ALTER TABLE `oc_return` ADD `new_order_id` int(11) NOT NULL AFTER `refund_amount`;
+
+#### Start 1.5.4:BC1.2.12
 --
 -- Table structure for table `oc_syspro_tax_codes`
 --
@@ -524,6 +585,78 @@ CREATE TABLE IF NOT EXISTS `oc_syspro_order` (
   PRIMARY KEY (`order_id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-#### Start 1.5.4:BC1.2.8
+#### Start 1.5.4:BC1.2.13
 
-ALTER TABLE `oc_review` ADD `reply` text COLLATE utf8_bin NOT NULL AFTER `rating`;
+ALTER TABLE `oc_review` ADD `reply` text NOT NULL AFTER `rating`;
+
+#### Start 1.5.4:BC1.2.13
+
+ALTER TABLE `oc_banner_image` ADD `status` TINYINT(1) NOT NULL DEFAULT 1 AFTER `sort_order`;
+
+#### Start 1.5.4:BC1.2.14
+
+ALTER TABLE `oc_url_alias` ADD `language_id` int(11) NOT NULL AFTER `keyword`;
+
+ALTER TABLE `oc_url_alias` ADD INDEX `query` (`query`); 
+ALTER TABLE `oc_url_alias` ADD INDEX `keyword` (`keyword`);
+
+ALTER TABLE `oc_product` ADD INDEX `model` (`model`);
+
+ALTER TABLE `oc_product_option` ADD INDEX `product_option_product_id` (`product_id`, `option_id`);
+ALTER TABLE `oc_product_option_value` ADD INDEX `product_option_product_option_id` (`product_option_id`, `product_id`);
+
+ALTER TABLE `oc_filter_description` ADD INDEX `name` (`name`, `filter_group_id`);
+ALTER TABLE `oc_filter_description` ADD INDEX `filter_group_id` (`filter_group_id`);
+
+ALTER TABLE `oc_option_value_description` ADD INDEX `option_id` (`option_id`, `name`);
+
+#### Start 1.5.4:BC1.2.15
+
+ALTER TABLE `oc_order` ADD INDEX `customer_group_id` (`customer_group_id`);
+
+ALTER TABLE `oc_order_option` ADD INDEX `order_product_id` (`order_product_id`);
+ALTER TABLE `oc_order_option` ADD INDEX `order_id` (`order_id`);
+
+ALTER TABLE `oc_order_product` ADD INDEX `order_id` (`order_id`);
+
+#### Start 1.5.4:BC1.2.16
+
+ALTER TABLE `oc_product` ADD `sale` TINYINT(1) NOT NULL DEFAULT '0' AFTER sort_order;
+ALTER TABLE `oc_customer` MODIFY `salt` varchar(60) NOT NULL;
+
+#### Start 1.5.4:BC1.2.17
+
+ALTER TABLE `oc_url_alias` ADD `language_id` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `keyword`;
+ALTER TABLE `oc_url_alias` ADD  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+#### Start 1.5.4:BC1.2.18
+
+CREATE TABLE `oc_redeem` (
+  `redeem_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `code` varchar(10) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `redeem` tinyint(1) NOT NULL,
+  `redeem_theme_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`redeem_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+ALTER TABLE oc_product ADD redeem tinyint(1) DEFAULT '0' AFTER shipping;
+ALTER TABLE oc_product ADD redeem_theme_id int(11) int DEFAULT '0' AFTER redeem;
+
+#### Start 1.5.4:BC1.2.19
+
+CREATE TABLE IF NOT EXISTS `oc_redeem_theme` (
+  `redeem_theme_id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  PRIMARY KEY (`redeem_theme_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `oc_redeem_theme_description` (
+  `redeem_theme_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`redeem_theme_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

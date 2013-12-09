@@ -17,7 +17,7 @@ class ModelPaymentSagePay extends Model {
 		
 		$method_data = array();
 	
-		if ($status) {  
+		if ($status && $this->currency->getCode() == 'GBP') {  
       		$method_data = array( 
         		'code'       => 'sagepay',
         		'title'      => $this->language->get('text_title'),

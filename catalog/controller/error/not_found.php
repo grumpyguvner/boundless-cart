@@ -52,6 +52,14 @@ class ControllerErrorNotFound extends Controller {
         $this->data['button_error_home'] = $this->language->get('button_error_home');
         $this->data['button_error_back'] = $this->language->get('button_error_back');
         $this->data['button_back'] = $this->language->get('button_back');
+        
+        if (count($this->data['breadcrumbs']) > 1)
+            {
+                $count = count($this->data['breadcrumbs']) - 2;
+                $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+            } else {
+                $this->data['text_breadcrumb_back'] = '';
+            }
 
         $this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . '/1.1 404 Not Found');
 

@@ -11,7 +11,7 @@
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
 <div class="contact_fr">
-  <h1><?php echo $heading_title; ?></h1>
+  <h1 class="heading_title"><?php echo $heading_title; ?></h1>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <h2><?php echo $text_location; ?></h2>
     <div class="contact-info">
@@ -28,6 +28,8 @@
         <b><?php echo $text_fax; ?></b><br />
         <?php echo $fax; ?>
         <?php } ?>
+        <b><?php echo $text_email; ?></b><br />
+        <a href="mailto:<?php echo $company_email; ?>"><?php echo $company_email; ?></a>
       </div>
     </div>
     </div>

@@ -58,6 +58,14 @@ class ControllerAccountAccount extends Controller {
 		$this->data['return'] = $this->url->link('account/return', '', 'SSL');
 		$this->data['transaction'] = $this->url->link('account/transaction', '', 'SSL');
 		$this->data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
+                
+                if (count($this->data['breadcrumbs']) > 1)
+                        {
+                            $count = count($this->data['breadcrumbs']) - 2;
+                            $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                        } else {
+                            $this->data['text_breadcrumb_back'] = '';
+                        }
 		
 		if ($this->config->get('reward_status')) {
 			$this->data['reward'] = $this->url->link('account/reward', '', 'SSL');

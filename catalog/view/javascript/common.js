@@ -2,6 +2,7 @@
     $.fn.postcodeAnywhere = function() {
         if ($(this).find('.paLookup').length)
         {
+            $(this).find('.paSelect').hide();
             if (!$(this).find('.paAddress input[name=address_1]').val() && !$(this).find('.paAddress input[name=postcode]').val())
             {
                 $(this).find('.paLookup').show();
@@ -119,6 +120,14 @@
                         paContainer.find('input[name=\'city\']').val(json['address']['city']);
                         paContainer.find('select[name=\'country_id\']').val(json['address']['country_id']);
                         paContainer.find('select[name=\'zone_id\']').val(json['address']['zone_id']);
+                       
+                        if (!paContainer.find('select[name=\'zone_id\']').val())
+                        {
+                            paContainer.find('select[name=\'zone_id\']').append('<option value="' + json['address']['zone_id'] + '"></option>').val(json['address']['zone_id']);
+                            
+                            $('select[name=\'country_id\']').trigger('change');
+                        }
+                        
                         paContainer.find('.paLookup').hide();
                         paContainer.find('.paSelect').hide();
                         paContainer.find('.paAddress').show();
@@ -249,23 +258,31 @@ $(document).ready(function() {
         $(this).parents('form').trigger('submit');
         return false;
     });
-    
-    /* Ajax Cart */
-    $('#header').on({mouseenter: function() {
-            if ($(this).hasClass('mouseover'))
-            {
-                openCart();
-            }
-        },mouseleave:  function() {
-            closeCart();
-        }
-    }, '#cart');
-    
-    $('#header').on('click', '#cart .heading a', function(event) {
-        event.preventDefault();
-        openCart(false, true);
-    });
 	
+    /* Ajax Cart */
+    $('#cart > .heading a').live('click', function() {
+        $('#cart').addClass('active');
+        
+		
+        $('#cart').load('index.php?route=module/cart #cart > *');
+		
+        $('#cart').live('mouseleave', function() {
+            $(this).removeClass('active');
+            
+        });
+    });
+
+    /* Ajax Currency */
+    $('#wrapCurrency > .heading a').live('click', function() {
+        $('#wrapCurrency').addClass('active');
+		
+        $('#wrapCurrency').load('index.php?route=module/localisation #wrapCurrency > *');
+		
+        $('#wrapCurrency').live('mouseleave', function() {
+            $(this).removeClass('active');
+        });
+    })/*.trigger('click')*/;
+    
     /* Mega Menu */
     $('#menu ul > li > a + div').each(function(index, element) {
         // IE6 & IE7 Fixes
@@ -352,7 +369,7 @@ function openCart(delay, update) {
 } 
 
 function closeCart() {
-    $('#cart').removeClass("active");
+    $('#cart').removeClass("active").addClass("hasItems");
 }
 
 function addToCart(product_id, quantity, cartTime) {

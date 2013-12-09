@@ -1,13 +1,17 @@
 <?php
 class Cache { 
 	private $expire;
+	private $queue;
         
        public function __construct ($expire = 3600)
        {
            $this->expire = $expire;
+           $this->queue = false;
        }
 
 	public function get($key) {
+            if ($this->queue === false)
+            {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
 		if ($files) {
@@ -27,21 +31,30 @@ class Cache {
 			
 			return $data;			
 		}
+            }
 	}
 
   	public function set($key, $value) {
-    	$this->delete($key);
-		
-		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
-    	
-		$handle = fopen($file, 'w');
+            if ($this->queue === false)
+            {
+                $this->delete($key);
 
-    	fwrite($handle, serialize($value));
-		
-    	fclose($handle);
+                $file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
+
+                $handle = fopen($file, 'w');
+
+                fwrite($handle, serialize($value));
+
+                fclose($handle);
+            }
+    
   	}
 	
   	public function delete($key) {
+            if (is_array($this->queue))
+            {
+                $this->queue[] = $key;
+            } else {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 		
 		if ($files) {
@@ -51,6 +64,32 @@ class Cache {
 				}
     		}
 		}
+            }
   	}
+        
+  	public function setQueue($queue = false) {
+            $this->flushQueue();
+            
+            if ($queue)
+            {
+                $this->queue = array();
+            } else {
+                $this->queue = false;
+            }
+  	}
+        
+  	public function flushQueue() {
+            if (is_array($this->queue)) 
+            {
+                foreach ($this->queue as $key)
+                {
+                    $this->delete($key);
+                }
+            }
+  	}
+
+        function __destruct() {
+            $this->flushQueue();
+        }
 }
 ?>

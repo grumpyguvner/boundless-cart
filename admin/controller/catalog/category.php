@@ -158,6 +158,8 @@ class ControllerCatalogCategory extends Controller {
                 $this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_percent'] = $this->language->get('text_percent');
 		$this->data['text_amount'] = $this->language->get('text_amount');
+                $this->data['text_select_all'] = $this->language->get('text_select_all');
+                $this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
 				
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_meta_title'] = $this->language->get('entry_meta_title');
@@ -166,9 +168,14 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
+		$this->data['entry_filter'] = $this->language->get('entry_filter');
 		$this->data['entry_parent'] = $this->language->get('entry_parent');
 		$this->data['entry_googlebase_text'] = $this->language->get('entry_googlebase_text');
 		$this->data['entry_googlebase_xml'] = $this->language->get('entry_googlebase_xml');
+		$this->data['entry_is_filter'] = $this->language->get('entry_is_filter');
+		$this->data['entry_members_only'] = $this->language->get('entry_members_only');
+		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
+		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
 		$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_top'] = $this->language->get('entry_top');
 		$this->data['entry_column'] = $this->language->get('entry_column');		
@@ -182,6 +189,7 @@ class ControllerCatalogCategory extends Controller {
                 $this->data['tab_general'] = $this->language->get('tab_general');
                 $this->data['tab_data'] = $this->language->get('tab_data');
 		$this->data['tab_design'] = $this->language->get('tab_design');
+		$this->data['tab_merchandising'] = $this->language->get('tab_merchandising');
 		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -220,8 +228,8 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->get['category_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-      		$category_info = $this->model_catalog_category->getCategory($this->request->get['category_id']);
-    	}
+                        $category_info = $this->model_catalog_category->getCategory($this->request->get['category_id']);
+                }
 		
 		$this->load->model('localisation/language');
 		
@@ -255,7 +263,30 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$this->data['parent_id'] = 0;
 		}
-
+                
+                // Filters
+		$this->load->model('catalog/filter');
+                
+                $this->data['has_filters'] = $this->model_catalog_filter->getTotalFilterGroups();
+                $filters = $this->model_catalog_filter->getFilters(); 
+                
+                if (isset($this->request->post['category_filter'])) {
+                    $this->data['category_filter_selected'] = $this->request->post['category_filter'];
+                } elseif (isset($this->request->get['category_id'])) {
+                    $this->data['category_filter_selected'] = $this->model_catalog_category->getCategoryFilters($this->request->get['category_id']);
+                } else {
+                    $this->data['category_filter_selected'] = array();
+                }
+			
+		$this->data['category_filters'] = array();
+		
+                foreach ($filters as $filter_info) {
+                        $this->data['category_filters'][] = array(
+                                'filter_id' => $filter_info['filter_id'],
+                                'name'      => $filter_info['group'] . ' &gt; ' . $filter_info['name']
+                        );
+                }
+		
 		if (isset($this->request->post['googlebase_text'])) {
 			$this->data['googlebase_text'] = $this->request->post['googlebase_text'];
 		} elseif (!empty($category_info)) {
@@ -335,6 +366,36 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$this->data['sort_order'] = 0;
 		}
+
+		if (isset($this->request->post['members_only'])) {
+			$this->data['members_only'] = $this->request->post['members_only'];
+		} elseif (!empty($category_info)) {
+			$this->data['members_only'] = $category_info['members_only'];
+		} else {
+			$this->data['members_only'] = 0;
+		}
+
+                if (isset($this->request->post['date_start_date'])) {
+                    $this->data['date_start_date'] = $this->request->post['date_start_date'];
+                    $this->data['date_start_time'] = $this->request->post['date_start_time'];
+                } elseif (!empty($category_info) && strtotime($category_info['date_start'])) {
+                    $this->data['date_start_date'] = date('Y-m-d', strtotime($category_info['date_start']));
+                    $this->data['date_start_time'] = date('H:i', strtotime($category_info['date_start']));
+                } else {
+                    $this->data['date_start_date'] = '';
+                    $this->data['date_start_time'] = '';
+                }
+
+                if (isset($this->request->post['date_end_date'])) {
+                    $this->data['date_end_date'] = $this->request->post['date_end_date'];
+                    $this->data['date_end_time'] = $this->request->post['date_end_time'];
+                } elseif (!empty($category_info) && strtotime($category_info['date_end'])) {
+                    $this->data['date_end_date'] = date('Y-m-d', strtotime($category_info['date_end']));
+                    $this->data['date_end_time'] = date('H:i', strtotime($category_info['date_end']));
+                } else {
+                    $this->data['date_end_date'] = '';
+                    $this->data['date_end_time'] = '';
+                }
 		
 		if (isset($this->request->post['status'])) {
 			$this->data['status'] = $this->request->post['status'];
@@ -355,6 +416,72 @@ class ControllerCatalogCategory extends Controller {
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
+                
+                $this->data['merchandising'] = ($this->extensions->isInstalled('merchandising', 'module') && isset($this->request->get['category_id'])) ? true : false;
+                
+                if ($this->data['merchandising'])
+                {
+                    $this->load->language('catalog/product');
+                    
+                    $this->data['column_sort_order'] = $this->language->get('column_sort_order');
+                    $this->data['column_image'] = $this->language->get('column_image');
+                    $this->data['column_name'] = $this->language->get('column_name');
+                    $this->data['column_model'] = $this->language->get('column_model');
+                    $this->data['column_price'] = $this->language->get('column_price');
+                    $this->data['column_quantity'] = $this->language->get('column_quantity');
+                    $this->data['column_status'] = $this->language->get('column_status');
+                    $this->data['column_action'] = $this->language->get('column_action');
+                    
+                    $this->load->model('catalog/product');
+                    
+                    $this->data['products'] = array();
+
+                    $data = array('filter_category_id' => $this->request->get['category_id']);
+
+                    $this->load->model('tool/image');
+
+                    $results = $this->model_catalog_product->getProducts($data);
+
+                    foreach ($results as $result) {
+                        $action = array();
+
+                        $action[] = array(
+                            'text' => $this->language->get('text_edit'),
+                            'href' => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'], 'SSL')
+                        );
+
+                        if ($result['image'] && file_exists(DIR_IMAGE . $result['image'])) {
+                            $image = $this->model_tool_image->resize($result['image'], 40, 40);
+                        } else {
+                            $image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
+                        }
+
+                        $special = false;
+
+                        $product_specials = $this->model_catalog_product->getProductSpecials($result['product_id']);
+
+                        foreach ($product_specials as $product_special) {
+                            if (($product_special['date_start'] == '0000-00-00' || $product_special['date_start'] < date('Y-m-d')) && ($product_special['date_end'] == '0000-00-00' || $product_special['date_end'] > date('Y-m-d'))) {
+                                $special = $product_special['price'];
+
+                                break;
+                            }
+                        }
+
+                        $this->data['products'][] = array(
+                            'product_id' => $result['product_id'],
+                            'name' => $result['name'],
+                            'model' => $result['model'],
+                            'price' => $result['price'],
+                            'special' => $special,
+                            'image' => $image,
+                            'quantity' => $result['quantity'],
+                            'status' => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+                            'selected' => isset($this->request->post['selected']) && in_array($result['product_id'], $this->request->post['selected']),
+                            'action' => $action
+                        );
+                    }
+                }
 						
 		$this->template = 'catalog/category_form.tpl';
 		$this->children = array(

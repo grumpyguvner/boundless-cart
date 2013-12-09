@@ -20,9 +20,9 @@ class ModelCheckoutOrder extends Model {
                         
                     //Add the redeem codes.
                     if ($this->config->get('config_redeem') == 1) {
-                        if ($product['redeem'] == 1) {
+                        if ($product['redeem'] > 0) {
                             for ($i = 0; $i < (int)$product['quantity']; $i++) {
-                                $this->db->query("INSERT INTO " . DB_PREFIX . "redeem SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', code = 'ts" . substr(md5(mt_rand()), 0, 6) . "', status = '1', `redeem` = '0', date_added = NOW()");
+                                $this->db->query("INSERT INTO " . DB_PREFIX . "redeem SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', code = 'W" . substr(md5(mt_rand()), 0, 6) . "', redeem_theme_id = '" . (int)$product['redeem_theme_id'] . "', status = '1', `redeem` = '0', date_added = NOW()");
                             }
                         }
                     }
@@ -36,11 +36,13 @@ class ModelCheckoutOrder extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($total['code']) . "', title = '" . $this->db->escape($total['title']) . "', text = '" . $this->db->escape($total['text']) . "', `value` = '" . (float)$total['value'] . "', sort_order = '" . (int)$total['sort_order'] . "'");
 		}
                 
-                if (isset($data['newsletter']) && $data['newsletter'])
+                if ((isset($data['newsletter']) && $data['newsletter']) ||
+                    ($this->config->get('newsletter_mailcampaign_enabled') && $this->config->get('newsletter_mailcampaign_checkout_listid') && !$this->config->get('newsletter_mailcampaign_checkout_optin')) || 
+                    ($this->config->get('newsletter_mailchimp_enabled') && $this->config->get('newsletter_mailchimp_checkout_listid') && !$this->config->get('newsletter_mailchimp_checkout_optin')))
                 {
                     $this->load->model('account/newsletter');
-
-                    $this->model_account_newsletter->subscribe($data['email'], $data['firstname'], $data['lastname'], 'checkout');
+            
+                    $this->model_account_newsletter->subscribe($data['email'], $data, 'checkout');
                 }
 
 		return $order_id;
@@ -228,6 +230,66 @@ class ModelCheckoutOrder extends Model {
 			
 			// Downloads
 			$order_download_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_download WHERE order_id = '" . (int)$order_id . "'");
+                        
+			// Redeem
+			$order_redeem_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "redeem WHERE order_id = '" . (int)$order_id . "'");
+                        
+                        $attachments = array();
+                        
+                        //add the codes to the comments section.
+                        if ($this->config->get('config_complete_status_id') == $order_status_id) {
+                                $this->load->model('account/redeem');
+                                
+                                $redeems = $this->model_account_redeem->getRedeemByOrderId($order_id);
+
+                                $i = 0;
+                                foreach ($redeems as $redeem) {
+                                    $i++;
+                                    if ($redeem['status'] == 1)
+                                    {
+                                        if ($redeem['redeem_theme_id'])
+                                        {
+                                            //get the theme that the product is assigned with.
+                                            $this->load->model('account/redeem_theme');
+                                            $theme_info = $this->model_account_redeem_theme->getRedeemTheme($redeem['redeem_theme_id']);
+
+                                            //replace the keyword with the redeem code.
+                                            $content_message = str_replace("[CODE]", $redeem['code'], $theme_info['content']);
+                                            
+                                            $content_message = preg_replace("%\[DATE(.*?)\]%ie", 'date("j F Y", strtotime("$1"))', $content_message);
+
+                                            $attachment_text =
+                                            "<!DOCTYPE HTML>
+                                            <html>
+                                            <head><meta charset=utf-8></head>
+                                            <body>".$content_message."</body>
+                                            </html>";
+
+                                            $filename = DIR_DOWNLOAD.'voucher-'.$redeem['code'].'.pdf';
+
+                                            $ch = curl_init();
+                                            curl_setopt($ch, CURLOPT_URL, HTTP_SERVER . 'pdf.php');
+                                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                                            curl_setopt($ch, CURLOPT_POST, true);
+
+                                            $attached = array(
+                                                'content' => $attachment_text,
+                                                'filename' => $filename
+                                            );
+
+                                            curl_setopt($ch, CURLOPT_POSTFIELDS, $attached);
+                                            $output = curl_exec($ch);
+                                            $info = curl_getinfo($ch);
+                                            curl_close($ch);
+
+                                            file_put_contents($filename, $output);
+                                            
+                                            $attachments[] = $filename;
+                                        }
+                                    }
+                                }
+
+                        }
 			
 			// Gift Voucher
 			$this->load->model('checkout/voucher');
@@ -499,6 +561,12 @@ class ModelCheckoutOrder extends Model {
 			$text .= $language->get('text_new_footer') . "\n\n";
 		
 			$mail = new Mail(); 
+                        
+                        foreach($attachments as $file)
+                        {
+                            $mail->AddAttachment($file);
+                        }
+                        
 			$mail->protocol = $this->config->get('config_mail_protocol');
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->hostname = $this->config->get('config_smtp_host');
@@ -529,7 +597,20 @@ class ModelCheckoutOrder extends Model {
 						$mail->send();
 					}
 				}				
-			}		
+			}
+                        
+                        //Trust pilot
+                        if($this->extensions->isInstalled('trustpilot', 'module')) {
+                            if ($this->config->get('trustpilot_status')) {
+                                    $email = $this->config->get('trustpilot_email');
+
+                                    if ($email && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+                                        $mail->setTo($this->config->get('trustpilot_email'));
+                                        $mail->send();
+                                    }
+                            }
+                        }
+                        
 		}
 	}
 	
@@ -613,6 +694,7 @@ class ModelCheckoutOrder extends Model {
 				$message .= $language->get('text_update_footer');
 
 				$mail = new Mail();
+                        
 				$mail->protocol = $this->config->get('config_mail_protocol');
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->hostname = $this->config->get('config_smtp_host');

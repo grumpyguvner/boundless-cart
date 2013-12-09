@@ -60,6 +60,18 @@ class ModelLocalisationZone extends Model {
 		$query = $this->db->query($sql);
 		
 		return $query->rows;
+	}	
+	
+	public function getZoneByName($name, $country_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone WHERE name = '" . $this->db->escape($name) . "' and country_id = '" . (int)$country_id . "' AND status = '1' ORDER BY name");
+	
+		return $query->row;
+	}
+	
+	public function getZoneByCode($code, $country_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone WHERE code = '" . $this->db->escape($code) . "' and country_id = '" . (int)$country_id . "' AND status = '1' ORDER BY name");
+	
+		return $query->row;
 	}
 	
 	public function getZonesByCountryId($country_id) {

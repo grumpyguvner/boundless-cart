@@ -130,6 +130,11 @@ class p3html
 		return self::options($return_statuses, $current, 'return_status_id', 'name', $addSlashes);
 	}
 
+	public static function oc_return_actions_options($return_actions, $current=null, $addSlashes=false)
+	{
+		return self::options($return_actions, $current, 'return_action_id', 'name', $addSlashes);
+	}
+
 	public static function oc_return_reason_options($return_reasons, $current=null, $addSlashes=false)
 	{
 		return self::options($return_reasons, $current, 'return_reason_id', 'name', $addSlashes);

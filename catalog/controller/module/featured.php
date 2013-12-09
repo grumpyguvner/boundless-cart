@@ -11,6 +11,10 @@ class ControllerModuleFeatured extends Controller {
 		
 		$this->load->model('tool/image');
 
+                $this->data['text_save'] = $this->language->get('text_save');
+                $this->data['text_rrp'] = $this->language->get('text_rrp');
+                $this->data['text_pay'] = $this->language->get('text_pay');
+                
 		$this->data['products'] = array();
 
 		$products = explode(',', $this->config->get('featured_product'));		
@@ -63,6 +67,9 @@ class ControllerModuleFeatured extends Controller {
                                         'quantity'    	 => $product_info['quantity'],
 					'price'   	  => $price,
 					'special' 	  => $special,
+                                        'sale'      => $product_info['sale'],
+                                        'saving_percent'            => $product_info['saving_percent'],
+                                        'new'            => $product_info['new'],
 					'summary'     => htmlentities($summary, ENT_QUOTES, 'UTF-8'),
 					'rating'      => $rating,
 					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']),

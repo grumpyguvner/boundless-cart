@@ -71,6 +71,14 @@ class ControllerCheckoutSuccess extends Controller {
             $this->data['text_message'] = sprintf($this->language->get('text_guest'), $this->session->data['last_order_id'], $this->url->link('information/contact'));
         }
         
+        if (count($this->data['breadcrumbs']) > 1)
+        {
+            $count = count($this->data['breadcrumbs']) - 2;
+            $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+        } else {
+            $this->data['text_breadcrumb_back'] = '';
+        }
+            
         $data_layer = array();
         if (!empty($this->session->data['last_order_id'])) {
 

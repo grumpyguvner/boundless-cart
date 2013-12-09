@@ -172,6 +172,10 @@
                   <?php } ?>
                 </select></td>
             </tr>
+            <tr<?php echo $display; ?>>
+              <td><?php echo $entry_site_region; ?></td>
+              <td><input type="text" name="config_site_region" value="<?php echo $config_site_region; ?>" /></td>
+            </tr>
             <tr>
               <td><?php echo $entry_currency; ?></td>
               <td><select name="config_currency">
@@ -245,6 +249,10 @@
           <h2><?php echo $text_product; ?></h2>
           <table class="form">
             <tr>
+              <td><?php echo $entry_new_product_age; ?></td>
+              <td><input type="text" name="config_new_product_age" value="<?php echo $config_new_product_age; ?>" size="3" /></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_product_count; ?></td>
               <td><?php if ($config_product_count) { ?>
                 <input type="radio" name="config_product_count" value="1" checked="checked" />
@@ -255,6 +263,34 @@
                 <input type="radio" name="config_product_count" value="1" />
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_product_count" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_sale_item; ?></td>
+              <td><?php if ($config_sale_item) { ?>
+                <input type="radio" name="config_sale_item" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_sale_item" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_sale_item" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_sale_item" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_category_instockonly; ?></td>
+              <td><?php if ($config_category_instockonly) { ?>
+                <input type="radio" name="config_category_instockonly" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_category_instockonly" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_category_instockonly" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_category_instockonly" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } ?></td>
             </tr>

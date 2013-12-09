@@ -223,18 +223,31 @@
             </div>
         
     </div>
+<div style="clear: both; padding-top: 15px; border-top: 1px solid #DDDDDD;">
+    <?php
+    if ($show_newsletter) {
+        ?>
+        <label for="newsletter" class="checkbox"><input type="checkbox" name="newsletter" value="1" id="newsletter" />
+            <?php echo $entry_newsletter; ?></label>
+        <br />
+        <?php
+    } else {
+        ?>
+        <input type="hidden" name="newsletter" value="1" />
+        <?php
+    }
+    ?>
+    <?php if ($shipping_required) { ?>
 
-<?php if ($shipping_required) { ?>
-    <div style="clear: both; padding-top: 15px; border-top: 1px solid #DDDDDD;">
         <label for="shipping" class="checkbox"><?php if ($shipping_address) { ?>
                 <input type="checkbox" name="shipping_address" value="1" id="shipping" checked="checked" />
             <?php } else { ?>
                 <input type="checkbox" name="shipping_address" value="1" id="shipping" />
             <?php } ?>
             <?php echo $entry_shipping; ?></label>
-
-    </div>
-<?php } ?>
+                    
+    <?php } ?>
+</div>
 <div class="buttons">
         <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="button" />
 </div>

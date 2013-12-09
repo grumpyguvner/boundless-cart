@@ -283,6 +283,7 @@ class ControllerCatalogOption extends Controller {
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_type'] = $this->language->get('entry_type');
 		$this->data['entry_value'] = $this->language->get('entry_value');
+		$this->data['entry_is_filter'] = $this->language->get('entry_is_filter');
 		$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -371,6 +372,14 @@ class ControllerCatalogOption extends Controller {
 			$this->data['type'] = $option_info['type'];
 		} else {
 			$this->data['type'] = '';
+		}
+
+		if (isset($this->request->post['is_filter'])) {
+			$this->data['is_filter'] = $this->request->post['is_filter'];
+		} elseif (!empty($option_info)) {
+			$this->data['is_filter'] = $option_info['is_filter'];
+		} else {
+			$this->data['is_filter'] = '0';
 		}
 		
 		if (isset($this->request->post['sort_order'])) {

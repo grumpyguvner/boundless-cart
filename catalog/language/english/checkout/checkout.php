@@ -38,6 +38,7 @@ $_['column_price']                   = 'Price';
 $_['column_total']                   = 'Total';
 
 // Entry
+$_['entry_title']                    = 'Title:';
 $_['entry_email_address']            = 'E-Mail Address:';
 $_['entry_email']                    = 'E-Mail:';
 $_['entry_password']                 = 'Password:';
@@ -58,12 +59,15 @@ $_['entry_country']                  = 'Country:';
 $_['entry_zone']                     = 'Region / State:';
 $_['entry_newsletter']               = 'I wish to subscribe to the %s newsletter.';
 $_['entry_shipping'] 	             = 'My delivery and billing addresses are the same.';
+$_['entry_date_birth']               = 'Date Of Birth:';
+$_['entry_title']                    = 'Title:';
 
 // Error
 $_['error_warning']                  = 'There was a problem while trying to process your order! If the problem persists please try selecting a different payment method or you can contact the store owner by <a href="%s">clicking here</a>.';
 $_['error_login']                    = 'Warning: No match for E-Mail Address and/or Password.';
 $_['error_approved']                 = 'Warning: Your account requires approval before you can login.'; 
 $_['error_exists']                   = 'Warning: E-Mail Address is already registered!';
+$_['error_title']                    = 'You must select a title';
 $_['error_firstname']                = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']                 = 'Last Name must be between 1 and 32 characters!';
 $_['error_email']                    = 'E-Mail Address does not appear to be valid!';
@@ -84,4 +88,7 @@ $_['error_shipping']                 = 'Warning: Shipping method required!';
 $_['error_no_shipping']              = 'Warning: No Shipping options are available. Please <a href="%s">contact us</a> for assistance!';
 $_['error_payment']                  = 'Warning: Payment method required!';
 $_['error_no_payment']               = 'Warning: No Payment options are available. Please <a href="%s">contact us</a> for assistance!';
+$_['error_day_birth']                = 'You need to select a day!';
+$_['error_month_birth']              = 'You need to select a month!';
+$_['error_year_birth']               = 'You need to select a year!';
 ?>

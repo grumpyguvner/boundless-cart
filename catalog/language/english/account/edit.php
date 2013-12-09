@@ -14,6 +14,8 @@ $_['entry_lastname']   = 'Last Name:';
 $_['entry_email']      = 'E-Mail:';
 $_['entry_telephone']  = 'Telephone:';
 $_['entry_fax']        = 'Fax:';
+$_['entry_date_birth'] = 'Date Of Birth:';
+$_['entry_title']          = 'Title:';
 
 // Error
 $_['error_exists']     = 'Warning: E-Mail address is already registered!';
@@ -21,4 +23,7 @@ $_['error_firstname']  = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']   = 'Last Name must be between 1 and 32 characters!';
 $_['error_email']      = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']  = 'Telephone must be between 3 and 32 characters!';
+$_['error_day_birth']  = 'You need to select a day!';
+$_['error_month_birth']= 'You need to select a month!';
+$_['error_year_birth'] = 'You need to select a year!';
 ?>

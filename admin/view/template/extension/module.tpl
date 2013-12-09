@@ -29,12 +29,10 @@
 				</thead>
 				<tbody>
           <?php foreach ($extensions as $extension) { ?>
-             <?php if ($extension['action'][1] != '' || $superuser) { ?>
-                <tr>
-                  <td class="column-name"><?php echo $extension['name']; ?></td>
-                  <td class="column-action"><?php echo p3html::tb_action_buttons($extension); ?></td>
-                </tr>
-            <?php } ?>
+            <tr>
+              <td class="column-name"><?php echo $extension['name']; ?></td>
+              <td class="column-action"><?php echo p3html::tb_action_buttons($extension); ?></td>
+            </tr>
          <?php } ?>
         </tbody>
       </table>

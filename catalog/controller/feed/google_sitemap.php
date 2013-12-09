@@ -2,8 +2,8 @@
 class ControllerFeedGoogleSitemap extends Controller {
     public function index() {
         if ($this->config->get('google_sitemap_status')) {
-            $output = '<?xml version="1.0" encoding="UTF-8"?>';
-            $output .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+            $output = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+            $output .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'."\n";
 
             $this->load->model('catalog/product');
 
@@ -16,6 +16,7 @@ class ControllerFeedGoogleSitemap extends Controller {
                     $output .= '<changefreq>weekly</changefreq>';
                     $output .= '<priority>1.0</priority>';
                     $output .= '</url>';
+                    $output .= "\n";
                 }
             }
 
@@ -33,6 +34,7 @@ class ControllerFeedGoogleSitemap extends Controller {
                 $output .= '<changefreq>weekly</changefreq>';
                 $output .= '<priority>0.7</priority>';
                 $output .= '</url>';
+                $output .= "\n";
 
                 if ($this->config->get('google_sitemap_products_category')) {
                     $products = $this->model_catalog_product->getProducts(array('filter_manufacturer_id' => $manufacturer['manufacturer_id']));
@@ -43,6 +45,7 @@ class ControllerFeedGoogleSitemap extends Controller {
                         $output .= '<changefreq>weekly</changefreq>';
                         $output .= '<priority>1.0</priority>';
                         $output .= '</url>';
+                        $output .= "\n";
                     }
                 }
             }
@@ -57,6 +60,7 @@ class ControllerFeedGoogleSitemap extends Controller {
                 $output .= '<changefreq>weekly</changefreq>';
                 $output .= '<priority>0.5</priority>';
                 $output .= '</url>';
+                $output .= "\n";
             }
 
             $output .= '</urlset>';
@@ -83,6 +87,7 @@ class ControllerFeedGoogleSitemap extends Controller {
             $output .= '<changefreq>weekly</changefreq>';
             $output .= '<priority>0.7</priority>';
             $output .= '</url>';
+            $output .= "\n";
 
             if ($this->config->get('google_sitemap_products_category')) {
                 $products = $this->model_catalog_product->getProducts(array('filter_category_id' => $result['category_id']));
@@ -93,6 +98,7 @@ class ControllerFeedGoogleSitemap extends Controller {
                     $output .= '<changefreq>weekly</changefreq>';
                     $output .= '<priority>1.0</priority>';
                     $output .= '</url>';
+                    $output .= "\n";
                 }
             }
             $output .= $this->getCategories($result['category_id'], $new_path);

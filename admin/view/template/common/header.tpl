@@ -143,7 +143,9 @@ function fixMenu($menu) {
                                             <ul class="dropdown-menu">
                                                 <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
                                                 <li><a href="<?php echo $banner; ?>"><?php echo $text_banner; ?></a></li>
-                                                <li><a href="<?php echo $welcome; ?>"><?php echo $text_welcome; ?></a></li>	
+                                                <li><a href="<?php echo $megamenu; ?>"><?php echo $text_megamenu; ?></a></li>
+                                                <li><a href="<?php echo $welcome; ?>"><?php echo $text_welcome; ?></a></li>
+                                                <li><a href="<?php echo $content_block; ?>"><?php echo $text_content_block; ?></a></li>	
                                                 <li><a href="<?php echo $news; ?>"><?php echo $text_news; ?></a></li>	
                                                 <li><a href="<?php echo $store_locations; ?>"><?php echo $text_store_locations; ?></a></li>	
                                                 <li><a href="<?php echo $event; ?>"><?php echo $text_event; ?></a></li>
@@ -165,6 +167,7 @@ function fixMenu($menu) {
                                                         <li><a href="<?php echo $attribute_group; ?>"><?php echo $text_attribute_group; ?></a></li>
                                                     </ul>
                                                 </li>
+                                                <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
                                                 <li><a href="<?php echo $option; ?>"><?php echo $text_option; ?></a></li>
                                                 <li><a href="<?php echo $manufacturer; ?>"><?php echo $text_manufacturer; ?></a></li>
                                                 <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>

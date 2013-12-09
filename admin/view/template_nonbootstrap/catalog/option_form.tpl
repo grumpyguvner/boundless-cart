@@ -89,6 +89,14 @@
                 </optgroup>
               </select></td>
           </tr>
+            <tr>
+              <td><?php echo $entry_is_filter; ?></td>
+              <td><?php if ($is_filter) { ?>
+                <input type="checkbox" name="is_filter" value="1" checked="checked" />
+                <?php } else { ?>
+                <input type="checkbox" name="is_filter" value="1" />
+                <?php } ?></td>
+            </tr>
           <tr>
             <td><?php echo $entry_sort_order; ?></td>
             <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="1" /></td>

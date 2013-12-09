@@ -40,6 +40,9 @@ class ControllerCheckoutShippingAddress extends Controller {
 		$this->data['entry_city'] = $this->language->get('entry_city');
 		$this->data['entry_country'] = $this->language->get('entry_country');
 		$this->data['entry_zone'] = $this->language->get('entry_zone');
+                $this->data['entry_title'] = $this->language->get('entry_title');
+                
+		$this->data['select_title'] = explode(',', $this->language->get('select_title'));
 	
 		$this->data['button_continue'] = $this->language->get('button_continue');
 			
@@ -155,6 +158,11 @@ class ControllerCheckoutShippingAddress extends Controller {
 			} 
 			
 			if ($this->request->post['shipping_address'] == 'new') {
+                            
+                                if (isset($this->request->post['title']) && empty($this->request->post['title'])) {
+                                        $json['error']['title'] = $this->language->get('error_title');
+                                }
+                                
 				if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 					$json['error']['firstname'] = $this->language->get('error_firstname');
 				}

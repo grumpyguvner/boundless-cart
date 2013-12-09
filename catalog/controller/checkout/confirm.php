@@ -125,7 +125,31 @@ class ControllerCheckoutConfirm extends Controller {
                 $data['email'] = $this->customer->getEmail();
                 $data['telephone'] = $this->customer->getTelephone();
                 $data['fax'] = $this->customer->getFax();
-                $data['newsletter'] = $this->session->data['newsletter'];
+                
+                $this->load->model('account/customer');
+                $customer = $this->model_account_customer->getCustomer($this->customer->getId());
+                
+                if (!empty($customer['title'])) {
+                    $data['title'] = $customer['title'];
+                } else {
+                    $data['title'] = "";
+                }
+                
+                if (isset($this->request->post['day_birth']) && isset($this->request->post['month_birth']) && isset($this->request->post['year_birth'])) {
+                    
+                    $data['day_birth'] = $this->request->post['day_birth'];
+                    $data['month_birth'] = $this->request->post['month_birth'];
+                    $data['year_birth'] = $this->request->post['year_birth'];
+                } else {
+                    $data['day_birth'] = "";
+                    $data['month_birth'] = "";
+                    $data['year_birth'] = "";
+                }   
+                
+                
+                if (isset($this->session->data['newsletter'])) {
+                    $data['newsletter'] = $this->session->data['newsletter'];
+                }
 
                 $this->load->model('account/address');
 
@@ -139,10 +163,9 @@ class ControllerCheckoutConfirm extends Controller {
                 $data['telephone'] = $this->session->data['guest']['telephone'];
                 $data['fax'] = $this->session->data['guest']['fax'];
                 $data['newsletter'] = $this->session->data['guest']['newsletter'];
-
                 $payment_address = $this->session->data['guest']['payment'];
             }
-
+            
             $data['payment_firstname'] = $payment_address['firstname'];
             $data['payment_lastname'] = $payment_address['lastname'];
             $data['payment_company'] = $payment_address['company'];
@@ -252,6 +275,7 @@ class ControllerCheckoutConfirm extends Controller {
                     'quantity' => $product['quantity'],
                     'subtract' => $product['subtract'],
                     'redeem' => $product['redeem'],
+                    'redeem_theme_id' => $product['redeem_theme_id'],
                     'price' => $product['price'],
                     'total' => $product['total'],
                     'tax' => $this->tax->getTax($product['price'], $product['tax_class_id']),
@@ -339,6 +363,9 @@ class ControllerCheckoutConfirm extends Controller {
             $this->data['column_price'] = $this->language->get('column_price');
             $this->data['column_total'] = $this->language->get('column_total');
 
+            
+	    $this->load->model('tool/image');
+                        
             $this->data['products'] = array();
 
             foreach ($this->cart->getProducts() as $product) {
@@ -358,12 +385,20 @@ class ControllerCheckoutConfirm extends Controller {
                         'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
                     );
                 }
+                			
+					
+                if ($product['image']) {
+                        $image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+                } else {
+                        $image = '';
+                }
 
                 $this->data['products'][] = array(
                     'product_id' => $product['product_id'],
                     'name' => $product['name'],
                     'model' => $product['model'],
                     'option' => $option_data,
+                    'thumb' => $image,
                     'quantity' => $product['quantity'],
                     'subtract' => $product['subtract'],
                     'price' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),

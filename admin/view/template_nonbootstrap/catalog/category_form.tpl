@@ -14,7 +14,7 @@
       <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-data"><?php echo $tab_data; ?></a><a href="#tab-design"><?php echo $tab_design; ?></a></div>
+      <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-data"><?php echo $tab_data; ?></a><a href="#tab-design"><?php echo $tab_design; ?></a><?php if ($merchandising) { ?><a href="#tab-merchandising"><?php echo $tab_merchandising; ?></a><?php } ?></div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <div id="tab-general">
           <div id="languages" class="htabs">
@@ -48,6 +48,10 @@
                 <td><?php echo $entry_description; ?></td>
                 <td><textarea name="category_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['description'] : ''; ?></textarea></td>
               </tr>
+                <tr>
+                  <td><?php echo $entry_keyword; ?></td>
+                  <td><input type="text" name="category_description[<?php echo $language['language_id']; ?>][keyword]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['keyword'] : ''; ?>" /></td>
+                </tr>
             </table>
           </div>
           <?php } ?>
@@ -67,6 +71,33 @@
                   <?php } ?>
                 </select></td>
             </tr>
+            <?php
+            if ($has_filters)
+            {
+            ?>
+            <tr>
+              <td><?php echo $entry_filter; ?></td>
+              <td><div id="category-filter" class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($category_filters as $category_filter) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div id="category-filter<?php echo $category_filter['filter_id']; ?>" class="<?php echo $class; ?>">
+                    <?php if (in_array($category_filter['filter_id'], $category_filter_selected)) { ?>
+                    <input type="checkbox" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" checked="checked" />                    
+                    <?php echo $category_filter['name']; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
+                    <?php echo $category_filter['name']; ?>
+                    <?php } ?>
+                  </div>
+                  <?php } ?>
+                </div>
+                <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a>
+              </td>
+            </tr>
+            <?php
+            }
+            ?>
             <tr>
               <td><?php echo $entry_googlebase_text; ?></td>
               <td><input name="googlebase_text" value="<?php echo $googlebase_text ?>" size="100" /></td>
@@ -123,6 +154,22 @@
             <tr>
               <td><?php echo $entry_column; ?></td>
               <td><input type="text" name="column" value="<?php echo $column; ?>" size="1" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_members_only; ?></td>
+              <td><?php if ($members_only) { ?>
+                <input type="checkbox" name="members_only" value="1" checked="checked" />
+                <?php } else { ?>
+                <input type="checkbox" name="members_only" value="1" />
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_date_start; ?></td>
+              <td><input type="text" name="date_start_date" value="<?php echo $date_start_date; ?>" size="12" class="date" /> <input type="text" name="date_start_time" value="<?php echo $date_start_time; ?>" size="6" class="time" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_date_end; ?></td>
+              <td><input type="text" name="date_end_date" value="<?php echo $date_end_date; ?>" size="12" class="date" /> <input type="text" name="date_end_time" value="<?php echo $date_end_time; ?>" size="6" class="time" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_sort_order; ?></td>
@@ -184,6 +231,58 @@
             <?php } ?>
           </table>
         </div>
+        <?php if ($merchandising) { ?>
+          <div id="tab-merchandising">
+              <table class="list sortable">
+          <thead>
+            <tr>
+              <td width="1" style="text-align: center;"><?php echo $column_sort_order; ?></td>
+              <td class="center"><?php echo $column_image; ?></td>
+              <td class="left"><?php echo $column_name; ?></td>
+              <td class="left"><?php echo $column_model; ?></td>
+              <td class="left"><?php echo $column_price; ?></td>
+              <td class="right"><?php echo $column_quantity; ?></td>
+              <td class="left"><?php echo $column_status; ?></td>
+<?php /*              <td class="right"><?php echo $column_action; ?></td> */ ?>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($products) { ?>
+              <?php $cnt = 0; ?>
+            <?php foreach ($products as $product) { ?>
+            <tr>
+              <td class="center sortorder" style="text-align: center;"><input type="text" name="product_category[<?php echo $product['product_id']; ?>]" value="<?php echo ++$cnt; ?>" size="1" /></td>
+              <td class="center"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" style="padding: 1px; border: 1px solid #DDDDDD;" /></td>
+              <td class="left"><?php echo $product['name']; ?></td>
+              <td class="left"><?php echo $product['model']; ?></td>
+              <td class="left"><?php if ($product['special']) { ?>
+                <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
+                <span style="color: #b00;"><?php echo $product['special']; ?></span>
+                <?php } else { ?>
+                <?php echo $product['price']; ?>
+                <?php } ?></td>
+              <td class="right"><?php if ($product['quantity'] <= 0) { ?>
+                <span style="color: #FF0000;"><?php echo $product['quantity']; ?></span>
+                <?php } elseif ($product['quantity'] <= 5) { ?>
+                <span style="color: #FFA500;"><?php echo $product['quantity']; ?></span>
+                <?php } else { ?>
+                <span style="color: #008000;"><?php echo $product['quantity']; ?></span>
+                <?php } ?></td>
+              <td class="left"><?php echo $product['status']; ?></td>
+<?php /*              <td class="right"><?php foreach ($product['action'] as $action) { ?>
+                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <?php } ?></td> */ ?>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="center" colspan="8"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+          </div>
+        <?php } ?>
       </form>
     </div>
   </div>
@@ -200,6 +299,46 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
 });
 <?php } ?>
+//--></script>
+<script type="text/javascript"><!--
+// Filter
+$('input[name=\'filter\']').autocomplete({
+	delay: 500,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.filter_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('#category-filter' + ui.item.value).remove();
+		
+		$('#category-filter').append('<div id="category-filter' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="category_filter[]" value="' + ui.item.value + '" /></div>');
+
+		$('#category-filter div:odd').attr('class', 'odd');
+		$('#category-filter div:even').attr('class', 'even');
+				
+		return false;
+	},
+	focus: function(event, ui) {
+      return false;
+   }
+});
+
+$('#category-filter div img').live('click', function() {
+	$(this).parent().remove();
+	
+	$('#category-filter div:odd').attr('class', 'odd');
+	$('#category-filter div:even').attr('class', 'even');	
+});
 //--></script> 
 <script type="text/javascript"><!--
 function image_upload(field, thumb) {
@@ -232,4 +371,52 @@ function image_upload(field, thumb) {
 $('#tabs a').tabs(); 
 $('#languages a').tabs();
 //--></script> 
+<?php if ($merchandising) { ?>
+<script type="text/javascript"><!--
+var fixHelper = function(e, ui) {
+    ui.children().each(function() {
+            $(this).width($(this).width());
+    });
+    return ui;
+};
+
+function reorderRows (ele)
+{
+    $(ele).each(function (i) {
+        $(this).val(i+1);
+    }); 
+}
+
+$("table.sortable tbody").sortable({
+	helper: fixHelper,
+        update: function( event, ui ) {
+            reorderRows('.sortorder input');
+        }
+});
+
+$("table.sortable tbody").on('change', '.sortorder input', function () {
+    row = Number($(this).val());
+    
+    if (!isNaN(row))
+    {
+       thisrow = $(this).parents('tr');
+       thisrowis = thisrow.index();
+       if (row == thisrowis+2)
+       {
+            $("table.sortable tbody tr:nth-of-type(" + row + ")").after(thisrow);
+       } else if (row != thisrowis+1) {
+           $("table.sortable tbody tr:nth-of-type(" + row + ")").before(thisrow);
+       }
+    }
+    
+    reorderRows('.sortorder input');
+});
+
+//$("table.sortable tbody").on('change', '.sortorder input', function () {
+//    $(this).next().html($(this).val());
+//});
+//
+//$('.sortorder input').hide().after('<span></span>').trigger('change');
+//--></script> 
+<?php } ?>
 <?php echo $footer; ?>

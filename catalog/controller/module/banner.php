@@ -15,10 +15,12 @@ class ControllerModuleBanner extends Controller {
 		foreach ($results as $result) {
 			if (file_exists(DIR_IMAGE . $result['image'])) {
 				$this->data['banners'][] = array(
-					'title' => $result['title'],
+					'title'       => $result['title'],
                                         'description' => $result['description'],
-					'link'  => $result['link'],
-					'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
+					'link'        => $result['link'],
+					'image'       => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height']),
+                                        'sort_order'  => $result['sort_order'],
+                                        'status'      => $result['status']
 				);
 			}
 		}

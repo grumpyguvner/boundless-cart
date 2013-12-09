@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogncategory extends Model {
 	public function addncategory($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "ncategory SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW(), date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "ncategory SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_added = NOW()");
 	
 		$ncategory_id = $this->db->getLastId();
 		
@@ -26,16 +26,21 @@ class ModelCatalogncategory extends Model {
 				}
 			}
 		}
-						
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'ncategory_id=" . (int)$ncategory_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
-		}
+                
+                $this->load->model('module/url_alias');
+                	
+		if (isset($data['keyword'])) {
+                    $url = array('keyword' => $data['keyword'],
+                                 'query' => 'ncategory_id=' . (int)$ncategory_id,
+                                 'language_id' => 0);
+                    $this->model_module_url_alias->addUrlAlias($url);
+                }
 		
 		$this->cache->delete('ncategory');
 	}
 	
 	public function editncategory($ncategory_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "ncategory SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE ncategory_id = '" . (int)$ncategory_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "ncategory SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_added = NOW() WHERE ncategory_id = '" . (int)$ncategory_id . "'");
 
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "ncategory SET image = '" . $this->db->escape($data['image']) . "' WHERE ncategory_id = '" . (int)$ncategory_id . "'");
@@ -64,12 +69,15 @@ class ModelCatalogncategory extends Model {
 				}
 			}
 		}
-						
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'ncat=" . (int)$ncategory_id. "'");
-		
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'ncat=" . (int)$ncategory_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
-		}
+                
+                $this->load->model('module/url_alias');
+                	
+		if (isset($data['keyword'])) {
+                    $url = array('keyword' => $data['keyword'],
+                                 'query' => 'ncategory_id=' . (int)$ncategory_id,
+                                 'language_id' => 0);
+                    $this->model_module_url_alias->addUrlAlias($url);
+                }
 		
 		$this->cache->delete('ncategory');
 	}
@@ -79,7 +87,9 @@ class ModelCatalogncategory extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "ncategory_description WHERE ncategory_id = '" . (int)$ncategory_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "ncategory_to_store WHERE ncategory_id = '" . (int)$ncategory_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "ncategory_to_layout WHERE ncategory_id = '" . (int)$ncategory_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'ncat=" . (int)$ncategory_id . "'");
+                
+                $this->load->model('module/url_alias');
+                $this->model_module_url_alias->deleteUrlAliasByQuery('ncategory_id=' . (int)$ncategory_id);
 		
 		$query = $this->db->query("SELECT ncategory_id FROM " . DB_PREFIX . "ncategory WHERE parent_id = '" . (int)$ncategory_id . "'");
 
@@ -91,7 +101,7 @@ class ModelCatalogncategory extends Model {
 	} 
 
 	public function getncategory($ncategory_id) {
-		$query = $this->db->query("SELECT DISTINCT *, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'ncat=" . (int)$ncategory_id . "') AS keyword FROM " . DB_PREFIX . "ncategory WHERE ncategory_id = '" . (int)$ncategory_id . "'");
+		$query = $this->db->query("SELECT DISTINCT *, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'ncat=" . (int)$ncategory_id . "' and language_id = 0 ORDER BY date_added DESC LIMIT 1) AS keyword FROM " . DB_PREFIX . "ncategory WHERE ncategory_id = '" . (int)$ncategory_id . "'");
 		
 		return $query->row;
 	} 

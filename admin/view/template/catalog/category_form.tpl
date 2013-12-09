@@ -80,6 +80,12 @@
                                                 <textarea name="category_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>" class="input-block-level"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['description'] : ''; ?></textarea>
                                             </div>
                                         </div>
+                                        <div class="control-group">
+                                            <label class="control-label"><?php echo $entry_keyword; ?></label>
+                                            <div class="controls">
+                                                <input type="text" name="category_description[<?php echo $language['language_id']; ?>][keyword]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['keyword'] : ''; ?>" class="span6 i-xxlarge">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <?php $langIndex++; ?>
@@ -158,6 +164,18 @@
                             <div class="control-group">
                                 <label class="control-label"><?php echo $entry_column; ?></label>
                                 <div class="controls"><input type="text" name="column" value="<?php echo $column; ?>" maxlength="1" class="input-mini"></div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="category-members_only"><?php echo $entry_members_only; ?></label>
+                                <div class="controls"><input type="checkbox" name="members_only" id="category-members_only" value="1"<?php if ($members_only) { ?> checked="checked"<?php } ?>></div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label"><?php echo $entry_date_start; ?></label>
+                                <div class="controls"><input type="text" name="date_start_date" value="<?php echo $date_start_date; ?>" class="date input-small"> <input type="text" name="date_start_time" value="<?php echo $date_start_time; ?>" class="time input-small"></div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label"><?php echo $entry_date_end; ?></label>
+                                <div class="controls"><input type="text" name="date_end_date" value="<?php echo $date_end_date; ?>" class="date input-small"> <input type="text" name="date_end_time" value="<?php echo $date_end_time; ?>" class="time input-small"></div>
                             </div>
                             <div class="control-group">
                                 <label class="control-label"><?php echo $entry_sort_order; ?></label>

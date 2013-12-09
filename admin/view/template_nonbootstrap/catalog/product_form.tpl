@@ -45,8 +45,19 @@
                 <td><textarea name="product_description[<?php echo $language['language_id']; ?>][meta_keyword]" cols="40" rows="5"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea></td>
               </tr>
               <tr>
+                <td><?php echo $entry_brief_summary; ?></td>
+                <td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][brief_summary]" size="100" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['brief_summary'] : ''; ?>" />
+                  <?php if (isset($error_name[$language['language_id']])) { ?>
+                  <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
                 <td><?php echo $entry_description; ?></td>
                 <td><textarea name="product_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['description'] : ''; ?></textarea></td>
+              </tr>
+              <tr>
+                <td><?php echo $entry_keyword; ?></td>
+                <td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][keyword]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['keyword'] : ''; ?>" /></td>
               </tr>
               <tr>
                 <td><?php echo $entry_tag; ?></td>
@@ -156,20 +167,42 @@
                 <?php echo $text_no; ?>
                 <?php } ?></td>
             </tr>
+            <?php if($this->config->get('config_redeem') == 1) { ?>
             <tr>
               <td><?php echo $entry_redeem; ?></td>
-              <td><?php if ($redeem) { ?>
-                <input type="radio" name="redeem" value="1" checked="checked" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="redeem" value="0" />
-                <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="redeem" value="1" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="redeem" value="0" checked="checked" />
-                <?php echo $text_no; ?>
-                <?php } ?></td>
+              <td>
+                    <?php if ($redeem) { ?>
+                    <input type="radio" name="redeem" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <input type="radio" name="redeem" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="redeem" value="1" />
+                    <?php echo $text_yes; ?>
+                    <input type="radio" name="redeem" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+              </td>
             </tr>
+            <tr>
+                <td><?php echo $entry_redeem_theme; ?></td>
+                <td>
+                    <select name="redeem_theme_id">
+                    <option value="0"><?php echo $text_none ?></option>
+                    <?php foreach ($redeem_themes as $themes) { ?>
+                    <?php if ($themes['redeem_theme_id'] == $redeem_theme_id) { ?>
+                    <option value="<?php echo $themes['redeem_theme_id']; ?>" selected="selected"><?php echo $themes['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $themes['redeem_theme_id']; ?>"><?php echo $themes['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                    </select>
+                </td>
+            </tr>
+            <?php } else { ?>
+                <input type="hidden" name="redeem" value="<?php echo $redeem; ?>">
+                <input type="hidden" name="redeem_theme_id" value="<?php echo $redeem_theme_id; ?>">
+            <?php } ?>
             <tr>
               <td><?php echo $entry_keyword; ?></td>
               <td><input type="text" name="keyword" value="<?php echo $keyword; ?>" /></td>
@@ -218,6 +251,26 @@
                   <?php } ?>
                 </select></td>
             </tr>
+            <?php if($this->config->get('config_sale_item') == 1) { ?>
+            <tr>
+              <td><?php echo $entry_sale; ?></td>
+              <td>
+                    <?php if ($sale) { ?>
+                    <input type="radio" name="sale" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <input type="radio" name="sale" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="sale" value="1" />
+                    <?php echo $text_yes; ?>
+                    <input type="radio" name="sale" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+              </td>
+            </tr>
+            <?php } else { ?>
+                <input type="hidden" name="sale" value="<?php echo $sale; ?>">
+            <?php } ?>
             <tr>
               <td><?php echo $entry_status; ?></td>
               <td><select name="status">
@@ -268,8 +321,37 @@
                   </div>
                   <?php } ?>
                 </div>
-                <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a></td>
+                <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a>
+              </td>
             </tr>
+            
+            
+            
+            
+            
+            <tr>
+              <td><?php echo $entry_filter; ?></td>
+              <td><div id="product-filter" class="scrollbox">
+                  <?php $class = 'odd'; ?>
+                  <?php foreach ($product_filters as $product_filter) { ?>
+                  <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
+                  <div id="product-filter<?php echo $product_filter['filter_id']; ?>" class="<?php echo $class; ?>">
+                    <?php if (in_array($product_filter['filter_id'], $product_filter_selected)) { ?>
+                    <input type="checkbox" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" checked="checked" />                    
+                    <?php echo $product_filter['name']; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" />
+                    <?php echo $product_filter['name']; ?>
+                    <?php } ?>
+                  </div>
+                  <?php } ?>
+                </div>
+                <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a>
+              </td>
+            </tr>
+            
+            
+             
             <tr>
               <td><?php echo $entry_store; ?></td>
               <td><div class="scrollbox">
@@ -333,6 +415,7 @@
             </tr>
           </table>
         </div>
+        
         <div id="tab-attribute">
           <table id="attribute" class="list">
             <thead>
@@ -756,6 +839,22 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--
+$.widget('custom.catcomplete', $.ui.autocomplete, {
+	_renderMenu: function(ul, items) {
+		var self = this, currentCategory = '';
+		
+		$.each(items, function(index, item) {
+			if (item.category != currentCategory) {
+				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
+				
+				currentCategory = item.category;
+			}
+			
+			self._renderItem(ul, item);
+		});
+	}
+});
+    
 $('input[name=\'related\']').autocomplete({
 	delay: 0,
 	source: function(request, response) {
@@ -794,6 +893,46 @@ $('#product-related div img').live('click', function() {
 	$('#product-related div:odd').attr('class', 'odd');
 	$('#product-related div:even').attr('class', 'even');	
 });
+
+
+// Filter
+$('input[name=\'filter\']').autocomplete({
+	delay: 500,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {		
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.filter_id
+					}
+				}));
+			}
+		});
+	}, 
+	select: function(event, ui) {
+		$('#product-filter' + ui.item.value).remove();
+		
+		$('#product-filter').append('<div id="product-filter' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="product_filter[]" value="' + ui.item.value + '" /></div>');
+
+		$('#product-filter div:odd').attr('class', 'odd');
+		$('#product-filter div:even').attr('class', 'even');
+				
+		return false;
+	},
+	focus: function(event, ui) {
+      return false;
+   }
+});
+
+$('#product-filter div img').live('click', function() {
+	$(this).parent().remove();
+	
+	$('#product-filter div:odd').attr('class', 'odd');
+	$('#product-filter div:even').attr('class', 'even');	
+});
 //--></script> 
 <script type="text/javascript"><!--
 var attribute_row = <?php echo $attribute_row; ?>;
@@ -818,25 +957,9 @@ function addAttribute() {
 	attribute_row++;
 }
 
-$.widget('custom.catcomplete', $.ui.autocomplete, {
-	_renderMenu: function(ul, items) {
-		var self = this, currentCategory = '';
-		
-		$.each(items, function(index, item) {
-			if (item.category != currentCategory) {
-				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
-				
-				currentCategory = item.category;
-			}
-			
-			self._renderItem(ul, item);
-		});
-	}
-});
-
 function attributeautocomplete(attribute_row) {
 	$('input[name=\'product_attribute[' + attribute_row + '][name]\']').catcomplete({
-		delay: 0,
+		delay: 500,
 		source: function(request, response) {
 			$.ajax({
 				url: 'index.php?route=catalog/attribute/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),

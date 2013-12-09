@@ -4,7 +4,7 @@ class ControllerProductCategory extends Controller {
                 $category_id = $this->category->getIdFromPath();
 
                 $this->category->load($category_id);
-                if ($this->category->getId() != $category_id) {
+                if ($this->category->getId() != $category_id || !$this->category->isAvailable()) {
                     $this->categoryNotFound();
                     return false;
                 }
@@ -15,6 +15,23 @@ class ControllerProductCategory extends Controller {
 		$this->load->model('tool/image');
 					
                 $this->data['breadcrumbs'] = $this->category->getBreadcrumbs();
+                
+		if (isset($this->request->get['filter'])) {
+			$filter = $this->request->get['filter'];
+		} else {
+			$filter = '';
+		}
+		if (isset($this->request->get['option'])) {
+			$option = $this->request->get['option'];
+		} else {
+			$option = '';
+		}
+		if (isset($this->request->get['product'])) {
+			$product = $this->request->get['product'];
+		} else {
+			$product = '';
+		}
+                
                 $path = $this->category->getPath();
 		
                 $sort = $this->category->getSort();
@@ -42,13 +59,26 @@ class ControllerProductCategory extends Controller {
                 $this->data['text_grid'] = $this->language->get('text_grid');
                 $this->data['text_sort'] = $this->language->get('text_sort');
                 $this->data['text_limit'] = $this->language->get('text_limit');
+                $this->data['text_save'] = $this->language->get('text_limit');
+                $this->data['text_rrp'] = $this->language->get('text_limit');
+                $this->data['text_pay'] = $this->language->get('text_limit');
                 $this->data['text_designed'] = $this->language->get('text_designed');
                 $this->data['text_pview'] = $this->language->get('text_pview');
+                $this->data['text_fourty_per_page'] = $this->language->get('text_fourty_per_page');
+                $this->data['text_hundred_per_page'] = $this->language->get('text_hundred_per_page');
 
                 $this->data['button_cart'] = $this->language->get('button_cart');
                 $this->data['button_wishlist'] = $this->language->get('button_wishlist');
                 $this->data['button_compare'] = $this->language->get('button_compare');
                 $this->data['button_continue'] = $this->language->get('button_continue');
+                
+                if (count($this->data['breadcrumbs']) > 1)
+                    {
+                        $count = count($this->data['breadcrumbs']) - 2;
+                        $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                    } else {
+                        $this->data['text_breadcrumb_back'] = '';
+                    }
 
                 if ($this->category->getImage()) {
                         $this->data['thumb'] = $this->model_tool_image->resize($this->category->getImage(), $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
@@ -85,17 +115,52 @@ class ControllerProductCategory extends Controller {
                 
                 $this->data['products'] = array();
 	
-                $data['filter_category_id'] = $category_id;
-                $data['filters'] = $this->category->getFilterData();
-
-                $data['sort'] = $sort;
-
-                $data['order'] = $order;
-                $data['limit'] = $limit;	
-                $data['start'] = ($page - 1) * $limit;
+                $data = array(
+                        'filter_category_id' => $category_id,
+                        'filter_filter'      => $filter, 
+                        'filter_option'      => $option,
+                        'sort'               => $sort,
+                        'order'              => $order,
+                        'start'              => ($page - 1) * $limit,
+                        'limit'              => $limit
+                );
+                                
+                if (!empty($product))
+                {
+                    $product = explode(',', $product);
+                    foreach ($product as $p)
+                    {
+                        if (preg_match('%range:\d+:\d+%', $p))
+                        {
+                            $price_range = explode(':', $p);
+                            $data['filter_product_min_price'] = $this->currency->convert($price_range[1], $this->currency->getCode(), $this->config->get('config_currency'));
+                            $data['filter_product_max_price'] = $this->currency->convert($price_range[2], $this->currency->getCode(), $this->config->get('config_currency'));
+                        } 
+                        elseif ($p == 'new')
+                        {
+                            $data['filter_new'] = true;
+                        }
+                        elseif ($p == 'sale')
+                        {
+                            $data['filter_sale'] = true;
+                        }
+                    }
+                }   
+                
+                if ($this->extensions->isInstalled('afilters'))
+                {
+                    
+                    $data['filters'] = $this->category->getFilterData();
+                    
+                    $product_total = $this->model_catalog_product->getTotalProductsAFiltered($data); 
+                    $this->data['total'] = $product_total;
+                    $results = $this->model_catalog_product->getProductsAFiltered($data);
+                } else {
+                    $product_total = $this->model_catalog_product->getTotalProducts($data); 
+                    $this->data['total'] = $product_total;
+                    $results = $this->model_catalog_product->getProducts($data);
+                }
 				
-                $product_total = $this->model_catalog_product->getTotalProductsAFiltered($data); 
-                $results = $this->model_catalog_product->getProductsAFiltered($data);
 	
                 foreach ($results as $result) {
                         if ($result['image']) {
@@ -127,7 +192,7 @@ class ControllerProductCategory extends Controller {
                         } else {
                                 $rating = false;
                         }
-
+                        
                         $this->data['products'][] = array(
                                 'product_id'  => $result['product_id'],
                                 'thumb'       => $image,
@@ -135,12 +200,19 @@ class ControllerProductCategory extends Controller {
                                 'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
                                 'price'       => $price,
                                 'special'     => $special,
+                                'saving_percent'        => $result['saving_percent'],
+                                'sale'      => $result['sale'],
+                                'new'         => $result['new'],
                                 'tax'         => $tax,
                                 'rating'      => $result['rating'],
                                 'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
                                 'href'        => $this->url->link('product/product', 'path=' . $path . '&product_id=' . $result['product_id'])
                         );
                 }
+                
+                    $this->data['login_required'] = (!$this->customer->isLogged() && $this->category->isMembersOnly()) ? true : false;
+                    $this->data['login_modal'] = $this->url->link('module/login');
+                    $this->data['date_end'] = $this->category->getDateEnd();
 
                         $urlSort = $this->category->getUrlQuery('sort');
 			$this->data['sorts'] = array();
@@ -239,6 +311,10 @@ class ControllerProductCategory extends Controller {
                         $pagination->total = $product_total;
                         $pagination->page = $page;
                         $pagination->limit = $limit;
+                        $pagination->text_first = $this->language->get('text_first');
+                        $pagination->text_prev = $this->language->get('text_prev');
+                        $pagination->text_next = $this->language->get('text_next');
+                        $pagination->text_last = $this->language->get('text_last');
                         $pagination->url = $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&page={page}' . $urlPage);
                         $this->data['pagination'] = $pagination->render();
                         
@@ -260,6 +336,7 @@ class ControllerProductCategory extends Controller {
                         $pagination2->page = $page;
                         $pagination2->limit = $limit;
                         $pagination2->text = $this->language->get('text_pagination');
+                        
            
                         $this->data['pagination2'] = $pagination2->text();
                         

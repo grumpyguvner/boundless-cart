@@ -8,6 +8,9 @@ $_['text_default']       = 'Default';
 $_['text_image_manager'] = 'Image Manager';
 $_['text_browse']        = 'Browse Files';
 $_['text_clear']         = 'Clear Image';
+$_['text_hide']          = 'Hide';
+$_['text_show']          = 'Show';
+
 
 // Column
 $_['column_name']        = 'Banner Name';

@@ -40,7 +40,12 @@ class ControllerCheckoutCart extends Controller {
 								
 			$this->redirect($this->url->link('checkout/cart'));
 		}
-			
+		//Coupon or Voucher
+                if (isset($this->request->post['coupon_voucher'])) {
+                    $this->request->post['coupon'] = $this->request->post['coupon_voucher']; 
+                    $this->request->post['voucher'] = $this->request->post['coupon_voucher']; 
+		}
+                
 		// Coupon    
 		if (isset($this->request->post['coupon']) && $this->validateCoupon()) { 
 			$this->session->data['coupon'] = $this->request->post['coupon'];
@@ -154,6 +159,14 @@ class ControllerCheckoutCart extends Controller {
 			$this->data['button_shipping'] = $this->language->get('button_shipping');			
                         $this->data['button_shopping'] = $this->language->get('button_shopping');
                         $this->data['button_checkout'] = $this->language->get('button_checkout');
+                        
+                        if (count($this->data['breadcrumbs']) > 1)
+                            {
+                                $count = count($this->data['breadcrumbs']) - 2;
+                                $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                            } else {
+                                $this->data['text_breadcrumb_back'] = '';
+                            }
 			
 			if (isset($this->error['warning'])) {
 				$this->data['error_warning'] = $this->error['warning'];
@@ -284,6 +297,14 @@ class ControllerCheckoutCart extends Controller {
                         
 			$this->data['coupon_status'] = $this->config->get('coupon_status');
 			
+                        if (isset($this->request->post['coupon_voucher'])) {
+				$this->data['coupon_voucher'] = $this->request->post['coupon_voucher'];			
+			} elseif (isset($this->session->data['coupon_voucher'])) {
+				$this->data['coupon_voucher'] = $this->session->data['coupon_voucher'];
+			} else {
+				$this->data['coupon_voucher'] = '';
+			}
+                        
 			if (isset($this->request->post['coupon'])) {
 				$this->data['coupon'] = $this->request->post['coupon'];			
 			} elseif (isset($this->session->data['coupon'])) {
@@ -418,6 +439,14 @@ class ControllerCheckoutCart extends Controller {
                 $this->data['button_error_back'] = $this->language->get('button_error_back');
 			
       		$this->data['continue'] = $this->url->link('common/home');
+                
+                if (count($this->data['breadcrumbs']) > 1)
+                    {
+                        $count = count($this->data['breadcrumbs']) - 2;
+                        $this->data['text_breadcrumb_back'] = sprintf($this->language->get('text_breadcrumb_back'), $this->data['breadcrumbs'][$count]['text']);
+                    } else {
+                        $this->data['text_breadcrumb_back'] = '';
+                    }
 
 			unset($this->session->data['success']);
 
