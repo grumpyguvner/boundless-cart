@@ -267,6 +267,19 @@
                 <?php } ?></td>
             </tr>
             <tr>
+              <td><?php echo $entry_report_weekday; ?></td>
+              <?php
+              $weekdays = explode(',', $weekdays);
+              ?>
+              <td><select name="config_report_weekday">
+                  <?php
+                  foreach ($weekdays as $key => $weekday) {
+                      echo '<option value="' . $key . '" ' . ($key == $config_report_weekday ? ' selected="selected"' : '') . ' >' . $weekday . '</option>';
+                  }
+                  ?>
+                </select></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_sale_item; ?></td>
               <td><?php if ($config_sale_item) { ?>
                 <input type="radio" name="config_sale_item" value="1" checked="checked" />

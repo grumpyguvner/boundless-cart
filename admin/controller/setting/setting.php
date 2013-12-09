@@ -26,6 +26,8 @@ class ControllerSettingSetting extends Controller {
                         
 			$this->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'));
                 }
+                
+		$this->data['weekdays'] = $this->language->get('weekdays');
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
@@ -75,6 +77,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_catalog_limit'] = $this->language->get('entry_catalog_limit');
 		$this->data['entry_admin_limit'] = $this->language->get('entry_admin_limit');
 		$this->data['entry_product_count'] = $this->language->get('entry_product_count');
+		$this->data['entry_report_weekday'] = $this->language->get('entry_report_weekday');
 		$this->data['entry_category_instockonly'] = $this->language->get('entry_category_instockonly');
 		$this->data['entry_new_product_age'] = $this->language->get('entry_new_product_age');
                 $this->data['entry_sale_item'] = $this->language->get('entry_sale_item');
@@ -516,6 +519,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_product_count'] = $this->request->post['config_product_count'];
 		} else {
 			$this->data['config_product_count'] = $this->config->get('config_product_count');
+		}
+                
+		if (isset($this->request->post['config_report_weekday'])) {
+			$this->data['config_report_weekday'] = $this->request->post['config_report_weekday'];
+		} else {
+			$this->data['config_report_weekday'] = $this->config->get('config_report_weekday');
 		}
                 
                 if (isset($this->request->post['config_sale_item'])) {
