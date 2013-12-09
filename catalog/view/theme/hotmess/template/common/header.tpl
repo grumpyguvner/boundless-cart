@@ -121,10 +121,10 @@ DD_belatedPNG.fix('#logo img');
         
         <div class="row">
             <div class="col-sm-12 pushmenu pushmenu-left">
-                <div class="hidden-xs hidden-small">
+                <div class="hidden-xs">
                 <?php echo $megamenu; ?>
                 </div>
-                <div class="hidden-md hidden-lg">
+                <div class="visible-xs">
                     <div id="nav">
 				<ul>
 				<?php foreach ($categories as $category) { ?>
