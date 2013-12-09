@@ -121,7 +121,33 @@ DD_belatedPNG.fix('#logo img');
         
         <div class="row">
             <div class="col-sm-12 pushmenu pushmenu-left">
+                <div class="hidden-xs hidden-small">
                 <?php echo $megamenu; ?>
+                </div>
+                <div class="hidden-md hidden-lg">
+                    <div id="nav">
+				<ul>
+				<?php foreach ($categories as $category) { ?>
+					<li <?php if ($category['children']) echo 'class="parent"'; ?>><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
+					  <?php if ($category['children']) { ?>
+					
+						<?php for ($i = 0; $i < count($category['children']);) { ?>
+						<ul>
+						  <?php $j = $i + ceil(count($category['children']) / $category['column']); ?>
+						  <?php for (; $i < $j; $i++) { ?>
+						  <?php if (isset($category['children'][$i])) { ?>
+						  <li><a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?></a></li>
+						  <?php } ?>
+						  <?php } ?>
+						</ul>
+						<?php } ?>
+					 
+					  <?php } ?>
+					</li>
+				<?php } ?>
+				</ul>
+                </div>
+                </div>
             </div>
         </div>
     </div>
