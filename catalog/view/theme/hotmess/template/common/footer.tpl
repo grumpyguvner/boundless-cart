@@ -75,13 +75,13 @@
                         <div class="middle-footer">                            
                             <div id="social-footer" style="display: inline-block;margin-top: 20px;float: none">
                                 <div class="media-links">
-                                    <a href="http://twitter.com/hotmessclothes" target="_blank"><img src="catalog/view/theme/hotmess_bootstrap/image/footer/Twitter.png" ></a>
-                                    <a href="http://www.facebook.com/pages/Hotmess/467402680008369" target="_blank"><img src="/catalog/view/theme/hotmess_bootstrap/image/footer/Facebook.png" ></a>
-                                    <a href="http://www.youtube.com/channel/UC_0MRGFFNu7z7GByJwXqnQA" target="_blank"><img src="catalog/view/theme/hotmess_bootstrap/image/footer/youtubeb.png" ></a>
-                                    <a href="http://instagram.com/HOTMESSCLOTHING" target="_blank"><img src="catalog/view/theme/hotmess_bootstrap/image/footer/instagramb.png" ></a>
+                                    <a href="http://twitter.com/hotmessclothes" target="_blank"><img src="catalog/view/theme/hotmess/image/footer/Twitter.png" ></a>
+                                    <a href="http://www.facebook.com/pages/Hotmess/467402680008369" target="_blank"><img src="/catalog/view/theme/hotmess/image/footer/Facebook.png" ></a>
+                                    <a href="http://www.youtube.com/channel/UC_0MRGFFNu7z7GByJwXqnQA" target="_blank"><img src="catalog/view/theme/hotmess/image/footer/youtubeb.png" ></a>
+                                    <a href="http://instagram.com/HOTMESSCLOTHING" target="_blank"><img src="catalog/view/theme/hotmess/image/footer/instagramb.png" ></a>
                                 </div>
                                 <div class="youth">
-                                <a href="uk-youth-charity"><img style="width: 100%; max-width: 179px;" src="catalog/view/theme/hotmess_bootstrap/image/footer/UK-Youth.png" ></a>
+                                <a href="uk-youth-charity"><img style="width: 100%; max-width: 179px;" src="catalog/view/theme/hotmess/image/footer/UK-Youth.png" ></a>
                                 </div>
                                 <div id="newsletter_footer" class="inputContainer" style="display: inline-block;">
                                   <div style="margin-top: 4px;"class="button-enter" title="sign up"></div>
@@ -95,7 +95,7 @@
                 <div class="row foot_text">
                     <div class="col-sm-6">
                         <div class="payment">
-                            <img style="width: 100%;" src="catalog/view/theme/hotmess_bootstrap/image/footer/payment.png" >
+                            <img style="width: 100%;" src="catalog/view/theme/hotmess/image/footer/payment.png" >
                         </div>
                     </div>
                     <div class="col-sm-6">

@@ -17,10 +17,10 @@
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
-<link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess_bootstrap/stylesheet/bootstrap.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess_bootstrap/stylesheet/megamenu.css" />
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess/stylesheet/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess/stylesheet/megamenu.css" />
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/colorbox/colorbox.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess_bootstrap/stylesheet/stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess/stylesheet/stylesheet.css" />
 <?php foreach ($styles as $style) { ?>
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
