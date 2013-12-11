@@ -7,7 +7,7 @@
 <?php if ($description) { ?>
 <meta name="description" content="<?php echo $description; ?>" />
 <?php } ?>
-<meta content="width=device-width, initial-scale=1, maximum-scale=1 user-scalable=no" name="viewport">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <?php if ($keywords) { ?>
 <meta name="keywords" content="<?php echo $keywords; ?>" />
 <?php } ?>
@@ -48,129 +48,157 @@ DD_belatedPNG.fix('#logo img');
 <?php if (isset($data_layer)) echo "<script>dataLayer =[" . json_encode($data_layer) . "];</script>"; ?>
 <?php echo $google_analytics; ?>
 </head>
-<body class="pushmenu-push">
-<div id="header">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4 text-center col-sm-push-4 hidden-xs">
-                <?php if ($logo) { ?>
-                    <div id="logo"><a href="<?php echo $home; ?>" style="display: inline-block; position: relative; top: -20px;"><img style="width: 100%; max-width: 290px;" src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
-                <?php } ?>
-            </div>
-            
-            <div class="col-sm-4 col-sm-pull-4 hidden-xs">
-                <div class="toplinks visible-lg"><?php if(isset($blocks[0]['description'])) {echo $blocks[0]['description'];} ?></div>
-                
-                <div id="top-inputs">
-                    <div id="newsletter" class="inputContainer topEmail">
-                      <div class="button-enter" title="sign up"></div>
-                      <input type="email" name="email" placeholder="enter email for latest news" value="" />
-                    </div>
-
-                    <div id="search" class="inputContainer topSearch">
-                      <div class="button-search" title="<?php echo $text_search; ?>"></div>
-                      <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4">
-                <div class="tag-line visible-lg" style="text-align: right; margin-top: 5px;"><?php if(isset($blocks[1]['description'])){echo $blocks[1]['description'];} ?></div>
-
-                <div class="madeuk hidden-xs"><span>MADE IN THE UK</span></div>
-
-                <?php echo $cart; ?>
-
-                <div id="welcome" class="purple visible-lg hidden-xs">
-                    <?php if (!$logged) { ?>
-                    <?php echo $text_welcome; ?>
-                    <?php } else { ?>
-                    <?php echo $text_logged; ?>
+<body>
+<div id="wrapper" class="wrapper">
+    <div id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 text-center col-sm-push-4 hidden-xs">
+                    <?php if ($logo) { ?>
+                        <div id="logo"><a href="<?php echo $home; ?>" style="display: inline-block; position: relative; top: -20px;"><img style="width: 100%; max-width: 290px;" src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
                     <?php } ?>
                 </div>
-            </div>
-            
-            <div class="col-xs-12 visible-xs">
-                <div class="row top_mobile">
-                    <div class="col-xs-1">
-                        <div id="nav_list"><span class="glyphicon glyphicon-align-justify"></span></div>
+
+                <div class="col-sm-4 col-sm-pull-4 hidden-xs">
+                    <div class="toplinks visible-lg"><?php if(isset($blocks[0]['description'])) {echo $blocks[0]['description'];} ?></div>
+
+                    <div id="top-inputs">
+                        <div id="newsletter" class="inputContainer topEmail">
+                          <div class="button-enter" title="sign up"></div>
+                          <input type="email" name="email" placeholder="enter email for latest news" value="" />
+                        </div>
+
+                        <div id="search" class="inputContainer topSearch">
+                          <div class="button-search" title="<?php echo $text_search; ?>"></div>
+                          <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" />
+                        </div>
                     </div>
-                    <div class="col-xs-4">
-                        <?php if ($logo) { ?>
-                        <div id="logo"><a href="<?php echo $home; ?>" style="display: inline-block;position: relative; top: -20px;"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="tag-line visible-lg" style="text-align: right; margin-top: 5px;"><?php if(isset($blocks[1]['description'])){echo $blocks[1]['description'];} ?></div>
+
+                    <div class="madeuk hidden-xs"><span>MADE IN THE UK</span></div>
+
+                    <?php echo $cart; ?>
+
+                    <div id="welcome" class="purple visible-lg hidden-xs">
+                        <?php if (!$logged) { ?>
+                        <?php echo $text_welcome; ?>
+                        <?php } else { ?>
+                        <?php echo $text_logged; ?>
                         <?php } ?>
                     </div>
-                    <div class="col-xs-7">
-                        <div class="media-links-mobile" style="z-index: 1700;">
-                            <span id="searchicon" style="font-size: 18px; position: absolute; top: 19px; right: 48px; cursor: pointer;"class="glyphicon glyphicon-search"></span>
-                            <?php //echo $cart; ?>
+                </div>
+
+                <div class="col-xs-12 visible-xs">
+                    <div class="row top_mobile mobileheader">
+                        <div class="col-xs-1">
+                            <div id="nav_list"><span class="glyphicon glyphicon-align-justify"></span></div>
+                        </div>
+                        <div class="col-xs-4">
+                            <?php if ($logo) { ?>
+                            <div id="logo"><a href="<?php echo $home; ?>" style="display: inline-block;position: relative; top: -20px;"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
+                            <?php } ?>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="media-links-mobile" style="z-index: 1700;">
+                                <span id="searchicon" style="font-size: 18px; position: absolute; top: 19px; right: 48px; cursor: pointer;"class="glyphicon glyphicon-search"></span>
+                                <?php //echo $cart; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 visible-xs">
+                    <div class="email" style="display: none;">
+                        <div id="search" class="inputContainer">
+                        <div class="button-search" title="<?php echo $text_search; ?>"></div>
+                        <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" />
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="col-xs-12 visible-xs">
-                <div class="email" style="display: none;">
-                    <div id="search" class="inputContainer">
-                    <div class="button-search" title="<?php echo $text_search; ?>"></div>
-                    <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" />
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="hidden-xs">
+                    <?php echo $megamenu; ?>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-sm-12 pushmenu pushmenu-left">
-                <div class="hidden-xs">
-                <?php echo $megamenu; ?>
-                </div>
-                <div class="visible-xs">
-                    <div id="nav">
-				<ul>
-				<?php foreach ($categories as $category) { ?>
-					<li <?php if ($category['children']) echo 'class="parent"'; ?>><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
-					  <?php if ($category['children']) { ?>
-					
-						<?php for ($i = 0; $i < count($category['children']);) { ?>
-						<ul>
-						  <?php $j = $i + ceil(count($category['children']) / $category['column']); ?>
-						  <?php for (; $i < $j; $i++) { ?>
-						  <?php if (isset($category['children'][$i])) { ?>
-						  <li><a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?></a></li>
-						  <?php } ?>
-						  <?php } ?>
-						</ul>
-						<?php } ?>
-					 
-					  <?php } ?>
-					</li>
-				<?php } ?>
-				</ul>
-                </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 mobilemenu mobilemenu-left">
+            <div class="visible-xs">
+                <div id="nav">
+                    <ul>
+                    <?php foreach ($categories as $category) { ?>
+                            <li <?php if ($category['children']) echo 'class="parent"'; ?>><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
+                              <?php if ($category['children']) { ?>
+
+                                    <?php for ($i = 0; $i < count($category['children']);) { ?>
+                                    <ul>
+                                      <?php $j = $i + ceil(count($category['children']) / $category['column']); ?>
+                                      <?php for (; $i < $j; $i++) { ?>
+                                      <?php if (isset($category['children'][$i])) { ?>
+                                      <li><a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?></a></li>
+                                      <?php } ?>
+                                      <?php } ?>
+                                    </ul>
+                                    <?php } ?>
+
+                              <?php } ?>
+                            </li>
+                    <?php } ?>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+
 <?php /* <div id="header_placeholder"></div> */ ?>
 
 <div id="notification"></div>
 <script>
         $(document).ready(function() {
-                $menuLeft = $('.pushmenu-left');
+                $menuLeft = $('.mobilemenu-left');
                 $nav_list = $('#nav_list');
-                 
+
                 $nav_list.click(function() {
                         $(this).toggleClass('active');
-                        $('.pushmenu-push').toggleClass('pushmenu-push-toright');
-                        $menuLeft.toggleClass('pushmenu-open');
+                        $('.mobilemenu-push').toggleClass('mobilemenu-push-toright');
+                        $('#header').toggleClass('mobilemenu-push-toright');
+                        $('#content').toggleClass('mobilemenu-push-toright');
+                        $('#footer').toggleClass('mobilemenu-push-toright');
+                        $menuLeft.toggleClass('mobilemenu-open');
+
+                        var active = $("#nav_list").hasClass("active");
+
+                        if (active == true) {
+                            offset_top = $(window).scrollTop();
+
+                            var nav_height = $('#nav').height();
+                            $('.wrapper').height(nav_height);
+
+                            $(".mobileheader").toggleClass("nav_list_active");
+                            $('body').scrollTop(0);
+                        }
+                        else
+                        {
+                            $(".mobileheader").toggleClass("nav_list_active");
+                            $('.wrapper').height('auto');
+                            $('body').scrollTop(offset_top);
+                        }
+                        //alert(offset_top);
                 });
                 
                 $('#searchicon').click(function(){
                     $(".email").slideToggle();
                 });
-                
-                
                 
                 /*Resize the youtube video on resize.*/
                 $(window).resize(function(){
@@ -185,8 +213,5 @@ DD_belatedPNG.fix('#logo img');
                 });
 
                 $(window).resize();
-                
-                
-                
         });
 </script>

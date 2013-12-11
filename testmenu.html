@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess/stylesheet/bootstrap.css" rel="stylesheet">
+        <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.7.1.min.js"></script>
+        
+        <style>
+            body {
+/*                overflow-x: hidden;*/
+            }
+            .maincontent {
+                background-color: #000;
+                position: relative;
+                padding-top: 40px;
+            }
+            .mobilemenu {
+                position: absolute;
+                width: 240px;
+                top: 0;
+                left: -240px;
+                z-index: 1000;
+                border-right: solid 1px #999;
+            }
+            .mobilemenu-push {
+                overflow-x: hidden;
+                position: relative;
+                left: 0;        
+            }
+            .mobilemenu-push-toright {
+                left: 240px;    
+            }
+            .mobilemenu-left.mobilemenu-open {
+                left: 0px;
+            }
+            /*Transition*/
+            .mobilemenu, .mobilemenu-push, .mobilemenu-push-toright, .nav_list_active, .maincontent, #nav_list {
+                -webkit-transition: all 0.3s ease;
+                -moz-transition: all 0.3s ease;
+                transition: all 0.3s ease;
+            }
+            .nav {
+                background-color: #0000C0;
+            }
+            #nav_list {
+                color: #FFF;
+                padding: 10px;
+                position: fixed;
+                top: 0;
+            }
+            .nav_list_active {
+                left: 240px;
+            }
+            .wrapper {
+                overflow: hidden;
+                
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <div class="maincontent">
+                <div id="nav_list">CLICK</div>
+                <p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p><p>Test</p>
+            </div>
+            
+            <div id="nav" class="nav mobilemenu mobilemenu-left">
+                <ul>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                    <li>test</li>
+                </ul>
+            </div>
+        </div>
+        
+        <script>
+        $(document).ready(function() {
+            $menuLeft = $('.mobilemenu-left');
+            $nav_list = $('#nav_list');
+
+            $nav_list.click(function() {
+                    $(this).toggleClass('active');
+                    $('.mobilemenu-push').toggleClass('mobilemenu-push-toright');
+                    $('#header').toggleClass('mobilemenu-push-toright');
+                    $menuLeft.toggleClass('mobilemenu-open');
+
+                    var active = $("#nav_list").hasClass("active");
+
+                    if (active == true) {
+                        offset_top = $(window).scrollTop();
+                        
+                        var nav_height = $('#nav').height();
+                        $('.wrapper').height(nav_height);
+                        
+                        $("#nav_list").toggleClass("nav_list_active");
+                        $('body').scrollTop(0);
+                    }
+                    else
+                    {
+                        $("#nav_list").toggleClass("nav_list_active");
+                        $('.wrapper').height('auto');
+                        $('body').scrollTop(offset_top);
+                    }
+                    //alert(offset_top);
+            });
+        });
+        </script>
+    </body>
+</html>

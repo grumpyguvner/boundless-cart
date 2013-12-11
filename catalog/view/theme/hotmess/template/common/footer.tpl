@@ -107,6 +107,8 @@
     </div>
 </div>
 
+</div><!-- end of wrapper -->
+
 </div>
 </div>
 <?php echo $welcome_popup; ?>
