@@ -123,17 +123,23 @@ label {
 #column-right + #content {
 	margin-right: 195px;
 }
+
+#environment {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
 /* header */
 #header {
         padding-top: 3px;
-	position: relative;
+        position: fixed;
+        width: 100%;
 	z-index: 99;
         background-color: #FFF;
 }
 #header_placeholder
 {
-    display: none;
-    height: 163px;
+    height: 175px;
 
 }
 #header #logo {
@@ -289,40 +295,14 @@ label {
 	color: #000;
         margin-bottom: 15px;
 }
-#nav {
-   margin: 0 -15px;
-   position: relative;
-   padding:0;
-}
-#nav ul {
-   list-style: none;
-   margin: 0;
-   position: relative;
-   padding:0;
-}
-#nav li {
-   margin: 0;
-   padding: 0;
-   font-size: 16px;
-}
-#nav a {
-   margin: 0;
-   padding: 5px 10px;
-   font-size: 16px;
-   display: block;
-}
-#nav ul ul {
-   border-top: 1px solid #aaa; 
-   border-bottom: 1px solid #aaa; 
-    
-}
+
 /* menu */
 #menu {
 	background: #585858;
 	border-bottom: 1px solid #000000;
 	height: 37px;
 	margin-bottom: 15px;
-	-webkit-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px; 
 	-moz-border-radius: 5px 5px 5px 5px;
 	-khtml-border-radius: 5px 5px 5px 5px;
 	border-radius: 5px 5px 5px 5px;
@@ -2045,6 +2025,47 @@ margin-top: 54px;
     #logo {
         
     }
+    .mobileheader {
+        border-bottom: solid 1px #b7b7b7;
+        position: relative;
+    }
+    
+    .mobileheader .navbar-toggle {
+        position: absolute;
+        left: 15px;
+        top: 12px;
+        z-index: 1000;
+    }
+    
+.navbar-toggle {
+border-color: #000;
+margin: 0;
+}
+.navbar-toggle:hover {
+background-color: #000;
+}
+.navbar-toggle .icon-bar {
+    background-color: #000;
+}
+.navbar-toggle:hover .icon-bar {
+    background-color: #FFF;
+}
+    #mobilelogo {
+        text-align: center;
+        padding: 4px 0;
+    }
+    #mobilelogo img {
+        width: 150px;
+        height: auto;
+        
+    }
+    #mobilesearchicon {
+        position: absolute;
+        right: 65px;
+        top: 14px;
+        z-index: 1000;
+        font-size: 25px; cursor: pointer;
+    }
     .nav_icon {
         
     }
@@ -2062,13 +2083,16 @@ margin-top: 54px;
         height: auto;
         margin-bottom: 0px;
         padding-bottom: 0px;
+        padding-top: 0;
     }
     #content {
         margin-top: 0px;
-        padding-top: 53px;
     }
     #header #cart {
-        
+        position: absolute;
+        right: 100px;
+        top: 10px;
+        z-index: 1000;
     }
     #header .madeuk {
         display: none !important;
@@ -2089,7 +2113,7 @@ margin-top: 54px;
         margin-bottom: 10px;
     }
     #header #cart .heading {
-        margin-top: 2px;
+        font-size: 30px;
     }
     /*END OF HEADER*/
     
@@ -2122,41 +2146,26 @@ margin-top: 54px;
     }
     /*END OF FOOTER*/
     
-    /*START OF SIDENAV*/
-    #boss_menu {
-        background-color: #FFF;
-        border-bottom: 0px;
-        margin-bottom: 0px;
+    /*Transition*/
+    #header, #nav, #footer, #bodycontent {
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        transition: all 0.3s ease;
     }
-    #boss_menu ul li a {
-        color: #000;
-        font-size: 12px;
+    #wrapper {
+        overflow: hidden;   
     }
-    #boss_menu ul li {
-        padding: 0px;
-        float: none;
+    #header {
+        position: fixed;
+        top: 0;
+        width: 100%;
     }
-    #boss_menu ul {
-        padding-top: 10px;
+    #header_placeholder
+    {
+        height: 61px;
+
     }
-    #boss_menu > ul > li > div.dropdown {
-        border: 0px;
-        width: auto;
-        position: relative;
-        height: 100%;
-        top: 0px;
-        padding: 0px;
-    }
-    #boss_menu  > ul > li > div .option {
-        float: none;
-    }
-    #boss_menu > ul > li > div .staticblock p {
-        padding: 20px 0px 0 20px;
-    }
-    #boss_menu > ul > li > div .staticblock :hover {
-        color: #FFF;
-    }
-    .mobilemenu {
+    #nav {
         position: absolute;
         width: 240px;
         top: 0;
@@ -2164,23 +2173,40 @@ margin-top: 54px;
         z-index: 1000;
         border-right: solid 1px #999;
     }
-    .mobilemenu-push {
-        overflow-x: hidden;
+     #nav ul {
+        list-style: none;
+        margin: 0;
         position: relative;
-        left: 0;        
+        padding:0;
+     }
+     #nav li {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+     }
+     #nav a {
+        margin: 0;
+        padding: 5px 10px;
+        font-size: 16px;
+        display: block;
+     }
+     #nav ul ul {
+        border-top: 1px solid #aaa; 
+        border-bottom: 1px solid #aaa; 
+
+     }
+    #bodycontent, #footer {
+        position: relative;
+        top: 0;
+        width: 100%;
     }
-    .mobilemenu-push-toright {
-        left: 240px;    
+    .navactive #nav {
+        left: 0;
     }
-    .mobilemenu-left.mobilemenu-open {
-        left: 0px;
+    .navactive #header, .navactive #bodycontent, .navactive #footer {
+        left: 240px;   
     }
-    /*Transition*/
-    .mobilemenu, .mobilemenu-push, .mobilemenu-push-toright, .nav_list_active, .maincontent, #nav_list {
-        -webkit-transition: all 0.3s ease;
-        -moz-transition: all 0.3s ease;
-        transition: all 0.3s ease;
-    }
+    
     .nav {
         background-color: #0000C0;
     }
@@ -2196,12 +2222,15 @@ margin-top: 54px;
             cursor: pointer;
             line-height: 45px;
     }
-    .wrapper {
-        overflow: hidden;   
-    }
-    .mobileheader {
-        position: fixed;
-        top: 0;
+    
+    .searchbox {
+        position: absolute;
+        width: 100%;
+        background: #fff;
+        padding: 5px 10px;
+        border-bottom: solid 1px #b7b7b7;
+        
+        border-top: solid 1px #b7b7b7;
     }
     /*END OF SIDENAV*/
     
@@ -2211,7 +2240,7 @@ margin-top: 54px;
         width: auto;
         display: block !important;
         position: absolute;
-        top: 8px;
+        top: -52px;
         right: 0px;
         margin-bottom: 0px;
     }
@@ -2245,6 +2274,7 @@ margin-top: 54px;
         padding-right: 0px;
         color: #000;
         margin-right: 18px;
+        font-size: 25px;
     }
     /*END OF CART*/
     

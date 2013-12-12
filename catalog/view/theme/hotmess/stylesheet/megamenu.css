@@ -9,7 +9,7 @@
 /* menu */
 .boss_menu {	margin-bottom: 10px;position:relative;z-index:70 }
 #boss_menu { border-bottom: 3px solid;height:60px;margin-bottom:8px}
-#boss_menu > ul {	list-style: none;margin: 0;padding: 0;}
+#boss_menu ul {	list-style: none;margin: 0;padding: 0;}
 
 #boss_menu li{ position:relative;}
 #boss_menu li:hover { z-index:1600}
@@ -128,13 +128,7 @@
 }
 
 #boss_menu .media-links {
-    position: absolute;
-    right: 20px;
-    bottom: 1px
-}
-
-#boss_menu ul{
-    padding-left: 20px;
+    float: right;
 }
 
 #boss_menu ul li{

@@ -11,7 +11,16 @@ function showSubmenu($category) {
 	}
 }
 ?>
-<div id="boss_menu">
+<div class="hidden-xs" style="background: #000;">
+    
+        <div class="container">
+            <div  id="boss_menu">
+  <div class="media-links" style="z-index: 850;">
+    <a href="http://twitter.com/hotmessclothes" target="_blank"><img src="catalog/view/theme/hotmess/image/header/twitter.png"></a>
+    <a href="http://www.facebook.com/pages/Hotmess/467402680008369" target="_blank"><img src="catalog/view/theme/hotmess/image/header/facebook.png"></a>
+    <a href="http://www.youtube.com/channel/UC_0MRGFFNu7z7GByJwXqnQA" target="_blank"><img src="catalog/view/theme/hotmess/image/header/youtube.png"></a>
+    <a href="http://instagram.com/HOTMESSCLOTHING" target="_blank"><img src="catalog/view/theme/hotmess/image/header/instagram.png"></a>
+  </div>
   <ul>
   <?php foreach ($menus as $menu) { ?>
 	<li><a href="<?php echo $menu['href']; ?>"><?php echo $menu['title'] ?></a>
@@ -100,10 +109,6 @@ function showSubmenu($category) {
 	</li>
   <?php } ?>
   </ul>
-  <div class="media-links" style="z-index: 850;">
-    <a href="http://twitter.com/hotmessclothes" target="_blank"><img src="catalog/view/theme/hotmess/image/header/twitter.png"></a>
-    <a href="http://www.facebook.com/pages/Hotmess/467402680008369" target="_blank"><img src="catalog/view/theme/hotmess/image/header/facebook.png"></a>
-    <a href="http://www.youtube.com/channel/UC_0MRGFFNu7z7GByJwXqnQA" target="_blank"><img src="catalog/view/theme/hotmess/image/header/youtube.png"></a>
-    <a href="http://instagram.com/HOTMESSCLOTHING" target="_blank"><img src="catalog/view/theme/hotmess/image/header/instagram.png"></a>
-  </div>
+</div>
+</div>
 </div>

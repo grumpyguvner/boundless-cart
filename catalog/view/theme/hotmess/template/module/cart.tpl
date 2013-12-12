@@ -2,9 +2,9 @@
   <div class="heading">
     <a><span id="cart-total" class="hidden-xs"><h4 style="font-weight: 400;"><?php echo $text_bag; ?></h4> <?php echo $text_items; ?></span></a>
     <?php if($products) { ?>
-    <a><span id="cart-total" class="glyphicon glyphicon-shopping-cart green visible-xs"></span></a>
+    <a><span class="glyphicon glyphicon-shopping-cart green visible-xs"></span></a>
     <?php } else { ?>
-    <a><span id="cart-total" style="font-size: 18px;" class="glyphicon glyphicon-shopping-cart visible-xs"></span></a>
+    <a><span class="glyphicon glyphicon-shopping-cart visible-xs"></span></a>
     <?php } ?>
   </div>
   <div class="content">
