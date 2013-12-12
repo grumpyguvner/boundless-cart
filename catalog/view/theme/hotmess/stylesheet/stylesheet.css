@@ -2032,7 +2032,7 @@ margin-top: 54px;
     
     .mobileheader .navbar-toggle {
         position: absolute;
-        left: 15px;
+        left: 10px;
         top: 12px;
         z-index: 1000;
     }
@@ -2041,15 +2041,10 @@ margin-top: 54px;
 border-color: #000;
 margin: 0;
 }
-.navbar-toggle:hover {
-background-color: #000;
-}
 .navbar-toggle .icon-bar {
     background-color: #000;
 }
-.navbar-toggle:hover .icon-bar {
-    background-color: #FFF;
-}
+
     #mobilelogo {
         text-align: center;
         padding: 4px 0;
@@ -2061,7 +2056,7 @@ background-color: #000;
     }
     #mobilesearchicon {
         position: absolute;
-        right: 65px;
+        right: 45px;
         top: 14px;
         z-index: 1000;
         font-size: 25px; cursor: pointer;
@@ -2090,7 +2085,7 @@ background-color: #000;
     }
     #header #cart {
         position: absolute;
-        right: 100px;
+        right: 95px;
         top: 10px;
         z-index: 1000;
     }
@@ -2241,7 +2236,7 @@ background-color: #000;
         display: block !important;
         position: absolute;
         top: -52px;
-        right: 0px;
+        right: -10px;
         margin-bottom: 0px;
     }
     #header #cart .content {
