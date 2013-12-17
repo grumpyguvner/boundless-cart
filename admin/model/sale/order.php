@@ -672,22 +672,15 @@ class ModelSaleOrder extends Model {
                 
                 $attachments = array();
                 
+                $redeem = array();
+                $redeem_links = array();
+                
                 //add the codes to the comments section.
 		if ($this->config->get('config_complete_status_id') == $data['order_status_id']) {
                         $this->load->model('sale/redeem');
                         $this->load->model('catalog/product');
-                        //$redeem_info = $this->model_sale_redeem->getRedeemByOrderId($order_id);
-                        //$has_downloads = $this->model_catalog_product->getProductDownloads($order_info[0]['product_id']);
                         
                         $redeems = $this->model_sale_redeem->getRedeemByOrderId($order_id);
-                        //if ($has_downloads && $redeems) {
-                        //    $data['comment'] .= "\n" . 'Please go to your downloads section to retrieve your voucher.' . "\n";
-                        //    $message .= "\n" . 'Please go to your downloads section to retrieve your voucher.' . "\n";
-                        //}
-                        //else {
-                        //    $data['comment'] .= "\n";
-                        //    $message .= "\n";
-                        //}
                         
                         $i = 0;
                         foreach ($redeems as $redeem) {
@@ -733,8 +726,13 @@ class ModelSaleOrder extends Model {
 
                                     file_put_contents($filename, $output);
                                     
+                                    
+                                    $redeem_links[] = $redeem['code'];
+                                    
                                     $attachments[] = $filename;
                                     
+                                } else {
+                                    $redeem[] = 'VOUCHER CODE ' . $i . ': ' . $redeem['code'];
                                 }
                             }
                         }
@@ -776,6 +774,24 @@ class ModelSaleOrder extends Model {
 			if ($order_info['customer_id']) {
 				$message .= $language->get('text_link') . "\n";
 				$message .= html_entity_decode($order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id, ENT_QUOTES, 'UTF-8') . "\n\n";
+			}
+			
+			if (!empty($redeem_links)) {
+				$message .= $language->get('text_redeem_download') . "\n";
+                                foreach ($redeem_links as $code)
+                                {
+                                    $message .= html_entity_decode($order_info['store_url'] . 'index.php?route=account/redeem/redeem&code=' . $code, ENT_QUOTES, 'UTF-8') . "\n";
+                                }
+				$message .= "\n";
+			}
+                        
+			if (!empty($redeem)) {
+				$message .= $language->get('text_redeem') . "\n";
+                                foreach ($redeem as $code)
+                                {
+                                    $message .= html_entity_decode($code, ENT_QUOTES, 'UTF-8') . "\n";
+                                }
+				$message .= "\n";
 			}
 			
 			if ($data['comment']) {

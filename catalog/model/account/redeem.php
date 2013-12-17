@@ -8,7 +8,7 @@ class ModelAccountRedeem extends Model {
 	}
 
 	public function getRedeemByCode($code) {
-      	$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "redeem WHERE code = '" . $this->db->escape($code) . "'");
+            $query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "redeem WHERE code = '" . $this->db->escape($code) . "' and status = 1 and redeem = 0");
 		
 		return $query->row;
 	}
