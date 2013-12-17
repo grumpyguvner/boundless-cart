@@ -5,7 +5,7 @@ class ModelSaleRedeem extends Model {
 	}
 	
 	public function editRedeem($redeem_id, $data) {
-      	$this->db->query("UPDATE " . DB_PREFIX . "redeem SET status = '" . $this->db->escape($data['status']) . "', redeem = '" . $this->db->escape($data['redeem']) . "', date_added = '" . (int)$data['date_added'] . "' WHERE redeem_id = '" . (int)$redeem_id . "'");
+      	$this->db->query("UPDATE " . DB_PREFIX . "redeem SET status = '" . $this->db->escape($data['status']) . "', redeem = '" . $this->db->escape($data['redeem']) . "' WHERE redeem_id = '" . (int)$redeem_id . "'");
 	}
 	
 	public function deleteRedeem($redeem_id) {
