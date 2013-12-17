@@ -672,7 +672,7 @@ class ModelSaleOrder extends Model {
                 
                 $attachments = array();
                 
-                $redeem = array();
+                $redeem_vouchers = array();
                 $redeem_links = array();
                 
                 //add the codes to the comments section.
@@ -732,7 +732,7 @@ class ModelSaleOrder extends Model {
                                     $attachments[] = $filename;
                                     
                                 } else {
-                                    $redeem[] = 'VOUCHER CODE ' . $i . ': ' . $redeem['code'];
+                                    $redeem_vouchers[] = 'VOUCHER CODE ' . $i . ': ' . $redeem['code'];
                                 }
                             }
                         }
@@ -785,9 +785,9 @@ class ModelSaleOrder extends Model {
 				$message .= "\n";
 			}
                         
-			if (!empty($redeem)) {
+			if (!empty($redeem_vouchers)) {
 				$message .= $language->get('text_redeem') . "\n";
-                                foreach ($redeem as $code)
+                                foreach ($redeem_vouchers as $code)
                                 {
                                     $message .= html_entity_decode($code, ENT_QUOTES, 'UTF-8') . "\n";
                                 }
