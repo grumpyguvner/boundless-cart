@@ -31,6 +31,9 @@ $_['entry_date_added'] = 'Date Added';
 $_['text_yes'] = 'Yes';
 $_['text_no'] = 'No';
 
+//Button
+$_['button_redeem'] = 'Redeem';
+
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify vouchers!';
 $_['error_exists']      = 'Warning: Voucher code is already in use!';

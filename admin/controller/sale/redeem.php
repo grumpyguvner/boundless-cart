@@ -109,6 +109,35 @@ class ControllerSaleRedeem extends Controller {
 	
     	$this->getList();
   	}
+        
+        public function redeem() {
+            $this->load->language('sale/redeem');
+            $this->load->model('sale/redeem');
+            
+            if (isset($this->request->post['selected'])) {
+                foreach ($this->request->post['selected'] as $redeem_id) {
+                        $this->model_sale_redeem->redeemRedeem($redeem_id);
+                }
+
+                $this->session->data['success'] = $this->language->get('text_success');
+
+                $url = '';
+
+                if (isset($this->request->get['sort'])) {
+                        $url .= '&sort=' . $this->request->get['sort'];
+                }
+
+                if (isset($this->request->get['order'])) {
+                        $url .= '&order=' . $this->request->get['order'];
+                }
+
+                if (isset($this->request->get['page'])) {
+                        $url .= '&page=' . $this->request->get['page'];
+                }
+
+                $this->redirect($this->url->link('sale/redeem', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+        }
 
   	private function getList() {
                 $this->data['text_enabled'] = $this->language->get('text_enabled');
@@ -164,6 +193,7 @@ class ControllerSaleRedeem extends Controller {
 							
 		$this->data['insert'] = $this->url->link('sale/redeem/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['delete'] = $this->url->link('sale/redeem/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+                $this->data['redeemCode'] = $this->url->link('sale/redeem/redeem', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		
 		$this->data['redeems'] = array();
 
@@ -307,6 +337,8 @@ class ControllerSaleRedeem extends Controller {
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
+        $this->data['button_redeem'] = $this->language->get('button_redeem');
+
 		
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		$this->data['tab_redeem_history'] = $this->language->get('tab_redeem_history');
@@ -461,10 +493,6 @@ class ControllerSaleRedeem extends Controller {
   	private function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/redeem')) {
       		$this->error['warning'] = $this->language->get('error_permission');
-    	}
-		
-    	if ((utf8_strlen($this->request->post['code']) < 3) || (utf8_strlen($this->request->post['code']) > 10)) {
-      		$this->error['code'] = $this->language->get('error_code');
     	}
 	
         $redeem_info = $this->model_sale_redeem->getRedeemByCode($this->request->post['code']);

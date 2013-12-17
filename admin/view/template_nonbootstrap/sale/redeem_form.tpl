@@ -42,10 +42,7 @@
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_code; ?></td>
-              <td><input type="text" name="code" value="<?php echo $code; ?>" />
-                <?php if ($error_code) { ?>
-                <span class="error"><?php echo $error_code; ?></span>
-                <?php } ?></td>
+              <td><?php echo $code; ?></td>
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_status; ?></td>

@@ -5,7 +5,7 @@ class ModelSaleRedeem extends Model {
 	}
 	
 	public function editRedeem($redeem_id, $data) {
-      	$this->db->query("UPDATE " . DB_PREFIX . "redeem SET product_id = '" . $this->db->escape($data['product_id']) . "', order_id = '" . $this->db->escape($data['order_id']) . "', code = '" . $this->db->escape($data['code']) . "', status = '" . $this->db->escape($data['status']) . "', redeem = '" . $this->db->escape($data['redeem']) . "', date_added = '" . (int)$data['date_added'] . "' WHERE redeem_id = '" . (int)$redeem_id . "'");
+      	$this->db->query("UPDATE " . DB_PREFIX . "redeem SET status = '" . $this->db->escape($data['status']) . "', redeem = '" . $this->db->escape($data['redeem']) . "', date_added = '" . (int)$data['date_added'] . "' WHERE redeem_id = '" . (int)$redeem_id . "'");
 	}
 	
 	public function deleteRedeem($redeem_id) {
@@ -13,6 +13,10 @@ class ModelSaleRedeem extends Model {
 		//$this->db->query("DELETE FROM " . DB_PREFIX . "redeem_history WHERE redeem_id = '" . (int)$redeem_id . "'");
 	}
 	
+        public function redeemRedeem($redeem_id) {
+            $this->db->query("UPDATE " . DB_PREFIX . "redeem SET redeem = 1 WHERE redeem_id = '" . (int)$redeem_id . "'");
+        }
+        
 	public function getRedeem($redeem_id) {
       	$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "redeem WHERE redeem_id = '" . (int)$redeem_id . "'");
 		
