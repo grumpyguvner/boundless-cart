@@ -98,14 +98,6 @@ label {
        width: 98%; 
        margin: 10px;
 }
-#contentback{
-    height: 464px;
-    width: 100%;
-    background-image: url('../image/backhome.png');
-}
-#contentbottom{
-    margin: 360px 10px 10px 10px;
-}
 #textbottom1{
     float: left;
     width: 50%;
