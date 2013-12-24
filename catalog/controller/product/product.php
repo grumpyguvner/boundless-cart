@@ -592,25 +592,28 @@ class ControllerProductProduct extends Controller {
                         
                         /***************************** News press **********************************************/
                         $this->data['news'] = array();
+                         
+                        if($this->extensions->isInstalled('ncategory'))
+                        {
+                            $news = $this->model_catalog_product->getInfoPress($this->request->get['product_id']);
+                            if (!empty($news)) {
+                                foreach ($news as $nproduct) {
+                                        if ($nproduct['image'] && $nproduct['status'] == '1') {
+                                                        $image = $this->model_tool_image->resize($nproduct['image'], 203, 217);
+                                                } else {
+                                                        $image = 'no_press_img.jpg';
+                                                }
+                                $this->data['news'][] = array(
+                                                'title'              => $nproduct['title'],
+                                                'acom'               => $nproduct['acom'],
+                                                'thumb'              => $image,
+                                                'short_description'  => substr(strip_tags(html_entity_decode($nproduct['description'])),0,140),
+                                                'short_description2' => substr(strip_tags(html_entity_decode($nproduct['description'])),0,350),
+                                                'href'               => $this->url->link('news/article', 'ncat=' . $nproduct['ncategory_id'] . '&news_id=' . $nproduct['news_id']),
+                                                'status'             => $nproduct['status']
 
-                        $news = $this->model_catalog_product->getInfoPress($this->request->get['product_id']);
-                        if (!empty($news)) {
-                            foreach ($news as $nproduct) {
-                                    if ($nproduct['image'] && $nproduct['status'] == '1') {
-                                                    $image = $this->model_tool_image->resize($nproduct['image'], 203, 217);
-                                            } else {
-                                                    $image = 'no_press_img.jpg';
-                                            }
-                            $this->data['news'][] = array(
-                                            'title'              => $nproduct['title'],
-                                            'acom'               => $nproduct['acom'],
-                                            'thumb'              => $image,
-                                            'short_description'  => substr(strip_tags(html_entity_decode($nproduct['description'])),0,140),
-                                            'short_description2' => substr(strip_tags(html_entity_decode($nproduct['description'])),0,350),
-                                            'href'               => $this->url->link('news/article', 'ncat=' . $nproduct['ncategory_id'] . '&news_id=' . $nproduct['news_id']),
-                                            'status'             => $nproduct['status']
-
-                            );
+                                );
+                                }
                             }
                         }
                         $this->data['no_press_img'] = $this->model_tool_image->resize('no_press_img.jpg', 203, 217);
