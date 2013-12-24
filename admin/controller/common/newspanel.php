@@ -2,6 +2,8 @@
 class ControllerCommonNewspanel extends Controller {
 
 	public function index() {
+            if($this->extensions->isInstalled('ncategory'))
+            {
 		$this->load->language('common/newspanel');
 		
 		$this->load->model('catalog/ncomments');
@@ -70,6 +72,7 @@ class ControllerCommonNewspanel extends Controller {
 		$this->template = 'common/newspanel.tpl';
 		
 		$this->render();
+            }
 	}
 }
 ?>
