@@ -4,7 +4,7 @@
 <head>
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
-<link rel="stylesheet" type="text/css" href="view/stylesheet/invoice.css" />
+<link rel="stylesheet" type="text/css" href="catalog/view/theme/hotmess/stylesheet/invoice.css" />
 </head>
 <body>
 <?php foreach ($orders as $order) { ?>
