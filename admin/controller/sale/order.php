@@ -2458,11 +2458,21 @@ class ControllerSaleOrder extends Controller {
                     $store_email = $store_info['config_email'];
                     $store_telephone = $store_info['config_telephone'];
                     $store_fax = $store_info['config_fax'];
+                    if ($store_info['config_logo'] && file_exists(DIR_IMAGE . $store_info['config_logo'])) {
+                            $store_logo = $server . $store_info['config_logo'];
+                    } else {
+                            $store_logo = '';
+                    }
                 } else {
                     $store_address = $this->config->get('config_address');
                     $store_email = $this->config->get('config_email');
                     $store_telephone = $this->config->get('config_telephone');
                     $store_fax = $this->config->get('config_fax');
+                    if ($this->config->get('config_logo') && file_exists(DIR_IMAGE . $this->config->get('config_logo'))) {
+                            $store_logo = $server . $this->config->get('config_logo');
+                    } else {
+                            $store_logo = '';
+                    }
                 }
 
                 if ($order_info['invoice_no']) {
