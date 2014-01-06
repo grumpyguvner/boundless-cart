@@ -81,19 +81,23 @@ class ControllerCommonFooter extends Controller {
             }
         }
         
-        $this->load->model('catalog/ncategory');
-
-        $this->data['ncategories'] = array();
         
-        $ncategories = $this->model_catalog_ncategory->getncategories();
+        $this->data['ncategories'] = array();
+        if($this->extensions->isInstalled('ncategory'))
+        {
+            $this->load->model('catalog/ncategory');
 
-        foreach ($ncategories as $ncat) {
 
-            $this->data['ncategories'][] = array(
-                'ncat_id'   => $ncat['ncategory_id'],
-                'name'      => $ncat['name'],
-                'href'      => $this->url->link('news/ncategory', 'ncat=' . $ncat['ncategory_id'])
-            );
+            $ncategories = $this->model_catalog_ncategory->getncategories();
+
+            foreach ($ncategories as $ncat) {
+
+                $this->data['ncategories'][] = array(
+                    'ncat_id'   => $ncat['ncategory_id'],
+                    'name'      => $ncat['name'],
+                    'href'      => $this->url->link('news/ncategory', 'ncat=' . $ncat['ncategory_id'])
+                );
+            }
         }
         
         /* End added for Sailskinz */
