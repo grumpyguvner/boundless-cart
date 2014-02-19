@@ -51,8 +51,7 @@
       </table>
     </div>
     <div class="checkout">
-        <a href="<?php echo $cart; ?>"><?php echo $text_cart; ?></a>
-        <a class="button " href="<?php echo $checkout; ?>">Checkout</a>
+        <a class="button " href="<?php echo $cart; ?>">Checkout</a>
     </div>
     <?php } else { ?>
     <div class="empty"><?php echo $text_empty; ?></div>
