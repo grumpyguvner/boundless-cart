@@ -3,7 +3,7 @@ body {
 }
 body, td, th, input, select, textarea, option, optgroup {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 14px;
 	color: #000000;
 }
 h1 {
@@ -16,7 +16,7 @@ h1 {
 	padding-bottom: 5px;
 	margin-top: 0px;
 	margin-bottom: 15px;
-	border-bottom: 1px solid #CDDDDD;
+	border-bottom: 1px solid #CCC;
         display: inline-block;
         width: 100%;
         vertical-align: text-bottom;
@@ -31,6 +31,11 @@ h1 span {
 }
 .store {
 	width: 100%;
+	border-bottom: 2px solid #CCC;
+	margin-bottom: 20px;
+}
+.labels {
+	width: 100%;
 	margin-bottom: 20px;
 }
 .div2 {
@@ -43,7 +48,7 @@ h1 span {
 	padding: 5px;
 }
 .heading td {
-	background: #E7EFEF;
+	background: #EEE;
 }
 .address, .product {
 	border-collapse: collapse;
@@ -51,26 +56,64 @@ h1 span {
 .address {
 	width: 100%;
 	margin-bottom: 20px;
-	border-top: 1px solid #CDDDDD;
-	border-right: 1px solid #CDDDDD;
+	border-top: 1px solid #CCC;
+	border-right: 1px solid #CCC;
 }
 .address th, .address td {
-	border-left: 1px solid #CDDDDD;
-	border-bottom: 1px solid #CDDDDD;
+	border-left: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
 	padding: 5px;
 	vertical-align: text-bottom;
 }
 .address td {
 	width: 50%;
 }
+
+.order-detail-wrapper {
+    border: solid 2px #CCC;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 80px;
+}
+.order-detail {
+    width: 100%;
+}
+
 .product {
 	width: 100%;
 	margin-bottom: 20px;
-	border-top: 1px solid #CDDDDD;
-	border-right: 1px solid #CDDDDD;
 }
 .product td {
-	border-left: 1px solid #CDDDDD;
-	border-bottom: 1px solid #CDDDDD;
+	border-bottom: 1px solid #CCC;
 	padding: 5px;
+}
+
+#product-wrapper {
+    border: solid 2px #CCC;
+    padding: 2px;
+    margin-bottom: 4px;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
+}
+
+#bottom {
+    height: 204px;
+    width: 793px;
+    position: absolute;
+    bottom: 0px;
+}
+
+.page1, .page2 {
+    position: relative;
+    width: 793px;
+    height: 1100px;
+}
+
+.page2 {
+    page-break-before:always;
 }
