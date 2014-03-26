@@ -107,6 +107,10 @@ class ControllerPaymentSagepay extends Controller {
 		foreach($data as $key => $value){
    			$crypt_data[] = $key . '=' . $value;
 		}
+		if (TRUE === TRUE) {
+			$audit = new Log(date("Y-m-d") . "-sagepay.log");
+			$audit->write(serialize($crypt_data));
+		}
 
 		$this->data['crypt'] = base64_encode($this->simpleXor(utf8_decode(implode('&', $crypt_data)), $password));
 		
