@@ -486,8 +486,9 @@ class ModelCatalogProduct extends Model {
 
                 if (!empty($data['filter_name'])) {
                     $sql .= " LEFT JOIN " . DB_PREFIX . "category_description cd ON (cd.category_id = p2c.category_id and cd.language_id = '" . (int) $this->config->get('config_language_id') . "')";
+                    $sql .= " LEFT JOIN " . DB_PREFIX . "product p ON (p2c.product_id = p.product_id)";
                     
-                    $sql .= " LEFT JOIN " . DB_PREFIX . "product_filter pf ON (p2c.product_id = pf.product_id) LEFT JOIN " . DB_PREFIX . "product p ON (pf.product_id = p.product_id)";
+                    $sql .= " LEFT JOIN " . DB_PREFIX . "product_filter pf ON (p.product_id = pf.product_id)";
                     $sql .= " LEFT JOIN " . DB_PREFIX . "filter_description fd ON (pf.filter_id = fd.filter_id and fd.language_id = '" . (int) $this->config->get('config_language_id') . "')";
                 } else {
                     $sql .= " LEFT JOIN " . DB_PREFIX . "product p ON (p2c.product_id = p.product_id)";
