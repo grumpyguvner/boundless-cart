@@ -25,6 +25,38 @@ class ControllerSaleVoucher extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+                
+                if (isset($this->request->get['filter_from'])) {
+                    $url .= '&filter_from=' . $this->request->get['filter_from'];
+                }
+                
+                if (isset($this->request->get['filter_to'])) {
+                    $url .= '&filter_to=' . $this->request->get['filter_to'];
+                }
+                
+                if (isset($this->request->get['filter_amount'])) {
+                    $url .= '&filter_amount=' . $this->request->get['filter_amount'];
+                }
+                
+                if (isset($this->request->get['filter_theme_id'])) {
+                    $url .= '&filter_theme_idt=' . $this->request->get['filter_theme_id'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_used'])) {
+                    $url .= '&filter_used=' . $this->request->get['filter_used'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 			
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -57,6 +89,38 @@ class ControllerSaleVoucher extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 	  
 			$url = '';
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+                
+                if (isset($this->request->get['filter_from'])) {
+                    $url .= '&filter_from=' . $this->request->get['filter_from'];
+                }
+                
+                if (isset($this->request->get['filter_to'])) {
+                    $url .= '&filter_to=' . $this->request->get['filter_to'];
+                }
+                
+                if (isset($this->request->get['filter_amount'])) {
+                    $url .= '&filter_amount=' . $this->request->get['filter_amount'];
+                }
+                
+                if (isset($this->request->get['filter_theme_id'])) {
+                    $url .= '&filter_theme_idt=' . $this->request->get['filter_theme_id'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_used'])) {
+                    $url .= '&filter_used=' . $this->request->get['filter_used'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 			
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -91,6 +155,38 @@ class ControllerSaleVoucher extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 	  
 			$url = '';
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+                
+                if (isset($this->request->get['filter_from'])) {
+                    $url .= '&filter_from=' . $this->request->get['filter_from'];
+                }
+                
+                if (isset($this->request->get['filter_to'])) {
+                    $url .= '&filter_to=' . $this->request->get['filter_to'];
+                }
+                
+                if (isset($this->request->get['filter_amount'])) {
+                    $url .= '&filter_amount=' . $this->request->get['filter_amount'];
+                }
+                
+                if (isset($this->request->get['filter_theme_id'])) {
+                    $url .= '&filter_theme_idt=' . $this->request->get['filter_theme_id'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_used'])) {
+                    $url .= '&filter_used=' . $this->request->get['filter_used'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 			
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -111,6 +207,55 @@ class ControllerSaleVoucher extends Controller {
   	}
 
   	private function getList() {
+
+                if (isset($this->request->get['filter_code'])) {
+                    $filter_code = $this->request->get['filter_code'];
+                } else {
+                    $filter_code = null;
+                }
+                
+                if (isset($this->request->get['filter_from'])) {
+                    $filter_from = $this->request->get['filter_from'];
+                } else {
+                    $filter_from = null;
+                }
+                
+                if (isset($this->request->get['filter_to'])) {
+                    $filter_to = $this->request->get['filter_to'];
+                } else {
+                    $filter_to = null;
+                }
+                
+                if (isset($this->request->get['filter_amount'])) {
+                    $filter_amount = $this->request->get['filter_amount'];
+                } else {
+                    $filter_amount = null;
+                }
+            
+                if (isset($this->request->get['filter_theme_id'])) {
+                    $filter_theme_id = $this->request->get['filter_theme_id'];
+                } else {
+                    $filter_theme_id = null;
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $filter_status = $this->request->get['filter_status'];
+                } else {
+                    $filter_status = null;
+                }
+                
+                if (isset($this->request->get['filter_used'])) {
+                    $filter_used = $this->request->get['filter_used'];
+                } else {
+                    $filter_used = null;
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $filter_date_added = $this->request->get['filter_date_added'];
+                } else {
+                    $filter_date_added = null;
+                }
+            
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -130,6 +275,38 @@ class ControllerSaleVoucher extends Controller {
 		}
 				
 		$url = '';
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+                
+                if (isset($this->request->get['filter_from'])) {
+                    $url .= '&filter_from=' . $this->request->get['filter_from'];
+                }
+                
+                if (isset($this->request->get['filter_to'])) {
+                    $url .= '&filter_to=' . $this->request->get['filter_to'];
+                }
+                
+                if (isset($this->request->get['filter_amount'])) {
+                    $url .= '&filter_amount=' . $this->request->get['filter_amount'];
+                }
+                
+                if (isset($this->request->get['filter_theme_id'])) {
+                    $url .= '&filter_theme_idt=' . $this->request->get['filter_theme_id'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_used'])) {
+                    $url .= '&filter_used=' . $this->request->get['filter_used'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 			
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -163,13 +340,21 @@ class ControllerSaleVoucher extends Controller {
 		$this->data['vouchers'] = array();
 
 		$data = array(
+			'filter_code'  => $filter_code,
+			'filter_from'  => $filter_from,
+			'filter_to'    => $filter_to,
+			'filter_amount'  => $filter_amount,
+			'filter_theme_id'  => $filter_theme_id,
+			'filter_status'  => $filter_status,
+			'filter_used'  => $filter_used,
+			'filter_date_added'  => $filter_date_added,
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
 			'limit' => $this->config->get('config_admin_limit')
 		);
 		
-		$voucher_total = $this->model_sale_voucher->getTotalVouchers();
+		$voucher_total = $this->model_sale_voucher->getTotalVouchers($data);
 	
 		$results = $this->model_sale_voucher->getVouchers($data);
  
@@ -188,12 +373,18 @@ class ControllerSaleVoucher extends Controller {
 				'to'         => $result['to_name'],
 				'theme'      => $result['theme'],
 				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
+				'spent'     => ($result['spent']) ? $this->currency->format($result['spent'], $this->config->get('config_currency')) : '',
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'used'     => ($result['used'] ? $this->language->get('text_yes') : $this->language->get('text_no')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'selected'   => isset($this->request->post['selected']) && in_array($result['voucher_id'], $this->request->post['selected']),
 				'action'     => $action
 			);
 		}
+                
+                $this->load->model('sale/voucher_theme');
+			
+		$this->data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 									
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
@@ -207,6 +398,7 @@ class ControllerSaleVoucher extends Controller {
 		$this->data['column_theme'] = $this->language->get('column_theme');
 		$this->data['column_amount'] = $this->language->get('column_amount');
 		$this->data['column_status'] = $this->language->get('column_status');
+		$this->data['column_used'] = $this->language->get('column_used');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
@@ -230,6 +422,38 @@ class ControllerSaleVoucher extends Controller {
 		}
 
 		$url = '';
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+                
+                if (isset($this->request->get['filter_from'])) {
+                    $url .= '&filter_from=' . $this->request->get['filter_from'];
+                }
+                
+                if (isset($this->request->get['filter_to'])) {
+                    $url .= '&filter_to=' . $this->request->get['filter_to'];
+                }
+                
+                if (isset($this->request->get['filter_amount'])) {
+                    $url .= '&filter_amount=' . $this->request->get['filter_amount'];
+                }
+                
+                if (isset($this->request->get['filter_theme_id'])) {
+                    $url .= '&filter_theme_idt=' . $this->request->get['filter_theme_id'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_used'])) {
+                    $url .= '&filter_used=' . $this->request->get['filter_used'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -246,10 +470,43 @@ class ControllerSaleVoucher extends Controller {
 		$this->data['sort_to'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.to_name' . $url, 'SSL');
 		$this->data['sort_theme'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=theme' . $url, 'SSL');
 		$this->data['sort_amount'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.amount' . $url, 'SSL');
-		$this->data['sort_status'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.date_end' . $url, 'SSL');
+		$this->data['sort_used'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=used' . $url, 'SSL');
+                $this->data['sort_status'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.date_end' . $url, 'SSL');
 		$this->data['sort_date_added'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . '&sort=v.date_added' . $url, 'SSL');
 				
 		$url = '';
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+                
+                if (isset($this->request->get['filter_from'])) {
+                    $url .= '&filter_from=' . $this->request->get['filter_from'];
+                }
+                
+                if (isset($this->request->get['filter_to'])) {
+                    $url .= '&filter_to=' . $this->request->get['filter_to'];
+                }
+                
+                if (isset($this->request->get['filter_amount'])) {
+                    $url .= '&filter_amount=' . $this->request->get['filter_amount'];
+                }
+                
+                if (isset($this->request->get['filter_theme_id'])) {
+                    $url .= '&filter_theme_idt=' . $this->request->get['filter_theme_id'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_used'])) {
+                    $url .= '&filter_used=' . $this->request->get['filter_used'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -268,6 +525,14 @@ class ControllerSaleVoucher extends Controller {
 			
 		$this->data['pagination'] = $pagination->render();
 
+		$this->data['filter_code'] = $filter_code;
+		$this->data['filter_from'] = $filter_from;
+		$this->data['filter_to'] = $filter_to;
+		$this->data['filter_amount'] = $filter_amount;
+		$this->data['filter_theme_id'] = $filter_theme_id;
+		$this->data['filter_status'] = $filter_status;
+		$this->data['filter_used'] = $filter_used;
+		$this->data['filter_date_added'] = $filter_date_added;
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
 
@@ -351,6 +616,38 @@ class ControllerSaleVoucher extends Controller {
 		}
 				
 		$url = '';
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+                
+                if (isset($this->request->get['filter_from'])) {
+                    $url .= '&filter_from=' . $this->request->get['filter_from'];
+                }
+                
+                if (isset($this->request->get['filter_to'])) {
+                    $url .= '&filter_to=' . $this->request->get['filter_to'];
+                }
+                
+                if (isset($this->request->get['filter_amount'])) {
+                    $url .= '&filter_amount=' . $this->request->get['filter_amount'];
+                }
+                
+                if (isset($this->request->get['filter_theme_id'])) {
+                    $url .= '&filter_theme_idt=' . $this->request->get['filter_theme_id'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_used'])) {
+                    $url .= '&filter_used=' . $this->request->get['filter_used'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 			
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];

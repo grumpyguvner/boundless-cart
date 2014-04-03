@@ -26,7 +26,48 @@ class ModelSaleVoucher extends Model {
 	}
 		
 	public function getVouchers($data = array()) {
-		$sql = "SELECT v.voucher_id, v.code, v.from_name, v.from_email, v.to_name, v.to_email, (SELECT vtd.name FROM " . DB_PREFIX . "voucher_theme_description vtd WHERE vtd.voucher_theme_id = v.voucher_theme_id AND vtd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS theme, v.amount, v.status, v.date_added FROM " . DB_PREFIX . "voucher v";
+		$sql = "SELECT v.voucher_id, v.code, v.from_name, v.from_email, v.to_name, v.to_email, (SELECT vtd.name FROM " . DB_PREFIX . "voucher_theme_description vtd WHERE vtd.voucher_theme_id = v.voucher_theme_id AND vtd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS theme, v.amount, SUM(vh.amount*-1) AS spent, IF (SUM(vh.amount*-1), 1, 0) AS used, v.status, v.date_added FROM " . DB_PREFIX . "voucher v LEFT JOIN " . DB_PREFIX . "voucher_history vh ON vh.voucher_id = v.voucher_id ";
+                
+                if (!empty($data['filter_code'])) {
+			$sql .= " WHERE v.code LIKe '" . $this->db->escape($data['filter_code']) . "%'";
+		} else {
+                    $sql .= " WHERE 0 = 0 ";
+                }
+                
+		if (!empty($data['filter_from'])) {
+			$sql .= " AND v.from_name LIKE '%" . $this->db->escape($data['filter_from']) . "%'";
+		}
+                
+		if (!empty($data['filter_to'])) {
+			$sql .= " AND v.to_name LIKE '%" . $this->db->escape($data['filter_to']) . "%'";
+		}
+                
+		if (!empty($data['filter_amount'])) {
+			$sql .= " AND v.amount = '" . (float)$data['filter_amount'] . "'";
+		}
+                
+                if (!empty($data['filter_theme_id'])) {
+                        $sql .= " AND v.voucher_theme_id = '" . (int)$this->db->escape($data['filter_theme_id']) . "%'";
+                }
+                
+                if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+                        $sql .= " AND status = '" . (int)$data['filter_status'] . "'";
+                }
+                
+                if (isset($data['filter_used']) && !is_null($data['filter_used'])) {
+                    if ($data['filter_used'])
+                    {
+                        $sql .= " AND vh.amount";
+                    } else {
+                        $sql .= " AND vh.amount is NULL";
+                    }
+                }
+
+		if (!empty($data['filter_date_added'])) {
+			$sql .= " AND DATE(v.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+		}
+                
+                $sql .= ' GROUP BY v.voucher_id';
 		
 		$sort_data = array(
 			'v.code',
@@ -37,6 +78,7 @@ class ModelSaleVoucher extends Model {
 			'v.theme',
 			'v.amount',
 			'v.status',
+			'used',
 			'v.date_added'
 		);	
 			

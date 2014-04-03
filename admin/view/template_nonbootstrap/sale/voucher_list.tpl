@@ -52,6 +52,11 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
                 <?php } ?></td>
+              <td class="left"><?php if ($sort == 'used') { ?>
+                <a href="<?php echo $sort_used; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_used; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_used; ?>"><?php echo $column_used; ?></a>
+                <?php } ?></td>
               <td class="left"><?php if ($sort == 'v.date_added') { ?>
                 <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
                 <?php } else { ?>
@@ -61,6 +66,51 @@
             </tr>
           </thead>
           <tbody>
+              <tr class="filter">
+              <td></td>
+              <td align="left"><input type="text" name="filter_code" value="<?php echo $filter_code; ?>" size="10" /></td>
+              <td align="left"><input type="text" name="filter_from" value="<?php echo $filter_from; ?>" size="10" /></td>
+              <td align="left"><input type="text" name="filter_to" value="<?php echo $filter_to; ?>" size="10" /></td>
+              <td align="right"><input type="text" name="filter_amount" value="<?php echo $filter_amount; ?>" size="4" style="text-align: right;" /></td>
+              <td><select name="filter_theme_id">
+                  <option value="*"></option>
+                  <?php foreach ($voucher_themes as $theme) { ?>
+                  <?php if ($theme['voucher_theme_id'] == $filter_theme_id) { ?>
+                  <option value="<?php echo $theme['voucher_theme_id']; ?>" selected="selected"><?php echo $theme['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $theme['voucher_theme_id']; ?>"><?php echo $theme['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
+              <td><select name="filter_status">
+                  <option value="*"></option>
+                  <?php if ($filter_status) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <?php } ?>
+                  <?php if (!is_null($filter_status) && !$filter_status) { ?>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select></td>
+              <td><select name="filter_used">
+                  <option value="*"></option>
+                  <?php if ($filter_used) { ?>
+                  <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_yes; ?></option>
+                  <?php } ?>
+                  <?php if (!is_null($filter_used) && !$filter_used) { ?>
+                  <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                  <?php } else { ?>
+                  <option value="0"><?php echo $text_no; ?></option>
+                  <?php } ?>
+                </select></td>
+              <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="date" /></td>
+              <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
+            </tr>
             <?php if ($vouchers) { ?>
             <?php foreach ($vouchers as $voucher) { ?>
             <tr>
@@ -72,9 +122,10 @@
               <td class="left"><?php echo $voucher['code']; ?></td>
               <td class="left"><?php echo $voucher['from']; ?></td>
               <td class="left"><?php echo $voucher['to']; ?></td>
-              <td class="right"><?php echo $voucher['amount']; ?></td>
+              <td class="right"><?php echo $voucher['amount']; ?><?php if (!empty($voucher['spent'])) echo ' (' . $voucher['spent'] . ')'; ?></td>
               <td class="left"><?php echo $voucher['theme']; ?></td>
               <td class="left"><?php echo $voucher['status']; ?></td>
+              <td class="left"><?php echo $voucher['used']; ?></td>
               <td class="left"><?php echo $voucher['date_added']; ?></td>
               <td class="right">[ <a onclick="sendVoucher('<?php echo $voucher['voucher_id']; ?>');"><?php echo $text_send; ?></a> ]
                 <?php foreach ($voucher['action'] as $action) { ?>
@@ -84,7 +135,7 @@
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="center" colspan="9"><?php echo $text_no_results; ?></td>
+              <td class="center" colspan="10"><?php echo $text_no_results; ?></td>
             </tr>
             <?php } ?>
           </tbody>
@@ -118,5 +169,79 @@ function sendVoucher(voucher_id) {
 		}
 	});
 }
+//--></script>
+<script type="text/javascript"><!--
+function filter() {
+	url = 'index.php?route=sale/voucher&token=<?php echo $token; ?>';
+	
+	var filter_code = $('input[name=\'filter_code\']').attr('value');
+	
+	if (filter_code) {
+		url += '&filter_code=' + encodeURIComponent(filter_code);
+	}
+        
+	var filter_from = $('input[name=\'filter_from\']').attr('value');
+	
+	if (filter_from) {
+		url += '&filter_from=' + encodeURIComponent(filter_from);
+	}
+        
+	var filter_to = $('input[name=\'filter_to\']').attr('value');
+	
+	if (filter_to) {
+		url += '&filter_to=' + encodeURIComponent(filter_to);
+        }
+        
+	var filter_amount = $('input[name=\'filter_amount\']').attr('value');
+	
+	if (filter_amount) {
+		url += '&filter_amount=' + encodeURIComponent(filter_amount);
+	}
+        
+	var filter_status = $('select[name=\'filter_status\']').attr('value');
+	
+	if (filter_status != '*') {
+		url += '&filter_status=' + encodeURIComponent(filter_status);
+	}	
+        
+	var filter_theme_id = $('select[name=\'filter_theme_id\']').attr('value');
+	
+	if (filter_theme_id != '*') {
+		url += '&filter_theme_id=' + encodeURIComponent(filter_theme_id);
+	}	
+        
+	var filter_status = $('select[name=\'filter_status\']').attr('value');
+	
+	if (filter_status != '*') {
+		url += '&filter_status=' + encodeURIComponent(filter_status);
+	}	
+        
+	var filter_used = $('select[name=\'filter_used\']').attr('value');
+	
+	if (filter_used != '*') {
+		url += '&filter_used=' + encodeURIComponent(filter_used);
+	}
+	
+	var filter_date_added = $('input[name=\'filter_date_added\']').attr('value');
+	
+	if (filter_date_added) {
+		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+	}
+	
+				
+	location = url;
+}
+//--></script>  
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+});
+//--></script> 
+<script type="text/javascript"><!--
+$('#form input').keydown(function(e) {
+	if (e.keyCode == 13) {
+		filter();
+	}
+});
 //--></script> 
 <?php echo $footer; ?>

@@ -52,8 +52,8 @@ class ModelSaleRedeem extends Model {
 			$sql .= " AND order_id = '" . (int)$data['filter_order_id'] . "'";
 		}
                 
-                if (isset($data['filter_code']) && !is_null($data['filter_code'])) {
-                        $sql .= " AND code LIKE '" . (int)$data['filter_code'] . "%'";
+                if (!empty($data['filter_code'])) {
+                        $sql .= " AND code LIKE '" . $this->db->escape($data['filter_code']) . "%'";
                 }
                 
                 if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
@@ -233,7 +233,7 @@ class ModelSaleRedeem extends Model {
 			$sql .= " AND order_id = '" . (int)$data['filter_order_id'] . "'";
 		}
                 
-                if (isset($data['filter_code']) && !is_null($data['filter_code'])) {
+                if (!empty($data['filter_code'])) {
                         $sql .= " AND code LIKE '" . (int)$data['filter_code'] . "%'";
                 }
                 
