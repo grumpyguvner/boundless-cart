@@ -38,6 +38,36 @@ class ModelSaleRedeem extends Model {
 	public function getRedeems($data = array()) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "redeem";
 		
+		if (!empty($data['filter_redeem_id'])) {
+			$sql .= " WHERE redeem_id = '" . (int)$data['filter_redeem_id'] . "'";
+		} else {
+                    $sql .= " WHERE 0 = 0 ";
+                }
+                
+		if (!empty($data['filter_product_id'])) {
+			$sql .= " AND product_id = '" . (int)$data['filter_product_id'] . "'";
+		}
+                
+		if (!empty($data['filter_order_id'])) {
+			$sql .= " AND order_id = '" . (int)$data['filter_order_id'] . "'";
+		}
+                
+                if (isset($data['filter_code']) && !is_null($data['filter_code'])) {
+                        $sql .= " AND code LIKE '" . (int)$data['filter_code'] . "%'";
+                }
+                
+                if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+                        $sql .= " AND status = '" . (int)$data['filter_status'] . "'";
+                }
+                
+                if (isset($data['filter_redeem']) && !is_null($data['filter_redeem'])) {
+                        $sql .= " AND redeem = '" . (int)$data['filter_redeem'] . "'";
+                }
+
+		if (!empty($data['filter_date_added'])) {
+			$sql .= " AND DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+		}
+                
 		$sort_data = array(
 			'redeem_id',
 			'product_id',
@@ -185,8 +215,41 @@ class ModelSaleRedeem extends Model {
 		}
 	}
 			
-	public function getTotalRedeems() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "redeem");
+	public function getTotalRedeems($data = array()) {
+                $sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "redeem";
+        
+		
+		if (!empty($data['filter_redeem_id'])) {
+                    $sql .= " WHERE redeem_id = '" . (int)$data['filter_redeem_id'] . "'";
+		} else {
+                    $sql .= " WHERE 0 = 0 ";
+                }
+                
+		if (!empty($data['filter_product_id'])) {
+			$sql .= " AND product_id = '" . (int)$data['filter_product_id'] . "'";
+		}
+                
+		if (!empty($data['filter_order_id'])) {
+			$sql .= " AND order_id = '" . (int)$data['filter_order_id'] . "'";
+		}
+                
+                if (isset($data['filter_code']) && !is_null($data['filter_code'])) {
+                        $sql .= " AND code LIKE '" . (int)$data['filter_code'] . "%'";
+                }
+                
+                if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+                        $sql .= " AND status = '" . (int)$data['filter_status'] . "'";
+                }
+                
+                if (isset($data['filter_redeem']) && !is_null($data['filter_redeem'])) {
+                        $sql .= " AND redeem = '" . (int)$data['filter_redeem'] . "'";
+                }
+
+		if (!empty($data['filter_date_added'])) {
+			$sql .= " AND DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+		}
+                
+                $query = $this->db->query($sql);
 		
 		return $query->row['total'];
 	}	

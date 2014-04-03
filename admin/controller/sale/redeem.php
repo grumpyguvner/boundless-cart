@@ -25,6 +25,34 @@ class ControllerSaleRedeem extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
+                
+                if (isset($this->request->get['filter_redeem_id'])) {
+                    $url .= '&filter_redeem_id=' . $this->request->get['filter_redeem_id'];
+                }
+                
+                if (isset($this->request->get['filter_product_id'])) {
+                    $url .= '&filter_product_id=' . $this->request->get['filter_product_id'];
+                }
+                
+                if (isset($this->request->get['filter_order_id'])) {
+                    $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+                }
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_redeem'])) {
+                    $url .= '&filter_redeem=' . $this->request->get['filter_redeem'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 			
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -57,6 +85,34 @@ class ControllerSaleRedeem extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 	  
 			$url = '';
+                
+                if (isset($this->request->get['filter_redeem_id'])) {
+                    $url .= '&filter_redeem_id=' . $this->request->get['filter_redeem_id'];
+                }
+                
+                if (isset($this->request->get['filter_product_id'])) {
+                    $url .= '&filter_product_id=' . $this->request->get['filter_product_id'];
+                }
+                
+                if (isset($this->request->get['filter_order_id'])) {
+                    $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+                }
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_redeem'])) {
+                    $url .= '&filter_redeem=' . $this->request->get['filter_redeem'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 			
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -91,6 +147,34 @@ class ControllerSaleRedeem extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 	  
 			$url = '';
+                
+                if (isset($this->request->get['filter_redeem_id'])) {
+                    $url .= '&filter_redeem_id=' . $this->request->get['filter_redeem_id'];
+                }
+                
+                if (isset($this->request->get['filter_product_id'])) {
+                    $url .= '&filter_product_id=' . $this->request->get['filter_product_id'];
+                }
+                
+                if (isset($this->request->get['filter_order_id'])) {
+                    $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+                }
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_redeem'])) {
+                    $url .= '&filter_redeem=' . $this->request->get['filter_redeem'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 			
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
@@ -115,13 +199,44 @@ class ControllerSaleRedeem extends Controller {
             $this->load->model('sale/redeem');
             
             if (isset($this->request->post['selected'])) {
-                foreach ($this->request->post['selected'] as $redeem_id) {
-                        $this->model_sale_redeem->redeemRedeem($redeem_id);
+                if (isset($this->request->post['selected']))
+                {
+                    foreach ($this->request->post['selected'] as $redeem_id) {
+                            $this->model_sale_redeem->redeemRedeem($redeem_id);
+                    }
                 }
 
                 $this->session->data['success'] = $this->language->get('text_success');
 
                 $url = '';
+                
+                if (isset($this->request->get['filter_redeem_id'])) {
+                    $url .= '&filter_redeem_id=' . $this->request->get['filter_redeem_id'];
+                }
+                
+                if (isset($this->request->get['filter_product_id'])) {
+                    $url .= '&filter_product_id=' . $this->request->get['filter_product_id'];
+                }
+                
+                if (isset($this->request->get['filter_order_id'])) {
+                    $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+                }
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_redeem'])) {
+                    $url .= '&filter_redeem=' . $this->request->get['filter_redeem'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 
                 if (isset($this->request->get['sort'])) {
                         $url .= '&sort=' . $this->request->get['sort'];
@@ -144,6 +259,48 @@ class ControllerSaleRedeem extends Controller {
                 $this->data['text_disabled'] = $this->language->get('text_disabled');
                 $this->data['text_yes'] = $this->language->get('text_yes');
                 $this->data['text_no'] = $this->language->get('text_no');
+                
+                if (isset($this->request->get['filter_redeem_id'])) {
+                    $filter_redeem_id = $this->request->get['filter_redeem_id'];
+                } else {
+                    $filter_redeem_id = null;
+                }
+                
+                if (isset($this->request->get['filter_product_id'])) {
+                    $filter_product_id = $this->request->get['filter_product_id'];
+                } else {
+                    $filter_product_id = null;
+                }
+                
+                if (isset($this->request->get['filter_order_id'])) {
+                    $filter_order_id = $this->request->get['filter_order_id'];
+                } else {
+                    $filter_order_id = null;
+                }
+
+                if (isset($this->request->get['filter_code'])) {
+                    $filter_code = $this->request->get['filter_code'];
+                } else {
+                    $filter_code = null;
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $filter_status = $this->request->get['filter_status'];
+                } else {
+                    $filter_status = null;
+                }
+                
+                if (isset($this->request->get['filter_redeem'])) {
+                    $filter_redeem = $this->request->get['filter_redeem'];
+                } else {
+                    $filter_redeem = null;
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $filter_date_added = $this->request->get['filter_date_added'];
+                } else {
+                    $filter_date_added = null;
+                }
             
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -163,7 +320,35 @@ class ControllerSaleRedeem extends Controller {
 			$page = 1;
 		}
 				
-		$url = '';
+		$url = ''; 
+                
+                if (isset($this->request->get['filter_redeem_id'])) {
+                    $url .= '&filter_redeem_id=' . $this->request->get['filter_redeem_id'];
+                }
+                
+                if (isset($this->request->get['filter_product_id'])) {
+                    $url .= '&filter_product_id=' . $this->request->get['filter_product_id'];
+                }
+                
+                if (isset($this->request->get['filter_order_id'])) {
+                    $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+                }
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_redeem'])) {
+                    $url .= '&filter_redeem=' . $this->request->get['filter_redeem'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 			
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -198,13 +383,20 @@ class ControllerSaleRedeem extends Controller {
 		$this->data['redeems'] = array();
 
 		$data = array(
+                        'filter_redeem_id' => $filter_redeem_id,
+                        'filter_product_id' => $filter_product_id,
+                        'filter_order_id' => $filter_order_id,
+                        'filter_code' => $filter_code,
+                        'filter_status' => $filter_status,
+                        'filter_redeem' => $filter_redeem,
+                        'filter_date_added' => $filter_date_added,
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
 			'limit' => $this->config->get('config_admin_limit')
 		);
 		
-		$redeem_total = $this->model_sale_redeem->getTotalRedeems();
+		$redeem_total = $this->model_sale_redeem->getTotalRedeems($data);
 	
 		$results = $this->model_sale_redeem->getRedeems($data);
  
@@ -269,6 +461,34 @@ class ControllerSaleRedeem extends Controller {
 		}
 
 		$url = '';
+                
+                if (isset($this->request->get['filter_redeem_id'])) {
+                    $url .= '&filter_redeem_id=' . $this->request->get['filter_redeem_id'];
+                }
+                
+                if (isset($this->request->get['filter_product_id'])) {
+                    $url .= '&filter_product_id=' . $this->request->get['filter_product_id'];
+                }
+                
+                if (isset($this->request->get['filter_order_id'])) {
+                    $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+                }
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_redeem'])) {
+                    $url .= '&filter_redeem=' . $this->request->get['filter_redeem'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -289,6 +509,34 @@ class ControllerSaleRedeem extends Controller {
 		$this->data['sort_date_added'] = $this->url->link('sale/redeem', 'token=' . $this->session->data['token'] . '&sort=v.date_added' . $url, 'SSL');
 				
 		$url = '';
+                
+                if (isset($this->request->get['filter_redeem_id'])) {
+                    $url .= '&filter_redeem_id=' . $this->request->get['filter_redeem_id'];
+                }
+                
+                if (isset($this->request->get['filter_product_id'])) {
+                    $url .= '&filter_product_id=' . $this->request->get['filter_product_id'];
+                }
+                
+                if (isset($this->request->get['filter_order_id'])) {
+                    $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+                }
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_redeem'])) {
+                    $url .= '&filter_redeem=' . $this->request->get['filter_redeem'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -306,6 +554,15 @@ class ControllerSaleRedeem extends Controller {
 		$pagination->url = $this->url->link('sale/redeem', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+                
+                
+                $this->data['filter_redeem_id'] = $filter_redeem_id;
+                $this->data['filter_product_id'] = $filter_product_id;
+                $this->data['filter_order_id'] = $filter_order_id;
+                $this->data['filer_code'] = $filter_code;
+                $this->data['filter_status'] = $filter_status;
+                $this->data['filter_redeem'] = $filter_redeem;
+                $this->data['filter_date_added'] = $filter_date_added;
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -392,6 +649,34 @@ class ControllerSaleRedeem extends Controller {
 		}
 				
 		$url = '';
+                
+                if (isset($this->request->get['filter_redeem_id'])) {
+                    $url .= '&filter_redeem_id=' . $this->request->get['filter_redeem_id'];
+                }
+                
+                if (isset($this->request->get['filter_product_id'])) {
+                    $url .= '&filter_product_id=' . $this->request->get['filter_product_id'];
+                }
+                
+                if (isset($this->request->get['filter_order_id'])) {
+                    $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+                }
+                
+                if (isset($this->request->get['filter_code'])) {
+                    $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+
+                if (isset($this->request->get['filter_status'])) {
+                    $url .= '&filter_status=' . $this->request->get['filter_status'];
+                }
+
+                if (isset($this->request->get['filter_redeem'])) {
+                    $url .= '&filter_redeem=' . $this->request->get['filter_redeem'];
+                }
+
+                if (isset($this->request->get['filter_date_added'])) {
+                    $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+                }
 			
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];

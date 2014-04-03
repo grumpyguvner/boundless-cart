@@ -61,6 +61,41 @@
             </tr>
           </thead>
           <tbody>
+              <tr class="filter">
+              <td></td>
+              <td align="right"><input type="text" name="filter_redeem_id" value="<?php echo $filter_redeem_id; ?>" size="4" style="text-align: right;" /></td>
+              <td align="left"><input type="text" name="filter_product_id" value="<?php echo $filter_product_id; ?>" size="4" style="text-align: right;" /></td>
+              <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" size="4" style="text-align: right;" /></td>
+              <td align="left"><input type="text" name="filter_code" value="<?php echo $filter_code; ?>" size="10" /></td>
+              <td><select name="filter_status">
+                  <option value="*"></option>
+                  <?php if ($filter_status) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <?php } ?>
+                  <?php if (!is_null($filter_status) && !$filter_status) { ?>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select></td>
+              <td><select name="filter_redeem">
+                  <option value="*"></option>
+                  <?php if ($filter_redeem) { ?>
+                  <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_yes; ?></option>
+                  <?php } ?>
+                  <?php if (!is_null($filter_redeem) && !$filter_redeem) { ?>
+                  <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                  <?php } else { ?>
+                  <option value="0"><?php echo $text_no; ?></option>
+                  <?php } ?>
+                </select></td>
+              <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="date" /></td>
+              <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
+            </tr>
             <?php if ($redeems) { ?>
             <?php foreach ($redeems as $redeem) { ?>
             <tr>
@@ -69,9 +104,9 @@
                 <?php } else { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $redeem['redeem_id']; ?>" />
                 <?php } ?></td>
-              <td class="left"><?php echo $redeem['redeem_id']; ?></td>
+              <td class="right"><?php echo $redeem['redeem_id']; ?></td>
               <td class="left"><a href="<?php echo $redeem['product_link']; ?>"><?php echo $redeem['product_id']; ?></a> - <?php echo $redeem['product_model']; ?></td>
-              <td class="left"><a href="<?php echo $redeem['order_link']; ?>"><?php echo $redeem['order_id']; ?></a></td>
+              <td class="right"><a href="<?php echo $redeem['order_link']; ?>"><?php echo $redeem['order_id']; ?></a></td>
               <td class="left"><?php echo $redeem['code']; ?></td>
               <td class="left">
                   <?php
@@ -111,28 +146,65 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-function sendVoucher(redeem_id) {
-	$.ajax({
-		url: 'index.php?route=sale/redeem/send&token=<?php echo $token; ?>&redeem_id=' + redeem_id,
-		type: 'post',
-		dataType: 'json',
-		beforeSend: function() {
-			$('.success, .warning').remove();
-			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
-		},
-		complete: function() {
-			$('.attention').remove();
-		},
-		success: function(json) {
-			if (json['error']) {
-				$('.box').before('<div class="warning">' + json['error'] + '</div>');
-			}
-			
-			if (json['success']) {
-				$('.box').before('<div class="success">' + json['success'] + '</div>');
-			}		
-		}
-	});
+function filter() {
+	url = 'index.php?route=sale/redeem&token=<?php echo $token; ?>';
+	
+	var filter_redeem_id = $('input[name=\'filter_redeem_id\']').attr('value');
+	
+	if (filter_redeem_id) {
+		url += '&filter_redeem_id=' + encodeURIComponent(filter_redeem_id);
+	}
+        
+	var filter_product_id = $('input[name=\'filter_product_id\']').attr('value');
+	
+	if (filter_product_id) {
+		url += '&filter_product_id=' + encodeURIComponent(filter_product_id);
+	}
+        
+	var filter_order_id = $('input[name=\'filter_order_id\']').attr('value');
+	
+	if (filter_order_id) {
+		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
+        }
+        
+	var filter_code = $('input[name=\'filter_code\']').attr('value');
+	
+	if (filter_code) {
+		url += '&filter_code=' + encodeURIComponent(filter_code);
+	}
+        
+	var filter_status = $('select[name=\'filter_status\']').attr('value');
+	
+	if (filter_status != '*') {
+		url += '&filter_status=' + encodeURIComponent(filter_status);
+	}	
+        
+	var filter_redeem = $('select[name=\'filter_redeem\']').attr('value');
+	
+	if (filter_redeem != '*') {
+		url += '&filter_redeem=' + encodeURIComponent(filter_redeem);
+	}	
+	
+	var filter_date_added = $('input[name=\'filter_date_added\']').attr('value');
+	
+	if (filter_date_added) {
+		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+	}
+	
+				
+	location = url;
 }
+//--></script>  
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
+});
+//--></script> 
+<script type="text/javascript"><!--
+$('#form input').keydown(function(e) {
+	if (e.keyCode == 13) {
+		filter();
+	}
+});
 //--></script> 
 <?php echo $footer; ?>
