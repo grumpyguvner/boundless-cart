@@ -219,8 +219,8 @@ class ModelSaleVoucher extends Model {
 		}
 	}
 			
-	public function getTotalVouchers() {
-      	$sql = "SELECT COUNT(v.*) AS total FROM " . DB_PREFIX . "voucher v LEFT JOIN " . DB_PREFIX . "voucher_history vh ON vh.voucher_id = v.voucher_id ";
+	public function getTotalVouchers($data) {
+      	$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher v LEFT JOIN " . DB_PREFIX . "voucher_history vh ON vh.voucher_id = v.voucher_id ";
                 
                 if (!empty($data['filter_code'])) {
 			$sql .= " WHERE v.code LIKe '" . $this->db->escape($data['filter_code']) . "%'";
@@ -251,9 +251,9 @@ class ModelSaleVoucher extends Model {
                 if (isset($data['filter_used']) && !is_null($data['filter_used'])) {
                     if ($data['filter_used'])
                     {
-                        $sql .= " AND vh.amount";
+                        $sql .= " AND (SELECT sum(amount) FROM " . DB_PREFIX . "voucher_history vh WHERE vh.voucher_id = v.voucher_id)";
                     } else {
-                        $sql .= " AND vh.amount is NULL";
+                        $sql .= " AND (SELECT sum(amount) FROM " . DB_PREFIX . "voucher_history vh WHERE vh.voucher_id = v.voucher_id) is NULL";
                     }
                 }
 
@@ -261,7 +261,6 @@ class ModelSaleVoucher extends Model {
 			$sql .= " AND DATE(v.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
                 
-                $sql .= ' GROUP BY v.voucher_id';
                 
                 $query = $this->db->query($sql);
 		
