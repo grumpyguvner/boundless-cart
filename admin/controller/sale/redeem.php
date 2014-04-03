@@ -559,7 +559,7 @@ class ControllerSaleRedeem extends Controller {
                 $this->data['filter_redeem_id'] = $filter_redeem_id;
                 $this->data['filter_product_id'] = $filter_product_id;
                 $this->data['filter_order_id'] = $filter_order_id;
-                $this->data['filer_code'] = $filter_code;
+                $this->data['filter_code'] = $filter_code;
                 $this->data['filter_status'] = $filter_status;
                 $this->data['filter_redeem'] = $filter_redeem;
                 $this->data['filter_date_added'] = $filter_date_added;
