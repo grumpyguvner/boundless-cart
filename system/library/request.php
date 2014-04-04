@@ -30,7 +30,7 @@ class Request {
 	    		$data[$this->clean($key)] = $this->clean($value);
 	  		}
 		} else { 
-	  		$data = htmlspecialchars($data, ENT_COMPAT);
+	  		$data = htmlspecialchars(trim($data), ENT_COMPAT);
 		}
 
 		return $data;

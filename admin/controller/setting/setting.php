@@ -1,4 +1,4 @@
- <?php
+<?php
 class ControllerSettingSetting extends Controller {
 	private $error = array();
  
@@ -85,6 +85,8 @@ class ControllerSettingSetting extends Controller {
         $this->data['entry_anonymous_review'] = $this->language->get('entry_anonymous_review');
 		$this->data['entry_download'] = $this->language->get('entry_download');
                 $this->data['entry_redeem'] = $this->language->get('entry_redeem');
+                $this->data['entry_auto_model'] = $this->language->get('entry_auto_model');
+                $this->data['entry_url_mask'] = $this->language->get('entry_url_mask');
 		$this->data['entry_upload_allowed'] = $this->language->get('entry_upload_allowed');
 		$this->data['entry_voucher_min'] = $this->language->get('entry_voucher_min');
 		$this->data['entry_voucher_max'] = $this->language->get('entry_voucher_max');
@@ -567,6 +569,18 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_redeem'] = $this->request->post['config_redeem'];
 		} else {
 			$this->data['config_redeem'] = $this->config->get('config_redeem');
+		}
+                
+                if (isset($this->request->post['config_auto_model'])) {
+			$this->data['config_auto_model'] = $this->request->post['config_auto_model'];
+		} else {
+			$this->data['config_auto_model'] = $this->config->get('config_auto_model');
+		}
+                
+                if (isset($this->request->post['config_url_mask'])) {
+			$this->data['config_url_mask'] = $this->request->post['config_url_mask'];
+		} else {
+			$this->data['config_url_mask'] = $this->config->get('config_url_mask');
 		}
 		
 		if (isset($this->request->post['config_upload_allowed'])) {

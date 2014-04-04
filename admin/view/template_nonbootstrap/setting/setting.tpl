@@ -366,6 +366,24 @@
                 <?php } ?></td>
             </tr>
             <tr>
+              <td><?php echo $entry_auto_model; ?></td>
+              <td><?php if ($config_auto_model) { ?>
+                <input type="radio" name="config_auto_model" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_auto_model" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_auto_model" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_auto_model" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_url_mask; ?></td>
+              <td><input type="text" name="config_url_mask" value="<?php echo $config_url_mask; ?>" /></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_upload_allowed; ?></td>
               <td><textarea name="config_upload_allowed" cols="40" rows="5"><?php echo $config_upload_allowed; ?></textarea></td>
             </tr>
