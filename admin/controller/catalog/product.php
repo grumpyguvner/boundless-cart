@@ -74,9 +74,13 @@ class ControllerCatalogProduct extends Controller {
         $this->load->model('catalog/product');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-            foreach ($this->request->post['product_image'] as &$image) {
-                if (empty($image['image']) && !empty($image['video'])) {
-                   $image['image'] = 'http://img.youtube.com/vi/' . $image['video'] . '/0.jpg'; 
+            
+            if (isset($this->request->post['product_image']))
+            {
+                foreach ($this->request->post['product_image'] as &$image) {
+                    if (empty($image['image']) && !empty($image['video'])) {
+                       $image['image'] = 'http://img.youtube.com/vi/' . $image['video'] . '/0.jpg'; 
+                    }
                 }
             }
             
@@ -547,7 +551,7 @@ class ControllerCatalogProduct extends Controller {
         $this->data['text_none'] = $this->language->get('text_none');
         $this->data['text_percent'] = $this->language->get('text_percent');
         $this->data['text_amount'] = $this->language->get('text_amount');
-        $this->data['text_link_youtube'] = $this->language->get('text_link_youtube');
+        $this->data['text_auto_model'] = $this->language->get('text_auto_model');
 
         $this->data['entry_name'] = $this->language->get('entry_name');
 	$this->data['entry_meta_title'] = $this->language->get('entry_meta_title');
@@ -736,14 +740,6 @@ class ControllerCatalogProduct extends Controller {
             $this->data['product_description'] = array();
         }
         
-        if (isset($this->request->post['product_brief_summary'])) {
-            $this->data['product_brief_summary'] = $this->request->post['product_brief_summary'];
-        } elseif (isset($this->request->get['product_id'])) {
-            $this->data['product_brief_summary'] = $this->model_catalog_product->getProductDescriptions($this->request->get['product_id']);
-        } else {
-            $this->data['product_brief_summary'] = array();
-        }
-        
         if (isset($this->request->post['model'])) {
             $this->data['model'] = $this->request->post['model'];
         } elseif (!empty($product_info)) {
@@ -819,13 +815,14 @@ class ControllerCatalogProduct extends Controller {
         } else {
             $this->data['product_store'] = array(0);
         }
-
-        if (isset($this->request->post['keyword'])) {
-            $this->data['keyword'] = $this->request->post['keyword'];
-        } elseif (!empty($product_info)) {
-            $this->data['keyword'] = $product_info['keyword'];
+        
+        if (isset($this->request->post['keywords'])) {
+            $this->data['keywords'] = $this->request->post['keyword'];
+        } elseif (isset($this->request->get['product_id'])) {
+            $this->load->model('module/url_alias');
+            $this->data['keywords'] = $this->model_module_url_alias->getKeywords('product_id=' . (int)$this->request->get['product_id']);
         } else {
-            $this->data['keyword'] = '';
+            $this->data['keywords'] = array();
         }
 
         if (isset($this->request->post['image'])) {
@@ -1281,6 +1278,12 @@ class ControllerCatalogProduct extends Controller {
         } else {
             $this->data['product_layout'] = array();
         }
+        
+        if (!isset($this->request->get['product_id']) && $this->config->get('config_auto_model')) {
+            $this->data['auto_model'] = true;
+        } else {
+            $this->data['auto_model'] = false;
+        }
 
         $this->load->model('design/layout');
 
@@ -1310,14 +1313,11 @@ class ControllerCatalogProduct extends Controller {
             }
         }
         
-        foreach ($this->request->post['product_brief_summary'] as $language_id => $value) {
-            if ((utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 255)) {
-                $this->error['name'][$language_id] = $this->language->get('error_name');
+        if (isset($this->request->get['product_id']) || !$this->config->get('config_auto_model'))
+        {
+            if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
+                $this->error['model'] = $this->language->get('error_model');
             }
-        }
-
-        if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
-            $this->error['model'] = $this->language->get('error_model');
         }
 
         if ($this->error && !isset($this->error['warning'])) {

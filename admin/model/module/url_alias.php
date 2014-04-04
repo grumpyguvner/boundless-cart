@@ -42,6 +42,23 @@ class ModelModuleUrlAlias extends Model {
 
             return $query->row;
 	}
+		
+	public function getKeywords($query) {
+            
+            $keywords = array();
+            
+            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE query = '" . $this->db->escape($query) . "'");
+            
+            if ($query->num_rows)
+            {
+               foreach ($query->rows as $row)
+               {
+                   $keywords[$row['language_id']][] = $row;
+               }
+            }
+
+            return $keywords;
+	}
         
         public function seoUrl($string) {
             //Unwanted:  {UPPERCASE} ; / ? : @ & = + $ , . ! ~ * ' ( )

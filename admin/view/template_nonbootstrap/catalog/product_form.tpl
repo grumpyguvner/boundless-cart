@@ -56,10 +56,6 @@
                 <td><textarea name="product_description[<?php echo $language['language_id']; ?>][description]" id="description<?php echo $language['language_id']; ?>"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['description'] : ''; ?></textarea></td>
               </tr>
               <tr>
-                <td><?php echo $entry_keyword; ?></td>
-                <td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][keyword]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['keyword'] : ''; ?>" /></td>
-              </tr>
-              <tr>
                 <td><?php echo $entry_tag; ?></td>
                 <td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][tag]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['tag'] : ''; ?>" size="80" /></td>
               </tr>
@@ -69,6 +65,16 @@
         </div>
         <div id="tab-data">
           <table class="form">
+            <?php
+            if ($auto_model) {
+            ?>
+              <tr>
+              <td><?php echo $entry_model; ?></td>
+              <td><?php echo $text_auto_model; ?><input type="hidden" name="model" value="<?php echo $model; ?>" /></td>
+            </tr>
+            <?php
+            } else {
+            ?>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_model; ?></td>
               <td><input type="text" name="model" value="<?php echo $model; ?>" />
@@ -76,6 +82,9 @@
                 <span class="error"><?php echo $error_model; ?></span>
                 <?php } ?></td>
             </tr>
+            <?php
+            }
+            ?>
             <tr>
               <td><?php echo $entry_sku; ?></td>
               <td><input type="text" name="sku" value="<?php echo $sku; ?>" /></td>
@@ -204,8 +213,20 @@
                 <input type="hidden" name="redeem_theme_id" value="<?php echo $redeem_theme_id; ?>">
             <?php } ?>
             <tr>
-              <td><?php echo $entry_keyword; ?></td>
-              <td><input type="text" name="keyword" value="<?php echo $keyword; ?>" /></td>
+              <td><?php echo $entry_keywords; ?></td>
+              <td><?php foreach ($languages as $language) { ?>
+              <div><input type="text" name="keywords[<?php echo $language['language_id']; ?>][]" value="<?php echo isset($keywords[$language['language_id']]) ? $keywords[$language['language_id']][0]['keyword'] : ''; ?>" />
+              <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></div>
+              <?php } ?>
+              <?php 
+              if (isset($keywords[0]) && !empty($keywords[0]))
+              {
+              foreach ($keywords[0] as $keyword) { ?>
+              <div><input type="text" name="keywords[0][]" value="<?php echo $keyword['keyword']; ?>" /> &nbsp;<img src="view/image/delete.png" class="keyword-delete" /></div>
+              <?php } ?>
+              <?php } ?>
+              <div id="keyword-add"><input name="keywords[0][]" value="" />
+            &nbsp;<img src="view/image/add.png" alt="" /></div></td>
             </tr>
             <tr>
               <td><?php echo $entry_image; ?></td>
@@ -1261,7 +1282,16 @@ function addImage() {
 	
 	image_row++;
 }
-//--></script> 
+//--></script>
+<script type="text/javascript"><!--
+    $('#keyword-add img').click(function () {
+         $('#keyword-add').before('<div><input type="text" name="keywords[0][]" value="' + $('#keyword-add input').val() + '" /> &nbsp;<img src="view/image/delete.png" class="keyword-delete" /></div>');   
+         $('#keyword-add input').val('');      
+    });
+    $('.keyword-delete').click(function () {
+         $(this).parent('div').remove();      
+    });
+//--></script>
 <script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
 $('.date').datepicker({dateFormat: 'yy-mm-dd'});
