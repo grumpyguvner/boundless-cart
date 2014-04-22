@@ -56,6 +56,10 @@ class ModelSaleRedeem extends Model {
                         $sql .= " AND code LIKE '" . $this->db->escape($data['filter_code']) . "%'";
                 }
                 
+                if (!empty($data['filter_option'])) {
+                        $sql .= " AND option LIKE '%" . $this->db->escape($data['filter_option']) . "%'";
+                }
+                
                 if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
                         $sql .= " AND status = '" . (int)$data['filter_status'] . "'";
                 }
@@ -73,6 +77,7 @@ class ModelSaleRedeem extends Model {
 			'product_id',
 			'order_id',
 			'code',
+                        'option',
 			'status',
 			'redeem',
 			'date_added'
@@ -235,6 +240,10 @@ class ModelSaleRedeem extends Model {
                 
                 if (!empty($data['filter_code'])) {
                         $sql .= " AND code LIKE '" . (int)$data['filter_code'] . "%'";
+                }
+                
+                if (!empty($data['filter_option'])) {
+                        $sql .= " AND option LIKE '%" . $this->db->escape($data['filter_option']) . "%'";
                 }
                 
                 if (isset($data['filter_status']) && !is_null($data['filter_status'])) {

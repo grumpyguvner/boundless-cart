@@ -41,6 +41,9 @@ class ControllerSaleRedeem extends Controller {
                 if (isset($this->request->get['filter_code'])) {
                     $url .= '&filter_code=' . $this->request->get['filter_code'];
                 }
+                if (isset($this->request->get['filter_option'])) {
+                    $url .= '&filter_option=' . $this->request->get['filter_option'];
+                }
 
                 if (isset($this->request->get['filter_status'])) {
                     $url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -100,6 +103,9 @@ class ControllerSaleRedeem extends Controller {
                 
                 if (isset($this->request->get['filter_code'])) {
                     $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+                if (isset($this->request->get['filter_option'])) {
+                    $url .= '&filter_option=' . $this->request->get['filter_option'];
                 }
 
                 if (isset($this->request->get['filter_status'])) {
@@ -163,6 +169,9 @@ class ControllerSaleRedeem extends Controller {
                 if (isset($this->request->get['filter_code'])) {
                     $url .= '&filter_code=' . $this->request->get['filter_code'];
                 }
+                if (isset($this->request->get['filter_option'])) {
+                    $url .= '&filter_option=' . $this->request->get['filter_option'];
+                }
 
                 if (isset($this->request->get['filter_status'])) {
                     $url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -225,6 +234,9 @@ class ControllerSaleRedeem extends Controller {
                 if (isset($this->request->get['filter_code'])) {
                     $url .= '&filter_code=' . $this->request->get['filter_code'];
                 }
+                if (isset($this->request->get['filter_option'])) {
+                    $url .= '&filter_option=' . $this->request->get['filter_option'];
+                }
 
                 if (isset($this->request->get['filter_status'])) {
                     $url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -284,6 +296,12 @@ class ControllerSaleRedeem extends Controller {
                     $filter_code = null;
                 }
 
+                if (isset($this->request->get['filter_option'])) {
+                    $filter_option = $this->request->get['filter_option'];
+                } else {
+                    $filter_option = null;
+                }
+
                 if (isset($this->request->get['filter_status'])) {
                     $filter_status = $this->request->get['filter_status'];
                 } else {
@@ -337,6 +355,9 @@ class ControllerSaleRedeem extends Controller {
                 if (isset($this->request->get['filter_code'])) {
                     $url .= '&filter_code=' . $this->request->get['filter_code'];
                 }
+                if (isset($this->request->get['filter_option'])) {
+                    $url .= '&filter_option=' . $this->request->get['filter_option'];
+                }
 
                 if (isset($this->request->get['filter_status'])) {
                     $url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -387,6 +408,7 @@ class ControllerSaleRedeem extends Controller {
                         'filter_product_id' => $filter_product_id,
                         'filter_order_id' => $filter_order_id,
                         'filter_code' => $filter_code,
+                        'filter_option' => $filter_option,
                         'filter_status' => $filter_status,
                         'filter_redeem' => $filter_redeem,
                         'filter_date_added' => $filter_date_added,
@@ -416,6 +438,7 @@ class ControllerSaleRedeem extends Controller {
 				'product_id'       => $result['product_id'],
 				'order_id'       => $result['order_id'],
 				'code'         => $result['code'],
+				'option'         => $result['option'],
 				'status'      => $result['status'],
 				'redeem'     => $result['redeem'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -436,6 +459,7 @@ class ControllerSaleRedeem extends Controller {
 		$this->data['column_product_id'] = $this->language->get('column_product_id');
 		$this->data['column_order_id'] = $this->language->get('column_order_id');
 		$this->data['column_code'] = $this->language->get('column_code');
+		$this->data['column_option'] = $this->language->get('column_option');
 		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_redeem'] = $this->language->get('column_redeem');
                 $this->data['column_date_added'] = $this->language->get('column_date_added');
@@ -477,6 +501,9 @@ class ControllerSaleRedeem extends Controller {
                 if (isset($this->request->get['filter_code'])) {
                     $url .= '&filter_code=' . $this->request->get['filter_code'];
                 }
+                if (isset($this->request->get['filter_option'])) {
+                    $url .= '&filter_option=' . $this->request->get['filter_option'];
+                }
 
                 if (isset($this->request->get['filter_status'])) {
                     $url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -501,6 +528,7 @@ class ControllerSaleRedeem extends Controller {
 		}
 		
 		$this->data['sort_code'] = $this->url->link('sale/redeem', 'token=' . $this->session->data['token'] . '&sort=v.code' . $url, 'SSL');
+		$this->data['sort_option'] = $this->url->link('sale/redeem', 'token=' . $this->session->data['token'] . '&sort=v.option' . $url, 'SSL');
 		$this->data['sort_from'] = $this->url->link('sale/redeem', 'token=' . $this->session->data['token'] . '&sort=v.from_name' . $url, 'SSL');
 		$this->data['sort_to'] = $this->url->link('sale/redeem', 'token=' . $this->session->data['token'] . '&sort=v.to_name' . $url, 'SSL');
 		$this->data['sort_theme'] = $this->url->link('sale/redeem', 'token=' . $this->session->data['token'] . '&sort=theme' . $url, 'SSL');
@@ -524,6 +552,9 @@ class ControllerSaleRedeem extends Controller {
                 
                 if (isset($this->request->get['filter_code'])) {
                     $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+                if (isset($this->request->get['filter_option'])) {
+                    $url .= '&filter_option=' . $this->request->get['filter_option'];
                 }
 
                 if (isset($this->request->get['filter_status'])) {
@@ -560,6 +591,7 @@ class ControllerSaleRedeem extends Controller {
                 $this->data['filter_product_id'] = $filter_product_id;
                 $this->data['filter_order_id'] = $filter_order_id;
                 $this->data['filter_code'] = $filter_code;
+                $this->data['filter_option'] = $filter_option;
                 $this->data['filter_status'] = $filter_status;
                 $this->data['filter_redeem'] = $filter_redeem;
                 $this->data['filter_date_added'] = $filter_date_added;
@@ -588,6 +620,7 @@ class ControllerSaleRedeem extends Controller {
         $this->data['entry_product_id'] = $this->language->get('entry_product_id');
         $this->data['entry_order_id'] = $this->language->get('entry_order_id');
         $this->data['entry_code'] = $this->language->get('entry_code');
+        
         $this->data['entry_status'] = $this->language->get('entry_status');
         $this->data['entry_redeem'] = $this->language->get('entry_redeem');
         $this->data['entry_date_added'] = $this->language->get('entry_date_added');
@@ -664,6 +697,9 @@ class ControllerSaleRedeem extends Controller {
                 
                 if (isset($this->request->get['filter_code'])) {
                     $url .= '&filter_code=' . $this->request->get['filter_code'];
+                }
+                if (isset($this->request->get['filter_option'])) {
+                    $url .= '&filter_option=' . $this->request->get['filter_option'];
                 }
 
                 if (isset($this->request->get['filter_status'])) {

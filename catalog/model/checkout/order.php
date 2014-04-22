@@ -9,9 +9,11 @@ class ModelCheckoutOrder extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_product SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', name = '" . $this->db->escape($product['name']) . "', model = '" . $this->db->escape($product['model']) . "', quantity = '" . (int)$product['quantity'] . "', price = '" . (float)$product['price'] . "', total = '" . (float)$product['total'] . "', tax = '" . (float)$product['tax'] . "', reward = '" . (int)$product['reward'] . "'");
  
 			$order_product_id = $this->db->getLastId();
-
+                        
+                        $options = array();
 			foreach ($product['option'] as $option) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "order_option SET order_id = '" . (int)$order_id . "', order_product_id = '" . (int)$order_product_id . "', product_option_id = '" . (int)$option['product_option_id'] . "', product_option_value_id = '" . (int)$option['product_option_value_id'] . "', name = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
+                                $options[] = $option['value'];
 			}
 				
 			foreach ($product['download'] as $download) {
@@ -22,7 +24,7 @@ class ModelCheckoutOrder extends Model {
                     if ($this->config->get('config_redeem') == 1) {
                         if ($product['redeem'] > 0) {
                             for ($i = 0; $i < (int)$product['quantity']; $i++) {
-                                $this->db->query("INSERT INTO " . DB_PREFIX . "redeem SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', code = 'W" . substr(md5(mt_rand()), 0, 6) . "-" . (int)$order_id . "', redeem_theme_id = '" . (int)$product['redeem_theme_id'] . "', status = '1', `redeem` = '0', date_added = NOW()");
+                                $this->db->query("INSERT INTO " . DB_PREFIX . "redeem SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "', name = '" . $this->db->escape($product['name']) . "', `option` = '" . $this->db->escape(implode(', ',$options)) . "', code = 'W" . substr(md5(mt_rand()), 0, 6) . "-" . (int)$order_id . "', redeem_theme_id = '" . (int)$product['redeem_theme_id'] . "', status = '1', redeem = '0', date_added = NOW()");
                             }
                         }
                     }
@@ -255,6 +257,7 @@ class ModelCheckoutOrder extends Model {
 
                                             //replace the keyword with the redeem code.
                                             $content_message = str_replace("[CODE]", $redeem['code'], $theme_info['content']);
+                                            $content_message = str_replace("[OPTION]", $redeem['option'], $content_message);
                                             
                                             $content_message = preg_replace("%\[DATE(.*?)\]%ie", 'date("j F Y", strtotime("$1"))', $content_message);
 

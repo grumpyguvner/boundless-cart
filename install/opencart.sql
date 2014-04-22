@@ -2849,6 +2849,8 @@ CREATE TABLE `oc_redeem` (
   `redeem_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `option` varchar(255) NOT NULL,
   `code` varchar(10) NOT NULL,
   `redeem_theme_id` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL,

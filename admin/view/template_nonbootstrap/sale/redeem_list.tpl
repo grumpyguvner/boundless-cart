@@ -32,6 +32,11 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_from; ?>"><?php echo $column_product_id; ?></a>
                 <?php } ?></td>
+              <td class="left"><?php if ($sort == 'option') { ?>
+                <a href="<?php echo $sort_option; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_option; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_option; ?>"><?php echo $column_option; ?></a>
+                <?php } ?></td>
               <td class="left"><?php if ($sort == 'order_id') { ?>
                 <a href="<?php echo $sort_to; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_order_id; ?></a>
                 <?php } else { ?>
@@ -65,6 +70,7 @@
               <td></td>
               <td align="right"><input type="text" name="filter_redeem_id" value="<?php echo $filter_redeem_id; ?>" size="4" style="text-align: right;" /></td>
               <td align="left"><input type="text" name="filter_product_id" value="<?php echo $filter_product_id; ?>" size="4" style="text-align: right;" /></td>
+              <td align="left"><input type="text" name="filter_option" value="<?php echo $filter_option; ?>" size="10" /></td>
               <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" size="4" style="text-align: right;" /></td>
               <td align="left"><input type="text" name="filter_code" value="<?php echo $filter_code; ?>" size="10" /></td>
               <td><select name="filter_status">
@@ -99,13 +105,14 @@
             <?php if ($redeems) { ?>
             <?php foreach ($redeems as $redeem) { ?>
             <tr>
-              <td style="text-align: center;"><?php if ($redeem['selected']) { ?>
+              <td style="text-align: center;"><?php if (isset($redeem['selected']) && $redeem['selected']) { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $redeem['redeem_id']; ?>" checked="checked" />
                 <?php } else { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $redeem['redeem_id']; ?>" />
                 <?php } ?></td>
               <td class="right"><?php echo $redeem['redeem_id']; ?></td>
               <td class="left"><a href="<?php echo $redeem['product_link']; ?>"><?php echo $redeem['product_id']; ?></a> - <?php echo $redeem['product_model']; ?></td>
+              <td class="left"><?php echo $redeem['option']; ?></td>
               <td class="right"><a href="<?php echo $redeem['order_link']; ?>"><?php echo $redeem['order_id']; ?></a></td>
               <td class="left"><?php echo $redeem['code']; ?></td>
               <td class="left">
@@ -135,7 +142,7 @@
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="center" colspan="9"><?php echo $text_no_results; ?></td>
+              <td class="center" colspan="10"><?php echo $text_no_results; ?></td>
             </tr>
             <?php } ?>
           </tbody>
@@ -171,6 +178,12 @@ function filter() {
 	
 	if (filter_code) {
 		url += '&filter_code=' + encodeURIComponent(filter_code);
+	}
+        
+	var filter_option = $('input[name=\'filter_option\']').attr('value');
+	
+	if (filter_option) {
+		url += '&filter_option=' + encodeURIComponent(filter_code);
 	}
         
 	var filter_status = $('select[name=\'filter_status\']').attr('value');

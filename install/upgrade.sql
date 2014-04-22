@@ -660,3 +660,8 @@ CREATE TABLE IF NOT EXISTS `oc_redeem_theme_description` (
   `name` varchar(32) NOT NULL,
   PRIMARY KEY (`redeem_theme_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+#### Start 1.5.4:BC1.2.20
+
+ALTER TABLE oc_redeem ADD `name` varchar(255) NOT NULL AFTER product_id;
+ALTER TABLE oc_redeem ADD `option` varchar(255) NOT NULL AFTER name;
