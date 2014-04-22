@@ -217,9 +217,15 @@
           <b><?php echo $option['name']; ?>:</b><br />
           <?php foreach ($option['option_value'] as $option_value) { ?>
           <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
-          <label for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
+          <label for="option-value-<?php echo $option_value['product_option_value_id']; ?>">
+            <?php if ($price && !$option_value['price']) { ?>
+              <?php echo $option_value['name']; ?>
             <?php if ($option_value['price']) { ?>
             (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
+            <?php } ?>
+            <?php } else { ?>
+            <strong><?php echo $option_value['price']; ?></strong> : 
+              <?php echo $option_value['name']; ?>
             <?php } ?>
           </label>
           <br />

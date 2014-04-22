@@ -169,7 +169,7 @@ class ControllerProductCategory extends Controller {
                                 $image = false;
                         }
 
-                        if (!$this->config->get('config_block_buy') && (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price'))) {
+                        if ((float)$result['price'] && !$this->config->get('config_block_buy') && (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price'))) {
                                 $price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
                         } else {
                                 $price = false;
