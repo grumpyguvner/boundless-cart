@@ -199,9 +199,20 @@
           <select name="option[<?php echo $option['product_option_id']; ?>]">
             <option value=""><?php echo $text_select; ?></option>
             <?php foreach ($option['option_value'] as $option_value) { ?>
-            <option value="<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
-            <?php if ($option_value['price']) { ?>
-            (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
+            <option value="<?php echo $option_value['product_option_value_id']; ?>">
+                
+            <?php if ($price && !$option_value['price']) { ?>
+                <?php echo $option_value['name']; ?>
+                <?php if ($option_value['price']) { ?>
+                (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
+                <?php } ?>
+            <?php } else { ?>
+                <?php
+                if ($text_option != 'Value') {
+                ?>
+            <strong><?php echo $option_value['price']; ?></strong> : 
+            <?php } ?>
+              <?php echo $option_value['name']; ?>
             <?php } ?>
             </option>
             <?php } ?>
