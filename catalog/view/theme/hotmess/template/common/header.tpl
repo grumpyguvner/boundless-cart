@@ -135,6 +135,7 @@ DD_belatedPNG.fix('#logo img');
                   <?php } ?>
                 </li>
         <?php } ?>
+            <li class="parent"><a href="/hot-looks">LOOKBOOKS</a></li>
         </ul>
     </div>
 

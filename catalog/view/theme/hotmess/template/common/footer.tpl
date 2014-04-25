@@ -13,6 +13,7 @@
                             <div class="column_content">
                                 <h3><?php echo $text_information; ?></h3>
                                 <ul>
+                                    <li><a href="http://hotmessclothes.blogspot.co.uk/">BLOG</a></li>
                                     <?php 
                                     foreach ($informations as $key => $information) {
                                         if ($information['sort_order'] < 10) {
