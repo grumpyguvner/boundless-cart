@@ -36,57 +36,55 @@ class ModelSaleRedeem extends Model {
 	}
 		
 	public function getRedeems($data = array()) {
-		$sql = "SELECT * FROM " . DB_PREFIX . "redeem";
+		$sql = "SELECT r.* FROM " . DB_PREFIX . "redeem r LEFT JOIN " . DB_PREFIX . "order o ON r.order_id = o.order_id WHERE o.order_status_id > 0";
 		
 		if (!empty($data['filter_redeem_id'])) {
-			$sql .= " WHERE redeem_id = '" . (int)$data['filter_redeem_id'] . "'";
-		} else {
-                    $sql .= " WHERE 0 = 0 ";
+			$sql .= " AND r.redeem_id = '" . (int)$data['filter_redeem_id'] . "'";
                 }
                 
 		if (!empty($data['filter_product_id'])) {
-			$sql .= " AND product_id = '" . (int)$data['filter_product_id'] . "'";
+			$sql .= " AND r.product_id = '" . (int)$data['filter_product_id'] . "'";
 		}
                 
 		if (!empty($data['filter_order_id'])) {
-			$sql .= " AND order_id = '" . (int)$data['filter_order_id'] . "'";
+			$sql .= " AND r.order_id = '" . (int)$data['filter_order_id'] . "'";
 		}
                 
                 if (!empty($data['filter_code'])) {
-                        $sql .= " AND code LIKE '" . $this->db->escape($data['filter_code']) . "%'";
+                        $sql .= " AND r.code LIKE '" . $this->db->escape($data['filter_code']) . "%'";
                 }
                 
                 if (!empty($data['filter_option'])) {
-                        $sql .= " AND option LIKE '%" . $this->db->escape($data['filter_option']) . "%'";
+                        $sql .= " AND r.option LIKE '%" . $this->db->escape($data['filter_option']) . "%'";
                 }
                 
                 if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-                        $sql .= " AND status = '" . (int)$data['filter_status'] . "'";
+                        $sql .= " AND r.status = '" . (int)$data['filter_status'] . "'";
                 }
                 
                 if (isset($data['filter_redeem']) && !is_null($data['filter_redeem'])) {
-                        $sql .= " AND redeem = '" . (int)$data['filter_redeem'] . "'";
+                        $sql .= " AND r.redeem = '" . (int)$data['filter_redeem'] . "'";
                 }
 
 		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+			$sql .= " AND DATE(r.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
                 
 		$sort_data = array(
-			'redeem_id',
-			'product_id',
-			'order_id',
-			'code',
-                        'option',
-			'status',
-			'redeem',
-			'date_added'
+			'r.redeem_id',
+			'r.product_id',
+			'r.order_id',
+			'r.code',
+                        'r.option',
+			'r.status',
+			'r.redeem',
+			'r.date_added'
 		);	
 			
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];	
 		} else {
-			$sql .= " ORDER BY date_added";	
+			$sql .= " ORDER BY r.redeem_id";	
 		}
 			
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -221,41 +219,39 @@ class ModelSaleRedeem extends Model {
 	}
 			
 	public function getTotalRedeems($data = array()) {
-                $sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "redeem";
+                $sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "redeem r LEFT JOIN " . DB_PREFIX . "order o ON r.order_id = o.order_id WHERE o.order_status_id > 0";
         
 		
 		if (!empty($data['filter_redeem_id'])) {
-                    $sql .= " WHERE redeem_id = '" . (int)$data['filter_redeem_id'] . "'";
-		} else {
-                    $sql .= " WHERE 0 = 0 ";
+                    $sql .= " AND r.redeem_id = '" . (int)$data['filter_redeem_id'] . "'";
                 }
                 
 		if (!empty($data['filter_product_id'])) {
-			$sql .= " AND product_id = '" . (int)$data['filter_product_id'] . "'";
+			$sql .= " AND r.product_id = '" . (int)$data['filter_product_id'] . "'";
 		}
                 
 		if (!empty($data['filter_order_id'])) {
-			$sql .= " AND order_id = '" . (int)$data['filter_order_id'] . "'";
+			$sql .= " AND r.order_id = '" . (int)$data['filter_order_id'] . "'";
 		}
                 
                 if (!empty($data['filter_code'])) {
-                        $sql .= " AND code LIKE '" . (int)$data['filter_code'] . "%'";
+                        $sql .= " AND r.code LIKE '" . (int)$data['filter_code'] . "%'";
                 }
                 
                 if (!empty($data['filter_option'])) {
-                        $sql .= " AND option LIKE '%" . $this->db->escape($data['filter_option']) . "%'";
+                        $sql .= " AND r.option LIKE '%" . $this->db->escape($data['filter_option']) . "%'";
                 }
                 
                 if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-                        $sql .= " AND status = '" . (int)$data['filter_status'] . "'";
+                        $sql .= " AND r.status = '" . (int)$data['filter_status'] . "'";
                 }
                 
                 if (isset($data['filter_redeem']) && !is_null($data['filter_redeem'])) {
-                        $sql .= " AND redeem = '" . (int)$data['filter_redeem'] . "'";
+                        $sql .= " AND r.redeem = '" . (int)$data['filter_redeem'] . "'";
                 }
 
 		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+			$sql .= " AND DATE(r.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
                 
                 $query = $this->db->query($sql);
