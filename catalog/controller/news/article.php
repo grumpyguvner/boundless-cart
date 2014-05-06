@@ -114,7 +114,12 @@ class ControllerNewsArticle extends Controller {
 			
 			foreach ($related as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    if ($this->config->get('config_image_related_adjustment') == 'crop')
+                                    {
+                                        $image = $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    } else {
+                                        $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    }
 				} else {
 					$image = false;
 				}

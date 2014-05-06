@@ -388,92 +388,245 @@
                   <br />
                   <a onclick="image_upload('icon', 'thumb-icon');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-icon').attr('src', '<?php echo $no_image; ?>'); $('#icon').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
             </tr>
-            <tr>
+            <tr<?php echo $display; ?>>
               <td><span class="required">*</span> <?php echo $entry_image_category; ?></td>
               <td><input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" size="3" />
+                <select name="config_image_category_adjustment">
+                    <?php
+                    if ($config_image_category_adjustment != 'crop') {
+                    ?>
+                        <option selected="selected">resize</option>
+                        <option>crop</option>
+                    <?php
+                    } else {
+                    ?>
+                        <option>resize</option>
+                        <option selected="selected">crop</option>
+                    <?php
+                    } // end if
+                    ?>
+                </select>
                 <?php if ($error_image_category) { ?>
                 <span class="error"><?php echo $error_image_category; ?></span>
-                <?php } ?></td>
+                <?php } ?>
+              </td>
             </tr>
-            <tr>
+            <tr<?php echo $display; ?>>
               <td><span class="required">*</span> <?php echo $entry_image_information; ?></td>
               <td><input type="text" name="config_image_information_width" value="<?php echo $config_image_information_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_information_height" value="<?php echo $config_image_information_height; ?>" size="3" />
+                <select name="config_image_information_adjustment">
+                    <?php
+                    if ($config_image_information_adjustment != 'crop') {
+                    ?>
+                        <option selected="selected">resize</option>
+                        <option>crop</option>
+                    <?php
+                    } else {
+                    ?>
+                        <option>resize</option>
+                        <option selected="selected">crop</option>
+                    <?php
+                    } // end if
+                    ?>
+                </select>
                 <?php if ($error_image_information) { ?>
                 <span class="error"><?php echo $error_image_information; ?></span>
-                <?php } ?></td>
+                <?php } ?>
+              </td>
             </tr>
-            <tr>
+            <tr<?php echo $display; ?>>
               <td><span class="required">*</span> <?php echo $entry_image_thumb; ?></td>
               <td><input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" size="3" />
+                <select name="config_image_thumb_adjustment">
+                    <?php
+                    if ($config_image_information_adjustment != 'crop') {
+                    ?>
+                        <option selected="selected">resize</option>
+                        <option>crop</option>
+                    <?php
+                    } else {
+                    ?>
+                        <option>resize</option>
+                        <option selected="selected">crop</option>
+                    <?php
+                    } // end if
+                    ?>
+                </select>
                 <?php if ($error_image_thumb) { ?>
                 <span class="error"><?php echo $error_image_thumb; ?></span>
-                <?php } ?></td>
+                <?php } ?>
+              </td>
             </tr>
-            <tr>
+            <tr<?php echo $display; ?>>
               <td><span class="required">*</span> <?php echo $entry_image_popup; ?></td>
               <td><input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" size="3" />
+                <select name="config_image_popup_adjustment">
+                    <?php
+                    if ($config_image_popup_adjustment != 'crop') {
+                    ?>
+                        <option selected="selected">resize</option>
+                        <option>crop</option>
+                    <?php
+                    } else {
+                    ?>
+                        <option>resize</option>
+                        <option selected="selected">crop</option>
+                    <?php
+                    } // end if
+                    ?>
+                </select>
                 <?php if ($error_image_popup) { ?>
                 <span class="error"><?php echo $error_image_popup; ?></span>
                 <?php } ?></td>
             </tr>
-            <tr>
+            <tr<?php echo $display; ?>>
               <td><span class="required">*</span> <?php echo $entry_image_product; ?></td>
               <td><input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" size="3" />
+                <select name="config_image_product_adjustment">
+                    <?php
+                    if ($config_image_product_adjustment != 'crop') {
+                    ?>
+                        <option selected="selected">resize</option>
+                        <option>crop</option>
+                    <?php
+                    } else {
+                    ?>
+                        <option>resize</option>
+                        <option selected="selected">crop</option>
+                    <?php
+                    } // end if
+                    ?>
+                </select>
                 <?php if ($error_image_product) { ?>
                 <span class="error"><?php echo $error_image_product; ?></span>
                 <?php } ?></td>
             </tr>
-            <tr>
+            <tr<?php echo $display; ?>>
               <td><span class="required">*</span> <?php echo $entry_image_additional; ?></td>
               <td><input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" size="3" />
+                <select name="config_image_additional_adjustment">
+                    <?php
+                    if ($config_image_additional_adjustment != 'crop') {
+                    ?>
+                        <option selected="selected">resize</option>
+                        <option>crop</option>
+                    <?php
+                    } else {
+                    ?>
+                        <option>resize</option>
+                        <option selected="selected">crop</option>
+                    <?php
+                    } // end if
+                    ?>
+                </select>
                 <?php if ($error_image_additional) { ?>
                 <span class="error"><?php echo $error_image_additional; ?></span>
                 <?php } ?></td>
             </tr>
-            <tr>
+            <tr<?php echo $display; ?>>
               <td><span class="required">*</span> <?php echo $entry_image_related; ?></td>
               <td><input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" size="3" />
+                <select name="config_image_related_adjustment">
+                    <?php
+                    if ($config_image_related_adjustment != 'crop') {
+                    ?>
+                        <option selected="selected">resize</option>
+                        <option>crop</option>
+                    <?php
+                    } else {
+                    ?>
+                        <option>resize</option>
+                        <option selected="selected">crop</option>
+                    <?php
+                    } // end if
+                    ?>
+                </select>
                 <?php if ($error_image_related) { ?>
                 <span class="error"><?php echo $error_image_related; ?></span>
                 <?php } ?></td>
             </tr>
-            <tr>
+            <tr<?php echo $display; ?>>
               <td><span class="required">*</span> <?php echo $entry_image_compare; ?></td>
               <td><input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" size="3" />
+                <select name="config_image_compare_adjustment">
+                    <?php
+                    if ($config_image_compare_adjustment != 'crop') {
+                    ?>
+                        <option selected="selected">resize</option>
+                        <option>crop</option>
+                    <?php
+                    } else {
+                    ?>
+                        <option>resize</option>
+                        <option selected="selected">crop</option>
+                    <?php
+                    } // end if
+                    ?>
+                </select>
                 <?php if ($error_image_compare) { ?>
                 <span class="error"><?php echo $error_image_compare; ?></span>
                 <?php } ?></td>
             </tr>
-            <tr>
+            <tr<?php echo $display; ?>>
               <td><span class="required">*</span> <?php echo $entry_image_wishlist; ?></td>
               <td><input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" size="3" />
+                <select name="config_image_wishlist_adjustment">
+                    <?php
+                    if ($config_image_wishlist_adjustment != 'crop') {
+                    ?>
+                        <option selected="selected">resize</option>
+                        <option>crop</option>
+                    <?php
+                    } else {
+                    ?>
+                        <option>resize</option>
+                        <option selected="selected">crop</option>
+                    <?php
+                    } // end if
+                    ?>
+                </select>
                 <?php if ($error_image_wishlist) { ?>
                 <span class="error"><?php echo $error_image_wishlist; ?></span>
                 <?php } ?></td>
             </tr>
-            <tr>
+            <tr<?php echo $display; ?>>
               <td><span class="required">*</span> <?php echo $entry_image_cart; ?></td>
               <td><input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" size="3" />
                 x
                 <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" size="3" />
+                <select name="config_image_cart_adjustment">
+                    <?php
+                    if ($config_image_cart_adjustment != 'crop') {
+                    ?>
+                        <option selected="selected">resize</option>
+                        <option>crop</option>
+                    <?php
+                    } else {
+                    ?>
+                        <option>resize</option>
+                        <option selected="selected">crop</option>
+                    <?php
+                    } // end if
+                    ?>
+                </select>
                 <?php if ($error_image_cart) { ?>
                 <span class="error"><?php echo $error_image_cart; ?></span>
                 <?php } ?></td>

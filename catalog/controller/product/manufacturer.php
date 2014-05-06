@@ -187,8 +187,13 @@ class ControllerProductManufacturer extends Controller {
 			$results = $this->model_catalog_product->getProducts($data);
 					
 			foreach ($results as $result) {
-				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+				if ($result['image']) {                          
+                                    if ($this->config->get('config_image_product_adjustment') == 'crop')
+                                    {
+                                        $image = $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+                                    } else {
+                                        $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+                                    }
 				} else {
 					$image = false;
 				}

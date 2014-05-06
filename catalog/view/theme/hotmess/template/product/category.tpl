@@ -219,7 +219,7 @@ view = $.cookie('display');
 if (view) {
 	display(view);
 } else {
-	display('list');
+	display('grid');
 }
 */
 //--></script> 

@@ -16,8 +16,13 @@ if(count($available_events)>0){
 		$results_no_sub = $query_no_sub->rows;
 		$no_sub = count($query_no_sub->rows);
 		
-		if ($v['image']) {
-            $thumb = $this->model_tool_image->resize($v['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+	if ($v['image']) {
+            if ($this->config->get('config_image_category_adjustment') == 'crop')
+            {
+                $thumb = $this->model_tool_image->cropsize($v['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+            } else {
+                $thumb = $this->model_tool_image->resize($v['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+            }
         } else {
             $thumb = '';
         }

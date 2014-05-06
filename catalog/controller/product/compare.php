@@ -74,8 +74,13 @@ class ControllerProductCompare extends Controller {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 			
 			if ($product_info) {
-				if ($product_info['image']) {
-					$image = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_compare_width'), $this->config->get('config_image_compare_height'));
+				if ($product_info['image']) {                          
+                                    if ($this->config->get('config_image_compare_adjustment') == 'crop')
+                                    {
+                                        $image = $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_compare_width'), $this->config->get('config_image_compare_height'));
+                                    } else {
+                                        $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_compare_width'), $this->config->get('config_image_compare_height'));
+                                    }
 				} else {
 					$image = false;
 				}

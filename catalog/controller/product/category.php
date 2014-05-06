@@ -80,8 +80,13 @@ class ControllerProductCategory extends Controller {
                         $this->data['text_breadcrumb_back'] = '';
                     }
 
-                if ($this->category->getImage()) {
-                        $this->data['thumb'] = $this->model_tool_image->resize($this->category->getImage(), $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+                if ($this->category->getImage()) {                   
+                        if ($this->config->get('config_image_category_adjustment') == 'crop')
+                        {
+                            $this->data['thumb'] = $this->model_tool_image->resize($this->category->getImage(), $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+                        } else {
+                            $this->data['thumb'] = $this->model_tool_image->resize($this->category->getImage(), $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+                        }
                         $this->data['thumbW'] = $this->config->get('config_image_category_width');
                         $this->data['thumbH'] = $this->config->get('config_image_category_height');
                 } else {
@@ -164,7 +169,12 @@ class ControllerProductCategory extends Controller {
 	
                 foreach ($results as $result) {
                         if ($result['image']) {
+                            if ($this->config->get('config_image_product_adjustment') == 'crop')
+                            {
+                                $image = $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+                            } else {
                                 $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+                            }
                         } else {
                                 $image = false;
                         }

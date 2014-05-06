@@ -77,7 +77,7 @@ class ControllerCommonLocationDetails extends Controller {
 			foreach ($images as $result) {
 				$this->data['images'][] = array(
 					'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('store_locations_iWidth'), $this->config->get('store_locations_iHeight')),
-					'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'))
+					'thumb' => ($this->config->get('config_image_additional_adjustment') == 'crop') ? $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height')) : $this->model_tool_image->resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'))
 				);
 			}	
 			

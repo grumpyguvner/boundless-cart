@@ -236,7 +236,7 @@ class ControllerSettingStore extends Controller {
 		$this->data['entry_image_related'] = $this->language->get('entry_image_related');
 		$this->data['entry_image_compare'] = $this->language->get('entry_image_compare');
 		$this->data['entry_image_wishlist'] = $this->language->get('entry_image_wishlist');
-		$this->data['entry_image_cart'] = $this->language->get('entry_image_cart');
+		$this->data['entry_image_cart'] = $this->language->get('entry_image_cart');	
 		$this->data['entry_use_ssl'] = $this->language->get('entry_use_ssl');
 				
 		$this->data['button_save'] = $this->language->get('button_save');
@@ -715,165 +715,185 @@ class ControllerSettingStore extends Controller {
 		
 		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 		
-		if (isset($this->request->post['config_image_category_height'])) {
-			$this->data['config_image_category_height'] = $this->request->post['config_image_category_height'];
-		} elseif (isset($store_info['config_image_category_height'])) {
-			$this->data['config_image_category_height'] = $store_info['config_image_category_height'];			
-		} else {
-			$this->data['config_image_category_height'] = 80;
-		}	
-                
-                if (isset($this->request->post['config_image_information_height'])) {
-			$this->data['config_image_information_height'] = $this->request->post['config_image_information_height'];
-		} elseif (isset($store_info['config_image_information_height'])) {
-			$this->data['config_image_information_height'] = $store_info['config_image_information_height'];			
-		} else {
-			$this->data['config_image_information_height'] = 80;
-		}
-				
-		if (isset($this->request->post['config_image_thumb_width'])) {
-			$this->data['config_image_thumb_width'] = $this->request->post['config_image_thumb_width'];
-		} elseif (isset($store_info['config_image_thumb_width'])) {
-			$this->data['config_image_thumb_width'] = $store_info['config_image_thumb_width'];			
-		} else {
-			$this->data['config_image_thumb_width'] = 228;
-		}
-		
-		if (isset($this->request->post['config_image_thumb_height'])) {
-			$this->data['config_image_thumb_height'] = $this->request->post['config_image_thumb_height'];
-		} elseif (isset($store_info['config_image_thumb_height'])) {
-			$this->data['config_image_thumb_height'] = $store_info['config_image_thumb_height'];				
-		} else {
-			$this->data['config_image_thumb_height'] = 228;
-		}
-		
-		if (isset($this->request->post['config_image_popup_width'])) {
-			$this->data['config_image_popup_width'] = $this->request->post['config_image_popup_width'];
-		} elseif (isset($store_info['config_image_popup_width'])) {
-			$this->data['config_image_popup_width'] = $store_info['config_image_popup_width'];			
-		} else {
-			$this->data['config_image_popup_width'] = 500;
-		}
-		
-		if (isset($this->request->post['config_image_popup_height'])) {
-			$this->data['config_image_popup_height'] = $this->request->post['config_image_popup_height'];
-		} elseif (isset($store_info['config_image_popup_height'])) {
-			$this->data['config_image_popup_height'] = $store_info['config_image_popup_height'];			
-		} else {
-			$this->data['config_image_popup_height'] = 500;
-		}
-		
-		if (isset($this->request->post['config_image_product_width'])) {
-			$this->data['config_image_product_width'] = $this->request->post['config_image_product_width'];
-		} elseif (isset($store_info['config_image_product_width'])) {
-			$this->data['config_image_product_width'] = $store_info['config_image_product_width'];		
-		} else {
-			$this->data['config_image_product_width'] = 80;
-		}
-		
-		if (isset($this->request->post['config_image_product_height'])) {
-			$this->data['config_image_product_height'] = $this->request->post['config_image_product_height'];
-		} elseif (isset($store_info['config_image_product_height'])) {
-			$this->data['config_image_product_height'] = $store_info['config_image_product_height'];		
-		} else {
-			$this->data['config_image_product_height'] = 80;
-		}
-		
 		if (isset($this->request->post['config_image_category_width'])) {
 			$this->data['config_image_category_width'] = $this->request->post['config_image_category_width'];
-		} elseif (isset($store_info['config_image_category_width'])) {
-			$this->data['config_image_category_width'] = $store_info['config_image_category_width'];			
 		} else {
-			$this->data['config_image_category_width'] = 80;
+			$this->data['config_image_category_width'] = $this->config->get('config_image_category_width');
+		}
+		
+		if (isset($this->request->post['config_image_category_height'])) {
+			$this->data['config_image_category_height'] = $this->request->post['config_image_category_height'];
+		} else {
+			$this->data['config_image_category_height'] = $this->config->get('config_image_category_height');
+		}
+		
+		if (isset($this->request->post['config_image_category_adjustment'])) {
+			$this->data['config_image_category_adjustment'] = $this->request->post['config_image_category_adjustment'];
+		} else {
+			$this->data['config_image_category_adjustment'] = $this->config->get('config_image_category_adjustment');
 		}
                 
                 if (isset($this->request->post['config_image_information_width'])) {
 			$this->data['config_image_information_width'] = $this->request->post['config_image_information_width'];
-		} elseif (isset($store_info['config_image_information_width'])) {
-			$this->data['config_image_information_width'] = $store_info['config_image_information_width'];			
 		} else {
-			$this->data['config_image_information_width'] = 80;
+			$this->data['config_image_information_width'] = $this->config->get('config_image_information_width');
+		}
+		
+		if (isset($this->request->post['config_image_information_height'])) {
+			$this->data['config_image_information_height'] = $this->request->post['config_image_information_height'];
+		} else {
+			$this->data['config_image_information_height'] = $this->config->get('config_image_information_height');
+		}
+		
+		if (isset($this->request->post['config_image_information_adjustment'])) {
+			$this->data['config_image_information_adjustment'] = $this->request->post['config_image_information_adjustment'];
+		} else {
+			$this->data['config_image_information_adjustment'] = $this->config->get('config_image_information_adjustment');
+		}
+				
+		if (isset($this->request->post['config_image_thumb_width'])) {
+			$this->data['config_image_thumb_width'] = $this->request->post['config_image_thumb_width'];
+		} else {
+			$this->data['config_image_thumb_width'] = $this->config->get('config_image_thumb_width');
+		}
+		
+		if (isset($this->request->post['config_image_thumb_height'])) {
+			$this->data['config_image_thumb_height'] = $this->request->post['config_image_thumb_height'];
+		} else {
+			$this->data['config_image_thumb_height'] = $this->config->get('config_image_thumb_height');
+		}
+		
+		if (isset($this->request->post['config_image_thumb_adjustment'])) {
+			$this->data['config_image_thumb_adjustment'] = $this->request->post['config_image_thumb_adjustment'];
+		} else {
+			$this->data['config_image_thumb_adjustment'] = $this->config->get('config_image_thumb_adjustment');
+		}
+		
+		if (isset($this->request->post['config_image_popup_width'])) {
+			$this->data['config_image_popup_width'] = $this->request->post['config_image_popup_width'];
+		} else {
+			$this->data['config_image_popup_width'] = $this->config->get('config_image_popup_width');
+		}
+		
+		if (isset($this->request->post['config_image_popup_height'])) {
+			$this->data['config_image_popup_height'] = $this->request->post['config_image_popup_height'];
+		} else {
+			$this->data['config_image_popup_height'] = $this->config->get('config_image_popup_height');
+		}
+		
+		if (isset($this->request->post['config_image_popup_adjustment'])) {
+			$this->data['config_image_popup_adjustment'] = $this->request->post['config_image_popup_adjustment'];
+		} else {
+			$this->data['config_image_popup_adjustment'] = $this->config->get('config_image_popup_adjustment');
+		}
+		
+		if (isset($this->request->post['config_image_product_width'])) {
+			$this->data['config_image_product_width'] = $this->request->post['config_image_product_width'];
+		} else {
+			$this->data['config_image_product_width'] = $this->config->get('config_image_product_width');
+		}
+		
+		if (isset($this->request->post['config_image_product_height'])) {
+			$this->data['config_image_product_height'] = $this->request->post['config_image_product_height'];
+		} else {
+			$this->data['config_image_product_height'] = $this->config->get('config_image_product_height');
+		}
+		
+		if (isset($this->request->post['config_image_product_adjustment'])) {
+			$this->data['config_image_product_adjustment'] = $this->request->post['config_image_product_adjustment'];
+		} else {
+			$this->data['config_image_product_adjustment'] = $this->config->get('config_image_product_adjustment');
 		}
 
 		if (isset($this->request->post['config_image_additional_width'])) {
 			$this->data['config_image_additional_width'] = $this->request->post['config_image_additional_width'];
-		} elseif (isset($store_info['config_image_additional_width'])) {
-			$this->data['config_image_additional_width'] = $store_info['config_image_additional_width'];			
 		} else {
-			$this->data['config_image_additional_width'] = 74;
+			$this->data['config_image_additional_width'] = $this->config->get('config_image_additional_width');
 		}
 		
 		if (isset($this->request->post['config_image_additional_height'])) {
 			$this->data['config_image_additional_height'] = $this->request->post['config_image_additional_height'];
-		} elseif (isset($store_info['config_image_additional_height'])) {
-			$this->data['config_image_additional_height'] = $store_info['config_image_additional_height'];				
 		} else {
-			$this->data['config_image_additional_height'] = 74;
+			$this->data['config_image_additional_height'] = $this->config->get('config_image_additional_height');
+		}
+		
+		if (isset($this->request->post['config_image_additional_adjustment'])) {
+			$this->data['config_image_additional_adjustment'] = $this->request->post['config_image_additional_adjustment'];
+		} else {
+			$this->data['config_image_additional_adjustment'] = $this->config->get('config_image_additional_adjustment');
 		}
 		
 		if (isset($this->request->post['config_image_related_width'])) {
 			$this->data['config_image_related_width'] = $this->request->post['config_image_related_width'];
-		} elseif (isset($store_info['config_image_related_width'])) {
-			$this->data['config_image_related_width'] = $store_info['config_image_related_width'];		
 		} else {
-			$this->data['config_image_related_width'] = 80;
+			$this->data['config_image_related_width'] = $this->config->get('config_image_related_width');
 		}
 		
 		if (isset($this->request->post['config_image_related_height'])) {
 			$this->data['config_image_related_height'] = $this->request->post['config_image_related_height'];
-		} elseif (isset($store_info['config_image_related_height'])) {
-			$this->data['config_image_related_height'] = $store_info['config_image_related_height'];			
 		} else {
-			$this->data['config_image_related_height'] = 80;
+			$this->data['config_image_related_height'] = $this->config->get('config_image_related_height');
+		}
+		
+		if (isset($this->request->post['config_image_related_adjustment'])) {
+			$this->data['config_image_related_adjustment'] = $this->request->post['config_image_related_adjustment'];
+		} else {
+			$this->data['config_image_related_adjustment'] = $this->config->get('config_image_related_adjustment');
 		}
 		
 		if (isset($this->request->post['config_image_compare_width'])) {
 			$this->data['config_image_compare_width'] = $this->request->post['config_image_compare_width'];
-		} elseif (isset($store_info['config_image_compare_width'])) {
-			$this->data['config_image_compare_width'] = $store_info['config_image_compare_width'];			
 		} else {
-			$this->data['config_image_compare_width'] = 90;
+			$this->data['config_image_compare_width'] = $this->config->get('config_image_compare_width');
 		}
 		
 		if (isset($this->request->post['config_image_compare_height'])) {
 			$this->data['config_image_compare_height'] = $this->request->post['config_image_compare_height'];
-		} elseif (isset($store_info['config_image_compare_height'])) {
-			$this->data['config_image_compare_height'] = $store_info['config_image_compare_height'];			
 		} else {
-			$this->data['config_image_compare_height'] = 90;
+			$this->data['config_image_compare_height'] = $this->config->get('config_image_compare_height');
+		}	
+		
+		if (isset($this->request->post['config_image_compare_adjustment'])) {
+			$this->data['config_image_compare_adjustment'] = $this->request->post['config_image_compare_adjustment'];
+		} else {
+			$this->data['config_image_compare_adjustment'] = $this->config->get('config_image_compare_adjustment');
 		}
 		
 		if (isset($this->request->post['config_image_wishlist_width'])) {
 			$this->data['config_image_wishlist_width'] = $this->request->post['config_image_wishlist_width'];
-		} elseif (isset($store_info['config_image_wishlist_width'])) {
-			$this->data['config_image_wishlist_width'] = $store_info['config_image_wishlist_width'];			
 		} else {
-			$this->data['config_image_wishlist_width'] = 50;
+			$this->data['config_image_wishlist_width'] = $this->config->get('config_image_wishlist_width');
 		}
 		
 		if (isset($this->request->post['config_image_wishlist_height'])) {
 			$this->data['config_image_wishlist_height'] = $this->request->post['config_image_wishlist_height'];
-		} elseif (isset($store_info['config_image_wishlist_height'])) {
-			$this->data['config_image_wishlist_height'] = $store_info['config_image_wishlist_height'];			
 		} else {
-			$this->data['config_image_wishlist_height'] = 50;
+			$this->data['config_image_wishlist_height'] = $this->config->get('config_image_wishlist_height');
+		}	
+		
+		if (isset($this->request->post['config_image_wishlist_adjustment'])) {
+			$this->data['config_image_wishlist_adjustment'] = $this->request->post['config_image_wishlist_adjustment'];
+		} else {
+			$this->data['config_image_wishlist_adjustment'] = $this->config->get('config_image_wishlist_adjustment');
 		}
-				
+						
 		if (isset($this->request->post['config_image_cart_width'])) {
 			$this->data['config_image_cart_width'] = $this->request->post['config_image_cart_width'];
-		} elseif (isset($store_info['config_image_cart_width'])) {
-			$this->data['config_image_cart_width'] = $store_info['config_image_cart_width'];			
 		} else {
-			$this->data['config_image_cart_width'] = 80;
+			$this->data['config_image_cart_width'] = $this->config->get('config_image_cart_width');
 		}
 		
 		if (isset($this->request->post['config_image_cart_height'])) {
 			$this->data['config_image_cart_height'] = $this->request->post['config_image_cart_height'];
-		} elseif (isset($store_info['config_image_cart_height'])) {
-			$this->data['config_image_cart_height'] = $store_info['config_image_cart_height'];			
 		} else {
-			$this->data['config_image_cart_height'] = 80;
-		}
+			$this->data['config_image_cart_height'] = $this->config->get('config_image_cart_height');
+		}	
+		
+		if (isset($this->request->post['config_image_cart_adjustment'])) {
+			$this->data['config_image_cart_adjustment'] = $this->request->post['config_image_cart_adjustment'];
+		} else {
+			$this->data['config_image_cart_adjustment'] = $this->config->get('config_image_cart_adjustment');
+		}	
 
 		if (isset($this->request->post['config_use_ssl'])) {
 			$this->data['config_use_ssl'] = $this->request->post['config_use_ssl'];

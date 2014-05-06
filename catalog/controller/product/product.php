@@ -234,10 +234,25 @@ class ControllerProductProduct extends Controller {
 			
 			$this->load->model('tool/image');
                         
-                        if ($product_info['image']) {
-                            $this->data['popup'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
-                            $this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
-                            $this->data['additional'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'));
+                        if ($product_info['image']) {                   
+                            if ($this->config->get('config_image_popup_adjustment') == 'crop')
+                            {
+                                $this->data['popup'] = $this->model_tool_image->cropsize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                            } else {
+                                $this->data['popup'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+                            }
+                            if ($this->config->get('config_image_thumb_adjustment') == 'crop')
+                            {
+                                $this->data['thumb'] = $this->model_tool_image->cropsize($product_info['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+                            } else {
+                                $this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+                            }
+                            if ($this->config->get('config_image_additional_adjustment') == 'crop')
+                            {
+                                $this->data['additional'] = $this->model_tool_image->cropsize($product_info['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'));
+                            } else {
+                                $this->data['additional'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'));
+                            }
                             
 			} else {
 				$this->data['popup'] = '';
@@ -255,10 +270,10 @@ class ControllerProductProduct extends Controller {
 			
 			foreach ($results as $result) {
 				$this->data['images'][] = array(
-					'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
+					'popup' => ($this->config->get('config_image_popup_adjustment') == 'crop') ? $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')) : $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
                                         'video' => $result['video'],
-					'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height')),
-                                        'main' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'))
+					'thumb' => ($this->config->get('config_image_additional_adjustment') == 'crop') ? $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height')) : $this->model_tool_image->resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height')),
+                                        'main' => ($this->config->get('config_image_thumb_adjustment') == 'crop') ? $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height')) : $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'))
 				);
 			}	
 						
@@ -383,7 +398,12 @@ class ControllerProductProduct extends Controller {
 			
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    if ($this->config->get('config_image_related_adjustment') == 'crop')
+                                    {
+                                        $image = $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    } else {
+                                        $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    }
 				} else {
 					$image = false;
 				}
@@ -436,7 +456,12 @@ class ControllerProductProduct extends Controller {
 			
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    if ($this->config->get('config_image_related_adjustment') == 'crop')
+                                    {
+                                        $image = $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    } else {
+                                        $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    }
 				} else {
 					$image = false;
 				}
@@ -500,7 +525,12 @@ class ControllerProductProduct extends Controller {
 			foreach ($results as $result) {
 				if ($result['product_id'] != $product_id) {
                                     if ($result['image']) {
-                                            $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    if ($this->config->get('config_image_related_adjustment') == 'crop')
+                                    {
+                                        $image = $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    } else {
+                                        $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    }
                                     } else {
                                             $image = false;
                                     }
@@ -549,7 +579,12 @@ class ControllerProductProduct extends Controller {
                         foreach ($results as $result) {
                             if ($result['product_id'] != $product_id) {
                                 if ($result['image']) {
+                                    if ($this->config->get('config_image_related_adjustment') == 'crop')
+                                    {
+                                        $image = $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    } else {
                                         $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                    }
                                 } else {
                                         $image = false;
                                 }

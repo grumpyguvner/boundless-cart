@@ -71,7 +71,7 @@ class ControllerInformationEvent extends Controller {
 				$product_related = unserialize($event_info['product_related']);
 				foreach ($product_related as $pid) {
 					$pinfo = $this->model_catalog_product->getProduct($pid);
-                                        $this->data['products'][$pid]['thumb'] = $this->model_tool_image->resize($pinfo['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                        $this->data['products'][$pid]['thumb'] = ($this->config->get('config_image_related_adjustment') == 'crop') ? $this->model_tool_image->cropsize($pinfo['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')) : $this->model_tool_image->resize($pinfo['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
 					$this->data['products'][$pid]['name'] = $pinfo['name'];
 					$this->data['products'][$pid]['href'] = $this->url->link('product/product', 'product_id=' . $pid);
                                         $this->data['products'][$pid]['price'] = $this->currency->format($this->tax->calculate($pinfo['price'], $pinfo['tax_class_id'], $this->config->get('config_tax')));

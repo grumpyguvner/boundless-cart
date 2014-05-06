@@ -57,7 +57,12 @@ class ControllerInformationInformation extends Controller {
 
             /*             * ************************ Added Antonio 05/02/2013 ********************* */
             if ($information_info['image']) {
-                $this->data['thumb'] = $this->model_tool_image->resize($information_info['image'], $this->config->get('config_image_information_width'), $this->config->get('config_image_information_height'));
+                if ($this->config->get('config_image_information_adjustment') == 'crop')
+                {
+                    $this->data['thumb'] = $this->model_tool_image->cropsize($information_info['image'], $this->config->get('config_image_information_width'), $this->config->get('config_image_information_height'));
+                } else {
+                    $this->data['thumb'] = $this->model_tool_image->resize($information_info['image'], $this->config->get('config_image_information_width'), $this->config->get('config_image_information_height'));
+                }
             } else {
                 $this->data['thumb'] = '';
             }

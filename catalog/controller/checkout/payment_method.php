@@ -149,7 +149,12 @@ class ControllerCheckoutPaymentMethod extends Controller {
                 }		
                 
                 if ($product['image']) {
+                    if ($this->config->get('config_image_cart_adjustment') == 'crop')
+                    {
+                        $image = $this->model_tool_image->cropsize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+                    } else {
                         $image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+                    }
                 } else {
                         $image = '';
                 }
