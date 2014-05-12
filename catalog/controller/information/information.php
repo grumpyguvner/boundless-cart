@@ -69,8 +69,8 @@ class ControllerInformationInformation extends Controller {
 
             /*             * ************************ End Added Antonio 05/02/2013 ********************* */
             
-
-            $this->data['description'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
+            $this->load->model('tool/content_embed');
+            $this->data['description'] = $this->model_tool_content_embed->convert_placeholders(html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8'));
 
 
             $this->data['continue'] = $this->url->link('common/home');
@@ -122,6 +122,7 @@ class ControllerInformationInformation extends Controller {
 
     public function info() {
         $this->load->model('catalog/information');
+        $this->load->model('tool/content_embed');
 
         if (isset($this->request->get['information_id'])) {
             $information_id = (int) $this->request->get['information_id'];
@@ -132,6 +133,7 @@ class ControllerInformationInformation extends Controller {
         $information_info = $this->model_catalog_information->getInformation($information_id);
 
         if ($information_info) {
+            
             $output = '<html dir="ltr" lang="en">' . "\n";
             $output .= '<head>' . "\n";
             $output .= '  <title>' . $information_info['title'] . '</title>' . "\n";
@@ -139,7 +141,7 @@ class ControllerInformationInformation extends Controller {
             $output .= '  <meta name="robots" content="noindex">' . "\n";
             $output .= '</head>' . "\n";
             $output .= '<body>' . "\n";
-            $output .= html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8') . "\n";
+            $output .= $this->model_tool_content_embed->convert_placeholders(html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8')) . "\n";
             $output .= '  </body>' . "\n";
             $output .= '</html>' . "\n";
 

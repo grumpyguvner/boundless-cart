@@ -13,6 +13,7 @@ class ControllerProductCategory extends Controller {
 		
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
+		$this->load->model('tool/content_embed');
 					
                 $this->data['breadcrumbs'] = $this->category->getBreadcrumbs();
                 
@@ -95,7 +96,7 @@ class ControllerProductCategory extends Controller {
                         $this->data['thumbH'] = 0;
                 }
 									
-                $this->data['description'] = html_entity_decode($this->category->getDescription(), ENT_QUOTES, 'UTF-8');
+                $this->data['description'] = $this->model_tool_content_embed->convert_placeholders(html_entity_decode($this->category->getDescription(), ENT_QUOTES, 'UTF-8'));
                 $this->data['compare'] = $this->url->link('product/compare');
 
                 $urlQuery = $this->category->getUrlQuery();

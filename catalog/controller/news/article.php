@@ -8,6 +8,7 @@ class ControllerNewsArticle extends Controller {
 		$this->load->model('catalog/ncomments');
 		
 		$this->load->model('tool/image');
+		$this->load->model('tool/content_embed');
 		
 		$this->data['breadcrumbs'] = array();
 		
@@ -92,7 +93,7 @@ class ControllerNewsArticle extends Controller {
 				
 				$this->data['acom'] = $news_info['acom'];
 				
-				$this->data['description'] = html_entity_decode($news_info['description']);
+				$this->data['description'] = $this->model_tool_content_embed->convert_placeholders(html_entity_decode($news_info['description']));
 				
 				$this->data['date_added'] = date($this->language->get('date_format_short'), strtotime($news_info['date_added']));
 				

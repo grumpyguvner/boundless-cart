@@ -90,6 +90,7 @@ class ControllerProductProduct extends Controller {
 		}
 		
 		$this->load->model('catalog/product');
+                $this->load->model('tool/content_embed');
 		
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 		
@@ -367,8 +368,8 @@ class ControllerProductProduct extends Controller {
                         $this->data['review_anonymous_status'] = $this->config->get('config_anonymous_review_status');
 			$this->data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$this->data['rating'] = (int)$product_info['rating'];
-			$this->data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
-                        $this->data['brief_summary'] = html_entity_decode($product_info['brief_summary'], ENT_QUOTES, 'UTF-8');
+			$this->data['description'] = $this->model_tool_content_embed->convert_placeholders(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8'));
+                        $this->data['brief_summary'] = $this->model_tool_content_embed->convert_placeholders(html_entity_decode($product_info['brief_summary'], ENT_QUOTES, 'UTF-8'));
 			$attGroups = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
                         $this->data['attribute_groups'] = array();
                         $this->data['product_tabs'] = array();
@@ -384,7 +385,7 @@ class ControllerProductProduct extends Controller {
                                             $information_data = $this->model_catalog_information->getInformation($information_id);
                                             $text = $information_data['description'];
                                         }
-                                        $this->data['product_tabs'][] = array('name'=>$tab['name'],'text'=>html_entity_decode($text));
+                                        $this->data['product_tabs'][] = array('name'=>$tab['name'],'text'=>$this->model_tool_content_embed->convert_placeholders(html_entity_decode($text)));
                                     }
                                     break;
                                 default:
