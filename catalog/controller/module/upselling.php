@@ -1,9 +1,9 @@
 <?php
 
-class ControllerModuleLatest extends Controller {
+class ControllerModuleUpselling extends Controller {
 
     protected function index($setting) {
-        $this->language->load('module/latest');
+        $this->language->load('module/upselling');
 
         $this->data['heading_title'] = $this->language->get('heading_title');
 
@@ -13,18 +13,13 @@ class ControllerModuleLatest extends Controller {
 
         $this->load->model('tool/image');
 
+        $this->load->model('module/upselling');
+
         $this->data['products'] = array();
 
-        $data = array(
-            'sort' => 'p.date_added',
-            'order' => 'DESC',
-            'start' => 0,
-            'limit' => $setting['limit']
-        );
+        $upselling_products = $this->model_module_upselling->getUpsellingProducts();
 
-        $results = $this->model_catalog_product->getProducts($data);
-
-        foreach ($results as $result) {
+        foreach ($upselling_products as $result) {
             if ($result['image']) {
                 if ($this->config->get('config_image_related_adjustment') == 'crop') {
                     $image = $this->model_tool_image->cropsize($result['image'], $setting['image_width'], $setting['image_height']);
@@ -68,7 +63,7 @@ class ControllerModuleLatest extends Controller {
             );
         }
 
-        $this->setTemplate('module/latest.tpl');
+        $this->setTemplate('module/upselling.tpl');
 
         $this->render();
     }

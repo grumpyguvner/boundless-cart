@@ -625,6 +625,65 @@ class ControllerProductProduct extends Controller {
                         }
                         
 			/* End Top selling products */
+                        if ($this->extensions->isInstalled('upselling', 'module') && $this->config->get('upselling_cart_limit')) {
+
+                            $this->load->model('module/upselling');
+
+                            $this->data['upselling_products'] = array();
+
+                            $upselling_products = $this->model_module_upselling->getUpsellingProducts($product_id);
+
+                            foreach ($upselling_products as $key => $result) {
+
+                                if ($result['product_id'] != $product_id) {
+                                    if ($result['image']) {
+                                        if ($this->config->get('config_image_related_adjustment') == 'crop')
+                                        {
+                                            $image = $this->model_tool_image->cropsize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                        } else {
+                                            $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                                        }
+                                    } else {
+                                            $image = false;
+                                    }
+
+                                    if (!$this->config->get('config_block_buy') && (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price'))) {
+                                            $price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+                                    } else {
+                                            $price = false;
+                                    }
+
+                                    if ((float)$result['special']) {
+                                            $special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
+                                    } else {
+                                            $special = false;
+                                    }
+
+                                    if ($this->config->get('config_review_status')) {
+                                            $rating = (int)$result['rating'];
+                                    } else {
+                                            $rating = false;
+                                    }
+
+                                    $this->data['bestSelling'][] = array(
+                                            'product_id' => $result['product_id'],
+                                            'thumb'   	 => $image,
+                                            'name'    	 => $result['name'],
+                                            'price'   	 => $price,
+                                            'special' 	 => $special,
+                                            'saving_percent' => $result['saving_percent'],
+                                            'new'            => $result['new'],
+                                            'sale'            => $result['sale'],
+                                            'rating'     => $rating,
+                                            'reviews'    => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
+                                            'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+                                    );
+                                    
+                                    if (($key+1) >= $this->config->get('upselling_cart_limit')) break;
+                                }
+
+                            }
+                        }
                         
                         /***************************** News press **********************************************/
                         $this->data['news'] = array();
