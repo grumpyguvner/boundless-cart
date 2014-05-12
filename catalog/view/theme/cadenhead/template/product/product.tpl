@@ -208,7 +208,7 @@
                 <?php } ?>
             <?php } else { ?>
                 <?php
-                if ($text_option != 'Value') {
+                if ($option['name'] != 'Value') {
                 ?>
             <strong><?php echo $option_value['price']; ?></strong> : 
             <?php } ?>
