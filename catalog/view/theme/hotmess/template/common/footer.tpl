@@ -86,8 +86,11 @@
                                     <a href="uk-youth-charity"><img style="width: 100%; max-width: 179px;" src="catalog/view/theme/hotmess/image/footer/UK-Youth.png" ></a>
                                     </div>
                                     <div id="newsletter_footer" class="inputContainer" style="display: inline-block;">
-                                      <div style="margin-top: 4px;"class="button-enter" title="sign up"></div>
+                                        <form action="index.php?route=module/newsletter" method="get" class="newsletter-form">
+                          <input type="hidden" name="route" value="module/newsletter/callback">
+                                      <div style="margin-top: 4px;"class="button-enter action" title="sign up"></div>
                                       <input type="email" name="email" placeholder="enter your email here for the latest" value="" />
+                                        </form>
                                     </div>
                                 </div>
                             </div>

@@ -84,8 +84,11 @@ DD_belatedPNG.fix('#logo img');
 
                     <div id="top-inputs">
                         <div id="newsletter" class="inputContainer topEmail">
-                          <div class="button-enter" title="sign up"></div>
+                          <form action="index.php?route=module/newsletter" method="get" class="newsletter-form">
+                          <input type="hidden" name="route" value="module/newsletter/callback">
+                          <div class="button-enter action" title="sign up"></div>
                           <input type="email" name="email" placeholder="enter email for latest news" value="" />
+                          </form>
                         </div>
 
                         <div id="search" class="inputContainer topSearch">
