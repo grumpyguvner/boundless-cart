@@ -167,6 +167,7 @@ $(document).ready(function() {
 		
         location = url;
     });
+    
 	
     $('#header input[name=\'filter_name\']').bind('keydown', function(e) {
         if (e.keyCode == 13) {
@@ -258,7 +259,14 @@ $(document).ready(function() {
         $(this).parents('form').trigger('submit');
         return false;
     });
-	
+    
+    $('form.newsletter-form input[name=\'email\']').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            $(this).parents('form').trigger('submit');
+            return false;
+        }
+    });
+    
     /* Ajax Cart */
     $('#cart > .heading a').live('click', function() {
         $('#cart').addClass('active');
