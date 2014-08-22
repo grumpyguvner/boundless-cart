@@ -27,14 +27,14 @@ class ModelReportSale extends Model {
 		
 		switch($group) {
 			case 'day';
-				$sql .= " GROUP BY DAY(tmp.date_added)";
+				$sql .= " GROUP BY YEAR(tmp.date_added), MONTH(tmp.date_added), DAY(tmp.date_added)";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY WEEK(tmp.date_added, " . (int)$this->config->get('config_report_weekday') . ")";
+				$sql .= " GROUP BY YEAR(tmp.date_added), WEEK(tmp.date_added, " . (int)$this->config->get('config_report_weekday') . ")";
 				break;	
 			case 'month':
-				$sql .= " GROUP BY MONTH(tmp.date_added)";
+				$sql .= " GROUP BY YEAR(tmp.date_added), MONTH(tmp.date_added)";
 				break;
 			case 'year':
 				$sql .= " GROUP BY YEAR(tmp.date_added)";
