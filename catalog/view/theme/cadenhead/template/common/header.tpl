@@ -50,7 +50,7 @@ DD_belatedPNG.fix('#logo img');
 <?php if ($error_environment) { ?>
 <div id="environment"><div class="warning"><?php echo $error_environment; ?></div></div>
 <?php } ?>
-<div id="environment"><div class="warning">Please be aware, due to a change of courier, new orders will not be shipped until week commencing 15th September 2014</div></div>
+
 
 <div id="header">
  
