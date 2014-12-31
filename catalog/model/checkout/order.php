@@ -237,6 +237,7 @@ class ModelCheckoutOrder extends Model {
 			$order_redeem_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "redeem WHERE order_id = '" . (int)$order_id . "'");
                         
                         $attachments = array();
+                        $redeem_links = array();
                         
                         //add the codes to the comments section.
                         if ($this->config->get('config_complete_status_id') == $order_status_id) {
@@ -286,6 +287,9 @@ class ModelCheckoutOrder extends Model {
                                             curl_close($ch);
 
                                             file_put_contents($filename, $output);
+                                            
+                                            
+                                            $redeem_links[] = $redeem['code'];
                                             
                                             $attachments[] = $filename;
                                         }
@@ -568,6 +572,19 @@ class ModelCheckoutOrder extends Model {
 				$text .= $language->get('text_new_download') . "\n";
 				$text .= $order_info['store_url'] . 'index.php?route=account/download' . "\n\n";
 			}
+                        
+			if ($order_redeem_query->num_rows) {
+                            if (!empty($redeem_links)) {
+                                    $message .= $language->get('text_new_redeem_attached') . "\n";
+                                    foreach ($redeem_links as $code)
+                                    {
+                                        $message .= $order_info['store_url'] . 'index.php?route=account/redeem/redeem&code=' . $code  . "\n\n";
+                                    }
+                                    $message .= "\n";
+                            } else {
+                                $message .= $language->get('text_new_redeem') . "\n\n";
+                            }
+                        }
 			
 			if ($order_info['comment']) {
 				$text .= $language->get('text_new_comment') . "\n\n";

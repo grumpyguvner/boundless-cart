@@ -30,7 +30,7 @@ class ModelSaleRedeem extends Model {
 	}
         
         public function getRedeemByOrderId($order_id) {
-      	$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "redeem WHERE order_id = '" . $this->db->escape($order_id) . "'");
+      	$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "redeem WHERE order_id = '" . $this->db->escape($order_id) . "' and status = 1");
 		
 		return $query->rows;
 	}

@@ -24,9 +24,11 @@ $_['text_new_price']            = 'Price';
 $_['text_new_order_total']      = 'Order Totals';	
 $_['text_new_total']            = 'Total';	
 $_['text_new_download']         = 'Once your payment has been confirmed you can click on the link below to access your downloadable products:';
+$_['text_new_redeem_attached']  = 'Once your payment has been confirmed you can click on the link below to access your redeem products:';
+$_['text_new_redeem']           = 'Once your payment has been confirmed, you will be sent your vouchers in a second email.';
 $_['text_new_comment']          = 'The comments for your order are:';
 $_['text_new_footer']           = 'Please reply to this email if you have any questions.';
-$_['text_new_powered']          = 'Powered By <a href="http://www.totallyboundless.com">Boundless Commerce</a>.';
+$_['text_new_powered']          = 'Powered By <a href="http://www.totallyboundless.com">Totally Boundless</a>.';
 
 
 $_['text_update_subject']       = '%s - Order Update %s';

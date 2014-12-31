@@ -676,7 +676,7 @@ class ModelSaleOrder extends Model {
                 $redeem_links = array();
                 
                 //add the codes to the comments section.
-		if ($this->config->get('config_complete_status_id') == $data['order_status_id']) {
+		if ($this->config->get('config_complete_status_id') == $data['order_status_id'] || $data['order_status_id'] == 5) {
                         $this->load->model('sale/redeem');
                         $this->load->model('catalog/product');
                         
