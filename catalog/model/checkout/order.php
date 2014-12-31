@@ -575,14 +575,14 @@ class ModelCheckoutOrder extends Model {
                         
 			if ($order_redeem_query->num_rows) {
                             if (!empty($redeem_links)) {
-                                    $message .= $language->get('text_new_redeem_attached') . "\n";
+                                    $text .= $language->get('text_new_redeem_attached') . "\n";
                                     foreach ($redeem_links as $code)
                                     {
-                                        $message .= $order_info['store_url'] . 'index.php?route=account/redeem/redeem&code=' . $code  . "\n\n";
+                                        $text .= $order_info['store_url'] . 'index.php?route=account/redeem/redeem&code=' . $code  . "\n\n";
                                     }
-                                    $message .= "\n";
+                                    $text .= "\n";
                             } else {
-                                $message .= $language->get('text_new_redeem') . "\n\n";
+                                $text .= $language->get('text_new_redeem') . "\n\n";
                             }
                         }
 			
