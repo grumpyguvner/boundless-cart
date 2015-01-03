@@ -391,6 +391,22 @@ class ModelCheckoutOrder extends Model {
 			} else {
 				$template->data['download'] = '';
 			}
+                        
+			if ($order_redeem_query->num_rows) {
+                            if (!empty($redeem_links)) {
+                                    $redeem_text = '';
+                                    $redeem_text .= $language->get('text_new_redeem_attached') . "<br >";
+                                    foreach ($redeem_links as $code)
+                                    {
+                                        $redeem_text .= '<br><a href="' . $order_info['store_url'] . 'index.php?route=account/redeem/redeem&code=' . $code  . '">' . $code  . '</a>';
+                                    }
+                                    $template->data['text_redemm'] .= $redeem_text;
+                            } else {
+                                $template->data['text_redemm'] .= $language->get('text_new_redeem') . "<br ><br >";
+                            }
+                        } else {
+                            $template->data['text_redemm'] = '';
+                        }
 			
 			$template->data['order_id'] = $order_id;
 			$template->data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));    	
