@@ -402,7 +402,7 @@ class ModelCheckoutOrder extends Model {
                                     }
                                     $template->data['text_redemm'] .= $redeem_text;
                             } else {
-                                $template->data['text_redemm'] .= $language->get('text_new_redeem') . "<br ><br >";
+                                $template->data['text_redemm'] .= $language->get('text_new_redeem');
                             }
                         } else {
                             $template->data['text_redemm'] = '';
