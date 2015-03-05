@@ -1000,7 +1000,7 @@ class ControllerCatalogProduct extends Controller {
         } elseif (!empty($product_info)) {
             $this->data['width'] = $product_info['width'];
         } else {
-            $this->data['width'] = '';
+            $this->data['width'] = '1';
         }
 
         if (isset($this->request->post['height'])) {
@@ -1055,7 +1055,7 @@ class ControllerCatalogProduct extends Controller {
         } elseif (isset($this->request->get['product_id'])) {
                 $product_attributes = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
         } else {
-                $product_attributes = array();
+                $product_attributes = array(array('attribute_id' => 21),array('attribute_id' => 15),array('attribute_id' => 16));
         }
 
         $this->data['product_attributes'] = array();

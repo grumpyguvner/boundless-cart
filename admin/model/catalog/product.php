@@ -547,7 +547,7 @@ class ModelCatalogProduct extends Model {
 	public function getProductAttributes($product_id) {
 		$product_attribute_data = array();
 		
-		$product_attribute_query = $this->db->query("SELECT attribute_id FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "' GROUP BY attribute_id");
+		$product_attribute_query = $this->db->query("SELECT pa.attribute_id FROM " . DB_PREFIX . "product_attribute pa LEFT JOIN " . DB_PREFIX . "attribute a ON a.attribute_id = pa.attribute_id LEFT JOIN " . DB_PREFIX . "attribute_group ag ON ag.attribute_group_id = a.attribute_group_id WHERE product_id = '" . (int)$product_id . "' GROUP BY pa.attribute_id ORDER BY ag.sort_order, a.sort_order");
 		
 		foreach ($product_attribute_query->rows as $product_attribute) {
 			$product_attribute_description_data = array();
