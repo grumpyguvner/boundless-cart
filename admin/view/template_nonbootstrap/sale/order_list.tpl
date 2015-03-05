@@ -32,6 +32,11 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_customer; ?>"><?php echo $column_customer; ?></a>
                 <?php } ?></td>
+              <td class="left"><?php if ($sort == 'shipping_method') { ?>
+                <a href="<?php echo $sort_shipping_method; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_shipping_method; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_shipping_method; ?>"><?php echo $column_shipping_method; ?></a>
+                <?php } ?></td>
               <td class="left"><?php if ($sort == 'status') { ?>
                 <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                 <?php } else { ?>
@@ -60,6 +65,15 @@
               <td></td>
               <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" size="4" style="text-align: right;" /></td>
               <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" /></td>
+              <td><select name="filter_shipping_method">
+                  <?php foreach ($order_shipping as $order_shipping) { ?>
+                  <?php if ($order_shipping['shipping_method'] == $filter_shipping_method) { ?>
+                  <option value="<?php echo $order_shipping['shipping_method']; ?>" selected="selected"><?php echo $order_shipping['shipping_method']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $order_shipping['shipping_method']; ?>"><?php echo $order_shipping['shipping_method']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
               <td><select name="filter_order_status_id">
                   <option value="*"></option>
                   <?php if ($filter_order_status_id == '0') { ?>
@@ -90,6 +104,7 @@
                 <?php } ?></td>
               <td class="right"><?php echo $order['order_id']; ?></td>
               <td class="left"><?php echo $order['customer']; ?></td>
+              <td class="left"><?php echo $order['shipping_method']; ?></td>
               <td class="left"><?php echo $order['status']; ?></td>
               <td class="right"><?php echo $order['total']; ?></td>
               <td class="left"><?php echo $order['date_added']; ?></td>
@@ -127,6 +142,12 @@ function filter() {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 	
+	var filter_shipping_method = $('select[name=\'filter_shipping_method\']').attr('value');
+	
+	if (filter_shipping_method != '*') {
+		url += '&filter_shipping_method=' + encodeURIComponent(filter_shipping_method);
+	}
+        
 	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
 	
 	if (filter_order_status_id != '*') {

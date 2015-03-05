@@ -129,6 +129,7 @@ $_['text_error']                              = 'Error:<br /><span class="help">
 // Column
 $_['column_order_id']                         = 'Order ID';
 $_['column_customer']                         = 'Customer';
+$_['column_shipping_method']                  = 'Shipping Method';
 $_['column_status']                           = 'Status';
 $_['column_date_added']                       = 'Date Added';
 $_['column_date_modified']                    = 'Date Modified';

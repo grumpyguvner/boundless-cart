@@ -36,6 +36,10 @@ class ControllerSaleOrder extends Controller {
                 $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
             }
 
+            if (isset($this->request->get['filter_shipping_method'])) {
+                $url .= '&filter_shipping_method=' . urlencode(html_entity_decode($this->request->get['filter_shipping_method'], ENT_QUOTES, 'UTF-8'));
+            }
+
             if (isset($this->request->get['filter_order_status_id'])) {
                 $url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
             }
@@ -90,6 +94,10 @@ class ControllerSaleOrder extends Controller {
 
             if (isset($this->request->get['filter_customer'])) {
                 $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+            }
+
+            if (isset($this->request->get['filter_shipping_method'])) {
+                $url .= '&filter_shipping_method=' . urlencode(html_entity_decode($this->request->get['filter_shipping_method'], ENT_QUOTES, 'UTF-8'));
             }
 
             if (isset($this->request->get['filter_order_status_id'])) {
@@ -150,6 +158,10 @@ class ControllerSaleOrder extends Controller {
                 $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
             }
 
+            if (isset($this->request->get['filter_shipping_method'])) {
+                $url .= '&filter_shipping_method=' . urlencode(html_entity_decode($this->request->get['filter_shipping_method'], ENT_QUOTES, 'UTF-8'));
+            }
+
             if (isset($this->request->get['filter_order_status_id'])) {
                 $url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
             }
@@ -195,6 +207,12 @@ class ControllerSaleOrder extends Controller {
             $filter_customer = $this->request->get['filter_customer'];
         } else {
             $filter_customer = null;
+        }
+
+        if (isset($this->request->get['filter_shipping_method'])) {
+            $filter_shipping_method = $this->request->get['filter_shipping_method'];
+        } else {
+            $filter_shipping_method = null;
         }
 
         if (isset($this->request->get['filter_order_status_id'])) {
@@ -249,6 +267,10 @@ class ControllerSaleOrder extends Controller {
             $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
         }
 
+        if (isset($this->request->get['filter_shipping_method'])) {
+            $url .= '&filter_shipping_method=' . urlencode(html_entity_decode($this->request->get['filter_shipping_method'], ENT_QUOTES, 'UTF-8'));
+        }
+
         if (isset($this->request->get['filter_order_status_id'])) {
             $url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
         }
@@ -300,6 +322,7 @@ class ControllerSaleOrder extends Controller {
         $data = array(
             'filter_order_id' => $filter_order_id,
             'filter_customer' => $filter_customer,
+            'filter_shipping_method' => $filter_shipping_method,
             'filter_order_status_id' => $filter_order_status_id,
             'filter_total' => $filter_total,
             'filter_date_added' => $filter_date_added,
@@ -332,6 +355,7 @@ class ControllerSaleOrder extends Controller {
             $this->data['orders'][] = array(
                 'order_id' => $result['order_id'],
                 'customer' => $result['customer'],
+                'shipping_method' => $result['shipping_method'],
                 'status' => $result['status'],
                 'total' => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
                 'date_added' => date($this->language->get('date_format_short_time'), strtotime($result['date_added'])),
@@ -345,9 +369,11 @@ class ControllerSaleOrder extends Controller {
 
         $this->data['text_no_results'] = $this->language->get('text_no_results');
         $this->data['text_missing'] = $this->language->get('text_missing');
+        $this->data['text_none'] = $this->language->get('text_none');
 
         $this->data['column_order_id'] = $this->language->get('column_order_id');
         $this->data['column_customer'] = $this->language->get('column_customer');
+        $this->data['column_shipping_method'] = $this->language->get('column_shipping_method');
         $this->data['column_status'] = $this->language->get('column_status');
         $this->data['column_total'] = $this->language->get('column_total');
         $this->data['column_date_added'] = $this->language->get('column_date_added');
@@ -385,6 +411,10 @@ class ControllerSaleOrder extends Controller {
             $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
         }
 
+        if (isset($this->request->get['filter_shipping_method'])) {
+            $url .= '&filter_shipping_method=' . urlencode(html_entity_decode($this->request->get['filter_shipping_method'], ENT_QUOTES, 'UTF-8'));
+        }
+
         if (isset($this->request->get['filter_order_status_id'])) {
             $url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
         }
@@ -413,6 +443,7 @@ class ControllerSaleOrder extends Controller {
 
         $this->data['sort_order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.order_id' . $url, 'SSL');
         $this->data['sort_customer'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, 'SSL');
+        $this->data['sort_shipping_method'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.shipping_method' . $url, 'SSL');
         $this->data['sort_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
         $this->data['sort_total'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.total' . $url, 'SSL');
         $this->data['sort_date_added'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.date_added' . $url, 'SSL');
@@ -426,6 +457,10 @@ class ControllerSaleOrder extends Controller {
 
         if (isset($this->request->get['filter_customer'])) {
             $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        if (isset($this->request->get['filter_shipping_method'])) {
+            $url .= '&filter_shipping_method=' . urlencode(html_entity_decode($this->request->get['filter_shipping_method'], ENT_QUOTES, 'UTF-8'));
         }
 
         if (isset($this->request->get['filter_order_status_id'])) {
@@ -463,6 +498,7 @@ class ControllerSaleOrder extends Controller {
 
         $this->data['filter_order_id'] = $filter_order_id;
         $this->data['filter_customer'] = $filter_customer;
+        $this->data['filter_shipping_method'] = $filter_shipping_method;
         $this->data['filter_order_status_id'] = $filter_order_status_id;
         $this->data['filter_total'] = $filter_total;
         $this->data['filter_date_added'] = $filter_date_added;
@@ -471,6 +507,8 @@ class ControllerSaleOrder extends Controller {
         $this->load->model('localisation/order_status');
 
         $this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+        
+        $this->data['order_shipping'] = $this->model_sale_order->getOrderShipping();
 
         $this->data['sort'] = $sort;
         $this->data['order'] = $order;
@@ -709,6 +747,10 @@ class ControllerSaleOrder extends Controller {
 
         if (isset($this->request->get['filter_customer'])) {
             $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        if (isset($this->request->get['filter_shipping_method'])) {
+            $url .= '&filter_shipping_method=' . urlencode(html_entity_decode($this->request->get['filter_shipping_method'], ENT_QUOTES, 'UTF-8'));
         }
 
         if (isset($this->request->get['filter_order_status_id'])) {
@@ -1540,6 +1582,10 @@ class ControllerSaleOrder extends Controller {
 
             if (isset($this->request->get['filter_customer'])) {
                 $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+            }
+
+            if (isset($this->request->get['filter_shipping_method'])) {
+                $url .= '&filter_shipping_method=' . urlencode(html_entity_decode($this->request->get['filter_shipping_method'], ENT_QUOTES, 'UTF-8'));
             }
 
             if (isset($this->request->get['filter_order_status_id'])) {
